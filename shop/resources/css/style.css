@@ -1,0 +1,55 @@
+body {
+  background: #f4f4f4;
+}
+
+.jumbotron {
+  min-height: 550px;
+  margin-bottom: 0px;
+}
+
+#login_card {
+  margin-top: 30px;
+}
+
+.two_button {
+  width:300px;
+  display:inline-block;
+  overflow: auto;
+  white-space: nowrap;
+  margin-top: 20px;
+
+}
+
+.search_box {
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 100px;
+
+
+}
+
+#main_footer {
+  width: 100%;
+  background: #333333;
+  color: #ffffff;
+  text-align: center;
+  padding: 30px;
+  margin-top: 200px;
+}
+
+#footer_container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+#footer_left_column {
+  width: 25%;
+}
+#footer_middle_column{
+  width: 50%;
+}
+#footer_right_column {
+  width: 25%;
+}
