@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="resources/css/bootstrap.css">
 
     <!-- Custom CSS to overwrite Bootstrap.css -->
-    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/custom.css">
 
     <title>Your Account</title>
 </head>
