@@ -24,6 +24,7 @@ body {
 /* color for the navbar on the main page */
 #defaultNav {
   background: #87B23E !important; /* !important is needed to securely overwrite bootstrap values */
+  border-bottom: #2E6D86 3px solid;
 }
 
 /* color and other properties for the letters in the navbar */
