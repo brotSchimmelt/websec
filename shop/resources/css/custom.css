@@ -85,7 +85,7 @@ Main Page
 */
 #home-section {
   background:url('../img/home.jpg') no-repeat;
-  min-height: 500px;
+  min-height: 600px;
   background-size:cover;
   background-attachment:fixed;
 }
@@ -102,11 +102,11 @@ Main Page
   background-color:rgba(0,0,0,0.5);
   position: absolute;
   width: 100%;
-  min-height: 500px;
+  min-height: 600px;
 }
 
 #home-inner {
-  padding-top: 80px;
+  padding-top: 120px;
 }
 
 #container-1 {
