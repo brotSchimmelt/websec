@@ -28,7 +28,7 @@
 
         <label for="inputMail" class="sr-only">Enter your Mail</label>
         <input type="email" id="inputMail" class="form-control" aria-describedby="mailHelp" placeholder="WWU Mail" required>
-        <small id="mailHelp" class="form-text text-muted">Please use your @uni-muenster.de mail address.</small>
+        <small id="mailHelp" class="form-text text-muted">Please use your <em>@uni-muenster.de</em> mail address.</small>
 
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
