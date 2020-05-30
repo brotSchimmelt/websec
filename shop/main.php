@@ -35,16 +35,24 @@ include("src/header.php");
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum unde consequatur fuga fugit tempore laborum.
                                 </div>
                             </div>
+                            <div class="d-flex flex-row">
+                                <div class="p-4 align-self-start">
+                                    LEFT COLUMN
+                                </div>
+                                <div class="p-4 align-self-end">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum unde consequatur fuga fugit tempore laborum.
+                                </div>
+                            </div>
                         </div>
                         <!-- CARD HEADER -->
-                        <div class="col-lg-4">
+                        <!-- <div class="col-lg-4">
                             <div class="card text-center">
                                 <div class="card-body" id="header-card">
                                     <h3>Headline in card</h3>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugiat nam nisi veniam quos. Libero aliquid aut ullam ab unde ratione suscipit ipsam et hic itaque, magni esse eligendi deleniti odit consequatur nemo. Culpa sed recusandae hic quia optio quam cumque dicta obcaecati laboriosam assumenda similique, voluptatem iusto quo molestias.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- END CARD -->
                     </div>
                 </div>
