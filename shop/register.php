@@ -27,7 +27,7 @@
         <small id="usernameHelp" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
 
         <label for="inputMail" class="sr-only">Enter your Mail</label>
-        <input type="email" id="inputMail" class="form-control" aria-describedby="mailHelp" placeholder="Mail" required>
+        <input type="email" id="inputMail" class="form-control" aria-describedby="mailHelp" placeholder="WWU Mail" required>
         <small id="mailHelp" class="form-text text-muted">Please use your @uni-muenster.de mail address.</small>
 
         <label for="inputPassword" class="sr-only">Password</label>
