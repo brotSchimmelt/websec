@@ -7,7 +7,7 @@
             </div>
 
             <div id="footer_middle_column">
-                <button class="btn btn-outline-light" data-toggle="modal" data-target="#help-modal">Help for the Exercises</button>
+                <button class="btn btn-outline-warning" data-toggle="modal" data-target="#help-modal">Help for the Exercises</button>
             </div>
 
             <div id="footer_right_column">
@@ -18,7 +18,7 @@
     </footer>
 
     <!-- Help Modal -->
-    <div class="modal fade text-dark" id="help-modal">
+    <div class="modal fade text-light" id="help-modal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
