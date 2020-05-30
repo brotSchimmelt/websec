@@ -1,10 +1,24 @@
 <!doctype html>
 <html lang="en">
 
-<?php include("src/header.php"); ?>
+<?php
+include("src/header.php");
+// include("src/greeting.php");
+?>
+
 
 
 <body>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#greeting-modal").modal('show');
+        });
+    </script>
+
+
+
     <!-- HEADER IMAGE SECTION -->
     <header id="home-section">
         <div class="dark-overlay">
