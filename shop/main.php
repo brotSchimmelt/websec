@@ -10,14 +10,11 @@ include("src/header.php");
 
 <body>
 
-
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             $("#greeting-modal").modal('show');
         });
-    </script>
-
-
+    </script> -->
 
     <!-- HEADER IMAGE SECTION -->
     <header id="home-section">
