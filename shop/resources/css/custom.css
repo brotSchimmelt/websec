@@ -1,25 +1,49 @@
+/*
+WWU colors:
+  green WWU: #7AB51D
+  blue WWU: #006E89
+  red ERCIS: #852339
+  grey ERCIS: #8C9598
+  dark grey: #666666
+*/
+
+/* TODO:
+difference between .class and class in css
+(look at "body" and ".dropdown-menu")
+*/
+
+
+
+/* main background color for the site */
 body {
-  background: #f4f4f4;
+  background: #333333;
 }
 
+/* color for the navbar on the main page */
+#defaultNav {
+  background: #7AB51D !important; /* !important is needed to securely overwrite bootstrap values */
+}
+
+/* color and other properties for the letters in the navbar */
+nav a {
+  color: #ffffff !important;
+  font-family: Roboto !important;
+  font-size: 21px !important;
+  font-weight: bold !important;
+}
+
+/* background color for the dropdown menu */
+.dropdown-menu {
+  background: #006E89;
+}
+
+/* properties for the jumbotron container */
 .jumbotron {
   min-height: 550px;
   margin-bottom: 0px;
 }
 
-#login_card {
-  margin-top: 30px;
-}
-
-.two_button {
-  width:300px;
-  display:inline-block;
-  overflow: auto;
-  white-space: nowrap;
-  margin-top: 20px;
-
-}
-
+/* search box field on the products page */
 .search_box {
   width: 80%;
   margin-top: 20px;
@@ -29,9 +53,10 @@ body {
 
 }
 
+/* properties for the main footer */
 #main_footer {
   width: 100%;
-  background: #333333;
+  background: #006E89;
   color: #ffffff;
   text-align: center;
   padding: 30px;
