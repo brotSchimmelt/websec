@@ -21,6 +21,10 @@ difference between .class and class in css
 General Styling Changes
 ===========================================
 */
+.dropdown-menu a:hover {
+  color: #2E6D86 !important;
+  background-color: #f4f4f4 !important;
+}
 body {
   background: #666666;
   color: #ffffff;
@@ -159,6 +163,10 @@ Footer
 }
 #footer_right_column {
   width: 25%;
+}
+
+.modal-content {
+  background-color: #8C9598;
 }
 
 #modal-close-btn { 
