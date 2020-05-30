@@ -1,7 +1,9 @@
 /*
 WWU colors:
   green WWU: #7AB51D
+  slightly darker green WWU: #87B23E
   blue WWU: #006E89
+  slightly darker blue WWU: #2E6D86
   red ERCIS: #852339
   grey ERCIS: #8C9598
   dark grey: #666666
@@ -16,12 +18,12 @@ difference between .class and class in css
 
 /* main background color for the site */
 body {
-  background: #333333;
+  background: #ffffff;
 }
 
 /* color for the navbar on the main page */
 #defaultNav {
-  background: #7AB51D !important; /* !important is needed to securely overwrite bootstrap values */
+  background: #87B23E !important; /* !important is needed to securely overwrite bootstrap values */
 }
 
 /* color and other properties for the letters in the navbar */
@@ -34,7 +36,7 @@ nav a {
 
 /* background color for the dropdown menu */
 .dropdown-menu {
-  background: #006E89;
+  background: #2E6D86;
 }
 
 /* properties for the jumbotron container */
@@ -56,7 +58,7 @@ nav a {
 /* properties for the main footer */
 #main_footer {
   width: 100%;
-  background: #006E89;
+  background: #2E6D86;
   color: #ffffff;
   text-align: center;
   padding: 30px;
