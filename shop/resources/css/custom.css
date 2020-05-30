@@ -16,10 +16,22 @@ difference between .class and class in css
 
 
 
-/* main background color for the site */
+/* 
+===========================================
+Body
+===========================================
+*/
 body {
-  background: #ffffff;
+  background: #666666;
+  color: #ffffff;
 }
+/* =========================================== */
+
+/* 
+===========================================
+Navigation Bar
+===========================================
+*/
 
 /* color for the navbar on the main page */
 #defaultNav {
@@ -39,7 +51,53 @@ nav a {
 .dropdown-menu {
   background: #2E6D86;
 }
+/* =========================================== */
 
+/* 
+===========================================
+Main Page 
+===========================================
+*/
+#home-section {
+  background:url('../img/home.jpg') no-repeat;
+  min-height: 500px;
+  background-size:cover;
+  background-attachment:fixed;
+}
+
+#header-container {
+  color: #ffffff;
+}
+
+#header-card {
+  color: #000000;
+}
+
+.dark-overlay {
+  background-color:rgba(0,0,0,0.5);
+  position: absolute;
+  width: 100%;
+  min-height: 500px;
+}
+
+#home-inner {
+  padding-top: 80px;
+}
+
+#container-1 {
+  background-color: #2E6D86;
+}
+
+#container-3 {
+  background-color: #87B23E;
+}
+
+#container-5 {
+  background-color: #2E6D86;
+}
+/* =========================================== */
+
+/* CURRENTLY UNUSED */
 /* properties for the jumbotron container */
 .jumbotron {
   min-height: 550px;
@@ -52,18 +110,19 @@ nav a {
   margin-top: 20px;
   margin-bottom: 20px;
   margin-left: 100px;
-
-
 }
 
-/* properties for the main footer */
+/* 
+===========================================
+Footer
+===========================================
+*/
 #main_footer {
   width: 100%;
-  background: #2E6D86;
+  background: #8C9598;
   color: #ffffff;
   text-align: center;
   padding: 30px;
-  margin-top: 200px;
 }
 
 #footer_container {
@@ -81,3 +140,4 @@ nav a {
 #footer_right_column {
   width: 25%;
 }
+/* =========================================== */
