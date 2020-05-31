@@ -2,8 +2,8 @@
 <html lang="en">
 
 <?php
-include("src/header.php");
-// include("src/greeting.php");
+require_once("src/header.php");
+// require_once("src/greeting.php");
 ?>
 
 
@@ -209,6 +209,6 @@ include("src/header.php");
 
 </body>
 
-<?php include("src/footer.php"); ?>
+<?php require_once("src/footer.php"); ?>
 
 </html>

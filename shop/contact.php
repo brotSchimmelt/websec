@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php include("src/header.php"); ?>
+<?php require_once("src/header.php"); ?>
 
 
 <body>
@@ -24,6 +24,6 @@
     </form>
 
 </body>
-<?php include("src/footer.php"); ?>
+<?php require_once("src/footer.php"); ?>
 
 </html>

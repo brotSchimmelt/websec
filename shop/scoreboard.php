@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php include("src/header_account.php"); ?>
+<?php require_once("src/header_account.php"); ?>
 
 
 <body>
@@ -17,6 +17,6 @@
 
 
 </body>
-<?php include("src/footer.php"); ?>
+<?php require_once("src/footer.php"); ?>
 
 </html>
