@@ -22,8 +22,8 @@
         <input type="text" name="upost" size="30" disabled><br><br>
         <input type="submit" value="Submit" disabled>
     </form>
-
+    <?php require_once("src/footer.php"); ?>
 </body>
-<?php require_once("src/footer.php"); ?>
+
 
 </html>

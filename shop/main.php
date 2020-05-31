@@ -206,9 +206,9 @@ require_once("src/header.php");
             </div>
         </div>
     </section>
-
+    <?php require_once("src/footer.php"); ?>
 </body>
 
-<?php require_once("src/footer.php"); ?>
+
 
 </html>

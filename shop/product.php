@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php include("src/header.php"); ?>
+<?php require_once("src/header.php"); ?>
 
 
 <body>
@@ -29,8 +29,8 @@
         <input type="text" name="ucomment" size="50"><br>
         <input type="submit" value="Submit">
     </form>
-
+    <?php require_once("src/footer.php"); ?>
 </body>
-<?php include("src/footer.php"); ?>
+
 
 </html>

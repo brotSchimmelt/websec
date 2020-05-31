@@ -9,8 +9,8 @@
     Reseting your DataBase ...
 
 
-
+    <?php require_once("src/footer.php"); ?>
 </body>
-<?php require_once("src/footer.php"); ?>
+
 
 </html>
