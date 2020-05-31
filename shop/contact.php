@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php require_once("src/header.php"); ?>
+<?php require("src/header.php"); ?>
 
 
 <body>
@@ -22,7 +22,7 @@
         <input type="text" name="upost" size="30" disabled><br><br>
         <input type="submit" value="Submit" disabled>
     </form>
-    <?php require_once("src/footer.php"); ?>
+    <?php require("src/footer.php"); ?>
 </body>
 
 
