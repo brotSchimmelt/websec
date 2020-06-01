@@ -19,7 +19,7 @@
 
 
 <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" action="src/registration.php" method="post">
         <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
 
         <label for="inputName" class="sr-only">Enter your Username</label>
@@ -37,11 +37,14 @@
         <label for="confirmPassword" class="sr-only">Confirm Password</label>
         <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
 
-        <a href="index.php" id="login_btn" class="btn btn-lg btn-primary btn-block">Register</a>
+        <button type="submit" name="register-submit" id="register_btn" class="btn btn-lg btn-primary btn-block">Register</button>
+        <!-- <a href="index.php" id="login_btn" class="btn btn-lg btn-primary btn-block">Register</a> -->
         <a href="index.php" class="btn btn-link">Back to Login Page</a>
 
         <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
     </form>
 </body>
+
+<?php include("config/db_login_config.php"); ?>
 
 </html>
