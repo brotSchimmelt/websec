@@ -17,7 +17,7 @@
 </head>
 
 <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" action="src/signin.php" method="post">
         <img class="mb-4" src="resources/img/wwu-cysec.png" alt="WWU Logo" width="280" height="150">
         <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
         <label for="inputName" class="sr-only">Username</label>
