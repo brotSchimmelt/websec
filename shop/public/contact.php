@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php require("src/header.php"); ?>
+<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
 
 
 <body>
@@ -22,7 +22,7 @@
         <input type="text" name="upost" size="30" disabled><br><br>
         <input type="submit" value="Submit" disabled>
     </form>
-    <?php require("src/footer.php"); ?>
+    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
 
 

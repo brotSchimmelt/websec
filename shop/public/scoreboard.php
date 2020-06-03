@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
 
-<?php require("src/header_account.php"); ?>
+<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
 
 
 <body>
 
-    <div class="jumbotron">
+    <div>
         <h1 class="display-3">Here is an overview of your progress:</h1>
         <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum explicabo id repellat sint minima fugiat excepturi tempore atque aliquid accusantium, expedita quaerat molestiae nostrum. Voluptate!</p>
         <hr class="my-4">
@@ -15,7 +15,7 @@
     </div>
 
 
-    <?php require("src/footer.php"); ?>
+    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
 
 

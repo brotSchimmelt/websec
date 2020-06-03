@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php require("src/header.php"); ?>
+<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
 
 
 <body>
@@ -29,7 +29,7 @@
         <input type="text" name="ucomment" size="50"><br>
         <input type="submit" value="Submit">
     </form>
-    <?php require("src/footer.php"); ?>
+    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
 
 

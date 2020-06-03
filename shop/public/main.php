@@ -2,7 +2,7 @@
 <html lang="en">
 
 <?php
-require("src/header.php");
+require("$_SERVER[DOCUMENT_ROOT]/../src/header.php");
 // require("src/greeting.php");
 ?>
 
@@ -206,7 +206,7 @@ require("src/header.php");
             </div>
         </div>
     </section>
-    <?php require("src/footer.php"); ?>
+    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
 
 

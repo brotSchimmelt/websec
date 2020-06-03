@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php require("src/header.php"); ?>
+<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
 
 
 <body>
@@ -9,7 +9,7 @@
     Your cart is currently empty.
 
 
-    <?php require("src/footer.php"); ?>
+    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
 
 
