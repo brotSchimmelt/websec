@@ -35,10 +35,10 @@
                     <a href="product.php" class="nav-link">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a href="contact.php" class="nav-link">Contact</a>
+                    <a href="friends.php" class="nav-link">Find Your Friends</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Find Your Friends</a>
+                    <a href="contact.php" class="nav-link">Contact</a>
                 </li>
             </ul>
         </div>
