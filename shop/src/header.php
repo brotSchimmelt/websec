@@ -55,6 +55,7 @@
                         <a class="dropdown-item" href="scoreboard.php">Scoreboard</a>
                         <a class="dropdown-item" href="reset_db.php">Reset Database</a>
                         <a class="dropdown-item" href="help.php">Help</a>
+                        <a class="dropdown-item" href="admin.php">Admin</a>
                         <a class="dropdown-item" href="logout.php">Logout</a>
                     </div>
                 </li>
