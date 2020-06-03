@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="en">
 
+<?php
+include("$_SERVER[DOCUMENT_ROOT]/../config/test.php");
+?>
+
+
+
+
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -27,7 +35,7 @@
 
         <a href="password_reset.php" id="forget_btn" class="btn btn-link">Forgot your password?</a>
 
-        <a href="main.php" id="login_btn" class="btn btn-lg btn-primary btn-block">Login</a>
+        <a href="./../scr/main.php" id="login_btn" class="btn btn-lg btn-primary btn-block">Login</a>
         <a href="register.php" id="register_btn" class="btn btn-lg btn-outline-secondary btn-block">Register</a>
         <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
     </form>
