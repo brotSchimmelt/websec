@@ -1,7 +1,8 @@
 <?php
-require("$_SERVER[DOCUMENT_ROOT]/../config/db_login_config.php"); // load DB credentials
+require("$_SERVER[DOCUMENT_ROOT]/../config/db_user_config.php"); // load DB credentials
 require("$_SERVER[DOCUMENT_ROOT]/../src/functions.php"); // load extra functions
 
+// TODO: check if user came from the registration page
 
 // TODO: open db connection
 // TODO: check db connection
@@ -20,3 +21,5 @@ require("$_SERVER[DOCUMENT_ROOT]/../src/functions.php"); // load extra functions
 // TODO: redirect to login page
 
 // TODO: error handling in case of something breaking the register process
+
+echo "I'm in registration_script!";
