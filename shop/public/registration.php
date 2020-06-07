@@ -16,10 +16,10 @@
 
 </head>
 
-<?php include("$_SERVER[DOCUMENT_ROOT]/../src/registration.php"); ?>
+<?php include("$_SERVER[DOCUMENT_ROOT]/../src/registration_script.php"); ?>
 
 <body class="text-center">
-    <form class="form-signin" action="$_SERVER[DOCUMENT_ROOT]/../src/registration.php" method="post">
+    <form class="form-signin" action="$_SERVER[DOCUMENT_ROOT]/../src/registration_script.php" method="post">
         <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
 
         <label for="inputName" class="sr-only">Enter your Username</label>
