@@ -17,7 +17,7 @@
 </head>
 
 <body class="text-center">
-    <form class="form-signin" action="src/signin.php" method="post">
+    <form class="form-signin" action="action_handler.php" method="post">
         <img class="mb-4" src="resources/img/wwu-cysec.png" alt="WWU Logo" width="280" height="150">
         <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
         <label for="inputName" class="sr-only">Username</label>
@@ -27,7 +27,8 @@
 
         <a href="password_reset.php" id="forget_btn" class="btn btn-link">Forgot your password?</a>
 
-        <a href="main.php" id="login_btn" class="btn btn-lg btn-primary btn-block">Login</a>
+        <button type="submit" name="login-submit" id="login_btn" class="btn btn-lg btn-primary btn-block">Login</button>
+        <!-- <a href="main.php" id="login_btn" class="btn btn-lg btn-primary btn-block">Login</a> -->
         <a href="registration.php" id="register_btn" class="btn btn-lg btn-outline-secondary btn-block">Register</a>
         <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
     </form>
