@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php require("$_SERVER[DOCUMENT_ROOT]/../src/errors.php"); ?>
+
 
 <head>
     <!-- Required meta tags -->
@@ -44,5 +44,12 @@
         <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
     </form>
 </body>
+
+<?php
+require("$_SERVER[DOCUMENT_ROOT]/../src/errors.php");
+if (isset($_GET['error'])) {
+    display_registration_error($_GET['error']);
+}
+?>
 
 </html>
