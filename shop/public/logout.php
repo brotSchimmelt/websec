@@ -1,4 +1,9 @@
-Goodbye ...
+<?php
 
+$loginPage = "index.php";
 
-<a href="index.php">Back to Login</a>
+session_start();
+session_unset($_SESSION['userName']);
+session_destroy();
+
+header("location: " . $loginPage);
