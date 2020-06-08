@@ -1,6 +1,6 @@
 <?php
 // load DB connection
-require("$_SERVER[DOCUMENT_ROOT]/../config/db_user_config.php");
+require("$_SERVER[DOCUMENT_ROOT]/../config/db_user_conn.php");
 // load extra functions
 require("$_SERVER[DOCUMENT_ROOT]/../src/functions.php");
 
