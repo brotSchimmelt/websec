@@ -21,9 +21,9 @@
         <img class="mb-4" src="resources/img/wwu-cysec.png" alt="WWU Logo" width="280" height="150">
         <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
         <label for="inputName" class="sr-only">Username</label>
-        <input type="text" id="inputName" class="form-control" placeholder="Username" required autofocus>
+        <input type="text" name="loginUsername" id="inputName" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="loginPwd" id="inputPassword" class="form-control" placeholder="Password" required>
 
         <a href="password_reset.php" id="forget_btn" class="btn btn-link">Forgot your password?</a>
 
