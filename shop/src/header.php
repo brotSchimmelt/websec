@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <html lang="en">
 
 <head>
@@ -35,10 +38,10 @@
                     <a href="product.php" class="nav-link">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a href="contact.php" class="nav-link">Contact</a>
+                    <a href="friends.php" class="nav-link">Find Your Friends</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Find Your Friends</a>
+                    <a href="contact.php" class="nav-link">Contact</a>
                 </li>
             </ul>
         </div>
@@ -55,6 +58,7 @@
                         <a class="dropdown-item" href="scoreboard.php">Scoreboard</a>
                         <a class="dropdown-item" href="reset_db.php">Reset Database</a>
                         <a class="dropdown-item" href="help.php">Help</a>
+                        <a class="dropdown-item" href="admin.php">Admin</a>
                         <a class="dropdown-item" href="logout.php">Logout</a>
                     </div>
                 </li>
