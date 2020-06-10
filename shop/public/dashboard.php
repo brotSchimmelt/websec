@@ -1,22 +1,12 @@
-<?php require("$_SERVER[DOCUMENT_ROOT]/../src/dashboard_header.php");
+<?php
+require("$_SERVER[DOCUMENT_ROOT]/../src/dashboard_header.php");
+$here = basename($_SERVER['PHP_SELF'], ".php");
 ?>
 
 <!doctype html>
 <html lang="en">
 
-<style>
-    .linkBtn {
-        background: none !important;
-        border: none;
-        padding: 0 !important;
-        /*optional*/
-        font-family: arial, sans-serif;
-        /*input has OS specific font-family*/
-        color: #069;
-        text-decoration: underline;
-        cursor: pointer;
-    }
-</style>
+
 
 <body>
 
@@ -25,6 +15,41 @@
             <?php include("$_SERVER[DOCUMENT_ROOT]/../src/sidebar.php"); ?>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+                <div class="jumbotron shadow-sm ">
+                    <h1>Dashboard</h1>
+                    <p>Insert Tables and Charts with user data.</p>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">Number of active users</div>
+                            <div class="card-body">Some Number</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">Total progress of registered students</div>
+                            <div class="card-body">Some Chart</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">Current level of the callenges</div>
+                            <div class="card-body">Bachelor/Master etc.</div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">Students behind schedule</div>
+                            <div class="card-body">List of Mail Addresses</div>
+                        </div>
+                    </div>
+                </div>
+
 
             </main>
         </div>
