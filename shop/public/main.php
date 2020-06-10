@@ -1,12 +1,10 @@
-<!doctype html>
-<html lang="en">
-
 <?php
 require("$_SERVER[DOCUMENT_ROOT]/../src/header.php");
 // require("src/greeting.php");
 ?>
 
-
+<!doctype html>
+<html lang="en">
 
 <body>
 
