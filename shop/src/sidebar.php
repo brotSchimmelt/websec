@@ -14,19 +14,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "results") ? "active" : ""; ?>" href="#">
+                <a class="nav-link <?php echo ($here == "results") ? "active" : ""; ?>" href="results.php">
                     <span data-feather="file"></span>
                     Results
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "export_data") ? "active" : ""; ?>" href="#">
+                <a class="nav-link <?php echo ($here == "export_data") ? "active" : ""; ?>" href="export_data.php">
                     <span data-feather="bar-chart-2"></span>
                     Export Data
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "feedback") ? "active" : ""; ?>" href="#">
+                <a class="nav-link <?php echo ($here == "feedback") ? "active" : ""; ?>" href="feedback.php">
                     <span data-feather="file"></span>
                     Feedback
                 </a>
@@ -38,7 +38,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "settings") ? "active" : ""; ?>" href="#">
+                <a class="nav-link <?php echo ($here == "shop_settings") ? "active" : ""; ?>" href="shop_settings.php">
                     <span data-feather="settings"></span>
                     Shop Settings
                 </a>
@@ -56,7 +56,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "logs") ? "active" : ""; ?>" href="#">
+                <a class="nav-link" href="#">
                     <span data-feather="settings"></span>
                     Log Files
                 </a>
