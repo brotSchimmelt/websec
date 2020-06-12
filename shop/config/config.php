@@ -10,6 +10,6 @@ define("DOC", ROOT .  ".." . DS . "docs" . DS); // Documentation dir
 define("LOG", ROOT .  ".." . DS . "docs" . DS); // Log dir
 define("BIN", ROOT .  ".." . DS . "docs" . DS); // Command Line Utility dir (currently empty)
 
-// Relative path to important pages
+// Relative path to frequent redirect destinations
 define("MAIN_PAGE", "shop" . DS . "main.php");
 define("LOGIN_PAGE", "index.php");
