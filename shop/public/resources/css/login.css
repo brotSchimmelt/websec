@@ -58,21 +58,16 @@ body {
   border-top-right-radius: 0;
 }
 
-#registerMail {
+.form-signin input[type="email_register"] {
   margin-bottom: 0px;
   margin-top: 10px;
 }
 
-#registerName {
+.form-signin input[type="text_register"] {
   margin-bottom: 0px;
 }
 
-#registerPassword {
-  margin-bottom: 0px;
-  margin-top: 10px;
-}
-
-#confirmPassword {
+.form-signin input[type="password_register"] {
   margin-bottom: 0px;
   margin-top: 10px;
 }
