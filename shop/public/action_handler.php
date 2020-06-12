@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 
 if (isset($_POST['register-submit'])) {
     require("$_SERVER[DOCUMENT_ROOT]/../src/registration_script.php");

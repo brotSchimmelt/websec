@@ -1,8 +1,8 @@
 <?php
+session_start();
 
 $loginPage = "index.php";
 
-session_start();
 session_unset($_SESSION['userName']);
 session_destroy();
 
