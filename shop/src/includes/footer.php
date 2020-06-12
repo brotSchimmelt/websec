@@ -1,20 +1,22 @@
-<footer id="main_footer">
-    <div id="footer_container">
+<body>
+    <footer id="main_footer">
+        <div id="footer_container">
 
-        <div id="footer_left_column">
-            <a href="#">Image Source</a>
+            <div id="footer_left_column">
+                <a href="#">Image Source</a>
+            </div>
+
+            <div id="footer_middle_column">
+                <button class="btn btn-outline-warning" data-toggle="modal" data-target="#help-modal">Help for the Exercises</button>
+            </div>
+
+            <div id="footer_right_column">
+                <a href="#">Back to the top</a>
+            </div>
+
         </div>
-
-        <div id="footer_middle_column">
-            <button class="btn btn-outline-warning" data-toggle="modal" data-target="#help-modal">Help for the Exercises</button>
-        </div>
-
-        <div id="footer_right_column">
-            <a href="#">Back to the top</a>
-        </div>
-
-    </div>
-</footer>
+    </footer>
+</body>
 
 <!-- Help Modal -->
 <div class="modal fade text-light" id="help-modal">

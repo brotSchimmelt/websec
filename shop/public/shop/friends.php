@@ -1,11 +1,14 @@
+<?php
+// includes
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(HEADER);
+require(FOOTER);
+?>
+
 <!doctype html>
 <html lang="en">
 
-<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
-
-
 <body>
-
     <h4>Find your friends</h4>
     You want to know what your friends bought?<br>
     No problemo! Just use the following form:
@@ -17,21 +20,6 @@
     </form>
     <br>
     <font size="-1">Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</font>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
-
 
 </html>

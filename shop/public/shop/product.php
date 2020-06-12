@@ -1,8 +1,12 @@
+<?php
+// includes
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(HEADER);
+require(FOOTER);
+?>
+
 <!doctype html>
 <html lang="en">
-
-<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
-
 
 <body>
     <h2>The Greatest Banana Slicer of All Time</h2>
@@ -29,7 +33,6 @@
         <input type="text" name="ucomment" size="50"><br>
         <input type="submit" value="Submit">
     </form>
-    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
 
 

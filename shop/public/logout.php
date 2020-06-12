@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-$loginPage = "index.php";
+// includes
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
 session_unset($_SESSION['userName']);
 session_destroy();
 
-header("location: " . $loginPage);
+header("location: " . LOGIN_PAGE);

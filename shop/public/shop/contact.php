@@ -1,8 +1,12 @@
+<?php
+// includes
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(HEADER);
+require(FOOTER);
+?>
+
 <!doctype html>
 <html lang="en">
-
-<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
-
 
 <body>
 
@@ -22,7 +26,6 @@
         <input type="text" name="upost" size="30" disabled><br><br>
         <input type="submit" value="Submit" disabled>
     </form>
-    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
 
 

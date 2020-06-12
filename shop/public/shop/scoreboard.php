@@ -1,8 +1,12 @@
+<?php
+// includes
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(HEADER);
+require(FOOTER);
+?>
+
 <!doctype html>
 <html lang="en">
-
-<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
-
 
 <body>
 
@@ -14,8 +18,6 @@
             The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
     </div>
 
-
-    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
 
 

@@ -1,5 +1,8 @@
 <?php
-require("$_SERVER[DOCUMENT_ROOT]/../src/header.php");
+// includes
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(HEADER);
+require(FOOTER);
 // require("src/greeting.php");
 ?>
 
@@ -204,9 +207,6 @@ require("$_SERVER[DOCUMENT_ROOT]/../src/header.php");
             </div>
         </div>
     </section>
-    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
-
-
 
 </html>

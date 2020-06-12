@@ -1,8 +1,12 @@
+<?php
+// includes
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(HEADER);
+require(FOOTER);
+?>
+
 <!doctype html>
 <html lang="en">
-
-<?php require("$_SERVER[DOCUMENT_ROOT]/../src/header.php"); ?>
-
 
 <body>
 
@@ -75,12 +79,6 @@
         If you successfully posted your attack, you will see a "Thank you!" message.
     </p>
     <hr>
-
-
-
-
-    <?php require("$_SERVER[DOCUMENT_ROOT]/../src/footer.php"); ?>
 </body>
-
 
 </html>
