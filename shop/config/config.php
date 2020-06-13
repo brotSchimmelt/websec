@@ -23,8 +23,8 @@ define("JS_DASHBOARD", INCL . "dashboard_js.php"); // JavaScript for the admin s
 define("JS_SHOP", INCL . "shop_js.php"); // JavaScript for the shop section
 
 // Functions
-define("FUNC_BASE", INCL . "basic_functions.php"); // Basic functions for the site
-define("FUNC_LOGIN", INCL . "login_functions.php"); // Functions for login, registration etc.
+define("FUNC_BASE", SRC . "basic_functions.php"); // Basic functions for the site
+define("FUNC_LOGIN", SRC . "login_functions.php"); // Functions for login, registration etc.
 
 // Relative path to frequent redirect destinations
 define("MAIN_PAGE", "shop" . DS . "main.php");
