@@ -3,8 +3,7 @@ session_start();
 
 // includes
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(FUNC_BASE);
 
-session_unset($_SESSION['userName']);
-session_destroy();
-
-header("location: " . LOGIN_PAGE);
+log_user_out();
+exit();
