@@ -34,10 +34,10 @@ require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">WebSec Documentation</h1>
         <p class="lead">Here is the HTML version of the project documentation.</p>
-        <a href="#"> · Here</a>
-        <a href="#"> · are</a>
-        <a href="#"> · some</a>
-        <a href="#"> · links</a>
+        <a href="#dashboard"> · Dashboard</a>
+        <a href="#docker"> · Docker</a>
+        <a href="#vagrant"> · Vagrant</a>
+        <a href="#shop"> · Shop</a>
     </div>
 
     <br><br>
@@ -47,6 +47,7 @@ require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
         <!-- Dashboard Documentation -->
         <?php include(DOC . "dashboard_doc.html"); ?>
+        <!-- <br> + new include ... -->
     </div>
 
     <!-- Simple Footer -->
