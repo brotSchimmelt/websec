@@ -44,7 +44,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://localhost:1234">
+                <a class="nav-link" href="http://localhost:1234" target="_blank">
                     <span data-feather="settings"></span>
                     phpMyAdmin
                 </a>
