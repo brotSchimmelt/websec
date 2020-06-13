@@ -22,6 +22,9 @@ define("SIDEBAR_DASH", INCL . "sidebar.php"); // Dashboard sidebar location
 define("JS_DASHBOARD", INCL . "dashboard_js.php"); // JavaScript for the admin section
 define("JS_SHOP", INCL . "shop_js.php"); // JavaScript for the shop section
 
+// Functions
+define("FUNC_LOGIN", INCL . "login_functions.php"); // Functions for login, registration etc.
+
 // Relative path to frequent redirect destinations
 define("MAIN_PAGE", "shop" . DS . "main.php");
 define("LOGIN_PAGE", "index.php");

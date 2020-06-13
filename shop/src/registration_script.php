@@ -4,7 +4,7 @@ require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 // load DB connection
 require(CON . "db_user_conn.php");
 // load extra functions
-require(SRC . "functions.php");
+require(FUNC_LOGIN);
 
 // paths
 $registerPage = "registration.php";
