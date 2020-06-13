@@ -7,27 +7,24 @@ function validate_username($username)
         return false;
     } else if ((strlen($username) > 64) || (strlen($username) < 2)) {
         return false;
-    } else {
-        return true;
     }
+    return true;
 }
 
 function validate_mail($mailAddress)
 {
     if ((strstr($mailAddress, "@") == "@uni-muenster.de") || ((strstr($mailAddress, "@") == "@wi.uni-muenster.de"))) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function validate_pwd($pwd)
 {
     if (!$pwd || strlen($pwd) < 8) {
         return false;
-    } else {
-        return true;
     }
+    return true;
 }
 
 function hash_user_pwd($pwd)
