@@ -50,7 +50,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="info.php">
+                <a class="nav-link" href="info.php" target="_blank">
                     <span data-feather="settings"></span>
                     info.php
                 </a>
