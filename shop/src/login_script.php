@@ -42,7 +42,9 @@ if (empty($username) || empty($pwd)) {
         if ($pwdTest) {
             // log user in
             session_start();
-            $_SESSION['userName'] = $result['user_name'];
+            $_SESSION['user_name'] = $result['user_name'];
+            $_SESSION['user_mail'] = $result['user_mail'];
+            $_SESSION['user_login_status'] = 1;
 
             header("location: " . MAIN_PAGE . "?login=success");
         } else if (!$pwdTest) {
