@@ -20,7 +20,7 @@ session_start();
 </head>
 
 <body class="text-center">
-    <form class="form-signin" action="action_handler.php" method="post">
+    <form class="form-signin" action="form_handler.php" method="post">
         <img class="mb-4" src="assets/img/wwu-cysec.png" alt="WWU Logo" width="280" height="150">
         <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
         <label for="inputName" class="sr-only">Username</label>
