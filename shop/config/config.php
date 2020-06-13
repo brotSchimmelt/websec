@@ -15,8 +15,8 @@ define("CON", ROOT .  ".." . DS . "config" . DS); // Log dir
 define("INCL", SRC . "includes" . DS);  // Includes dir
 
 // Common includes
-define("HEADER_SHOP", INCL . "header.php"); // Header location
-define("FOOTER_SHOP", INCL . "footer.php");  // Footer location
+define("HEADER_SHOP", INCL . "shop_header.php"); // Header location
+define("FOOTER_SHOP", INCL . "shop_footer.php");  // Footer location
 define("HEADER_DASH", INCL . "dashboard_header.php"); // Dashboard header location
 define("SIDEBAR_DASH", INCL . "sidebar.php"); // Dashboard sidebar location
 define("JS_DASHBOARD", INCL . "dashboard_js.php"); // JavaScript for the admin section
