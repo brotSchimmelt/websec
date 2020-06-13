@@ -27,7 +27,7 @@ require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
             <a class="p-2 text-dark" href="../shop/main.php">Back to the Shop</a>
             <a class="p-2 text-dark" href="dashboard.php">Back to the Dashboard</a>
         </nav>
-        <a class="btn btn-outline-warning" href="#">Logout</a>
+        <a class="btn btn-outline-warning" href="/logout.php">Logout</a>
     </div>
 
     <!-- Headline -->

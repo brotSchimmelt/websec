@@ -33,7 +33,7 @@ session_start();
             </li>
             <li class="nav-item text-nowrap">
                 <!-- <a class="nav-link" href="#">Logout</a> -->
-                <a class="btn btn-outline-warning" href="#">Logout</a>
+                <a class="btn btn-outline-warning" href="/logout.php">Logout</a>
             </li>
         </ul>
     </nav>
