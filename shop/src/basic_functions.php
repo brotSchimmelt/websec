@@ -25,4 +25,5 @@ function log_user_out()
     session_destroy();
 
     header("location: " . "/index.php" . "?login=loggedOut");
+    exit();
 }
