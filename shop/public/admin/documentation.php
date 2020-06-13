@@ -31,13 +31,13 @@ require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
     </div>
 
     <!-- Headline -->
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <div class="doc-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">WebSec Documentation</h1>
         <p class="lead">Here is the HTML version of the project documentation.</p>
-        <a href="#dashboard"> · Dashboard</a>
-        <a href="#docker"> · Docker</a>
-        <a href="#vagrant"> · Vagrant</a>
-        <a href="#shop"> · Shop</a>
+        <a class="doc-link" href="#dashboard"> · Dashboard</a>
+        <a class="doc-link" href="#docker"> · Docker</a>
+        <a class="doc-link" href="#vagrant"> · Vagrant</a>
+        <a class="doc-link" href="#shop"> · Shop</a>
     </div>
 
     <br><br>
