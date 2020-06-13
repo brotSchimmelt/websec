@@ -26,7 +26,7 @@ session_start();
         </ul>
         <ul class="nav flex-row">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Back to the Shop</a>
+                <a class="nav-link" href="../shop/main.php">Back to the Shop</a>
             </li>
             <li class="nav-item text-nowrap">
                 <a class="nav-link" href="documentation.php">Documentation</a>
