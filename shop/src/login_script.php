@@ -1,19 +1,18 @@
 <?php
+// load config files
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 // load DB connection
-require("$_SERVER[DOCUMENT_ROOT]/../config/db_user_conn.php");
+require(CON . "db_user_conn.php");
 // load extra functions
-require("$_SERVER[DOCUMENT_ROOT]/../src/functions.php");
+require(FUNC_LOGIN);
 
-// path to login page
-$loginPage = "index.php";
-$mainPage = "main.php";
 
 // get password and user name from POST
 $username = filter_input(INPUT_POST, 'loginUsername');
 $pwd = filter_input(INPUT_POST, 'loginPwd');
 
 if (empty($username) || empty($pwd)) {
-    header("location: " . $loginPage . "?error=emptyFields");
+    header("location: " . LOGIN_PAGE . "?error=emptyFields");
     exit();
 } else {
 
@@ -22,7 +21,7 @@ if (empty($username) || empty($pwd)) {
         $sql = $pdoLogin->prepare("SELECT * FROM users WHERE user_name=?");
         $sql->execute([$username]);
     } catch (Exception $e) {
-        header("location: " . $loginPage . "?error=sqlError");
+        header("location: " . LOGIN_PAGE . "?error=sqlError");
         exit();
     }
 
@@ -30,11 +29,11 @@ if (empty($username) || empty($pwd)) {
     $numUsers = $sql->rowCount();
     if ($numUsers > 1) {
         // check if there is more than 1 entry for that name
-        header("location: " . $loginPage . "?error=sqlError");
+        header("location: " . LOGIN_PAGE . "?error=sqlError");
         exit();
     } else if ($numUsers < 1) {
         // user not found
-        header("location: " . $loginPage . "?error=wrongCredentials");
+        header("location: " . LOGIN_PAGE . "?error=wrongCredentials");
         exit();
     } else {
         // validate the entered password
@@ -43,16 +42,18 @@ if (empty($username) || empty($pwd)) {
         if ($pwdTest) {
             // log user in
             session_start();
-            $_SESSION['userName'] = $result['user_name'];
+            $_SESSION['user_name'] = $result['user_name'];
+            $_SESSION['user_mail'] = $result['user_mail'];
+            $_SESSION['user_login_status'] = 1;
 
-            header("location: " . $mainPage . "?login=success");
+            header("location: " . MAIN_PAGE . "?login=success");
         } else if (!$pwdTest) {
             // send user back if password does not match
-            header("location: " . $loginPage . "?error=wrongCredentials");
+            header("location: " . LOGIN_PAGE . "?error=wrongCredentials");
             exit();
         } else {
             // just to catch any errors in the 'password_verify' function
-            header("location: " . $loginPage . "?error=internalError");
+            header("location: " . LOGIN_PAGE . "?error=internalError");
             exit();
         }
     }

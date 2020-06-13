@@ -1,12 +1,13 @@
 <?php
+// load config files
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 // load DB connection
-require("$_SERVER[DOCUMENT_ROOT]/../config/db_user_conn.php");
+require(CON . "db_user_conn.php");
 // load extra functions
-require("$_SERVER[DOCUMENT_ROOT]/../src/functions.php");
+require(FUNC_LOGIN);
 
 // paths
 $registerPage = "registration.php";
-$loginPage = "index.php";
 
 // check if username AND mail are okay
 if (!validate_username($_POST['username']) && !validate_mail($_POST['mail'])) {
@@ -62,8 +63,7 @@ else if ($_POST['password'] !== $_POST['confirmPassword']) {
             exit();
         }
         // redirect back to login page
-        $loginPage = "index.php";
-        header("location: " . $loginPage . "?signup=success");
+        header("location: " . LOGIN_PAGE . "?signup=success");
         exit();
     }
 }

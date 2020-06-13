@@ -11,10 +11,10 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="resources/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
 
     <!-- Custom CSS to overwrite Bootstrap.css -->
-    <link rel="stylesheet" href="resources/css/register.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 
     <title>WebSec | Registration</title>
 
@@ -25,15 +25,15 @@ session_start();
         <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
 
         <label for="inputName" class="sr-only">Enter your Username</label>
-        <input type="text" name="username" id="inputName" class="form-control" aria-describedby="usernameHelp" placeholder="Username" required autofocus>
+        <input type="text" name="username" id="registerName" class="form-control" aria-describedby="usernameHelp" placeholder="Username" required autofocus>
         <small id="usernameHelp" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
 
         <label for="inputMail" class="sr-only">Enter your Mail</label>
-        <input type="email" name="mail" id="inputMail" class="form-control" aria-describedby="mailHelp" placeholder="WWU Mail" required>
+        <input type="email" name="mail" id="registerMail" class="form-control" aria-describedby="mailHelp" placeholder="WWU Mail" required>
         <small id="mailHelp" class="form-text text-muted">Please use your <em>@uni-muenster.de</em> mail address.</small>
 
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="password" id="registerPassword" class="form-control" placeholder="Password" required>
         <small id="passwordHelp" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
 
         <label for="confirmPassword" class="sr-only">Confirm Password</label>
