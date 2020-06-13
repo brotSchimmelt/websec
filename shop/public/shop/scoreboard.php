@@ -1,8 +1,7 @@
 <?php
 // includes
 require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(HEADER);
-require(FOOTER);
+require(HEADER_SHOP);
 ?>
 
 <!doctype html>
@@ -17,7 +16,10 @@ require(FOOTER);
         <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>
             The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
     </div>
-
+    <?php
+    require(FOOTER_SHOP);
+    require(JS_SHOP);
+    ?>
 </body>
 
 

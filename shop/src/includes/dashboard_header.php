@@ -8,9 +8,9 @@ session_start();
     <title>WebSec | Admin</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <!-- Custom styles for this template -->
-    <link href="resources/css/dashboard.css" rel="stylesheet">
+    <link href="../assets/css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>

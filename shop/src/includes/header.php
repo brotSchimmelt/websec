@@ -9,13 +9,13 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300&display=swap" rel="stylesheet">
 
     <!-- Custom CSS to overwrite Bootstrap.css -->
-    <link rel="stylesheet" href="resources/css/custom.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
 
     <title>WebSec Shop</title>
 </head>
@@ -24,7 +24,7 @@ session_start();
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="defaultNav">
         <div class="navbar-collapse collapse">
-            <a class="mx-auto navbar-brand" href="#"><img class="mb-4" src="resources/img/wwu-cysec.png" width="140" height="75"></a>
+            <a class="mx-auto navbar-brand" href="#"><img class="mb-4" src="../assets/img/wwu-cysec.png" width="140" height="75"></a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsedNavBar">
             <span class="navbar-toggler-icon"></span>
@@ -96,11 +96,4 @@ session_start();
             </ul>
         </div>
     </nav>
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="resources/js/jquery-3.4.1.slim.min.js"></script>
-    <script src="resources/js/popper.min.js"></script>
-    <script src="resources/js/bootstrap.min.js"></script>
 </body>

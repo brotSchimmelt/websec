@@ -1,8 +1,7 @@
 <?php
 // includes
 require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(HEADER);
-require(FOOTER);
+require(HEADER_SHOP);
 ?>
 
 <!doctype html>
@@ -20,7 +19,7 @@ require(FOOTER);
                 <button type="button"><strong>BUY NOW</strong></button><br>
                 <font size="small">only 5.879 in stock</font><br><br><br>
             </td>
-            <td><img src="resources/img/bananaslicer.jpg" width="250"></td>
+            <td><img src="../assets/img/bananaslicer.jpg" width="250"></td>
         </tr>
     </table>
 
@@ -33,6 +32,10 @@ require(FOOTER);
         <input type="text" name="ucomment" size="50"><br>
         <input type="submit" value="Submit">
     </form>
+    <?php
+    require(FOOTER_SHOP);
+    require(JS_SHOP);
+    ?>
 </body>
 
 

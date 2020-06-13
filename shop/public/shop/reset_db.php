@@ -1,8 +1,7 @@
 <?php
 // includes
 require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(HEADER);
-require(FOOTER);
+require(HEADER_SHOP);
 ?>
 
 <!doctype html>
@@ -10,6 +9,10 @@ require(FOOTER);
 
 <body>
     <h4>Reseting your DataBase ...</h4>
+    <?php
+    require(FOOTER_SHOP);
+    require(JS_SHOP);
+    ?>
 </body>
 
 

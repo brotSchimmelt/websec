@@ -1,9 +1,8 @@
 <?php
 // includes
 require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(HEADER);
-require(FOOTER);
-// require("src/greeting.php");
+require(HEADER_SHOP);
+// require(SRC . "greeting.php");
 ?>
 
 <!doctype html>
@@ -80,7 +79,7 @@ require(FOOTER);
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img class="img-fluid mb-3 rounded-circle" src="resources/img/iphone.jpg" alt="picture of clothes">
+                    <img class="img-fluid mb-3 rounded-circle" src="../assets/img/iphone.jpg" alt="picture of clothes">
                 </div>
 
                 <div class="col-md-6">
@@ -151,7 +150,7 @@ require(FOOTER);
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <img class="img-fluid mb-3 rounded-circle" src="resources/img/friends.jpg" alt="friends">
+                    <img class="img-fluid mb-3 rounded-circle" src="../assets/img/friends.jpg" alt="friends">
                 </div>
             </div>
         </div>
@@ -181,7 +180,7 @@ require(FOOTER);
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img class="img-fluid mb-3 rounded-circle" src="resources/img/contact.jpg" alt="contact">
+                    <img class="img-fluid mb-3 rounded-circle" src="../assets/img/contact.jpg" alt="contact">
                 </div>
 
                 <div class="col-md-6">
@@ -207,6 +206,12 @@ require(FOOTER);
             </div>
         </div>
     </section>
+    <?php
+    require(FOOTER_SHOP);
+    require(JS_SHOP);
+    ?>
 </body>
+
+
 
 </html>

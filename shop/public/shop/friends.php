@@ -1,8 +1,7 @@
 <?php
 // includes
 require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(HEADER);
-require(FOOTER);
+require(HEADER_SHOP);
 ?>
 
 <!doctype html>
@@ -20,6 +19,10 @@ require(FOOTER);
     </form>
     <br>
     <font size="-1">Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</font>
+    <?php
+    require(FOOTER_SHOP);
+    require(JS_SHOP);
+    ?>
 </body>
 
 </html>
