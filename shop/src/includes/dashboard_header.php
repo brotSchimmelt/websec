@@ -29,7 +29,7 @@ session_start();
                 <a class="nav-link" href="#">Back to the Shop</a>
             </li>
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Documentation</a>
+                <a class="nav-link" href="documentation.php">Documentation</a>
             </li>
             <li class="nav-item text-nowrap">
                 <a class="nav-link" href="#">Logout</a>
