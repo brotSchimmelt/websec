@@ -46,3 +46,9 @@ function is_user_logged_in()
 
     return false;
 }
+
+function log_user_out()
+{
+    $_SESSION = array();
+    session_destroy();
+}
