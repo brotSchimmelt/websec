@@ -44,6 +44,9 @@ function do_login($username, $mail, $adminFlag)
         session_start();
     }
 
+    $token = bin2hex(openssl_random_pseudo_bytes(32));
+
+    $_SESSION['user_token'] = $token;
     $_SESSION['user_name'] = $username;
     $_SESSION['user_mail'] = $mail;
     $_SESSION['user_login_status'] = 1;
