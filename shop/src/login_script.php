@@ -47,6 +47,7 @@ if (empty($username) || empty($pwd)) {
             $_SESSION['user_login_status'] = 1;
 
             header("location: " . MAIN_PAGE . "?login=success");
+            exit();
         } else if (!$pwdTest) {
             // send user back if password does not match
             header("location: " . LOGIN_PAGE . "?error=wrongCredentials");

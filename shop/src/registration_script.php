@@ -30,6 +30,7 @@ else if (!validate_mail($_POST['mail'])) {
 else if (!validate_pwd($_POST['password'])) {
     $oldInput = "&username=" . $_POST['username'] . "&mail=" . $_POST['mail'];
     header("Location: " . $registerPage . "?error=invalidPassword" . $oldInput);
+    exit();
 }
 // check if the passwords match
 else if ($_POST['password'] !== $_POST['confirmPassword']) {

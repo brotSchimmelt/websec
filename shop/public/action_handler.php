@@ -11,4 +11,5 @@ if (isset($_POST['register-submit'])) {
     require(SRC . "login_script.php");
 } else {
     header("location: " . LOGIN_PAGE);
+    exit();
 }
