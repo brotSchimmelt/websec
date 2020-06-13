@@ -2,7 +2,7 @@
 session_start();
 
 // includes
-require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
 
 if (isset($_POST['register-submit'])) {
