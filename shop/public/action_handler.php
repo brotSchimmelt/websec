@@ -10,6 +10,6 @@ if (isset($_POST['register-submit'])) {
 } else if (isset($_POST['login-submit'])) {
     require(SRC . "login_script.php");
 } else {
-    header("location: " . LOGIN_PAGE);
+    header("location: " . LOGIN_PAGE . "?message=Nope");
     exit();
 }
