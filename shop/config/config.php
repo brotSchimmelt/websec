@@ -18,7 +18,7 @@ define("INCL", SRC . "includes" . DS);  // Includes dir
 define("HEADER_SHOP", INCL . "shop_header.php"); // Header location
 define("FOOTER_SHOP", INCL . "shop_footer.php");  // Footer location
 define("HEADER_DASH", INCL . "dashboard_header.php"); // Dashboard header location
-define("SIDEBAR_DASH", INCL . "sidebar.php"); // Dashboard sidebar location
+define("SIDEBAR_DASH", INCL . "dashboard_sidebar.php"); // Dashboard sidebar location
 define("JS_DASHBOARD", INCL . "dashboard_js.php"); // JavaScript for the admin section
 define("JS_SHOP", INCL . "shop_js.php"); // JavaScript for the shop section
 
