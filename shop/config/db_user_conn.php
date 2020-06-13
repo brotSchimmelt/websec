@@ -16,5 +16,5 @@ try {
     $pdoLogin = new PDO($dsn, DB_USER, DB_PWD, $options);
 } catch (Exception $e) {
     // TODO: add verbose error message 
-    echo "upps :-(";
+    echo "whoops :-(";
 }
