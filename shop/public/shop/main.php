@@ -13,7 +13,7 @@ if (!is_user_logged_in()) {
 require(HEADER_SHOP);
 
 // get user name
-$username = htmlentities($_SESSION['user_name']);
+$username = htmlentities($_SESSION['userName']);
 ?>
 
 <!doctype html>

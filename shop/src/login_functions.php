@@ -46,12 +46,12 @@ function do_login($username, $mail, $adminFlag)
 
     $token = bin2hex(openssl_random_pseudo_bytes(32));
 
-    $_SESSION['user_token'] = $token;
-    $_SESSION['user_name'] = $username;
-    $_SESSION['user_mail'] = $mail;
-    $_SESSION['user_login_status'] = 1;
+    $_SESSION['userToken'] = $token;
+    $_SESSION['userName'] = $username;
+    $_SESSION['userMail'] = $mail;
+    $_SESSION['userLoginStatus'] = 1;
 
     if ($adminFlag == 1) {
-        $_SESSION['user_is_admin'] = $adminFlag;
+        $_SESSION['userIsAdmin'] = $adminFlag;
     }
 }

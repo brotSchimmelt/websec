@@ -3,7 +3,7 @@
 // checks if the user is already logged in
 function is_user_logged_in()
 {
-    if (isset($_SESSION['user_login_status']) && $_SESSION['user_login_status'] == 1) {
+    if (isset($_SESSION['userLoginStatus']) && $_SESSION['userLoginStatus'] == 1) {
         return true;
     }
     return false;
@@ -12,7 +12,7 @@ function is_user_logged_in()
 // check if the user is logged in as an admin
 function is_user_admin()
 {
-    if (is_user_logged_in() && isset($_SESSION['user_is_admin']) && $_SESSION['user_is_admin'] == 1) {
+    if (is_user_logged_in() && isset($_SESSION['userIsAdmin']) && $_SESSION['userIsAdmin'] == 1) {
         return true;
     }
     return false;

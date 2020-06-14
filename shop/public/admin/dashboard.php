@@ -18,19 +18,17 @@ if (!is_user_admin()) {
 }
 
 // include header
-require(HEADER_DASH);
+require(HEADER_ADMIN);
 $here = basename($_SERVER['PHP_SELF'], ".php"); // get script name
 ?>
 
 <!doctype html>
 <html lang="en">
 
-
-
 <body>
     <div class="container-fluid">
         <div class="row">
-            <?php include(SIDEBAR_DASH); ?>
+            <?php include(SIDEBAR_ADMIN); ?>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
@@ -73,7 +71,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // get script name
         </div>
     </div>
 
-    <?php include(JS_DASHBOARD); ?>
+    <?php include(JS_ADMIN); ?>
 </body>
 
 </html>
