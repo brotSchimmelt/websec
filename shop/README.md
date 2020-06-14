@@ -20,3 +20,19 @@ shop/
 └── vendor
     └── Used Components (mainly PHPUnit)
 ```
+
+## Naming Conventions
+
+**Variables**: ```variableName```
+
+**Constants**: ```CONSTANT_NAME```
+
+**Methods**: ```method_name```
+
+**CSS Classes**: ```class-name```
+
+**CSS IDs**: ```idName```
+
+**HTML Fields etc.**: ```field-name```
+
+**DB Fields**: ```[table]_field_name```
