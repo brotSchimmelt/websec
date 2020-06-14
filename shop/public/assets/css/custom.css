@@ -14,37 +14,41 @@ difference between .class and class in css
 (look at "body" and ".dropdown-menu")
 */
 
-
-
 /* 
 ===========================================
 General Styling Changes
 ===========================================
 */
+
 body {
   background: #666666;
   color: #ffffff;
 }
 
- /* unvisited link */
+/* unvisited link */
+
 a:link {
   color: #ffffff;
 }
 
 /* visited link */
+
 a:visited {
   color: #ffffff;
 }
 
 /* mouse over link */
+
 a:hover {
   color: #2E6D86;
 }
 
 /* selected link */
+
 a:active {
   color: #2E6D86
-} 
+}
+
 /* =========================================== */
 
 /* 
@@ -52,13 +56,17 @@ a:active {
 Navigation Bar
 ===========================================
 */
+
 /* color for the navbar on the main page */
-#defaultNav {
-  background: #87B23E !important; /* !important is needed to securely overwrite bootstrap values */
+
+#default-nav {
+  background: #87B23E !important;
+  /* !important is needed to securely overwrite bootstrap values */
   border-bottom: #2E6D86 3px solid;
 }
 
 /* color and other properties for the letters in the navbar */
+
 nav a {
   color: #ffffff !important;
   font-family: Roboto !important;
@@ -67,15 +75,18 @@ nav a {
 }
 
 /* background color for the dropdown menu */
+
 .dropdown-menu {
   background: #2E6D86;
 }
 
 /* change active colors in the dropdown menu */
+
 .dropdown-menu a:hover {
   color: #2E6D86 !important;
   background-color: #f4f4f4 !important;
 }
+
 /* =========================================== */
 
 /* 
@@ -83,11 +94,12 @@ nav a {
 Main Page 
 ===========================================
 */
+
 #home-section {
-  background:url('../img/home.jpg') no-repeat;
+  background: url('../img/home.jpg') no-repeat;
   min-height: 600px;
-  background-size:cover;
-  background-attachment:fixed;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 #header-container {
@@ -99,7 +111,7 @@ Main Page
 }
 
 .dark-overlay {
-  background-color:rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   width: 100%;
   min-height: 600px;
@@ -120,16 +132,20 @@ Main Page
 #container-5 {
   background-color: #2E6D86;
 }
+
 /* =========================================== */
 
 /* CURRENTLY UNUSED */
+
 /* properties for the jumbotron container */
+
 .jumbotron {
   min-height: 550px;
   margin-bottom: 0px;
 }
 
 /* search box field on the products page */
+
 .search_box {
   width: 80%;
   margin-top: 20px;
@@ -142,7 +158,8 @@ Main Page
 Footer
 ===========================================
 */
-#main_footer {
+
+#main-footer {
   width: 100%;
   background: #8C9598;
   color: #ffffff;
@@ -150,18 +167,20 @@ Footer
   padding: 30px;
 }
 
-#footer_container {
+#footer-container {
   width: 100%;
   display: flex;
 }
 
-#footer_left_column {
+#footer-left-column {
   width: 25%;
 }
-#footer_middle_column{
+
+#footer-middle-column {
   width: 50%;
 }
-#footer_right_column {
+
+#footer-right-column {
   width: 25%;
 }
 
@@ -169,11 +188,13 @@ Footer
   background-color: #8C9598;
 }
 
-#modal-close-btn { 
-  display: flex; justify-content: center; 
+#modal-close-btn {
+  display: flex;
+  justify-content: center;
 }
 
 #ok-btn {
   width: 100px;
 }
+
 /* =========================================== */

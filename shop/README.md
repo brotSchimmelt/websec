@@ -36,3 +36,7 @@ shop/
 **HTML Fields etc.**: ```field-name```
 
 **DB Fields**: ```[table]_field_name```
+
+**PHP Files**: ```file_name.php```
+
+**Asset Files**: ```file_name.ending```

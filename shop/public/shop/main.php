@@ -2,7 +2,7 @@
 session_start();
 
 // include config and basic functions
-require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require(FUNC_BASE);
 
 if (!is_user_logged_in()) {
@@ -13,7 +13,7 @@ if (!is_user_logged_in()) {
 require(HEADER_SHOP);
 
 // get user name
-$username = htmlentities($_SESSION['user_name']);
+$username = htmlentities($_SESSION['userName']);
 ?>
 
 <!doctype html>

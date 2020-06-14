@@ -2,7 +2,7 @@
 session_start();
 
 // include config and basic functions
-require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require(FUNC_BASE);
 
 // check if user is logged in
@@ -18,7 +18,7 @@ if (!is_user_admin()) {
 }
 
 // include header
-require(HEADER_DASH);
+require(HEADER_ADMIN);
 $here = basename($_SERVER['PHP_SELF'], ".php"); // get script name
 ?>
 
@@ -28,7 +28,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // get script name
 <body>
     <div class="container-fluid">
         <div class="row">
-            <?php include(SIDEBAR_DASH); ?>
+            <?php include(SIDEBAR_ADMIN); ?>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
@@ -42,7 +42,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // get script name
     </div>
 
 
-    <?php include(JS_DASHBOARD); ?>
+    <?php include(JS_ADMIN); ?>
 </body>
 
 </html>

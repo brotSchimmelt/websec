@@ -1,6 +1,6 @@
 <?php
 
-require("$_SERVER[DOCUMENT_ROOT]/../config/db_credentials.php");
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/db_credentials.php");
 
 $dsn =
     "mysql:host=" . DB_HOST .

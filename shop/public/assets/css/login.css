@@ -58,32 +58,32 @@ body {
   border-top-right-radius: 0;
 }
 
-.form-signin input[type="email_register"] {
+.form-signin input[type="email-register"] {
   margin-bottom: 0px;
   margin-top: 10px;
 }
 
-.form-signin input[type="text_register"] {
+.form-signin input[type="text-register"] {
   margin-bottom: 0px;
 }
 
-.form-signin input[type="password_register"] {
+.form-signin input[type="password-register"] {
   margin-bottom: 0px;
   margin-top: 10px;
 }
 
-#info_text {
+#info-text {
   margin-top: 15px;
 }
 
-#login_btn {
+#login-btn {
   margin-top: 15px;
 }
 
-#register_btn_link {
+#register-btn-link {
   margin-top: 5px;
 }
 
-#register_btn {
+#register-btn {
   margin-top: 25px;
 }

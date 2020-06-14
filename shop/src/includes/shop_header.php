@@ -19,9 +19,9 @@
 
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="defaultNav">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="default-nav">
         <div class="navbar-collapse collapse">
-            <a class="mx-auto navbar-brand" href="#"><img class="mb-4" src="../assets/img/wwu-cysec.png" width="140" height="75"></a>
+            <a class="mx-auto navbar-brand" href="#"><img class="mb-4" src="../assets/img/wwu_cysec.png" width="140" height="75"></a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsedNavBar">
             <span class="navbar-toggler-icon"></span>
@@ -56,7 +56,7 @@
                         <a class="dropdown-item" href="reset_db.php">Reset Database</a>
                         <a class="dropdown-item" href="help.php">Help</a>
                         <a class="dropdown-item" href="admin.php">Admin</a>
-                        <a class="dropdown-item" href="/logout.php?token=<?= $_SESSION['user_token'] ?>">Logout</a>
+                        <a class="dropdown-item" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -88,7 +88,7 @@
                     <a href="help.php" class="nav-link">Help</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout.php?token=<?= $_SESSION['user_token'] ?>">Logout</a>
+                    <a class="nav-link" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
                 </li>
             </ul>
         </div>

@@ -1,6 +1,6 @@
 <?php
 // get user name
-$username = htmlentities($_SESSION['user_name']);
+$username = htmlentities($_SESSION['userName']);
 ?>
 
 <head>
@@ -34,7 +34,7 @@ $username = htmlentities($_SESSION['user_name']);
             </li>
             <li class="nav-item text-nowrap">
                 <!-- <a class="nav-link" href="#">Logout</a> -->
-                <a class="btn btn-outline-warning" href="/logout.php?token=<?= $_SESSION['user_token'] ?>">Logout</a>
+                <a class="btn btn-outline-warning" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
             </li>
         </ul>
     </nav>
