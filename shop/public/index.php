@@ -1,5 +1,14 @@
 <?php
 session_start();
+
+// includes
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(FUNC_BASE);
+
+if (is_user_logged_in()) {
+    header("location: " . MAIN_PAGE);
+    exit();
+}
 ?>
 <!doctype html>
 <html lang="en">

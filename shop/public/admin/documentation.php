@@ -1,6 +1,21 @@
 <?php
+session_start();
+
+// include config and basic functions
 require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-// require(HEADER_DASH);
+require(FUNC_BASE);
+
+// check if user is logged in
+if (!is_user_logged_in()) {
+    header("location: " . LOGIN_PAGE . "?login=accessDenied");
+    exit();
+}
+
+// check if user is admin
+if (!is_user_admin()) {
+    header("location: " . MAIN_PAGE);
+    exit();
+}
 ?>
 
 <!doctype html>

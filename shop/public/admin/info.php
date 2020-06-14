@@ -1,10 +1,18 @@
 <?php
-// TODO: Add check if admin or not
-// best practice would be a separate function to check
-$value = true;
+session_start();
 
-if ($value) {
+// include config and basic functions
+require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(FUNC_BASE);
+
+if (!is_user_logged_in()) {
+    header("location: " . LOGIN_PAGE . "?login=accessDenied");
+    exit();
+}
+
+if (is_user_admin()) {
     phpinfo();
 } else {
-    header("location: index.php");
+    header("location: " . MAIN_PAGE);
+    exit();
 }
