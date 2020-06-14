@@ -1,3 +1,8 @@
+<?php
+// get user name
+$username = htmlentities($_SESSION['user_name']);
+?>
+
 <head>
     <meta charset="utf-8">
 
@@ -17,7 +22,7 @@
         </button> -->
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="">Welcome, [USERNAME]</a>
+                <a class="nav-link" href="">Welcome, <?= $username ?></a>
             </li>
         </ul>
         <ul class="nav flex-row">

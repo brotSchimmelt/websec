@@ -11,6 +11,9 @@ if (!is_user_logged_in()) {
 }
 // include Header
 require(HEADER_SHOP);
+
+// get user name
+$username = htmlentities($_SESSION['user_name']);
 ?>
 
 <!doctype html>
@@ -31,7 +34,7 @@ require(HEADER_SHOP);
                 <div class="container" id="header-container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h1 class="display-4">Welcome to our new shop!</h1>
+                            <h1 class="display-4">Welcome to our new shop<?= ", " . $username ?>!</h1>
                             <div class="d-flex flex-row">
                                 <div class="p-4 align-self-start">
                                     LEFT COLUMN
