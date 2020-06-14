@@ -5,7 +5,7 @@ function validate_username($username)
 {
     if (!preg_match("/^[A-Za-z0-9]*$/", $username)) {
         return false;
-    } else if ((strlen($username) > 64) || (strlen($username) < 2)) {
+    } else if ((mb_strlen($username) > 64) || (mb_strlen($username) < 2)) {
         return false;
     }
     return true;
@@ -13,7 +13,7 @@ function validate_username($username)
 
 function validate_mail($mailAddress)
 {
-    if ((strstr($mailAddress, "@") == "@uni-muenster.de") || ((strstr($mailAddress, "@") == "@wi.uni-muenster.de"))) {
+    if ((mb_strstr($mailAddress, "@") == "@uni-muenster.de") || ((mb_strstr($mailAddress, "@") == "@wi.uni-muenster.de"))) {
         return true;
     }
     return false;
@@ -21,7 +21,7 @@ function validate_mail($mailAddress)
 
 function validate_pwd($pwd)
 {
-    if (!$pwd || strlen($pwd) < 8) {
+    if (!$pwd || mb_strlen($pwd) < 8) {
         return false;
     }
     return true;
