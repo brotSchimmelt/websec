@@ -2,7 +2,7 @@
 session_start();
 
 // include config and basic functions
-require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require(FUNC_BASE);
 
 // check if user is logged in
