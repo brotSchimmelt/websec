@@ -26,6 +26,6 @@ define("JS_SHOP", INCL . "shop_js.php"); // JavaScript for the shop section
 define("FUNC_BASE", SRC . "basic_functions.php"); // Basic functions for the site
 define("FUNC_LOGIN", SRC . "login_functions.php"); // Functions for login, registration etc.
 
-// Relative path to frequent redirect destinations
-define("MAIN_PAGE", "shop" . DS . "main.php");
-define("LOGIN_PAGE", "index.php");
+// Path for frequent redirect destinations
+define("MAIN_PAGE", "/shop" . DS . "main.php");
+define("LOGIN_PAGE", "/index.php");
