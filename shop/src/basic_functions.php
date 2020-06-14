@@ -27,3 +27,19 @@ function log_user_out()
     header("location: " . "/index.php" . "?login=loggedOut");
     exit();
 }
+
+function get_semester()
+{
+    $moduleName = " VM Web Security ";
+    $semester = "";
+    $month = date("n");
+    $year = date("Y");
+
+    if ($month <= 9) {
+        $semester = "Summer Term ";
+    } else {
+        $semester = "Winter Term ";
+    }
+
+    echo $moduleName . $semester . $year;
+}

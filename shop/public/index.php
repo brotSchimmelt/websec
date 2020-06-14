@@ -41,7 +41,7 @@ if (is_user_logged_in()) {
 
         <button type="submit" name="login-submit" id="login-btn" class="btn btn-lg btn-primary btn-block">Login</button>
         <a href="registration.php" id="register-btn-link" class="btn btn-lg btn-outline-secondary btn-block">Register</a>
-        <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
+        <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
     </form>
 </body>
 

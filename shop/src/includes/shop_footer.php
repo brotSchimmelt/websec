@@ -7,9 +7,10 @@
 
         <div id="footer-middle-column">
             <button class="btn btn-outline-warning" data-toggle="modal" data-target="#help-modal">Help for the Exercises</button>
+            <p class="mt-3 mb-0">&copy; <?php get_semester() ?></p>
         </div>
 
-        <div id="footer-right-column">
+        <div id=" footer-right-column">
             <a href="#">Back to the top</a>
         </div>
 

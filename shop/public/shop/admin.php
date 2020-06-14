@@ -49,7 +49,7 @@ if (is_user_logged_in() && is_user_admin()) {
             <!-- <a href="password_forgotten.php" id="forget_btn" class="btn btn-link">Forgot your password?</a> -->
             <a class="btn btn-lg btn-primary btn-block" href="admin_redirect.php">Login</a>
             <!-- <a href="registration.php" id="register_btn_link" class="btn btn-lg btn-outline-secondary btn-block">Register</a> -->
-            <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
+            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
 
 
         </form>

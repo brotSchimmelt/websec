@@ -36,7 +36,7 @@ session_start();
         <a href="form_handler.php" id="send-btn" class="btn btn-lg btn-info btn-block">Send Mail</a>
         <a href="index.php" class="btn btn-link">Back to Login Page</a>
 
-        <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
+        <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
     </form>
 </body>
 

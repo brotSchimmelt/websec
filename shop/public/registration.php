@@ -52,7 +52,7 @@ if (is_user_logged_in()) {
         <!-- <a href="index.php" id="login_btn" class="btn btn-lg btn-primary btn-block">Register</a> -->
         <a href="index.php" class="btn btn-link">Back to Login Page</a>
 
-        <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
+        <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
     </form>
 </body>
 
