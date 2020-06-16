@@ -9,6 +9,12 @@ if (is_user_logged_in()) {
     header("location: " . MAIN_PAGE);
     exit();
 }
+// $result = $condition ? 'foo' : 'bar';
+
+$name = isset($_GET['username']) ? $_GET['username'] : "";
+$name = htmlentities($name);
+$mail = isset($_GET['mail']) ? $_GET['mail'] : "";
+$mail = htmlentities($mail);
 ?>
 <!doctype html>
 <html lang="en">
@@ -34,11 +40,11 @@ if (is_user_logged_in()) {
         <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
 
         <label for="input-name" class="sr-only">Enter your Username</label>
-        <input type="text" name="username" id="register-name" class="form-control" aria-describedby="username-help" placeholder="Username" required autofocus>
+        <input type="text" name="username" id="register-name" class="form-control" aria-describedby="username-help" value="<?= $name ?>" placeholder="Username" required autofocus>
         <small id="username-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
 
         <label for="input-mail" class="sr-only">Enter your Mail</label>
-        <input type="email" name="mail" id="register-mail" class="form-control" aria-describedby="mail-help" placeholder="WWU Mail" required>
+        <input type="email" name="mail" id="register-mail" class="form-control" aria-describedby="mail-help" value="<?= $mail ?>" placeholder="WWU Mail" required>
         <small id="mail-help" class="form-text text-muted">Please use your <em>@uni-muenster.de</em> mail address.</small>
 
         <label for="input-password" class="sr-only">Password</label>
