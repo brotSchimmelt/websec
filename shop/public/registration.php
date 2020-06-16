@@ -63,7 +63,7 @@ $mail = htmlentities($mail);
 </body>
 
 <?php
-require("$_SERVER[DOCUMENT_ROOT]/../src/errors.php");
+require("$_SERVER[DOCUMENT_ROOT]/../src/error_functions.php");
 if (isset($_GET['error'])) {
     display_registration_error($_GET['error']);
 }
