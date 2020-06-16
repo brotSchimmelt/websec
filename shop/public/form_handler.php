@@ -2,7 +2,7 @@
 session_start();
 
 // includes
-require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
 
 if (isset($_POST['register-submit'])) {
@@ -10,5 +10,6 @@ if (isset($_POST['register-submit'])) {
 } else if (isset($_POST['login-submit'])) {
     require(SRC . "login_script.php");
 } else {
-    header("location: " . LOGIN_PAGE);
+    header("location: " . LOGIN_PAGE . "?message=Nope");
+    exit();
 }

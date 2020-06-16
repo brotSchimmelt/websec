@@ -1,5 +1,6 @@
 <?php
-session_start();
+// get user name
+$username = htmlentities($_SESSION['userName']);
 ?>
 
 <head>
@@ -21,7 +22,7 @@ session_start();
         </button> -->
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="">Welcome, [USERNAME]</a>
+                <a class="nav-link" href="">Welcome, <?= $username ?></a>
             </li>
         </ul>
         <ul class="nav flex-row">
@@ -33,7 +34,7 @@ session_start();
             </li>
             <li class="nav-item text-nowrap">
                 <!-- <a class="nav-link" href="#">Logout</a> -->
-                <a class="btn btn-outline-warning" href="#">Logout</a>
+                <a class="btn btn-outline-warning" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
             </li>
         </ul>
     </nav>

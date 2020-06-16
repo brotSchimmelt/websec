@@ -5,29 +5,26 @@ function validate_username($username)
 {
     if (!preg_match("/^[A-Za-z0-9]*$/", $username)) {
         return false;
-    } else if ((strlen($username) > 64) || (strlen($username) < 2)) {
+    } else if ((mb_strlen($username) > 64) || (mb_strlen($username) < 2)) {
         return false;
-    } else {
-        return true;
     }
+    return true;
 }
 
 function validate_mail($mailAddress)
 {
-    if ((strstr($mailAddress, "@") == "@uni-muenster.de") || ((strstr($mailAddress, "@") == "@wi.uni-muenster.de"))) {
+    if ((mb_strstr($mailAddress, "@") == "@uni-muenster.de") || ((mb_strstr($mailAddress, "@") == "@wi.uni-muenster.de"))) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function validate_pwd($pwd)
 {
-    if (!$pwd || strlen($pwd) < 8) {
+    if (!$pwd || mb_strlen($pwd) < 8) {
         return false;
-    } else {
-        return true;
     }
+    return true;
 }
 
 function hash_user_pwd($pwd)
@@ -38,4 +35,23 @@ function hash_user_pwd($pwd)
         throw new Exception("Hash creation failed: Error Code 42. Please post this error in Learnweb.");
     }
     return $hash;
+}
+
+function do_login($username, $mail, $adminFlag)
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        // Session has not yet started
+        session_start();
+    }
+
+    $token = bin2hex(openssl_random_pseudo_bytes(32));
+
+    $_SESSION['userToken'] = $token;
+    $_SESSION['userName'] = $username;
+    $_SESSION['userMail'] = $mail;
+    $_SESSION['userLoginStatus'] = 1;
+
+    if ($adminFlag == 1) {
+        $_SESSION['userIsAdmin'] = $adminFlag;
+    }
 }

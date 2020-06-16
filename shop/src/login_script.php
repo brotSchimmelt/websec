@@ -1,6 +1,6 @@
 <?php
 // load config files
-require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 // load DB connection
 require(CON . "db_user_conn.php");
 // load extra functions
@@ -40,13 +40,11 @@ if (empty($username) || empty($pwd)) {
         $result = $sql->fetch();
         $pwdTest = password_verify($pwd, $result['user_pwd_hash']);
         if ($pwdTest) {
-            // log user in
-            session_start();
-            $_SESSION['user_name'] = $result['user_name'];
-            $_SESSION['user_mail'] = $result['user_mail'];
-            $_SESSION['user_login_status'] = 1;
+
+            do_login($result['user_name'], $result['user_mail'], $result['user_isAdmin']);
 
             header("location: " . MAIN_PAGE . "?login=success");
+            exit();
         } else if (!$pwdTest) {
             // send user back if password does not match
             header("location: " . LOGIN_PAGE . "?error=wrongCredentials");

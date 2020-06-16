@@ -27,16 +27,16 @@ session_start();
         <h1 class="h3 mb-3 font-weight-normal">Password Reset</h1>
 
 
-        <label for="inputMail" class="sr-only">Enter your Mail</label>
-        <input type="email" id="inputMail" class="form-control" aria-describedby="mailHelp" placeholder="WWU Mail" required autofocus>
-        <div id="info_text">
+        <label for="input-mail" class="sr-only">Enter your Mail</label>
+        <input type="email" id="input-mail" class="form-control" aria-describedby="mail-help" placeholder="WWU Mail" required autofocus>
+        <div id="info-text">
             <p>Enter your @uni-muenster.de mail address. If you are already registered, you will receive a mail with further instructions to reset your password.</p>
         </div>
 
-        <a href="action_handler.php" id="send_btn" class="btn btn-lg btn-info btn-block">Send Mail</a>
+        <a href="form_handler.php" id="send-btn" class="btn btn-lg btn-info btn-block">Send Mail</a>
         <a href="index.php" class="btn btn-link">Back to Login Page</a>
 
-        <p class="mt-5 mb-3 text-muted">&copy; <?php echo date("Y"); ?></p>
+        <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
     </form>
 </body>
 

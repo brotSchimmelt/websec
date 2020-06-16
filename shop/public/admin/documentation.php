@@ -1,6 +1,21 @@
 <?php
-require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-// require(HEADER_DASH);
+session_start();
+
+// include config and basic functions
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(FUNC_BASE);
+
+// check if user is logged in
+if (!is_user_logged_in()) {
+    header("location: " . LOGIN_PAGE . "?login=accessDenied");
+    exit();
+}
+
+// check if user is admin
+if (!is_user_admin()) {
+    header("location: " . MAIN_PAGE);
+    exit();
+}
 ?>
 
 <!doctype html>
@@ -27,7 +42,7 @@ require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
             <a class="p-2 text-dark" href="../shop/main.php">Back to the Shop</a>
             <a class="p-2 text-dark" href="dashboard.php">Back to the Dashboard</a>
         </nav>
-        <a class="btn btn-outline-warning" href="#">Logout</a>
+        <a class="btn btn-outline-warning" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
     </div>
 
     <!-- Headline -->

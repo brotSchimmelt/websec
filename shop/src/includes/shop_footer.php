@@ -1,15 +1,16 @@
-<footer id="main_footer">
-    <div id="footer_container">
+<footer id="main-footer">
+    <div id="footer-container">
 
-        <div id="footer_left_column">
+        <div id="footer-left-column">
             <a href="#">Image Source</a>
         </div>
 
-        <div id="footer_middle_column">
+        <div id="footer-middle-column">
             <button class="btn btn-outline-warning" data-toggle="modal" data-target="#help-modal">Help for the Exercises</button>
+            <p class="mt-3 mb-0">&copy; <?php get_semester() ?></p>
         </div>
 
-        <div id="footer_right_column">
+        <div id=" footer-right-column">
             <a href="#">Back to the top</a>
         </div>
 

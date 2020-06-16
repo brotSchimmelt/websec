@@ -17,15 +17,17 @@ define("INCL", SRC . "includes" . DS);  // Includes dir
 // Common includes
 define("HEADER_SHOP", INCL . "shop_header.php"); // Header location
 define("FOOTER_SHOP", INCL . "shop_footer.php");  // Footer location
-define("HEADER_DASH", INCL . "dashboard_header.php"); // Dashboard header location
-define("SIDEBAR_DASH", INCL . "dashboard_sidebar.php"); // Dashboard sidebar location
-define("JS_DASHBOARD", INCL . "dashboard_js.php"); // JavaScript for the admin section
 define("JS_SHOP", INCL . "shop_js.php"); // JavaScript for the shop section
+define("HEADER_ADMIN", INCL . "admin_header.php"); // Dashboard header location
+define("SIDEBAR_ADMIN", INCL . "admin_sidebar.php"); // Dashboard sidebar location
+define("JS_ADMIN", INCL . "admin_js.php"); // JavaScript for the admin section
+
 
 // Functions
-define("FUNC_BASE", INCL . "basic_functions.php"); // Basic functions for the site
-define("FUNC_LOGIN", INCL . "login_functions.php"); // Functions for login, registration etc.
+define("FUNC_BASE", SRC . "basic_functions.php"); // Basic functions for the site
+define("FUNC_LOGIN", SRC . "login_functions.php"); // Functions for login, registration etc.
 
-// Relative path to frequent redirect destinations
-define("MAIN_PAGE", "shop" . DS . "main.php");
-define("LOGIN_PAGE", "index.php");
+// Path for frequent redirect destinations
+define("MAIN_PAGE", "/shop" . DS . "main.php");
+define("LOGIN_PAGE", "/index.php");
+define("REGISTER_PAGE", "/registration.php");

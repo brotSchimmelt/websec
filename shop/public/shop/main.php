@@ -1,8 +1,19 @@
 <?php
-// includes
-require("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+session_start();
+
+// include config and basic functions
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require(FUNC_BASE);
+
+if (!is_user_logged_in()) {
+    header("location: " . LOGIN_PAGE . "?login=false");
+    exit();
+}
+// include Header
 require(HEADER_SHOP);
-// require(SRC . "greeting.php");
+
+// get user name
+$username = htmlentities($_SESSION['userName']);
 ?>
 
 <!doctype html>
@@ -23,7 +34,7 @@ require(HEADER_SHOP);
                 <div class="container" id="header-container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h1 class="display-4">Welcome to our new shop!</h1>
+                            <h1 class="display-4">Welcome to our new shop<?= ", " . $username ?>!</h1>
                             <div class="d-flex flex-row">
                                 <div class="p-4 align-self-start">
                                     LEFT COLUMN

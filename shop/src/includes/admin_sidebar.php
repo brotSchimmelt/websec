@@ -2,31 +2,31 @@
     <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "dashboard") ? "active" : ""; ?>" href="dashboard.php">
+                <a class="nav-link <?= ($here == "dashboard") ? "active" : ""; ?>" href="dashboard.php">
                     <span data-feather="home"></span>
                     Dashboard <span class="sr-only">(current)</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "user_management") ? "active" : ""; ?>" href="user_management.php">
+                <a class="nav-link <?= ($here == "user_management") ? "active" : ""; ?>" href="user_management.php">
                     <span data-feather="users"></span>
                     User Management
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "results") ? "active" : ""; ?>" href="results.php">
+                <a class="nav-link <?= ($here == "results") ? "active" : ""; ?>" href="results.php">
                     <span data-feather="file"></span>
                     Results
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "export_data") ? "active" : ""; ?>" href="export_data.php">
+                <a class="nav-link <?= ($here == "export_data") ? "active" : ""; ?>" href="export_data.php">
                     <span data-feather="bar-chart-2"></span>
                     Export Data
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "feedback") ? "active" : ""; ?>" href="feedback.php">
+                <a class="nav-link <?= ($here == "feedback") ? "active" : ""; ?>" href="feedback.php">
                     <span data-feather="file"></span>
                     Feedback
                 </a>
@@ -38,7 +38,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link <?php echo ($here == "shop_settings") ? "active" : ""; ?>" href="shop_settings.php">
+                <a class="nav-link <?= ($here == "shop_settings") ? "active" : ""; ?>" href="shop_settings.php">
                     <span data-feather="settings"></span>
                     Shop Settings
                 </a>
