@@ -32,7 +32,7 @@
                     <a href="main.php" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="product.php" class="nav-link">Products</a>
+                    <a href="overview.php" class="nav-link">Products</a>
                 </li>
                 <li class="nav-item">
                     <a href="friends.php" class="nav-link">Find Your Friends</a>
@@ -67,7 +67,7 @@
             </div>
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a href="product.php" class="nav-link">Products</a>
+                    <a href="overview.php" class="nav-link">Products</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Find Your Friends</a>
