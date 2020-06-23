@@ -44,9 +44,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://localhost:1234" target="_blank">
+                <a class="nav-link" href="http://localhost:8081" target="_blank">
                     <span data-feather="settings"></span>
-                    phpMyAdmin
+                    phpMyAdmin Login
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8080" target="_blank">
+                    <span data-feather="settings"></span>
+                    phpMyAdmin Shop
                 </a>
             </li>
             <li class="nav-item">

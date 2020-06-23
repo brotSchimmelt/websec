@@ -20,6 +20,8 @@ if (!is_user_admin()) {
 
 // Load POST or GET variables and sanitize input BELOW this comment
 
+// Other php variables
+$here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,7 +45,6 @@ if (!is_user_admin()) {
     <?php
     // Load navbar and sidebar
     require(HEADER_ADMIN);
-    require(SIDEBAR_ADMIN);
     // Load error messages, user notifications etc.
     require(MESSAGES);
     ?>

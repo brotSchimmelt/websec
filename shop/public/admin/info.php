@@ -1,14 +1,13 @@
 <?php
-session_start();
+session_start(); // Needs to be called first on every page
 
-// include config and basic functions
+// Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(FUNC_BASE);
 
-if (!is_user_logged_in()) {
-    header("location: " . LOGIN_PAGE . "?login=accessDenied");
-    exit();
-}
+// Load custom libraries
+require(FUNC_BASE);
+require(FUNC_ADMIN);
+
 
 if (is_user_admin()) {
     phpinfo();
