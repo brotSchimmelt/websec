@@ -30,6 +30,7 @@ define("JS_BOOTSTRAP", INCL . "bootstrap_js.php"); // Default JavaScript for boo
 define("FUNC_BASE", SRC . "basic_functions.php"); // Basic functions for the site
 define("FUNC_LOGIN", SRC . "login_functions.php"); // Functions for login, registration etc.
 define("FUNC_ADMIN", SRC . "admin_functions.php"); // Functions for user management etc.
+define("FUNC_SHOP", SRC . "shop_functions.php"); // Functions for user management etc.
 
 // Errors
 define("ERROR_HANDLING", SRC . "error_handling.php"); // Functions for error handling
