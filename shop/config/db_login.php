@@ -2,10 +2,10 @@
 
 // Dummy credentials from the docker example.env file
 // TODO: change credentials to real ones
-define("DB_HOST", "db_shop");
-define("DB_NAME", "shop");
-define("DB_USER", "shop");
-define("DB_PWD", "shop");
+define("DB_HOST", "db_login");
+define("DB_NAME", "login");
+define("DB_USER", "root");
+define("DB_PWD", "root");
 define("CHARSET", "utf8mb4");
 
 
@@ -23,5 +23,5 @@ try {
     $pdoLogin = new PDO($dsn, DB_USER, DB_PWD, $options);
 } catch (Exception $e) {
     // TODO: add verbose error message 
-    echo "whoops :-(";
+    echo "whoops, the database connection could not be established:-(";
 }
