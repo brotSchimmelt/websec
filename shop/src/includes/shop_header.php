@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="default-nav">
     <div class="navbar-collapse collapse">
-        <a class="mx-auto navbar-brand" href="#"><img class="mb-4" src="../assets/img/wwu_cysec.png" width="140" height="75"></a>
+        <a class="mx-auto navbar-brand" href="/shop/main.php"><img class="mb-4" src="../assets/img/wwu_cysec.png" width="140" height="75"></a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsedNavBar">
         <span class="navbar-toggler-icon"></span>
