@@ -1,16 +1,25 @@
 <?php
-session_start();
+session_start(); // Needs to be called first on every page
 
-// includes
+// Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(FUNC_BASE);
+// require_once(CONF_DB_LOGIN);
 
+// Load custom libraries
+require(FUNC_BASE);
+// require(FUNC_LOGIN);
+
+// Load error handling and user messages
+require(ERROR_HANDLING);
+
+// Check login status
 if (is_user_logged_in()) {
+    // Redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
 }
-// $result = $condition ? 'foo' : 'bar';
 
+// Load POST or GET variables and sanitize input BELOW this comment
 $name = isset($_GET['username']) ? $_GET['username'] : "";
 $name = htmlentities($name);
 $mail = isset($_GET['mail']) ? $_GET['mail'] : "";
@@ -36,6 +45,16 @@ $mail = htmlentities($mail);
 </head>
 
 <body class="text-center">
+
+    <?php
+    // Load error messages
+    // TODO: Implement with bootstrap alerts
+    if (isset($_GET['error'])) {
+        display_registration_error($_GET['error']);
+    }
+    ?>
+
+    <!-- HTML Content BEGIN -->
     <form class="form-signin" action="form_handler.php" method="post">
         <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
 
@@ -60,13 +79,7 @@ $mail = htmlentities($mail);
 
         <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
     </form>
+    <!-- HTML Content END -->
 </body>
-
-<?php
-require("$_SERVER[DOCUMENT_ROOT]/../src/error_functions.php");
-if (isset($_GET['error'])) {
-    display_registration_error($_GET['error']);
-}
-?>
 
 </html>

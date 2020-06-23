@@ -1,13 +1,14 @@
 <?php
-// load config files
+// Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-// load DB connection
-require(CON . "db_user_conn.php");
-// load extra functions
+require_once(CONF_DB_LOGIN); // Login db credentials
+
+// Load custom libraries
+// require(FUNC_BASE);
 require(FUNC_LOGIN);
 
 
-// get password and user name from POST
+// Load POST or GET variables and sanitize input BELOW this comment
 $username = filter_input(INPUT_POST, 'loginUsername');
 $pwd = filter_input(INPUT_POST, 'loginPwd');
 
@@ -18,7 +19,7 @@ if (empty($username) || empty($pwd)) {
 
     // get pwd and username from db
     try {
-        $sql = $pdoLogin->prepare("SELECT * FROM users WHERE user_name=?");
+        $sql = $pdoLogin->prepare("SELECT user_name,user_pwd_hash,user_wwu_email,is_admin FROM users WHERE user_name=?");
         $sql->execute([$username]);
     } catch (Exception $e) {
         header("location: " . LOGIN_PAGE . "?error=sqlError");
@@ -41,7 +42,7 @@ if (empty($username) || empty($pwd)) {
         $pwdTest = password_verify($pwd, $result['user_pwd_hash']);
         if ($pwdTest) {
 
-            do_login($result['user_name'], $result['user_mail'], $result['user_isAdmin']);
+            do_login($result['user_name'], $result['user_wwu_email'], $result['is_admin']);
 
             header("location: " . MAIN_PAGE . "?login=success");
             exit();

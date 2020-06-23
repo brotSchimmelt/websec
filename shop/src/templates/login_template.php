@@ -17,7 +17,11 @@ if (is_user_logged_in()) {
     // Redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
-} ?>
+}
+
+// Load POST or GET variables and sanitize input BELOW this comment
+
+?>
 <!doctype html>
 <html lang="en">
 

@@ -1,13 +1,14 @@
 <?php
-// load config files
+// Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-// load DB connection
-require(CON . "db_user_conn.php");
-// load login functions
+require_once(CONF_DB_LOGIN); // Login db credentials
+
+// Load custom libraries
+// require(FUNC_BASE);
 require(FUNC_LOGIN);
 
 
-// get all user input
+// Load POST or GET variables and sanitize input BELOW this comment
 $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
 $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL);
 $password = filter_input(INPUT_POST, "password");
@@ -62,7 +63,7 @@ else if ($password !== $confirmPassword) {
         $pwdHash = hash_user_pwd($password);
 
         try {
-            $insertUser = "INSERT INTO users (user_name, user_mail, user_pwd_hash) VALUE (?, ?, ?)";
+            $insertUser = "INSERT INTO users (user_name, user_wwu_email, user_pwd_hash) VALUE (?, ?, ?)";
             $pdoLogin->prepare($insertUser)->execute([$username, $mail, $pwdHash]);
         } catch (Exception $e) {
             header("Location: " . REGISTER_PAGE . "?error=sqlError");

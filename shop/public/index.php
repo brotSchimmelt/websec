@@ -1,15 +1,23 @@
 <?php
-session_start();
+session_start(); // Needs to be called first on every page
 
-// includes
+// Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(FUNC_BASE);
+// require_once(CONF_DB_LOGIN);
 
+// Load custom libraries
+require(FUNC_BASE);
+// require(FUNC_LOGIN);
+
+// Load error handling and user messages
+require(ERROR_HANDLING);
+
+// Check login status
 if (is_user_logged_in()) {
+    // Redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
-}
-?>
+} ?>
 <!doctype html>
 <html lang="en">
 
