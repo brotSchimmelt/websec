@@ -1,7 +1,7 @@
 <?php
-session_start();
+session_start(); // Needs to be called first on every page
 
-// includes
+// Include default config file
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
 
