@@ -1,25 +1,51 @@
 <?php
-session_start();
+session_start(); // Needs to be called first on every page
 
-// include config and basic functions
+// Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-require(FUNC_BASE);
 
+// Load custom libraries
+require(FUNC_BASE);
+require(FUNC_SHOP);
+
+// Load error handling and user messages
+require(ERROR_HANDLING);
+
+// Check admin status
 if (!is_user_logged_in()) {
+    // Redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
-// include Header
-require(HEADER_SHOP);
 
-// get user name
-$username = htmlentities($_SESSION['userName']);
+// Load POST or GET variables and sanitize input BELOW this comment
+$username = $_SESSION['userName'];
 ?>
-
 <!doctype html>
 <html lang="en">
 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <!-- Custom CSS to overwrite Bootstrap.css -->
+    <link rel="stylesheet" href="/assets/css/shop.css">
+
+    <title>WebSec Shop</title>
+</head>
+
 <body>
+
+    <?php
+    // Load navbar
+    require(HEADER_SHOP);
+    // Load error messages, user notifications etc.
+    require(MESSAGES);
+    ?>
 
     <!-- <script>
         $(document).ready(function() {
@@ -68,6 +94,7 @@ $username = htmlentities($_SESSION['userName']);
         </div>
     </header>
 
+
     <!-- Container 1 -->
     <section id="container-1">
         <div class="container">
@@ -84,6 +111,7 @@ $username = htmlentities($_SESSION['userName']);
             </div>
         </div>
     </section>
+
 
     <!-- Container 2 -->
     <section id="container-2" class="bg-light text-muted py-5">
@@ -168,7 +196,6 @@ $username = htmlentities($_SESSION['userName']);
     </section>
 
 
-
     <!-- Container 5 -->
     <section id="container-5">
         <div class="container">
@@ -218,8 +245,11 @@ $username = htmlentities($_SESSION['userName']);
         </div>
     </section>
     <?php
+    // Load shop footer
     require(FOOTER_SHOP);
-    require(JS_SHOP);
+    // Load JavaScript
+    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
+    require_once(JS_SHOP); // Custom JavaScript
     ?>
 </body>
 

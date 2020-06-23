@@ -14,7 +14,7 @@ require(ERROR_HANDLING);
 // Check admin status
 if (!is_user_logged_in()) {
     // Redirect to login page
-    header("location: " . LOGIN_PAGE);
+    header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
 
