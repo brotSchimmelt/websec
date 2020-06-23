@@ -18,7 +18,7 @@ if (!is_user_admin()) {
     exit();
 }
 
-// load POST or GET variables and sanitize input
+// Load POST or GET variables and sanitize input BELOW this comment
 
 ?>
 <!doctype html>
@@ -40,6 +40,24 @@ if (!is_user_admin()) {
 
 <body>
 
+    <?php
+    // Load navbar and sidebar
+    require(HEADER_ADMIN);
+    require(SIDEBAR_ADMIN);
+    // Load error messages, user notifications etc.
+    require(MESSAGES);
+    ?>
+
+
+    <!-- HTML Content BEGIN -->
+    <!-- HTML Content END -->
+
+
+    <?php
+    // Load JavaScript
+    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
+    require_once(JS_ADMIN); // Custom JavaScript
+    ?>
 </body>
 
 </html>
