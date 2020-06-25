@@ -1,0 +1,35 @@
+.prod-btn {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.flex-equal>* {
+    -ms-flex: 1;
+    flex: 1;
+}
+
+@media (min-width: 768px) {
+    .flex-md-equal>* {
+        -ms-flex: 1;
+        flex: 1;
+    }
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.number-field {
+    max-width: 60px;
+    max-height: 30px;
+    margin-right: 0px;
+    padding-right: 0px;
+}
+
+.btn-col {
+    margin-left: 0px;
+    padding-left: 0px;
+    margin-right: 8px;
+    padding-right: 8px;
+}

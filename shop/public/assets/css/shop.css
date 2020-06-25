@@ -21,8 +21,8 @@ General Styling Changes
 */
 
 body {
-  background: #666666;
-  color: #ffffff;
+  background: #e2e2e2;
+  color: #000000;
 }
 
 /* unvisited link */
@@ -195,6 +195,12 @@ Footer
 
 #ok-btn {
   width: 100px;
+}
+
+.prod-center {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
 }
 
 /* =========================================== */
