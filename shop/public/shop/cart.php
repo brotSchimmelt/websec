@@ -3,6 +3,7 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_SHOP);
 
 // Load custom libraries
 require(FUNC_BASE);
@@ -49,7 +50,22 @@ if (!is_user_logged_in()) {
     ?>
 
     <!-- HTML Content BEGIN -->
-    <h2>Your cart is currently empty :(</h2>
+    <div class="cart-center">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Position</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php show_cart_content() ?>
+            </tbody>
+        </table>
+    </div>
     <!-- HTML Content END -->
 
     <?php

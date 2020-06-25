@@ -93,3 +93,39 @@ function show_products($productsPerRow)
         echo "</div>";
     }
 }
+
+
+function show_cart_content()
+{
+
+    $sqlCart = "SELECT `prod_id`, `quantity`, `timestamp` FROM `cart` WHERE `user_name` = :user_name";
+    $stmtCart = get_shop_db()->prepare($sqlCart);
+    $stmtCart->execute(['user_name' => $_SESSION['userName']]);
+    $cart = $stmtCart->fetchAll();
+
+    if ($cart && $stmtCart->rowCount() > 0) {
+
+        $i = 0;
+        foreach ($cart as $row) {
+
+            $prodID = $row['prod_id'];
+            $sqlProducts = "SELECT `prod_title`, `price`, `img_path` FROM `products` WHERE `prod_id` = :prod_id";
+            $stmtProd = get_shop_db()->prepare($sqlProducts);
+            $stmtProd->execute(['prod_id' => $prodID]);
+            $product = $stmtProd->fetch();
+
+            $total = $row['quantity'] * $product['price'];
+            $i++;
+
+            echo "<tr>";
+            echo '<th scope="row">' . $i . '.</th>';
+            echo '<td>' . $product['prod_title'] . '</td>';
+            echo '<td>' . $product['price'] . '</td>';
+            echo '<td>' . $row['quantity'] . '</td>';
+            echo '<td><strong>' . $total . '</strong></td>';
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr><td>0.</td><td></td><td>Your cart is currently empty.</td><td></td><td></td></tr>";
+    }
+}
