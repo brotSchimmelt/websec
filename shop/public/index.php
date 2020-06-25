@@ -40,7 +40,7 @@ if (is_user_logged_in()) {
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card">
-        <form class="form-signin" action="form_handler.php" method="post">
+        <form class="form-signin" action="input_handler.php" method="post">
             <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="280" height="150">
 
             <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
