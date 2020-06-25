@@ -3,6 +3,7 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_SHOP); // Credentials for the shop db
 
 // Load custom libraries
 require(FUNC_BASE);
@@ -19,6 +20,10 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+$userName = $_SESSION['userName'];
+
+// Other variables
+$productsPerRow = 3;
 
 ?>
 <!doctype html>
@@ -34,6 +39,7 @@ if (!is_user_logged_in()) {
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
+    <link rel="stylesheet" href="/assets/css/card.css">
 
     <title>Websec | Overview</title>
 </head>
@@ -47,51 +53,21 @@ if (!is_user_logged_in()) {
     require(MESSAGES);
     ?>
 
-    <!-- HTML Content BEGIN -->
-    <h1>Here are our wonderful products!</h1>
+    <!-- Page Content BEGIN -->
 
     <!-- Search form -->
-    <div class="search_box">
+    <div class="prod-center">
         <h2>Product Search</h2>
         <input class="form-control" type="text" placeholder="Search" aria-label="Search" autofocus>
-        <p>You searched for [placeholder] </p>
+        <p>You searched for <strong>[placeholder]</strong></p>
     </div>
 
-    <a href=""></a>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-4">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header"><a href="product.php">Product Nr. 1</a></div>
-                    <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header"><a href="product.php">Product Nr. 2</a></div>
-                    <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card border-primary mb-3" style="max-width: 20rem;">
-                    <div class="card-header"><a href="product.php">Product Nr. 3</a></div>
-                    <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- HTML Content END -->
+    <!-- Product previews -->
+    <section id="products">
+        <?php show_products($productsPerRow) ?>
+    </section>
+    <!-- Page Content END -->
 
 
     <?php
