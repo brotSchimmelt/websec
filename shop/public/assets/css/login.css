@@ -14,7 +14,7 @@ body {
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f4f4f4;
+  background-color: #e2e2e2;
 }
 
 .form-signin {
@@ -86,4 +86,56 @@ body {
 
 #register-btn {
   margin-top: 25px;
+}
+
+hr.accent-blue {
+  border-top: 2px solid #006E89;
+  max-width: 80%;
+}
+
+.btn-login {
+  background-color: #7AB51D;
+  border-color: #7AB51D;
+  color: #ffffff;
+}
+
+.btn-login:hover {
+  background-color: #609b02 !important;
+  border-color: #609b02 !important;
+  color: #ffffff;
+}
+
+.btn-outline-register {
+  border-color: #006E89;
+  color: #006E89;
+}
+
+.btn-outline-register:hover {
+  background-color: #006E89;
+  border-color: #006E89;
+  color: #ffffff;
+}
+
+.btn-register {
+  background-color: #006E89;
+  border-color: #006E89;
+  color: #ffffff;
+}
+
+.btn-register:hover {
+  background-color: #005469;
+  border-color: #005469;
+  color: #ffffff;
+}
+
+.login-link {
+  color: #006E89;
+}
+
+.login-link:hover, .login-link:active, .login-link:visited, .login-link:focus {
+  color: #005469;
+}
+
+.login-card {
+  min-width: 25%;
 }
