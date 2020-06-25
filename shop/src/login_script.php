@@ -19,7 +19,7 @@ if (empty($username) || empty($pwd)) {
 
     // get pwd and username from db
     try {
-        $sql = $pdoLogin->prepare("SELECT user_name,user_pwd_hash,user_wwu_email,is_admin FROM users WHERE user_name=?");
+        $sql = get_login_db()->prepare("SELECT user_name,user_pwd_hash,user_wwu_email,is_admin FROM users WHERE user_name=?");
         $sql->execute([$username]);
     } catch (Exception $e) {
         header("location: " . LOGIN_PAGE . "?error=sqlError");

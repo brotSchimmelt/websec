@@ -56,7 +56,7 @@ $mail = htmlentities($mail);
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card">
-        <form class="form-signin" action="form_handler.php" method="post">
+        <form class="form-signin" action="input_handler.php" method="post">
             <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
 
             <label for="input-name" class="sr-only">Enter your Username</label>

@@ -46,7 +46,7 @@ else if ($password !== $confirmPassword) {
 } else {
     // check if username already exits in the db
     try {
-        $duplicateQuery = $pdoLogin->prepare("SELECT 1 FROM users WHERE user_name = ?");
+        $duplicateQuery = get_login_db()->prepare("SELECT 1 FROM users WHERE user_name = ?");
         $duplicateQuery->execute([$username]);
     } catch (Exception $e) {
         header("Location: " . REGISTER_PAGE . "?error=sqlError");
@@ -64,7 +64,7 @@ else if ($password !== $confirmPassword) {
 
         try {
             $insertUser = "INSERT INTO users (user_name, user_wwu_email, user_pwd_hash) VALUE (?, ?, ?)";
-            $pdoLogin->prepare($insertUser)->execute([$username, $mail, $pwdHash]);
+            get_login_db()->prepare($insertUser)->execute([$username, $mail, $pwdHash]);
         } catch (Exception $e) {
             header("Location: " . REGISTER_PAGE . "?error=sqlError");
             exit();
