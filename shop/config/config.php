@@ -13,6 +13,7 @@ define("CON", ROOT .  ".." . DS . "config" . DS); // Configuration dir
 
 // Database configurations
 define("CONF_DB_LOGIN", CON . "db_login.php"); // Login database credentials
+define("CONF_DB_SHOP", CON . "db_shop.php"); // Shop database credentials
 
 // Subfolders in src/
 define("INCL", SRC . "includes" . DS);  // Includes dir
