@@ -122,12 +122,12 @@ function show_cart_content()
             echo "<tr>";
             echo '<th scope="row">' . $i . '.</th>';
             echo '<td>' . $product['prod_title'] . '</td>';
-            echo '<td>' . $product['price'] . '</td>';
+            echo '<td>' . $product['price'] . ' &euro;</td>';
             echo '<td>' . $row['quantity'] . '</td>';
-            echo '<td>' . $rowPrice . '</td>';
+            echo '<td>' . $rowPrice . ' &euro;</td>';
             echo "</tr>";
         }
-        echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3) . "<td><strong>" . $totalPrice . "</strong></td></tr>";
+        echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3) . "<td><strong>" . $totalPrice . " &euro;</strong></td></tr>";
     } else {
         echo "<tr><td>0.</td><td></td><td>Your cart is currently empty.</td><td></td><td></td></tr>";
     }
