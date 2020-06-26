@@ -103,34 +103,29 @@ function show_cart_content()
     $stmtCart->execute(['user_name' => $_SESSION['userName']]);
     $cart = $stmtCart->fetchAll();
 
-    if ($cart && $stmtCart->rowCount() > 0) {
+    $i = 0;
+    $totalPrice = 0;
+    foreach ($cart as $row) {
 
-        $i = 0;
-        $totalPrice = 0;
-        foreach ($cart as $row) {
+        $prodID = $row['prod_id'];
+        $sqlProducts = "SELECT `prod_title`, `price`, `img_path` FROM `products` WHERE `prod_id` = :prod_id";
+        $stmtProd = get_shop_db()->prepare($sqlProducts);
+        $stmtProd->execute(['prod_id' => $prodID]);
+        $product = $stmtProd->fetch();
 
-            $prodID = $row['prod_id'];
-            $sqlProducts = "SELECT `prod_title`, `price`, `img_path` FROM `products` WHERE `prod_id` = :prod_id";
-            $stmtProd = get_shop_db()->prepare($sqlProducts);
-            $stmtProd->execute(['prod_id' => $prodID]);
-            $product = $stmtProd->fetch();
+        $rowPrice = $row['quantity'] * $product['price'];
+        $i++;
+        $totalPrice += $rowPrice;
 
-            $rowPrice = $row['quantity'] * $product['price'];
-            $i++;
-            $totalPrice += $rowPrice;
-
-            echo "<tr>";
-            echo '<th scope="row">' . $i . '.</th>';
-            echo '<td>' . $product['prod_title'] . '</td>';
-            echo '<td>' . $product['price'] . ' &euro;</td>';
-            echo '<td>' . $row['quantity'] . '</td>';
-            echo '<td>' . $rowPrice . ' &euro;</td>';
-            echo "</tr>";
-        }
-        echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3) . "<td><strong>" . $totalPrice . " &euro;</strong></td></tr>";
-    } else {
-        echo "<tr><td>0.</td><td></td><td>Your cart is currently empty.</td><td></td><td></td></tr>";
+        echo "<tr>";
+        echo '<th scope="row">' . $i . '.</th>';
+        echo '<td>' . $product['prod_title'] . '</td>';
+        echo '<td>' . $product['price'] . ' &euro;</td>';
+        echo '<td>' . $row['quantity'] . '</td>';
+        echo '<td>' . $rowPrice . ' &euro;</td>';
+        echo "</tr>";
     }
+    echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3) . "<td><strong>" . $totalPrice . " &euro;</strong></td></tr>";
 }
 
 
