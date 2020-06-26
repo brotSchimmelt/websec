@@ -17,33 +17,50 @@ function get_shop_db()
     return $dbShop;
 }
 
-// function get_number_of_cart_items()
-// {
-//     // $sql = "SELECT COUNT(id) FROM shopping_cart WHERE user_name=?";
-//     $sql = "SELECT SUM(quantity) FROM shopping_cart WHERE user_name=?";
-//     $stmt = get_shop_db()->prepare($sql);
-//     $stmt->execute([$userID]);
+function get_number_of_cart_items()
+{
+    $sql = "SELECT SUM(`quantity`) FROM `cart` WHERE user_name=?";
+    $stmt = get_shop_db()->prepare($sql);
+    $stmt->execute([$_SESSION['userName']]);
 
-//     return $stmt->fetchColumn();
-// }
+    return $stmt->fetchColumn();
+}
 
 function add_product_to_cart($productID, $quantity)
 {
-    // check if quantity is not greater than 3
-    $quantity = $quantity > 3 ? 3 : $quantity;
 
+    // add existing product to cart
     if (is_product_in_cart($productID)) {
 
+        $quantityQuery = "SELECT `quantity` FROM `cart` WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
+        $stmtQuantity = get_shop_db()->prepare($quantityQuery);
+        $stmtQuantity->execute([
+            'prod_id' => $productID,
+            'user_name' => $_SESSION['userName']
+        ]);
+        $result = $stmtQuantity->fetch();
 
-        $sql = "UPDATE `cart` SET `quantity` = `quantity` + :quantity, `timestamp` = :date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
+        if (($result['quantity'] + $quantity) >= 3) {
+            $quantity = 3;
+            $sql = "UPDATE `cart` SET `quantity` = :quantity, `timestamp` = :date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
+        } else if (($result['quantity'] + $quantity) <= 0) {
+            $quantity = 1;
+            $sql = "UPDATE `cart` SET `quantity` = :quantity, `timestamp` = :date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
+        } else {
+            $sql = "UPDATE `cart` SET `quantity` = `quantity` + :quantity, `timestamp` = :date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
+        }
+
         $stmt = get_shop_db()->prepare($sql);
         $stmt->execute([
-            'quantity' => $quantity,
             'prod_id' => $productID,
             'user_name' => $_SESSION['userName'],
+            'quantity' => $quantity,
             'date' => date("Y-m-d H:i:s")
         ]);
+        // add new product to cart
     } else {
+        // check if quantity sent by user is not greater than 3
+        $quantity = $quantity > 3 ? 3 : $quantity;
         $sql = "INSERT INTO `cart` (`position_id`, `prod_id`, `user_name`, `quantity`, `timestamp`) VALUES (NULL, :prod_id, :user_name, :quantity, :date)";
         $stmt = get_shop_db()->prepare($sql);
         $stmt->execute([
