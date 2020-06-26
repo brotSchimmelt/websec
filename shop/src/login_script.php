@@ -29,10 +29,18 @@ if (empty($username) || empty($pwd)) {
     // check if user exists
     $numUsers = $sql->rowCount();
     if ($numUsers > 1) {
+
+        // wait for 3 seconds
+        sleep(3);
+
         // check if there is more than 1 entry for that name
         header("location: " . LOGIN_PAGE . "?error=sqlError");
         exit();
     } else if ($numUsers < 1) {
+
+        // wait for 3 seconds
+        sleep(3);
+
         // user not found
         header("location: " . LOGIN_PAGE . "?error=wrongCredentials");
         exit();
@@ -47,10 +55,18 @@ if (empty($username) || empty($pwd)) {
             header("location: " . MAIN_PAGE . "?login=success");
             exit();
         } else if (!$pwdTest) {
+
+            // wait for 3 seconds
+            sleep(3);
+
             // send user back if password does not match
             header("location: " . LOGIN_PAGE . "?error=wrongCredentials");
             exit();
         } else {
+
+            // wait for 3 seconds
+            sleep(3);
+
             // just to catch any errors in the 'password_verify' function
             header("location: " . LOGIN_PAGE . "?error=internalError");
             exit();
