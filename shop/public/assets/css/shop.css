@@ -209,4 +209,13 @@ Footer
   padding: 10px;
 }
 
+.my-head {
+  background-color: #2E6D86 !important;
+  color: white;
+}
+
+tbody tr:last-child {
+  border-top: 2px solid #2E6D86;
+}
+
 /* =========================================== */

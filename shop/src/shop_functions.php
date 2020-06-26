@@ -106,6 +106,7 @@ function show_cart_content()
     if ($cart && $stmtCart->rowCount() > 0) {
 
         $i = 0;
+        $totalPrice = 0;
         foreach ($cart as $row) {
 
             $prodID = $row['prod_id'];
@@ -114,17 +115,19 @@ function show_cart_content()
             $stmtProd->execute(['prod_id' => $prodID]);
             $product = $stmtProd->fetch();
 
-            $total = $row['quantity'] * $product['price'];
+            $rowPrice = $row['quantity'] * $product['price'];
             $i++;
+            $totalPrice += $rowPrice;
 
             echo "<tr>";
             echo '<th scope="row">' . $i . '.</th>';
             echo '<td>' . $product['prod_title'] . '</td>';
             echo '<td>' . $product['price'] . '</td>';
             echo '<td>' . $row['quantity'] . '</td>';
-            echo '<td><strong>' . $total . '</strong></td>';
+            echo '<td>' . $rowPrice . '</td>';
             echo "</tr>";
         }
+        echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3) . "<td><strong>" . $totalPrice . "</strong></td></tr>";
     } else {
         echo "<tr><td>0.</td><td></td><td>Your cart is currently empty.</td><td></td><td></td></tr>";
     }

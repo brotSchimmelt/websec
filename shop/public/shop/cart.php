@@ -50,9 +50,9 @@ if (!is_user_logged_in()) {
     ?>
 
     <!-- HTML Content BEGIN -->
-    <div class="cart-center">
+    <div class="cart-center mt-5">
         <table class="table table-striped">
-            <thead class="thead-dark">
+            <thead class="my-head">
                 <tr>
                     <th scope="col">Position</th>
                     <th scope="col">Product Name</th>
@@ -65,6 +65,11 @@ if (!is_user_logged_in()) {
                 <?php show_cart_content() ?>
             </tbody>
         </table>
+    </div>
+    <div class="cart-center">
+        <a class="btn btn-danger btn" href="">Delete</a>
+        <a class="btn btn-success btn" href="">Buy</a>
+        <p><small>Due to recent hacker attacks our shop is currently closed! Don't worry, we will remember your cart items the next visit.</small></p>
     </div>
     <!-- HTML Content END -->
 
