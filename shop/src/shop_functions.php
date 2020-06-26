@@ -158,3 +158,13 @@ function is_cart_empty()
     }
     return false;
 }
+
+
+function get_num_of_cart_items()
+{
+    $sql = "SELECT SUM(quantity) FROM `cart` WHERE `user_name` = :user_name";
+    $stmt = get_shop_db()->prepare($sql);
+    $stmt->execute(['user_name' => $_SESSION['userName']]);
+
+    return $stmt->fetchColumn();
+}

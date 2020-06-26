@@ -24,7 +24,15 @@
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-                <a href="cart.php" class="nav-link">Shopping Cart</a>
+                <?php
+                $num = 0;
+                ?>
+                <a href="cart.php" class="nav-link icon-count">
+                    <span>Cart</span>
+                    <?php if ($num > 0) : ?>
+                        <span class="cart-badge"><?= $num < 100 ? $num : "99+" ?></span>
+                    <?php endif ?>
+                </a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
