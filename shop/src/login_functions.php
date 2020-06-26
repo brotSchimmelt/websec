@@ -1,5 +1,22 @@
 <?php
 
+function get_login_db()
+{
+    static $dbLogin;
+
+    if ($dbLogin instanceof PDO) {
+        return $dbLogin;
+    }
+
+    try {
+        $dbLogin = new PDO(DSN, DB_USER, DB_PWD, OPTIONS);
+    } catch (PDOException $e) {
+        exit("Unable to connect to the database :(");
+    }
+    return $dbLogin;
+}
+
+
 // check if username is in scope and 2 <= len <= 64
 function validate_username($username)
 {

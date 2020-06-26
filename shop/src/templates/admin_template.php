@@ -19,7 +19,6 @@ if (!is_user_admin()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
-$username = $_SESSION['userName'];
 
 // Other php variables
 $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
@@ -38,7 +37,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
 
-    <title>Admin | Results</title>
+    <title>[DUMMY TITLE]</title>
 </head>
 
 <body>
@@ -52,20 +51,6 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
 
 
     <!-- HTML Content BEGIN -->
-    <div class="container-fluid">
-        <div class="row">
-            <?php include(SIDEBAR_ADMIN); ?>
-
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-
-                <div class="jumbotron shadow">
-                    <h1>Student Results</h1>
-                    <hr>
-
-                </div>
-            </main>
-        </div>
-    </div>
     <!-- HTML Content END -->
 
 

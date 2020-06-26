@@ -32,34 +32,32 @@ if (is_user_logged_in()) {
     <!-- Custom CSS to overwrite Bootstrap.css -->
     <link rel="stylesheet" href="assets/css/login.css">
 
-    <title>WebSec | Login</title>
+    <title>WebSec | Password Reset</title>
 
 </head>
 
-<body class="text-center">
 
+
+<body class="text-center">
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card">
-        <form class="form-signin" action="input_handler.php" method="post">
-            <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="280" height="150">
+        <form class="form-signin">
+            <h1 class="h3 mb-3 font-weight-normal">Reset Your Password</h1>
 
-            <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
-            <label for="input-name" class="sr-only">Username</label>
-            <input type="text" name="loginUsername" id="input-name" class="form-control" placeholder="Username" required autofocus>
-            <label for="input-password" class="sr-only">Password</label>
-            <input type="password" name="loginPwd" id="input-password" class="form-control" placeholder="Password" required>
+            <label for="input-mail" class="sr-only">Enter your Mail</label>
+            <input type="email" id="input-mail" class="form-control" aria-describedby="mail-help" placeholder="WWU Mail" required autofocus>
+            <div class="pb-3" id="info-text">
+                <small>Enter your <strong>@uni-muenster.de</strong> mail address. If you are already registered, you will receive a mail with further instructions to reset your password.</small>
+            </div>
 
-            <a href="password_reset.php" id="forget_btn" class="btn btn-link login-link">Forgot your password?</a>
-
-            <button type="submit" name="login-submit" id="login-btn" class="btn btn-lg btn-login btn-block">Login</button>
-            <a href="registration.php" id="register-btn-link" class="btn btn-lg btn-outline-register btn-block">Register</a>
+            <a href="form_handler.php" id="send-btn" class="btn btn-lg btn-register btn-block">Send Mail</a>
+            <a href="index.php" class="btn btn-link login-link">Back to Login Page</a>
 
             <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
             <hr class="accent-blue">
         </form>
     </div>
-    <!-- HTML Content END -->
-
+    <!-- HTML Content BEGIN -->
 </body>
 
 </html>

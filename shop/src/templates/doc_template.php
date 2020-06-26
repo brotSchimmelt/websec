@@ -6,20 +6,13 @@ require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
 // Load custom libraries
 require(FUNC_BASE);
-require(FUNC_SHOP);
-
-// Load error handling and user messages
-require(ERROR_HANDLING);
 
 // Check admin status
-if (!is_user_logged_in()) {
-    // Redirect to login page
-    header("location: " . LOGIN_PAGE . "?login=false");
+if (!is_user_admin()) {
+    // Redirect to shop main page
+    header("location: " . MAIN_PAGE);
     exit();
 }
-
-// Load POST or GET variables and sanitize input BELOW this comment
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -33,32 +26,22 @@ if (!is_user_logged_in()) {
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
 
     <!-- Custom CSS to overwrite bootstrap.css -->
-    <link rel="stylesheet" href="/assets/css/shop.css">
+    <link rel="stylesheet" href="/assets/css/doc.css">
 
-    <title>Websec | Database Reset</title>
+    <title>[DUMMY TITLE]</title>
 </head>
 
 <body>
 
-    <?php
-    // Load navbar
-    require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
-    require(MESSAGES);
-    ?>
-
+    <!-- Simple Navbar -->
 
     <!-- HTML Content BEGIN -->
-    <h2>Reseting your database ...</h2>
     <!-- HTML Content END -->
 
-
+    <footer></footer>
     <?php
-    // Load shop footer
-    require(FOOTER_SHOP);
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
     ?>
 </body>
 

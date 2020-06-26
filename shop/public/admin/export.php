@@ -38,7 +38,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
 
-    <title>Admin | Results</title>
+    <title>Admin | Export Data</title>
 </head>
 
 <body>
@@ -59,7 +59,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
                 <div class="jumbotron shadow">
-                    <h1>Student Results</h1>
+                    <h1>Export Data</h1>
                     <hr>
 
                 </div>

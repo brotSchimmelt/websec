@@ -1,6 +1,6 @@
 <?php
 
-// checks if the user is already logged in
+// Check if the user is already logged in
 function is_user_logged_in()
 {
     if (isset($_SESSION['userLoginStatus']) && $_SESSION['userLoginStatus'] == 1) {
@@ -9,7 +9,7 @@ function is_user_logged_in()
     return false;
 }
 
-// check if the user is logged in as an admin
+// Check if the user is logged in and admin
 function is_user_admin()
 {
     if (is_user_logged_in() && isset($_SESSION['userIsAdmin']) && $_SESSION['userIsAdmin'] == 1) {
@@ -18,7 +18,14 @@ function is_user_admin()
     return false;
 }
 
-// logs the user out
+// Check if user is unlocked
+// TODO: add session var and if false redirect to overview page
+function is_user_unlocked()
+{
+    return true;
+}
+
+// Log the user out
 function log_user_out()
 {
     $_SESSION = array();
@@ -28,6 +35,7 @@ function log_user_out()
     exit();
 }
 
+// Return the current year and semester
 function get_semester()
 {
     $moduleName = " VM Web Security ";

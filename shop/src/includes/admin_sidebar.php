@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= ($here == "export_data") ? "active" : ""; ?>" href="export_data.php">
+                <a class="nav-link <?= ($here == "export") ? "active" : ""; ?>" href="export.php">
                     <span data-feather="bar-chart-2"></span>
                     Export Data
                 </a>
@@ -44,9 +44,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://localhost:1234" target="_blank">
+                <a class="nav-link" href="http://localhost:8081" target="_blank">
                     <span data-feather="settings"></span>
-                    phpMyAdmin
+                    phpMyAdmin Login
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8080" target="_blank">
+                    <span data-feather="settings"></span>
+                    phpMyAdmin Shop
                 </a>
             </li>
             <li class="nav-item">
