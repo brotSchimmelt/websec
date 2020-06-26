@@ -132,3 +132,17 @@ function show_cart_content()
         echo "<tr><td>0.</td><td></td><td>Your cart is currently empty.</td><td></td><td></td></tr>";
     }
 }
+
+
+function is_cart_empty()
+{
+    $sqlCart = "SELECT `prod_id`, `quantity`, `timestamp` FROM `cart` WHERE `user_name` = :user_name";
+    $stmtCart = get_shop_db()->prepare($sqlCart);
+    $stmtCart->execute(['user_name' => $_SESSION['userName']]);
+    $cart = $stmtCart->fetchAll();
+
+    if ($cart && $stmtCart->rowCount() > 0) {
+        return true;
+    }
+    return false;
+}

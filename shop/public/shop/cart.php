@@ -50,27 +50,39 @@ if (!is_user_logged_in()) {
     ?>
 
     <!-- HTML Content BEGIN -->
-    <div class="cart-center mt-5">
-        <table class="table table-striped">
-            <thead class="my-head">
-                <tr>
-                    <th scope="col">Position</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php show_cart_content() ?>
-            </tbody>
-        </table>
-    </div>
-    <div class="cart-center">
-        <a class="btn btn-danger btn" href="">Delete</a>
-        <a class="btn btn-success btn" href="">Buy</a>
-        <p><small>Due to recent hacker attacks our shop is currently closed! Don't worry, we will remember your cart items the next visit.</small></p>
-    </div>
+    <?php
+    if (!is_cart_empty()) :
+    ?>
+        <header id="desert-section">
+            <div class="dark-overlay2">
+                <div id="home-inner2">
+                    <h1 class="display-4">Your cart is currently empty!</h1>
+                </div>
+            </div>
+        </header>
+    <?php else : ?>
+        <div class="cart-center mt-5">
+            <table class="table table-striped">
+                <thead class="my-head">
+                    <tr>
+                        <th scope="col">Position</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php show_cart_content() ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="cart-center">
+            <a class="btn btn-danger btn" href="">Delete</a>
+            <a class="btn btn-success btn" href="">Buy</a>
+            <p><small>Due to recent hacker attacks our shop is currently closed! Don't worry, we will remember your cart items the next visit.</small></p>
+        </div>
+    <?php endif; ?>
     <!-- HTML Content END -->
 
     <?php
