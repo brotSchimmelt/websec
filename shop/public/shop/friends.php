@@ -49,17 +49,19 @@ if (!is_user_logged_in()) {
 
 
     <!-- HTML Content BEGIN -->
-    <h4>Find your friends</h4>
-    You want to know what your friends bought?<br>
-    No problemo! Just use the following form:
-    <br><br>
-    <form action="sqlinjection.php" method="post">
-        search a username:
-        <input type="text" name="searchuser" size="50" value="">
-        <input type="submit" value="Search User">
-    </form>
-    <br>
-    <font size="-1">Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</font>
+    <div class="prod-center page-center">
+        <h4 class=display-4>Find your Friends</h4>
+        You want to know what your friends bought in our shop?<br>
+        We got you! Just use our absolutely privacy conform search form:
+        <br><br>
+        <form action="friends.php" method="post">
+            search a username:
+            <input type="text" name="searchuser" size="50" value="">
+            <input type="submit" value="Search User">
+        </form>
+        <br>
+        <font size="-1">Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</font>
+    </div>
     <!-- HTML Content END -->
 
     <?php

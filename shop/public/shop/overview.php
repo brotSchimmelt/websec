@@ -64,7 +64,7 @@ $searchFlag = false;
 
     <!-- Search form -->
     <div class="prod-center">
-        <h2>Product Search</h2>
+        <h2 class="display-4">Product Search</h2>
         <form action="overview.php" method="get">
             <input class="form-control" type="text" name="search" placeholder="Search for Products" aria-label="Search" autofocus>
         </form>
