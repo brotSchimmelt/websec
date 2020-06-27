@@ -50,9 +50,13 @@ function query_sqli_db()
         $queries = explode(';', $searchQuery);
 
         foreach ($queries as $q) {
+            echo "query: " . $q . "<br>";
             $pos1 = strpos($q, "SELECT");
             $pos2 = strpos($q, "INSERT");
             if ($pos1 === false && $pos2 === false) {
+                continue;
+            } else if ($pos2 !== false) {
+                $database->query($q);
             } else {
                 $result = $database->query($q);
                 while ($row = $result->fetchArray()) {
@@ -71,12 +75,12 @@ function query_sqli_db()
                     echo "</div>";
                     echo "<br><hr><br>";
                 }
-                if ($database->querySingle($countAdminQuery) > $numOfAdminsBefore) {
-                    echo "message: Great! You added a new admin user and completed the challenge!";
-                } else if ($database->querySingle($countUserQuery) > $numOfUsersBefore) {
-                    echo "message: Seems like you successfully added a new user to the database! Now try to insert a user with the role <strong>admin</strong>.";
-                }
             }
+        }
+        if ($database->querySingle($countAdminQuery) > $numOfAdminsBefore) {
+            echo "message: Great! You added a new admin user and completed the challenge!";
+        } else if ($database->querySingle($countUserQuery) > $numOfUsersBefore) {
+            echo "message: Seems like you successfully added a new user to the database! Now try to insert a user with the role <strong>admin</strong>.";
         }
     } else {
         echo 'You seem to have an error in your SQL query: ' . htmlentities($searchTerm);
