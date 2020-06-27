@@ -20,8 +20,8 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
-if (isset($_GET['sqli'])) {
-    $searchTerm = filter_input(INPUT_GET, 'sqli', FILTER_SANITIZE_SPECIAL_CHARS);
+if (isset($_POST['sqli'])) {
+    $searchTerm = filter_input(INPUT_POST, 'sqli', FILTER_SANITIZE_SPECIAL_CHARS);
 }
 
 ?>
@@ -60,7 +60,7 @@ if (isset($_GET['sqli'])) {
         You want to know what your friends bought in our shop?<br>
         We got you! Just use our absolutely privacy conform search form:
         <br><br>
-        <form action="friends.php" method="get">
+        <form action="friends.php" method="post">
             <!-- <input type="text" name="sqli" value=""> -->
             <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" autofocus>
         </form>
@@ -69,7 +69,7 @@ if (isset($_GET['sqli'])) {
     </div>
 
     <?php
-    if (isset($_GET['sqli']) && (!empty($_GET['sqli']))) {
+    if (isset($_POST['sqli']) && (!empty($_POST['sqli']))) {
         query_sqli_db($searchTerm);
     }
     ?>

@@ -27,7 +27,6 @@ function create_sqli_db($username)
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('admin','admin','admin@admin.admin','admin');");
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('elliot','toor','alderson@f.society','user');");
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('l337_h4ck3r','password123','girly95@hotmail.con','user');");
-        $database->exec("INSERT INTO users (username,password,email,role) VALUES ('user','user','user@user.user','user');");
     } else {
         echo "error: database was not created!";
     }
@@ -35,11 +34,11 @@ function create_sqli_db($username)
 
 function query_sqli_db()
 {
-    $searchTerm = $_GET['sqli'];
+    $searchTerm = $_POST['sqli'];
     $userDbPath = DAT . $_SESSION['userName'] . ".sqlite";
 
-    $countUserQuery = "SELECT COUNT(*) as num FROM `users`;";
-    $countAdminQuery = "SELECT COUNT(*) as num FROM `users` WHERE role='admin';";
+    $countUserQuery = "SELECT COUNT(*) FROM `users`;";
+    $countAdminQuery = "SELECT COUNT(*) FROM `users` WHERE role='admin';";
     $searchQuery = 'SELECT username,email FROM users WHERE username="' . $searchTerm . '";';
 
     $database = new SQLite3($userDbPath);
