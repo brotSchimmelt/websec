@@ -56,13 +56,12 @@ if (!is_user_logged_in()) {
         You want to know what your friends bought in our shop?<br>
         We got you! Just use our absolutely privacy conform search form:
         <br><br>
-        <form action="friends.php" method="post">
-            search a username:
-            <input type="text" name="sqli" size="50" value="">
-            <input type="submit" value="Search User">
+        <form action="friends.php" method="get">
+            <!-- <input type="text" name="sqli" value=""> -->
+            <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" autofocus>
         </form>
         <br>
-        <font size="-1">Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</font>
+        <small>Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</small>
     </div>
     <!-- HTML Content END -->
 
