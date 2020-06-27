@@ -10,6 +10,7 @@ define("DOC", ROOT .  ".." . DS . "docs" . DS); // Documentation dir
 define("LOG", ROOT .  ".." . DS . "docs" . DS); // Log dir
 define("BIN", ROOT .  ".." . DS . "docs" . DS); // Command Line Utility dir (currently empty)
 define("CON", ROOT .  ".." . DS . "config" . DS); // Configuration dir
+define("DAT", ROOT .  ".." . DS . "data" . DS); // Database dir for the sql injection challenge
 
 // Database configurations
 define("CONF_DB_LOGIN", CON . "db_login.php"); // Login database credentials
