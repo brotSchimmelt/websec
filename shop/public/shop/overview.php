@@ -22,15 +22,16 @@ if (!is_user_logged_in()) {
 // Load POST or GET variables and sanitize input BELOW this comment
 $userName = $_SESSION['userName'];
 
-if (isset($_GET['search'])) {
-    $searchTerm = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_SPECIAL_CHARS);
-    $rawSearchTerm = $_GET['search'];
+if (isset($_GET['xss'])) {
+    $searchTerm = filter_input(INPUT_GET, 'xss', FILTER_SANITIZE_SPECIAL_CHARS);
+    $rawSearchTerm = $_GET['xss'];
 }
 
 
 // Other variables
 $productsPerRow = 3;
-$searchFlag = false;
+$searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
+
 
 ?>
 <!doctype html>
@@ -66,17 +67,14 @@ $searchFlag = false;
     <div class="prod-center">
         <h2 class="display-4">Product Search</h2>
         <form action="overview.php" method="get">
-            <input class="form-control" type="text" name="search" placeholder="Search for Products" aria-label="Search" autofocus>
+            <input class="form-control" type="text" name="xss" placeholder="Search for Products" aria-label="Search" autofocus>
         </form>
-        <?php if (isset($_GET['search']) && (!empty($_GET['search']))) : ?>
+        <?php if ($searchFieldWasUsed) : ?>
             <p>You searched for <strong><?= $rawSearchTerm ?></strong></p>
-        <?php
-            $searchFlag = true;
-        endif;
-        ?>
+        <?php endif; ?>
     </div>
 
-    <?php if ($searchFlag) : ?>
+    <?php if ($searchFieldWasUsed) : ?>
 
         <!-- Search Results -->
         <section id="search-results">
