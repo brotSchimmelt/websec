@@ -7,6 +7,7 @@ require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -19,6 +20,9 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+if (isset($_GET['sqli'])) {
+    $searchTerm = filter_input(INPUT_GET, 'sqli', FILTER_SANITIZE_SPECIAL_CHARS);
+}
 
 ?>
 <!doctype html>
@@ -63,6 +67,12 @@ if (!is_user_logged_in()) {
         <br>
         <small>Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</small>
     </div>
+
+    <?php
+    if (isset($_GET['sqli']) && (!empty($_GET['sqli']))) {
+        query_sqli_db($searchTerm);
+    }
+    ?>
     <!-- HTML Content END -->
 
     <?php
