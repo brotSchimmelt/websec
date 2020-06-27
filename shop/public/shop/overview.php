@@ -65,7 +65,7 @@ $searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : f
     <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Reflective XSS</a>
 
     <!-- Search form -->
-    <div class="prod-center">
+    <div class="prod-center page-center">
         <h2 class="display-4">Product Search</h2>
         <form action="overview.php" method="get">
             <input class="form-control" type="text" name="xss" placeholder="Search for Products" aria-label="Search" autofocus>
