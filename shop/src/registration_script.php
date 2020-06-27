@@ -6,6 +6,7 @@ require_once(CONF_DB_LOGIN); // Login db credentials
 // Load custom libraries
 // require(FUNC_BASE);
 require(FUNC_LOGIN);
+require(FUNC_WEBSEC);
 
 
 // Load POST or GET variables and sanitize input BELOW this comment
@@ -69,6 +70,9 @@ else if ($password !== $confirmPassword) {
             header("Location: " . REGISTER_PAGE . "?error=sqlError");
             exit();
         }
+
+        create_sqli_db($username);
+
         // redirect back to login page
         header("location: " . LOGIN_PAGE . "?signup=success");
         exit();
