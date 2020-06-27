@@ -23,12 +23,6 @@ function create_sqli_db($username)
         $thisUserPwd = "-1";
         $thisUserMail = "-1";
 
-        # unnecessary since the challenge does not involve the own user credentials
-        // $sql = "SELECT `user_name`,`user_pwd_hash`,`user_wwu_email` FROM `users` WHERE user_name = :user_name";
-        // $stmt = get_login_db()->prepare($sql);
-        // $stmt->execute(['user_name' => $_SESSION['userName']]);
-        // $result = $stmt->fetch();
-
         $database->exec('CREATE TABLE users (username text NOT NULL, password text, email text, role text NOT NULL);');
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('admin','admin','admin@admin.admin','admin');");
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('elliot','toor','alderson@f.society','user');");
@@ -44,17 +38,22 @@ function query_sqli_db()
     $searchTerm = $_GET['sqli'];
     $userDbPath = DAT . $_SESSION['userName'] . ".sqlite";
 
+    $countUserQuery = "SELECT COUNT(*) as num FROM `users`;";
+    $countAdminQuery = "SELECT COUNT(*) as num FROM `users` WHERE role='admin';";
+    $searchQuery = 'SELECT username,email FROM users WHERE username="' . $searchTerm . '";';
+
     $database = new SQLite3($userDbPath);
     if ($database) {
-        $sql = 'SELECT username,email FROM users WHERE username="' . $searchTerm . '";';
 
-        $queries = explode(';', $sql);
+        $numOfUsersBefore = $database->querySingle($countUserQuery);
+        $numOfAdminsBefore = $database->querySingle($countAdminQuery);
+
+        $queries = explode(';', $searchQuery);
 
         foreach ($queries as $q) {
             $pos1 = strpos($q, "SELECT");
             $pos2 = strpos($q, "INSERT");
             if ($pos1 === false && $pos2 === false) {
-                continue;
             } else {
                 $result = $database->query($q);
                 while ($row = $result->fetchArray()) {
@@ -72,6 +71,11 @@ function query_sqli_db()
                     }
                     echo "</div>";
                     echo "<br><hr><br>";
+                }
+                if ($database->querySingle($countAdminQuery) > $numOfAdminsBefore) {
+                    echo "message: Great! You added a new admin user and completed the challenge!";
+                } else if ($database->querySingle($countUserQuery) > $numOfUsersBefore) {
+                    echo "message: Seems like you successfully added a new user to the database! Now try to insert a user with the role <strong>admin</strong>.";
                 }
             }
         }
