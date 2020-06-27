@@ -56,7 +56,7 @@ if (!is_user_logged_in()) {
         <br><br>
         <form action="friends.php" method="post">
             search a username:
-            <input type="text" name="searchuser" size="50" value="">
+            <input type="text" name="sqli" size="50" value="">
             <input type="submit" value="Search User">
         </form>
         <br>
