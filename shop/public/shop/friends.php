@@ -49,6 +49,8 @@ if (!is_user_logged_in()) {
 
 
     <!-- HTML Content BEGIN -->
+    <a href="https://en.wikipedia.org/wiki/SQL_injection" class="badge badge-pill badge-warning shadow-sm" target="_blank">SQL Injection</a>
+
     <div class="prod-center page-center">
         <h4 class=display-4>Find your Friends</h4>
         You want to know what your friends bought in our shop?<br>
