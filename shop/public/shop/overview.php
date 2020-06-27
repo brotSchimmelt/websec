@@ -22,8 +22,15 @@ if (!is_user_logged_in()) {
 // Load POST or GET variables and sanitize input BELOW this comment
 $userName = $_SESSION['userName'];
 
+if (isset($_GET['search'])) {
+    $searchTerm = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_SPECIAL_CHARS);
+    $rawSearchTerm = $_GET['search'];
+}
+
+
 // Other variables
 $productsPerRow = 3;
+$searchFlag = false;
 
 ?>
 <!doctype html>
@@ -58,15 +65,31 @@ $productsPerRow = 3;
     <!-- Search form -->
     <div class="prod-center">
         <h2>Product Search</h2>
-        <input class="form-control" type="text" placeholder="Search" aria-label="Search" autofocus>
-        <p>You searched for <strong>[placeholder]</strong></p>
+        <form action="overview.php" method="get">
+            <input class="form-control" type="text" name="search" placeholder="Search for Products" aria-label="Search" autofocus>
+        </form>
+        <?php if (isset($_GET['search']) && (!empty($_GET['search']))) : ?>
+            <p>You searched for <strong><?= $rawSearchTerm ?></strong></p>
+        <?php
+            $searchFlag = true;
+        endif;
+        ?>
     </div>
 
+    <?php if ($searchFlag) : ?>
 
-    <!-- Product previews -->
-    <section id="products">
-        <?php show_products($productsPerRow) ?>
-    </section>
+        <!-- Search Results -->
+        <section id="search-results">
+            <?php show_search_results($searchTerm, $productsPerRow) ?>
+        </section>
+
+    <?php else : ?>
+
+        <!-- Product previews -->
+        <section id="products">
+            <?php show_products($productsPerRow) ?>
+        </section>
+    <?php endif; ?>
     <!-- Page Content END -->
 
 

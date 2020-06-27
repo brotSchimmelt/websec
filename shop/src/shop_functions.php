@@ -95,7 +95,7 @@ function show_products($productsPerRow)
     $result = get_shop_db()->query($sql);
 
 
-    $done = false;
+    $done = false; // is used in product_preview.php
     while ($row = $result->fetch()) {
         echo '<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">';
 
@@ -167,4 +167,35 @@ function get_num_of_cart_items()
     $stmt->execute(['user_name' => $_SESSION['userName']]);
 
     return $stmt->fetchColumn();
+}
+
+
+
+function show_search_results($searchTerm, $productsPerRow)
+{
+    $sql = "SELECT `prod_id`, `prod_title`, `prod_description`, `price`, `img_path` FROM `products` WHERE `prod_title` LIKE :needle";
+    $stmt = get_shop_db()->prepare($sql);
+    $needle = "%" . $searchTerm . "%";
+    $stmt->bindValue(':needle', $needle, PDO::PARAM_STR);
+    $stmt->execute();
+
+    if ($stmt->rowCount() <= 0) {
+        echo "sorry, seems like we have no products that match your search request :(";
+    }
+
+
+    $done = false; // is used in product_preview.php
+    while ($row = $stmt->fetch()) {
+        echo '<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">';
+
+        $i = $productsPerRow;
+        while ($i > 0) {
+            if ($i != $productsPerRow) { // don't load a new prod if the first hasn't been displayed yet
+                $row = $stmt->fetch();
+            }
+            include(INCL . "product_preview.php");
+            $i--;
+        }
+        echo "</div>";
+    }
 }
