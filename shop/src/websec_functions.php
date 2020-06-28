@@ -24,7 +24,7 @@ function create_sqli_db($username, $mail)
 
         $database->exec('CREATE TABLE users (username text NOT NULL, password text, email text, role text NOT NULL);');
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('admin','admin','admin@admin.admin','admin');");
-        $database->exec("INSERT INTO users (username,password,email,role) VALUES ('elliot','toor','alderson@f.society','user');");
+        $database->exec("INSERT INTO users (username,password,email,role) VALUES ('elliot','toor','alderson@allsafe.con','user');");
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('l337_h4ck3r','password123','girly95@hotmail.con','user');");
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('" . $username . "','" . $fakePwdHash . "','" . $mail . "','user');");
     } else {
