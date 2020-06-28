@@ -106,3 +106,47 @@ function add_comment_to_db($comment, $author)
         'timestamp' => date("Y-m-d H:i:s")
     ]);
 }
+
+
+function process_csrf($userName, $userPost)
+{
+    $referrer = $_SERVER['HTTP_REFERER'];
+    $pos1 = strpos($referrer, "product.php");
+    $pos2 = strpos($referrer, "overview.php");
+    $pos3 = strpos($referrer, "friends.php");
+    if ($pos1 != false || $pos2 != false || $pos3 != false) {
+
+        if ($userName == $_SESSION['userName']) {
+
+            $sql = "SELECT `user_name` FROM `csrf_posts` WHERE `user_name` = :user_name";
+            $stmt = get_shop_db()->prepare($sql);
+            $stmt->execute(['user_name' => $userName]);
+            $numOfResults = $stmt->rowCount();
+
+
+
+            if ($numOfResults < 1) {
+
+                $pwnedSent = ($userPost == "pwned") ? true : false;
+
+                $sql = "INSERT INTO `csrf_posts` (`post_id`,`user_name`,`message`,`referrer`,`timestamp`) VALUES (NULL, :user_name, :message, :referrer, :timestamp)";
+                $stmt = get_shop_db()->prepare($sql);
+                $stmt->execute([
+                    'user_name' => $userName,
+                    'message' => $userPost,
+                    'referrer' => $referrer,
+                    'timestamp' => date("Y-m-d H:i:s")
+                ]);
+                echo '<h4>Thank You!</h4>We have received your request and will come back to you very soon.<br>Very soon! Really!<br>One day..<br>or never.';
+            } else {
+                echo "message: You have already posted a request.";
+            }
+        } else {
+            // wrong user
+            echo 'error: user mismatch';
+        }
+    } else {
+        // referrer incorrect
+        echo '<h4>Something went wrong!</h4>You tried to contact us but the form is disabled.<br>Sorry, you will have to find another way..<br>Do not manipulate the disabled form!';
+    }
+}
