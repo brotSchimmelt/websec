@@ -8,7 +8,7 @@ function slug($z)
     return trim($z, '-');
 }
 
-function create_sqli_db($username)
+function create_sqli_db($username, $mail)
 {
 
     $dbName = DAT . slug($username) . ".sqlite";
@@ -19,14 +19,14 @@ function create_sqli_db($username)
 
     $database = new SQLite3($dbName);
     if ($database) {
-        $thisUsername = "-1";
-        $thisUserPwd = "-1";
-        $thisUserMail = "-1";
+
+        $fakePwdHash = str_shuffle(str_repeat("superSecureFakePasswordHash13579", 2));
 
         $database->exec('CREATE TABLE users (username text NOT NULL, password text, email text, role text NOT NULL);');
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('admin','admin','admin@admin.admin','admin');");
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('elliot','toor','alderson@f.society','user');");
         $database->exec("INSERT INTO users (username,password,email,role) VALUES ('l337_h4ck3r','password123','girly95@hotmail.con','user');");
+        $database->exec("INSERT INTO users (username,password,email,role) VALUES ('" . $username . "','" . $fakePwdHash . "','" . $mail . "','user');");
     } else {
         echo "error: database was not created!";
     }
@@ -50,7 +50,9 @@ function query_sqli_db()
         $queries = explode(';', $searchQuery);
 
         foreach ($queries as $q) {
-            echo "query: " . $q . "<br>";
+
+            // Debug: echo "query: " . $q . "<br>";
+
             $pos1 = strpos($q, "SELECT");
             $pos2 = strpos($q, "INSERT");
             if ($pos1 === false && $pos2 === false) {

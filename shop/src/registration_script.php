@@ -71,7 +71,7 @@ else if ($password !== $confirmPassword) {
             exit();
         }
 
-        create_sqli_db($username);
+        create_sqli_db($username, $mail);
 
         // redirect back to login page
         header("location: " . LOGIN_PAGE . "?signup=success");
