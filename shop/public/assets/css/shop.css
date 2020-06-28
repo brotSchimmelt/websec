@@ -270,3 +270,11 @@ cart icon
 .page-center {
   text-align: center;
 }
+
+.review-text {
+  max-width: 40%;
+}
+
+.review-name {
+  max-width: 20%;
+}
