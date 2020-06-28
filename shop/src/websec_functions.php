@@ -88,3 +88,21 @@ function query_sqli_db()
         echo 'You seem to have an error in your SQL query: ' . htmlentities($searchTerm);
     }
 }
+
+function show_xss_comments()
+{
+    include(INCL . "comments.php");
+}
+
+
+function add_comment_to_db($comment, $author)
+{
+    $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, `rating`, `timestamp`) VALUES (NULL, :author, :comment, :rating, :timestamp)";
+    $stmt = get_shop_db()->prepare($sql);
+    $stmt->execute([
+        'author' => $author,
+        'comment' => $comment,
+        'rating' => 5,
+        'timestamp' => date("Y-m-d H:i:s")
+    ]);
+}
