@@ -3,10 +3,12 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_SHOP);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -19,7 +21,23 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+if (!isset($_GET['id']) or empty($_GET['id'])) {
+    $productID = 1;
+} else if (isset($_GET['id']) and (!empty($_GET['id']))) {
+    $productID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+}
 
+// get product data from database
+$sql = "SELECT `prod_title`, `prod_description`, `price`, `img_path` FROM `products` WHERE `prod_id` = :prod_id";
+$stmt = get_shop_db()->prepare($sql);
+$stmt->execute(['prod_id' => $productID]);
+$productData = $stmt->fetch();
+
+
+// functions
+if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
+    add_comment_to_db($_POST['userComment'], $_SESSION['userName']);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -34,6 +52,8 @@ if (!is_user_logged_in()) {
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
+    <link rel="stylesheet" href="/assets/css/card.css">
+    <link rel="stylesheet" href="/assets/css/comment.css">
 
     <title>Websec | Products</title>
 </head>
@@ -48,30 +68,66 @@ if (!is_user_logged_in()) {
 
 
     <!-- HTML Content BEGIN -->
-    <h2>The Greatest Banana Slicer of All Time</h2>
+    <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Stored XSS</a>
 
-    <h4>Product Description</h4>
-    <table border="0" width="500" cellpadding="5">
-        <tr>
-            <td>
-                Here it comes: The world's most famous banana slicer!<br><br>
-                You will never need any other banana slicer once you have one of these. It is amazing! Consisting of the findest plastic pieces and absolutely non-sharp, child-proof, never-cutting razors, it does exactly what you want it for.<br><br>
-                <button type="button"><strong>BUY NOW</strong></button><br>
-                <font size="small">only 5.879 in stock</font><br><br><br>
-            </td>
-            <td><img src="../assets/img/bananaslicer.jpg" width="250"></td>
-        </tr>
-    </table>
+    <div class="page-center prod-center jumbotron shadow-sm container">
+        <div class="row">
 
-    <h4>Write a Review</h4>
-    <form id="reviewform">
-        your name:
-        <input type="text" name="username" value="TestUser" disabled><br>
-        <input type="hidden" name="uname" value="username">
-        your comment:<br>
-        <input type="text" name="ucomment" size="50"><br>
-        <input type="submit" value="Submit">
-    </form>
+            <div class="col-md-6 mt-5">
+                <img class="img-fluid mb-3 shadow" src="https://placeimg.com/500/300/animals" alt="Product Image">
+                <?php // $productData['img_path'] 
+                ?>
+            </div>
+
+            <div class="col-md-6 mt-5">
+                <h3 class="display-5"><?= $productData['prod_title'] ?></h3>
+                <br>
+                <p><?= $productData['prod_description'] ?></p>
+                <div class="d-flex flex-row">
+                    <div class="p-4 align-self-start">
+                        <span class="badge badge-success">5 Stars</span>
+                    </div>
+                    <div class="p-4 align-self-end">
+                        <blockquote class="blockquote">
+                            <p class="mb-0">Some super awesome customer review about our product that is definitely no fake.</p>
+                            <footer class="blockquote-footer">New York Times <cite title="Source Title">Fake Pundit</cite></footer>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="p-4 align-self-start">
+                        <strong><?= $productData['price'] ?> &euro;</strong>
+                    </div>
+                    <form action="/input_handler.php" method="post">
+                        <div class="p-4 align-self-start">
+                            <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="3" placeholder="-" required>
+
+                        </div>
+                        <div class="p-4 align-self-end">
+                            <input type="hidden" name="product_id" value="<?= $productID ?>">
+                            <input type="submit" class="btn btn-success btn-sm" name="add-product" value="Add To Cart">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-center prod-center">
+        <h4 class="display-5">Write Your Own Review!</h4>
+        <form class="text-center" action="product.php" method="post">
+            <div class="justify-content-center">
+                Your Name:
+                <input class="form-control review-name" type="text" name="username" value="<?= $_SESSION['userName']; ?>" disabled><br>
+                <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                Your Review:<br><br>
+                <input class="form-control review-text" type="text" name="userComment" size="50"><br>
+                <input class="btn btn-success" type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <?php require(INCL . "comments.php"); ?>
     <!-- HTML Content END -->
 
     <?php
