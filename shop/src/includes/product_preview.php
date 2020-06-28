@@ -22,7 +22,7 @@ if (!$done) :
                 <p class="card-text"><?= $row['prod_description'] ?></p>
                 <div class="prod-btn">
                     <!-- <a href="#" class="btn btn-outline-light btn-sm">Detail Page</a> -->
-                    <a href="#" class="btn btn-primary btn-sm">Detail Page</a>
+                    <a href="product.php?id= <?= $row['prod_id']  ?>" class="btn btn-primary btn-sm">Detail Page</a>
 
                     <form action="/input_handler.php" method="post">
                         <div class="form-row">
