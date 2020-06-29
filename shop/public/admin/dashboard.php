@@ -126,13 +126,13 @@ $numOfStudents = get_num_of_students();
                                     <table class="table table-bordered table-striped filteredtable">
                                         <thead>
                                             <tr>
-                                                <td>Position</td>
-                                                <td>Username</td>
-                                                <td>Mail <i>(with mailto link)</i></td>
-                                                <td>Open Challenges</td>
-                                                <td>Is Admin</td>
-                                                <td>Is Unlocked</td>
-                                                <td>Last Activity <span class="badge badge-danger">Not Implemented</span></td>
+                                                <td><strong>Position</strong></td>
+                                                <td><strong>Username</strong></td>
+                                                <td><strong>Mail</strong> <i>(with mailto link)</i></td>
+                                                <td><strong>Open Challenges</strong></td>
+                                                <td><strong>Is Admin</strong></td>
+                                                <td><strong>Is Unlocked</strong></td>
+                                                <td><strong>Last Activity</strong> <span class="badge badge-danger">Not Implemented</span></td>
                                             </tr>
                                         </thead>
                                         <tbody>
