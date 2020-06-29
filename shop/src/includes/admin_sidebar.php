@@ -23,15 +23,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= ($here == "export") ? "active" : ""; ?>" href="export.php">
-                    <span data-feather="bar-chart-2"></span>
-                    Export Data
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link <?= ($here == "feedback") ? "active" : ""; ?>" href="feedback.php">
                     <span data-feather="file"></span>
                     Feedback
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= ($here == "export") ? "active" : ""; ?>" href="export.php">
+                    <span data-feather="bar-chart-2"></span>
+                    Export Data
                 </a>
             </li>
         </ul>
