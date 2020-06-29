@@ -8,6 +8,23 @@ function slug($z)
     return trim($z, '-');
 }
 
+function set_fake_cookie($username)
+{
+    $cookieName = "SessionCookieID";
+    try {
+        $sql = "SELECT `xss_fake_cookie_id` FROM users WHERE `user_name`=:user_name";
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute(['user_name' => $username]);
+
+        $result = $stmt->fetch();
+        $fakeID = $result['xss_fake_cookie_id'];
+
+        setcookie($cookieName, $fakeID);
+    } catch (Exception $e) {
+        echo "error: Sorry, it seems like we encountered a problem while setting your cookies. Please report this error.";
+    }
+}
+
 function create_sqli_db($username, $mail)
 {
 
@@ -210,4 +227,59 @@ function reset_csrf_db($username)
     } catch (Exception $e) {
         echo "error: Sorry, your CSRF database could not be reset. Please report this error.";
     }
+}
+
+
+function check_xss_challenge($username)
+{
+    $challengeStatus = false;
+    $fakeID = 'youShouldNotGetThisCookiePleaseReportInLearnweb';
+
+    $sql = "SELECT `xss_fake_cookie_id` FROM users WHERE user_name = :user_name";
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute(['user_name' => $username]);
+
+        if (!$result = $stmt->fetch()) {
+            echo "error: User in XSS challenge was not found. Please report this error.";
+            return $challengeStatus;
+        } else {
+            $fakeID = $result['xss_fake_cookie_id'];
+        }
+    } catch (Exception $e) {
+        echo "error: Sorry, your status regarding the XSS challenge could not be fetch from the user database. Please report this error.";
+        return $challengeStatus;
+    }
+
+    $sql = "SELECT `text` FROM `xss_comments` WHERE `author` = :user_name";
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute(['user_name' => $username]);
+        while ($row = $stmt->fetch()) {
+            $haystack = htmlentities($row['text']);
+            if (preg_match("/alert\(.*$fakeID.*\)/i", $haystack)) {
+                $challengeStatus = true;
+            }
+        }
+    } catch (Exception $e) {
+        echo "error: Sorry, your status regarding the XSS challenge could not be fetch from the challenge database. Please report this error.";
+        return $challengeStatus;
+    }
+
+    return $challengeStatus;
+}
+
+function check_sqli_challenge($username)
+{
+    return false;
+}
+
+function check_crosspost_challenge($username)
+{
+    return false;
+}
+
+function check_crosspost_challenge_double($username)
+{
+    return false;
 }
