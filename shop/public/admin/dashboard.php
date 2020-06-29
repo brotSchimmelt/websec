@@ -128,7 +128,7 @@ $numOfStudents = get_num_of_students();
                                             <tr>
                                                 <td>Position</td>
                                                 <td>Username</td>
-                                                <td>Mail</td>
+                                                <td>Mail <i>(with mailto link)</i></td>
                                                 <td>Open Challenges</td>
                                                 <td>Is Admin</td>
                                                 <td>Is Unlocked</td>

@@ -125,7 +125,7 @@ function show_students_with_open_challenges()
         echo '<tr class="' . $adminClass . '">';
         echo "<td><strong>" . $pos . ".</strong></td>";
         echo "<td>" . $row['user_name'] . "</td>";
-        echo "<td>" . $row['user_wwu_email'] . "</td>";
+        echo "<td>" . '<a href="mailto:' . $row['user_wwu_email'] . '">' . $row['user_wwu_email'] . '</a></td>';
         echo "<td>" . $openChallenges . "</td>";
         echo "<td>" . $adminFlag . "</td>";
         echo "<td>" . $unlockedFlag . "</td>";
