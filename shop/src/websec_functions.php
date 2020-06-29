@@ -138,6 +138,12 @@ function process_csrf($userName, $userPost)
                     'timestamp' => date("Y-m-d H:i:s")
                 ]);
                 echo '<h4>Thank You!</h4>We have received your request and will come back to you very soon.<br>Very soon! Really!<br>One day..<br>or never.';
+
+                if (!$pwnedSent) {
+                    echo "message: you should have sent 'pwned' but ok. Challenge passed!";
+                } else {
+                    echo "message: Challenge passed!";
+                }
             } else {
                 echo "message: You have already posted a request.";
             }
