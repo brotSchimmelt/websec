@@ -271,15 +271,76 @@ function check_xss_challenge($username)
 
 function check_sqli_challenge($username)
 {
-    return false;
+
+    $challengeStatus = false;
+    $pathToSQLiDB = DAT . $username . ".sqlite";
+
+    $database = new SQLite3($pathToSQLiDB);
+    if ($database) {
+
+        $sql = 'SELECT * FROM users WHERE role="admin" and username != "admin";';
+        $result = $database->query($sql);
+        $row = $result->fetchArray();
+        if ($row) {
+            $challengeStatus = True;
+        }
+    } else {
+        echo "error: Your SQLi database could not be found. Please reset your database and report this error.";
+        return $challengeStatus;
+    }
+
+    return $challengeStatus;
 }
 
 function check_crosspost_challenge($username)
 {
-    return false;
+
+    $challengeStatus = false;
+
+    try {
+        $sql = "SELECT `message` FROM `csrf_posts` WHERE `user_name` = :user_name";
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute(['user_name' => $username]);
+
+        if ($result = $stmt->fetchColumn()) {
+            $challengeStatus = true;
+        }
+        return $challengeStatus;
+    } catch (Exception $e) {
+        echo "error: Sorry, we could not establish a connection to the CSRF database. Please report this error.";
+        return $challengeStatus;
+    }
+    return $challengeStatus;
 }
 
 function check_crosspost_challenge_double($username)
 {
-    return false;
+    $challengeStatus = false;
+
+    try {
+        $sql = "SELECT `referrer` FROM `csrf_posts` WHERE `user_name` = :user_name";
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute(['user_name' => $username]);
+
+        $needle1 = "product.php";
+        $needle2 = "overview.php";
+        $needle3 = "friends.php";
+
+        while ($row = $stmt->fetch()) {
+
+            $haystack = $row['referrer'];
+            $pos1 = strpos($haystack, $needle1);
+            $pos2 = strpos($haystack, $needle2);
+            $pos3 = strpos($haystack, $needle3);
+
+            if ($pos1 !== false || $pos2 !== false || $pos3 !== false) {
+                $challengeStatus = true;
+                return $challengeStatus;
+            }
+        }
+    } catch (Exception $e) {
+        echo "error: Sorry, we could not establish a connection to the CSRF database. Please report this error.";
+        return $challengeStatus;
+    }
+    return $challengeStatus;
 }
