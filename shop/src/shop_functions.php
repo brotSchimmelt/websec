@@ -10,7 +10,7 @@ function get_shop_db()
     }
 
     try {
-        $dbShop = new PDO(DSN, DB_USER, DB_PWD, OPTIONS);
+        $dbShop = new PDO(DSN_SHOP, DB_USER_SHOP, DB_PWD_SHOP, OPTIONS_SHOP);
     } catch (PDOException $e) {
         exit("Unable to connect to the database :(");
     }

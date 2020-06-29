@@ -9,7 +9,7 @@ function get_login_db()
     }
 
     try {
-        $dbLogin = new PDO(DSN, DB_USER, DB_PWD, OPTIONS);
+        $dbLogin = new PDO(DSN_LOGIN, DB_USER_LOGIN, DB_PWD_LOGIN, OPTIONS_LOGIN);
     } catch (PDOException $e) {
         exit("Unable to connect to the database :(");
     }

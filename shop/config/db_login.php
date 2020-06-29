@@ -2,19 +2,19 @@
 
 // Dummy credentials from the docker example.env file
 // TODO: change credentials to real ones
-define("DB_HOST", "db_login");
-define("DB_NAME", "login");
-define("DB_USER", "root");
-define("DB_PWD", "root");
-define("CHARSET", "utf8mb4");
+define("DB_HOST_LOGIN", "db_login");
+define("DB_NAME_LOGIN", "login");
+define("DB_USER_LOGIN", "root");
+define("DB_PWD_LOGIN", "root");
+define("CHARSET_LOGIN", "utf8mb4");
 define(
-    "DSN",
-    "mysql:host=" . DB_HOST .
-        ";dbname=" . DB_NAME .
-        ";charset=" . CHARSET
+    "DSN_LOGIN",
+    "mysql:host=" . DB_HOST_LOGIN .
+        ";dbname=" . DB_NAME_LOGIN .
+        ";charset=" . CHARSET_LOGIN
 );
 define(
-    "OPTIONS",
+    "OPTIONS_LOGIN",
     [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
