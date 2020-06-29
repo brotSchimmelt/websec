@@ -4,10 +4,13 @@ session_start(); // Needs to be called first on every page
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP); // Credentials for the shop db
+require_once(CONF_DB_LOGIN);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_LOGIN);
+require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -21,6 +24,7 @@ if (!is_user_logged_in()) {
 
 // Load POST or GET variables and sanitize input BELOW this comment
 $userName = $_SESSION['userName'];
+set_fake_cookie($userName);
 
 if (isset($_GET['xss'])) {
     $searchTerm = filter_input(INPUT_GET, 'xss', FILTER_SANITIZE_SPECIAL_CHARS);
