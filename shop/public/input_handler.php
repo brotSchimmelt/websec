@@ -17,6 +17,15 @@ if (isset($_POST['register-submit'])) {
     add_product_to_cart($productID, $quantity);
     header("location: " . "/shop/overview.php" . "?cart=success");
     exit();
+} else if (isset($_POST['add-product'])) {
+
+    require_once(CONF_DB_SHOP);
+    require_once(FUNC_SHOP);
+    $productID = filter_input(INPUT_POST, 'product_id');
+    $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_INT);
+    add_product_to_cart($productID, $quantity);
+    header("location: " . "/shop/product.php?id=" . $productID . "&cart=success");
+    exit();
 } else {
     header("location: " . MAIN_PAGE);
     exit();

@@ -6,6 +6,7 @@ require_once(CONF_DB_LOGIN); // Login db credentials
 // Load custom libraries
 // require(FUNC_BASE);
 require(FUNC_LOGIN);
+require(FUNC_WEBSEC);
 
 
 // Load POST or GET variables and sanitize input BELOW this comment
@@ -61,14 +62,23 @@ else if ($password !== $confirmPassword) {
     // add user to the db
     else {
         $pwdHash = hash_user_pwd($password);
+        $fakeXSSCookieID = bin2hex(openssl_random_pseudo_bytes(16));
 
         try {
-            $insertUser = "INSERT INTO users (user_name, user_wwu_email, user_pwd_hash) VALUE (?, ?, ?)";
-            get_login_db()->prepare($insertUser)->execute([$username, $mail, $pwdHash]);
+            $insertUser = "INSERT INTO users (user_id, user_name, user_wwu_email, user_pwd_hash, is_unlocked, is_admin, xss_fake_cookie_id) VALUE (NULL, :user, :mail, :pwd_hash, '0', '0', :cookie_id)";
+            get_login_db()->prepare($insertUser)->execute([
+                'user' => $username,
+                'mail' => $mail,
+                'pwd_hash' => $pwdHash,
+                'cookie_id' => $fakeXSSCookieID
+            ]);
         } catch (Exception $e) {
             header("Location: " . REGISTER_PAGE . "?error=sqlError");
             exit();
         }
+
+        create_sqli_db($username, $mail);
+
         // redirect back to login page
         header("location: " . LOGIN_PAGE . "?signup=success");
         exit();

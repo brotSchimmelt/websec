@@ -3,10 +3,14 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_SHOP);
+require_once(CONF_DB_LOGIN);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_LOGIN);
+require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -19,6 +23,13 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+$username = $_SESSION['userName'];
+
+// Challenge variables
+$solvedXSS = check_xss_challenge($username);
+$solvedSQLi = check_sqli_challenge($username);
+$solvedCrosspost = check_crosspost_challenge($username);
+$solvedCrosspostDoubleCheck = check_crosspost_challenge_double($username);
 
 ?>
 <!doctype html>
@@ -35,7 +46,7 @@ if (!is_user_logged_in()) {
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
 
-    <title>[DUMMY TITLE]</title>
+    <title>Websec | Scoreboard</title>
 </head>
 
 <body>
@@ -49,13 +60,47 @@ if (!is_user_logged_in()) {
 
 
     <!-- HTML Content BEGIN -->
-    <div>
-        <h1 class="display-3">Here is an overview of your progress:</h1>
-        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum explicabo id repellat sint minima fugiat excepturi tempore atque aliquid accusantium, expedita quaerat molestiae nostrum. Voluptate!</p>
-        <hr class="my-4">
-        <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>
-            The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
-    </div>
+    <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>
+        The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
+    <table class="minimalistBlack">
+        <thead>
+            <tr>
+                <th>Challenge</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>XSS (combined)</td>
+                <?php if ($solvedXSS) {
+                    echo "<td class=\"green\">solved</td>";
+                } else {
+                    echo "<td class=\"red\">NOT SOLVED</td>";
+                } ?>
+            </tr>
+            <tr>
+                <td>SQLi</td>
+                <?php if ($solvedSQLi) {
+                    echo "<td class=\"green\">solved</td>";
+                } else {
+                    echo "<td class=\"red\">NOT SOLVED</td>";
+                } ?>
+            </tr>
+            <tr>
+                <td>Support Form Hack</td>
+                <?php
+                if ($solvedCrosspost && $solvedCrosspostDoubleCheck) {
+                    echo "<td class=\"green\">solved</td>";
+                } elseif ($solvedCrosspost || $solvedCrosspostDoubleCheck) {
+                    echo "<td class=\"yellow\">probably solved</td>";
+                } else {
+                    echo "<td class=\"red\">NOT SOLVED</td>";
+                }
+                ?>
+            </tr>
+        </tbody>
+        </tr>
+    </table>
     <!-- HTML Content END -->
 
 

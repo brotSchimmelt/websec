@@ -56,7 +56,7 @@ if (!is_user_logged_in()) {
         <header id="desert-section">
             <div class="dark-overlay2">
                 <div id="home-inner2">
-                    <h1 class="display-4">Your cart is currently empty!</h1>
+                    <h1 class="display-4">Your cart is currently empty</h1>
                 </div>
             </div>
         </header>

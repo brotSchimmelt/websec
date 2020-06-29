@@ -2,3 +2,4 @@
 .DS_Store
 credentials.txt
 shop/public/test.php
+shop/data/*.sqlite

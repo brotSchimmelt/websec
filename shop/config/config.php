@@ -10,6 +10,7 @@ define("DOC", ROOT .  ".." . DS . "docs" . DS); // Documentation dir
 define("LOG", ROOT .  ".." . DS . "docs" . DS); // Log dir
 define("BIN", ROOT .  ".." . DS . "docs" . DS); // Command Line Utility dir (currently empty)
 define("CON", ROOT .  ".." . DS . "config" . DS); // Configuration dir
+define("DAT", ROOT .  ".." . DS . "data" . DS); // Database dir for the sql injection challenge
 
 // Database configurations
 define("CONF_DB_LOGIN", CON . "db_login.php"); // Login database credentials
@@ -31,7 +32,8 @@ define("JS_BOOTSTRAP", INCL . "bootstrap_js.php"); // Default JavaScript for boo
 define("FUNC_BASE", SRC . "basic_functions.php"); // Basic functions for the site
 define("FUNC_LOGIN", SRC . "login_functions.php"); // Functions for login, registration etc.
 define("FUNC_ADMIN", SRC . "admin_functions.php"); // Functions for user management etc.
-define("FUNC_SHOP", SRC . "shop_functions.php"); // Functions for user management etc.
+define("FUNC_SHOP", SRC . "shop_functions.php"); // Functions for products, cart etc.
+define("FUNC_WEBSEC", SRC . "websec_functions.php"); // Functions for websec challenges
 
 // Errors
 define("ERROR_HANDLING", SRC . "error_handling.php"); // Functions for error handling

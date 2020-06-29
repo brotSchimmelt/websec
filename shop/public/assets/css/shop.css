@@ -227,6 +227,8 @@ Cart.php
   margin: auto;
   width: 60%;
   padding: 10px;
+  margin-top: 50px;
+  margin-bottom: 60px;
 }
 
 .cart-center {
@@ -263,4 +265,16 @@ cart icon
   border-radius: 50%;
   background-color: rgba(231, 76, 60, 0.8);
   color: white;
+}
+
+.page-center {
+  text-align: center;
+}
+
+.review-text {
+  max-width: 40%;
+}
+
+.review-name {
+  max-width: 20%;
 }

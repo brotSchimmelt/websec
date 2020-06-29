@@ -30,7 +30,7 @@
                 <a href="cart.php" class="nav-link icon-count">
                     <span>Cart</span>
                     <?php if ($num > 0) : ?>
-                        <span class="cart-badge"><?= $num < 100 ? $num : "99+" ?></span>
+                        <span class="badge badge-danger"><?= $num < 100 ? $num : "99+" ?></span>
                     <?php endif ?>
                 </a>
             </li>

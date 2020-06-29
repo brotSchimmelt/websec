@@ -7,6 +7,7 @@ require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -19,6 +20,9 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+if (isset($_POST['sqli'])) {
+    $searchTerm = filter_input(INPUT_POST, 'sqli', FILTER_SANITIZE_SPECIAL_CHARS);
+}
 
 ?>
 <!doctype html>
@@ -49,17 +53,26 @@ if (!is_user_logged_in()) {
 
 
     <!-- HTML Content BEGIN -->
-    <h4>Find your friends</h4>
-    You want to know what your friends bought?<br>
-    No problemo! Just use the following form:
-    <br><br>
-    <form action="sqlinjection.php" method="post">
-        search a username:
-        <input type="text" name="searchuser" size="50" value="">
-        <input type="submit" value="Search User">
-    </form>
-    <br>
-    <font size="-1">Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</font>
+    <a href="https://en.wikipedia.org/wiki/SQL_injection" class="badge badge-pill badge-warning shadow-sm" target="_blank">SQL Injection</a>
+
+    <div class="prod-center page-center">
+        <h4 class=display-4>Find your Friends</h4>
+        You want to know what your friends bought in our shop?<br>
+        We got you! Just use our absolutely privacy conform search form:
+        <br><br>
+        <form action="friends.php" method="post">
+            <!-- <input type="text" name="sqli" value=""> -->
+            <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" autofocus>
+        </form>
+        <br>
+        <small>Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</small>
+    </div>
+
+    <?php
+    if (isset($_POST['sqli']) && (!empty($_POST['sqli']))) {
+        query_sqli_db($searchTerm);
+    }
+    ?>
     <!-- HTML Content END -->
 
     <?php

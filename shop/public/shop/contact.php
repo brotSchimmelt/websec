@@ -3,10 +3,12 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_SHOP);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -19,7 +21,12 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+if (isset($_POST['uname']) && isset($_POST['userPost'])) {
+    $userName = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
+    $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
 
+    $postRequestSent = true;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,6 +56,7 @@ if (!is_user_logged_in()) {
 
 
     <!-- HTML Content BEGIN -->
+    <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" class="badge badge-pill badge-warning shadow-sm" target="_blank">CSRF</a>
     <h2>Contact Our Support Team</h2>
     We are here for you every day, twentyfour hours a day, 365 days a year!
     <h4>Contact Form</h4>
@@ -57,14 +65,20 @@ if (!is_user_logged_in()) {
     In urgent cases please contact our support team.<br>
     Thanks!<br>
     <br>
-    <form action="thisfile" method="post" id="reviewform">
+    <form action="contact.php" method="post" id="reviewform">
         your name:
-        <input type="text" name="username" value="TestUser" disabled><br>
-        <input type="hidden" name="uname" value="uname">
+        <input type="text" name="username" value="<?= $_SESSION['userName'] ?>" disabled><br>
+        <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
         your message for us:
-        <input type="text" name="upost" size="30" disabled><br><br>
+        <input type="text" name="userPost" size="30" disabled><br><br>
         <input type="submit" value="Submit" disabled>
     </form>
+
+    <?php
+    if ($postRequestSent) {
+        process_csrf($userName, $userPost);
+    }
+    ?>
     <!-- HTML Content END -->
 
 

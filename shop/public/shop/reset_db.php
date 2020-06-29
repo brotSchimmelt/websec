@@ -3,10 +3,14 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_LOGIN);
+require_once(CONF_DB_SHOP);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_LOGIN);
+require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -19,6 +23,7 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+$username = $_SESSION['userName'];
 
 ?>
 <!doctype html>
@@ -49,8 +54,76 @@ if (!is_user_logged_in()) {
 
 
     <!-- HTML Content BEGIN -->
-    <h2>Reseting your database ...</h2>
+    <h4>RESET REFLECTIVE XSS</h4>
+    This will <strong>delete all your achievements</strong>!<br>
+    <form action="reset_db.php" method="post">
+        your name:
+        <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+        <input type="hidden" name="doit-simplexss" value="1">
+        <input type="hidden" name="simplexss" value="1">
+        <input type="submit" value="RESET REFLECTIVE XSS CHALLENGE">
+    </form>
+    <br>
+    <hr><br>
+
+    <h4>RESET STORED XSS</h4>
+    This will <strong>delete all your achievements</strong>!<br>
+    <form action="reset_db.php" method="post">
+        your name:
+        <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+        <input type="hidden" name="doit-storedxss" value="1">
+        <input type="hidden" name="storedxss" value="1">
+        <input type="submit" value="RESET STORED XSS CHALLENGE">
+    </form>
+    <br>
+    <hr><br>
+
+    <h4>RESET SQL DATABASE</h4>
+    This will <strong>delete all your achievements</strong>!<br>
+    <form action="reset_db.php" method="post">
+        your name:
+        <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+        <input type="hidden" name="doit-sqli" value="1">
+        <input type="hidden" name="sqli" value="1">
+        <input type="submit" value="RESET SQL DATABASE">
+    </form>
+    <br>
+    <hr><br>
+
+    <h4>RESET CONTACT FORM</h4>
+    This will <strong>delete all your achievements</strong>!<br>
+    <form action="reset_db.php" method="post">
+        your name:
+        <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+        <input type="hidden" name="doit-csrf" value="1">
+        <input type="hidden" name="csrf" value="1">
+        <input type="submit" value="RESET SUPPORT CONTACT">
+    </form>
+    <br><br>
+    <hr><br>
     <!-- HTML Content END -->
+
+    <?php
+
+    if (isset($_POST['simplexss']) && isset($_POST['doit-simplexss'])) {
+        reset_reflective_xss_db($username);
+    }
+    if (isset($_POST['storedxss']) && isset($_POST['doit-storedxss'])) {
+        reset_stored_xss_db($username);
+    }
+    if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
+        reset_sqli_db($username);
+    }
+    if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
+        reset_csrf_db($username);
+    }
+
+
+
+
+
+
+    ?>
 
 
     <?php
