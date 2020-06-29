@@ -3,10 +3,15 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_LOGIN);
+require_once(CONF_DB_SHOP);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_ADMIN);
+require(FUNC_LOGIN);
+require(FUNC_WEBSEC);
+require(FUNC_SHOP);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -51,8 +56,8 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
     ?>
 
 
-    <!-- HTML Content BEGIN -->
 
+    <!-- HTML Content BEGIN -->
     <div class="container-fluid">
         <div class="row">
             <?php include(SIDEBAR_ADMIN); ?>
@@ -62,31 +67,35 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                 <div class="jumbotron shadow">
                     <h1>User Management</h1>
                     <hr>
-                    <div class="row">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-header">Quick Metrics</div>
-                                <div class="card-body">
-                                    <p>Number of Users: 42</p>
-                                    <p>Number of Admin Users: 42</p>
-                                    <p>Last Activity: 01.01.1970</p>
-                                    <p></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
 
-                        </div>
-                        <div class="col">
-
-                        </div>
-                    </div>
                     <br><br>
                     <div class="row">
                         <div class="col">
                             <div class="card shadow-sm">
-                                <div class="card-header">List of all users</div>
-                                <div class="card-body">[Table]</div>
+                                <div class="card-header">
+                                    <h5 class="display-5">List of all Users<button class="btn btn-sm btn-success ml-4">Add New User</button></h5>
+                                </div>
+                                <div class="card-body">
+                                    <input class="form-control" id="user-search" type="text" placeholder="Search User Database ...">
+                                    <br>
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <td><strong>Position</strong></td>
+                                                <td><strong>User ID</strong></td>
+                                                <td><strong>User Name</strong></td>
+                                                <td><strong>Mail</strong></td>
+                                                <td><strong>Is Admin</strong></td>
+                                                <td><strong>Is Unlocked</strong></td>
+                                                <td><strong>Registered At</strong></td>
+                                                <td><strong>Options</strong> <span class="badge badge-danger">Not Implemented</span></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="user-table">
+                                            <?php show_all_user() ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
