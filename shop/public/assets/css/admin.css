@@ -126,3 +126,26 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+.filteredtable tbody tr, .tablefilter {
+  display: table-row;
+}
+
+#is-admin.tablefilter:checked~table tbody tr.is-admin {
+  display: none;
+}
+
+/* .tablefilter+label {
+  cursor: pointer;
+  background-color: red;
+  color: #fff;
+  padding: 3px;
+}
+
+.tablefilter:checked+label {
+  background-color: green;
+} */
+
+#checkbox-admin-label {
+  margin-left: 10px;
+}
