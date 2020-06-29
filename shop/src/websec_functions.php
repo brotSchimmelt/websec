@@ -156,3 +156,58 @@ function process_csrf($userName, $userPost)
         echo '<h4>Something went wrong!</h4>You tried to contact us but the form is disabled.<br>Sorry, you will have to find another way..<br>Do not manipulate the disabled form!';
     }
 }
+
+
+
+function reset_reflective_xss_db($username)
+{
+    $newFakeCookieID = bin2hex(openssl_random_pseudo_bytes(16));
+
+    if ($newFakeCookieID) {
+        try {
+            $sql = "UPDATE `users` SET `xss_fake_cookie_id`=:new_cookie WHERE `user_name` = :user_name";
+            get_login_db()->prepare($sql)->execute([
+                'new_cookie' => $newFakeCookieID,
+                'user_name' => $username
+            ]);
+            echo "success: The database for the reflective XSS challenge was successfully reset.";
+        } catch (Exception $e) {
+            echo "error: Sorry, the database could not be reset. Please report this error!";
+        }
+    } else {
+        echo "error: Sorry, it seems like the internal function for cookie creation is broken. Please report this error.";
+    }
+}
+
+function reset_stored_xss_db($username)
+{
+    $sql = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
+    try {
+        get_shop_db()->prepare($sql)->execute(['user_name' => $username]);
+        echo "success: The database for the stored XSS challenge was successfully reset.";
+    } catch (Exception $e) {
+        echo "error: Sorry, your XSS comment database could not be reset. Please report this error.";
+    }
+}
+
+function reset_sqli_db($username)
+{
+    try {
+        $mail = $_SESSION['userMail'];
+        create_sqli_db($username, $mail);
+        echo "The SQL injection database was successfully reset.";
+    } catch (Exception $e) {
+        echo "error: Seems like it went something wrong while we tried to reset your SQL injection database. Please report this error.";
+    }
+}
+
+function reset_csrf_db($username)
+{
+    $sql = "DELETE FROM `csrf_posts` WHERE `user_name` = :user_name";
+    try {
+        get_shop_db()->prepare($sql)->execute(['user_name' => $username]);
+        echo "success: The database for the CSRF challenge was successfully reset.";
+    } catch (Exception $e) {
+        echo "error: Sorry, your CSRF database could not be reset. Please report this error.";
+    }
+}
