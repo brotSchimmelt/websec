@@ -42,7 +42,7 @@ if (is_user_logged_in() && is_user_admin()) {
             For <strong>admins</strong> only!
         </div>
         <label for="inputName" class="sr-only">Username</label>
-        <input type="text" class="form-control" value="admin" placeholder="Username" required autofocus>
+        <input type="text" class="form-control" value="admin" placeholder="Username" required>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" class="form-control shadow-sm" value="password123" placeholder="Password" required>
 
