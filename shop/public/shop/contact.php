@@ -21,6 +21,7 @@ if (!is_user_logged_in()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+$postRequestSent = false;
 if (isset($_POST['uname']) && isset($_POST['userPost'])) {
     $userName = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
     $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
