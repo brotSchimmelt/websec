@@ -79,7 +79,7 @@ function query_sqli_db()
             } else {
                 $result = $database->query($q);
                 while ($row = $result->fetchArray()) {
-                    echo '<div class="page-center prod-center">';
+                    echo '<div class="con-center con-search">';
                     echo '<h4 class="display-5">Looks like we found your friend!</h4><br>';
                     echo "Here are his/her contact infos!<br>";
 

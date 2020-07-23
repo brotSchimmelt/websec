@@ -137,5 +137,6 @@ hr.accent-blue {
 }
 
 .login-card {
-  min-width: 25%;
+  min-width: 30%;
+  padding-top: 15px;
 }

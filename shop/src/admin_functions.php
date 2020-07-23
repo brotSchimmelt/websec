@@ -147,9 +147,7 @@ function show_all_user()
     while ($row = $stmt->fetch()) {
 
         $editBtn = '<button class="btn btn-sm btn-info mr-2" id="' . $row['user_name'] . '-edit">Edit</button>';
-        $resetPwdBtn = '<button class="btn btn-sm btn-info mr-2" id="' . $row['user_name'] . '-pwd">Reset Password</button>';
         $deleteBtn = '<button class="btn btn-sm btn-danger" id="' . $row['user_name'] . '-delete">Delete</button>';
-        $adminBtn = '<button class="btn btn-sm btn-info mr-2" id="' . $row['user_name'] . '-admin">Make Admin</button>';
 
 
         $adminFlag = $row['is_admin'] == 1 ? "Yes" : "No";
@@ -162,7 +160,7 @@ function show_all_user()
         echo "<td>" . $adminFlag . "</td>";
         echo "<td>" . $unlockedFlag . "</td>";
         echo "<td>" . $row['timestamp'] . "</td>";
-        echo "<td>" . $editBtn . $adminBtn . $resetPwdBtn . $deleteBtn . "</td>";
+        echo "<td>" . $editBtn . $deleteBtn . "</td>";
         echo "</tr>";
 
         $pos++;

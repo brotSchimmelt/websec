@@ -54,53 +54,55 @@ $username = $_SESSION['userName'];
 
 
     <!-- HTML Content BEGIN -->
-    <h4>RESET REFLECTIVE XSS</h4>
-    This will <strong>delete all your achievements</strong>!<br>
-    <form action="reset_db.php" method="post">
-        your name:
-        <input type="text" name="username" value="<?= $username; ?>" disabled><br>
-        <input type="hidden" name="doit-simplexss" value="1">
-        <input type="hidden" name="simplexss" value="1">
-        <input type="submit" value="RESET REFLECTIVE XSS CHALLENGE">
-    </form>
-    <br>
-    <hr><br>
+    <div class="con-search">
+        <h4>RESET REFLECTIVE XSS</h4>
+        This will <strong>delete all your achievements</strong>!<br>
+        <form action="reset_db.php" method="post">
+            your name:
+            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+            <input type="hidden" name="doit-simplexss" value="1">
+            <input type="hidden" name="simplexss" value="1">
+            <input type="submit" value="RESET REFLECTIVE XSS CHALLENGE">
+        </form>
+        <br>
+        <hr><br>
 
-    <h4>RESET STORED XSS</h4>
-    This will <strong>delete all your achievements</strong>!<br>
-    <form action="reset_db.php" method="post">
-        your name:
-        <input type="text" name="username" value="<?= $username; ?>" disabled><br>
-        <input type="hidden" name="doit-storedxss" value="1">
-        <input type="hidden" name="storedxss" value="1">
-        <input type="submit" value="RESET STORED XSS CHALLENGE">
-    </form>
-    <br>
-    <hr><br>
+        <h4>RESET STORED XSS</h4>
+        This will <strong>delete all your achievements</strong>!<br>
+        <form action="reset_db.php" method="post">
+            your name:
+            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+            <input type="hidden" name="doit-storedxss" value="1">
+            <input type="hidden" name="storedxss" value="1">
+            <input type="submit" value="RESET STORED XSS CHALLENGE">
+        </form>
+        <br>
+        <hr><br>
 
-    <h4>RESET SQL DATABASE</h4>
-    This will <strong>delete all your achievements</strong>!<br>
-    <form action="reset_db.php" method="post">
-        your name:
-        <input type="text" name="username" value="<?= $username; ?>" disabled><br>
-        <input type="hidden" name="doit-sqli" value="1">
-        <input type="hidden" name="sqli" value="1">
-        <input type="submit" value="RESET SQL DATABASE">
-    </form>
-    <br>
-    <hr><br>
+        <h4>RESET SQL DATABASE</h4>
+        This will <strong>delete all your achievements</strong>!<br>
+        <form action="reset_db.php" method="post">
+            your name:
+            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+            <input type="hidden" name="doit-sqli" value="1">
+            <input type="hidden" name="sqli" value="1">
+            <input type="submit" value="RESET SQL DATABASE">
+        </form>
+        <br>
+        <hr><br>
 
-    <h4>RESET CONTACT FORM</h4>
-    This will <strong>delete all your achievements</strong>!<br>
-    <form action="reset_db.php" method="post">
-        your name:
-        <input type="text" name="username" value="<?= $username; ?>" disabled><br>
-        <input type="hidden" name="doit-csrf" value="1">
-        <input type="hidden" name="csrf" value="1">
-        <input type="submit" value="RESET SUPPORT CONTACT">
-    </form>
-    <br><br>
-    <hr><br>
+        <h4>RESET CONTACT FORM</h4>
+        This will <strong>delete all your achievements</strong>!<br>
+        <form action="reset_db.php" method="post">
+            your name:
+            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+            <input type="hidden" name="doit-csrf" value="1">
+            <input type="hidden" name="csrf" value="1">
+            <input type="submit" value="RESET SUPPORT CONTACT">
+        </form>
+        <br><br>
+        <hr><br>
+    </div>
     <!-- HTML Content END -->
 
     <?php

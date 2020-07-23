@@ -1,50 +1,21 @@
-<hr class="footer-line">
-<footer class="container py-5">
-    <div class="row">
-        <div class="col-12 col-md">
-            <a class="py-2d-none d-md-inline-block pb-3" href="main.php" aria-label="Main Page">
-                <img class="mt-1 mb-2" src="/assets/img/wwu_cysec.png" width="100" height="45">
-            </a>
-            <small class="d-block mb-3 text-muted">&copy; <?php get_semester() ?></small>
+<footer id="main-footer">
+    <div id="footer-container">
+
+        <div id="footer-left-column">
+            <a href="#">Image Source</a>
         </div>
-        <div class="col-6 col-md">
-            <h5 class="green">Instructions</h5>
-            <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">General</a></li>
-                <li><a class="text-muted" href="#">XSS</a></li>
-                <li><a class="text-muted" href="#">SQLi</a></li>
-                <li><a class="text-muted" href="#">CSRF</a></li>
-            </ul>
+
+        <div id="footer-middle-column">
+            <button class="btn btn-outline-warning" data-toggle="modal" data-target="#help-modal">Help for the Exercises</button>
+            <p class="mt-3 mb-0">&copy; <?php get_semester() ?></p>
         </div>
-        <div class="col-6 col-md">
-            <h5 class="green">Help</h5>
-            <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">some</a></li>
-                <li><a class="text-muted" href="#">list</a></li>
-                <li><a class="text-muted" href="#">elements</a></li>
-            </ul>
+
+        <div id=" footer-right-column">
+            <a href="#">Back to the top</a>
         </div>
-        <div class="col-6 col-md">
-            <h5 class="green">Contact Instructor</h5>
-            <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">mail</a></li>
-                <li><a class="text-muted" href="#">phone</a></li>
-                <li><a class="text-muted" href="#">address</a></li>
-                <li><a class="text-muted" href="#">time</a></li>
-            </ul>
-        </div>
-        <div class="col-6 col-md">
-            <a class="py-2d-none d-md-inline-block pb-3" href="#" aria-label="Main Page">
-                <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-arrow-bar-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M11.354 5.854a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L8 3.207l2.646 2.647a.5.5 0 0 0 .708 0z" />
-                    <path fill-rule="evenodd" d="M8 10a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-1 0v6.5a.5.5 0 0 0 .5.5zm-4.8 1.6c0-.22.18-.4.4-.4h8.8a.4.4 0 0 1 0 .8H3.6a.4.4 0 0 1-.4-.4z" />
-                </svg>
-            </a>
-        </div>
+
     </div>
 </footer>
-
-
 
 <!-- Help Modal -->
 <div class="modal fade text-light" id="help-modal">

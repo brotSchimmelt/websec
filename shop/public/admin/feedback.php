@@ -62,6 +62,19 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                     <h1>User Feedback</h1>
                     <hr>
 
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="display-5">User Feedback</h5><span class="badge badge-danger">Not Implemented</span>
+                                </div>
+                                <div class="card-body">
+                                    <i>Anonymous feedback for the shop</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </main>
         </div>

@@ -53,9 +53,9 @@ if (isset($_POST['sqli'])) {
 
 
     <!-- HTML Content BEGIN -->
-    <a href="https://en.wikipedia.org/wiki/SQL_injection" class="badge badge-pill badge-warning shadow-sm" target="_blank">SQL Injection</a>
+    <a href="https://en.wikipedia.org/wiki/SQL_injection" class="badge badge-pill badge-success shadow-sm" target="_blank">SQL Injection</a>
 
-    <div class="prod-center page-center">
+    <div class="con-center con-search">
         <h4 class=display-4>Find your Friends</h4>
         You want to know what your friends bought in our shop?<br>
         We got you! Just use our absolutely privacy conform search form:
@@ -65,7 +65,7 @@ if (isset($_POST['sqli'])) {
             <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" autofocus>
         </form>
         <br>
-        <small>Info: We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</small>
+        <small><strong>Info:</strong> We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</small>
     </div>
 
     <?php
