@@ -60,47 +60,52 @@ $solvedCrosspostDoubleCheck = check_crosspost_challenge_double($username);
 
 
     <!-- HTML Content BEGIN -->
-    <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>
-        The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
-    <table class="minimalistBlack">
-        <thead>
-            <tr>
-                <th>Challenge</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>XSS (combined)</td>
-                <?php if ($solvedXSS) {
-                    echo "<td class=\"green\">solved</td>";
-                } else {
-                    echo "<td class=\"red\">NOT SOLVED</td>";
-                } ?>
-            </tr>
-            <tr>
-                <td>SQLi</td>
-                <?php if ($solvedSQLi) {
-                    echo "<td class=\"green\">solved</td>";
-                } else {
-                    echo "<td class=\"red\">NOT SOLVED</td>";
-                } ?>
-            </tr>
-            <tr>
-                <td>Support Form Hack</td>
-                <?php
-                if ($solvedCrosspost && $solvedCrosspostDoubleCheck) {
-                    echo "<td class=\"green\">solved</td>";
-                } elseif ($solvedCrosspost || $solvedCrosspostDoubleCheck) {
-                    echo "<td class=\"yellow\">probably solved</td>";
-                } else {
-                    echo "<td class=\"red\">NOT SOLVED</td>";
-                }
-                ?>
-            </tr>
-        </tbody>
-        </tr>
-    </table>
+    <div class="con-search">
+        <h1 class="display-4">Your Scorecard</h1>
+        <br>
+        <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>
+            The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
+        <br>
+        <table class="table table-striped shadow">
+            <thead class="my-head">
+                <tr>
+                    <th scope="col">Challenge</th>
+                    <th scope="col">Current Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>XSS (combined)</td>
+                    <td> <?php if ($solvedXSS) {
+                                echo "Solved";
+                            } else {
+                                echo "Still Open";
+                            } ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>SQLi</td>
+                    <td> <?php if ($solvedSQLi) {
+                                echo "Solved";
+                            } else {
+                                echo "Still Open";
+                            } ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Support Form Hack</td>
+                    <td> <?php if ($solvedCrosspost && $solvedCrosspostDoubleCheck) {
+                                echo "Solved";
+                            } elseif ($solvedCrosspost || $solvedCrosspostDoubleCheck) {
+                                echo "probably solved";
+                            } else {
+                                echo "Still Open";
+                            } ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <!-- HTML Content END -->
 
 

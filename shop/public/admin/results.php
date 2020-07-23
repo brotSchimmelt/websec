@@ -3,10 +3,15 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_LOGIN);
+require_once(CONF_DB_SHOP);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_ADMIN);
+require(FUNC_LOGIN);
+require(FUNC_SHOP);
+require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
@@ -61,6 +66,45 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                 <div class="jumbotron shadow">
                     <h1>Student Results</h1>
                     <hr>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="display-5">Results</h5><span class="badge badge-danger">Not Implemented</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td><strong>Position</strong></td>
+                                                <td><strong>Username</strong></td>
+                                                <td><strong>Mail</strong></td>
+                                                <td><strong>Solved Challenges</strong></td>
+                                                <td><strong>Last Activity</strong> <span class="badge badge-danger">Not Implemented</span></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1.</td>
+                                                <td>tim</td>
+                                                <td>t_kneb01@uni-muenster.de</td>
+                                                <td>None</td>
+                                                <td>1970-01-01 00:00:01</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2.</td>
+                                                <td>admin</td>
+                                                <td>t_kneb01@uni-muenster.de</td>
+                                                <td>None</td>
+                                                <td>1970-01-01 00:00:01</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </main>

@@ -58,22 +58,25 @@ if (isset($_POST['uname']) && isset($_POST['userPost'])) {
 
     <!-- HTML Content BEGIN -->
     <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" class="badge badge-pill badge-warning shadow-sm" target="_blank">CSRF</a>
-    <h2>Contact Our Support Team</h2>
-    We are here for you every day, twentyfour hours a day, 365 days a year!
-    <h4>Contact Form</h4>
-    Dear customer,<br>
-    our contact form has been temporarily disabled.<br>We were experiencing heavy hacker attacks at our website and decided<br>to shut down our services for a few days/weeks/months.<br>
-    In urgent cases please contact our support team.<br>
-    Thanks!<br>
-    <br>
-    <form action="contact.php" method="post" id="reviewform">
-        your name:
-        <input type="text" name="username" value="<?= $_SESSION['userName'] ?>" disabled><br>
-        <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
-        your message for us:
-        <input type="text" name="userPost" size="30" disabled><br><br>
-        <input type="submit" value="Submit" disabled>
-    </form>
+    <div class="con-search">
+        <h2 class="display-4">Contact Our Support Team</h2>
+        We are here for you every day, twentyfour hours a day, 365 days a year!
+        <br><br>
+        <h4>Contact Form</h4>
+        Dear customer,<br>
+        our contact form has been temporarily disabled.<br>We were experiencing heavy hacker attacks at our website and decided<br>to shut down our services for a few days/weeks/months.<br>
+        In urgent cases please contact our support team.<br>
+        Thanks!<br>
+        <br>
+        <form action="contact.php" method="post" id="reviewform">
+            your name:
+            <input type="text" name="username" value="<?= $_SESSION['userName'] ?>" disabled><br>
+            <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+            your message for us:
+            <input type="text" name="userPost" size="30" disabled><br><br>
+            <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
+        </form>
+    </div>
 
     <?php
     if ($postRequestSent) {

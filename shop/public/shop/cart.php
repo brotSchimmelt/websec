@@ -55,14 +55,16 @@ if (!is_user_logged_in()) {
     ?>
         <header id="desert-section">
             <div class="dark-overlay2">
-                <div id="home-inner2">
+                <div id="home-inner2" class="con-search con-center">
                     <h1 class="display-4">Your cart is currently empty</h1>
                 </div>
             </div>
         </header>
     <?php else : ?>
         <div class="cart-center mt-5">
-            <table class="table table-striped">
+            <h1 class="display-4">Your Cart</h1>
+            <br>
+            <table class="table table-striped shadow">
                 <thead class="my-head">
                     <tr>
                         <th scope="col">Position</th>
@@ -77,9 +79,11 @@ if (!is_user_logged_in()) {
                 </tbody>
             </table>
         </div>
-        <div class="cart-center">
-            <a class="btn btn-danger btn" href="">Delete</a>
-            <a class="btn btn-success btn" href="">Buy</a>
+        <div class="cart-center con-center">
+            <a class="btn btn-danger btn" href="">Delete all items</a>
+            <!-- <a class="btn btn-wwu-primary btn" href="" disabled>Checkout</a> -->
+            <input class="btn btn-wwu-primary" type="submit" value="Checkout" disabled>
+            <br><br>
             <p><small>Due to recent hacker attacks our shop is currently closed! Don't worry, we will remember your cart items the next visit.</small></p>
         </div>
     <?php endif; ?>

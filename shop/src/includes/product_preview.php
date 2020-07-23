@@ -19,16 +19,17 @@ if (!$done) :
             <img class="card-img-top" src="https://placeimg.com/300/180/animals" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title"><?= $row['prod_title'] ?></h5>
+                <hr>
                 <p class="card-text"><?= $row['prod_description'] ?></p>
                 <div class="prod-btn">
                     <!-- <a href="#" class="btn btn-outline-light btn-sm">Detail Page</a> -->
-                    <a href="product.php?id= <?= $row['prod_id']  ?>" class="btn btn-primary btn-sm">Detail Page</a>
+                    <a href="product.php?id= <?= $row['prod_id']  ?>" class="btn btn-wwu-primary btn-sm">Detail Page</a>
 
                     <form action="/input_handler.php" method="post">
                         <div class="form-row">
 
                             <div class="col btn-col">
-                                <input type="submit" class="btn btn-success btn-sm" name="add-preview" value="Add To Cart">
+                                <input type="submit" class="btn btn-wwu-cart btn-sm" name="add-preview" value="Add To Cart">
                             </div>
                             <div class="col btn-col">
                                 <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="3" placeholder="-" required>

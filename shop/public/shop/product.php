@@ -70,7 +70,7 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
     <!-- HTML Content BEGIN -->
     <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Stored XSS</a>
 
-    <div class="page-center prod-center jumbotron shadow-sm container">
+    <div class="con-center con-search jumbotron shadow container">
         <div class="row">
 
             <div class="col-md-6 mt-5">
@@ -89,7 +89,7 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
                     </div>
                     <div class="p-4 align-self-end">
                         <blockquote class="blockquote">
-                            <p class="mb-0">Some super awesome customer review about our product that is definitely no fake.</p>
+                            <p class="mb-0">Some super awesome customer review about our product that is definitely not fake.</p>
                             <footer class="blockquote-footer">New York Times <cite title="Source Title">Fake Pundit</cite></footer>
                         </blockquote>
                     </div>
@@ -105,7 +105,7 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
                         </div>
                         <div class="p-4 align-self-end">
                             <input type="hidden" name="product_id" value="<?= $productID ?>">
-                            <input type="submit" class="btn btn-success btn-sm" name="add-product" value="Add To Cart">
+                            <input type="submit" class="btn btn-wwu-cart btn-sm" name="add-product" value="Add To Cart">
                         </div>
                     </form>
                 </div>
@@ -113,7 +113,7 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
         </div>
     </div>
 
-    <div class="page-center prod-center">
+    <div class="con-center con-search">
         <h4 class="display-5">Write Your Own Review!</h4>
         <form class="text-center" action="product.php" method="post">
             <div class="justify-content-center">
@@ -122,7 +122,7 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
                 <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
                 Your Review:<br><br>
                 <input class="form-control review-text" type="text" name="userComment" size="50"><br>
-                <input class="btn btn-success" type="submit" value="Submit">
+                <input class="btn btn-wwu-primary" type="submit" value="Submit Comment">
             </div>
         </form>
     </div>

@@ -8,7 +8,7 @@ function get_shop_db()
     if ($dbShop instanceof PDO) {
         return $dbShop;
     }
-
+    require_once(CONF_DB_SHOP);
     try {
         $dbShop = new PDO(DSN_SHOP, DB_USER_SHOP, DB_PWD_SHOP, OPTIONS_SHOP);
     } catch (PDOException $e) {
@@ -180,7 +180,7 @@ function show_search_results($searchTerm, $productsPerRow)
     $stmt->execute();
 
     if ($stmt->rowCount() <= 0) {
-        echo "sorry, seems like we have no products that match your search request :(";
+        echo '<div class="con-center con-search">sorry, seems like we have no products that match your search request :(</div>';
     }
 
 

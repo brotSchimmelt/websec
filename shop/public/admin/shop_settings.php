@@ -61,6 +61,22 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                 <div class="jumbotron shadow">
                     <h1>Shop Settings</h1>
                     <hr>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="display-5">General Settings</h5><span class="badge badge-danger">Not Implemented</span>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Set valid mail addresses for students</li>
+                                        <li>Set help links for the challenges</li>
+                                        <li>Add or change products</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </main>

@@ -6,7 +6,7 @@ $stmt->execute();
 
 while ($row = $stmt->fetch()) :
 ?>
-    <div class="prod-center page-center container">
+    <div class="container">
         <div class="row">
             <div class="col-8">
                 <div class="card card-white post">

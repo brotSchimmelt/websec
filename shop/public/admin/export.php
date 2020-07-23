@@ -61,6 +61,18 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                 <div class="jumbotron shadow">
                     <h1>Export Data</h1>
                     <hr>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="display-5">Export User Results</h5><span class="badge badge-danger">Not Implemented</span>
+                                </div>
+                                <div class="card-body">
+                                    <i>JSON, PDF ...</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </main>
