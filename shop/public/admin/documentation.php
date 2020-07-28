@@ -36,13 +36,13 @@ if (!is_user_admin()) {
 
 <body>
     <!-- Simple Navbar -->
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" id="top">
         <h5 class="my-0 mr-md-auto font-weight-normal">WebSec Documentation</h5>
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="../shop/main.php">Back to the Shop</a>
             <a class="p-2 text-dark" href="dashboard.php">Back to the Dashboard</a>
         </nav>
-        <a class="btn btn-outline-warning" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
+        <a class="btn btn-outline-secondary" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
     </div>
 
     <!-- Headline -->
@@ -50,9 +50,10 @@ if (!is_user_admin()) {
         <h1 class="display-4">WebSec Documentation</h1>
         <p class="lead">Here is the HTML version of the project documentation.</p>
         <a class="doc-link" href="#dashboard"> · Dashboard</a>
+        <a class="doc-link" href="#shop"> · Shop</a>
         <a class="doc-link" href="#docker"> · Docker</a>
         <a class="doc-link" href="#vagrant"> · Vagrant</a>
-        <a class="doc-link" href="#shop"> · Shop</a>
+
     </div>
 
     <br><br>
@@ -60,15 +61,36 @@ if (!is_user_admin()) {
     <!-- Content Container -->
     <div class="container">
 
-        <!-- Dashboard Documentation -->
-        <?php include(DOC . "dashboard_doc.html"); ?>
-        <!-- <br> + new include ... -->
+        <!-- Include Documentations -->
+        <div id="dashboard">
+            <?php include(DOC . "dashboard.html"); ?>
+        </div>
+        <a href="#top">Back to the Top</a>
+        <br>
+
+        <div id="dashboard">
+            <?php include(DOC . "shop.html"); ?>
+        </div>
+        <a href="#top">Back to the Top</a>
+        <br>
+
+        <div id="dashboard">
+            <?php include(DOC . "docker.html"); ?>
+        </div>
+        <a href="#top">Back to the Top</a>
+        <br>
+
+        <div id="dashboard">
+            <?php include(DOC . "vagrant.html"); ?>
+        </div>
+        <!-- End  Documentation -->
     </div>
 
     <!-- Simple Footer -->
+    <br><br>
     <div class="container">
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
-            <a href="#">Back to the Top</a>
+            <a href="#top">Back to the Top</a>
         </footer>
     </div>
 </body>
