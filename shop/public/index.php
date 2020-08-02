@@ -1,23 +1,29 @@
 <?php
 session_start(); // Needs to be called first on every page
 
-// Load config files
+// Load dependencies
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-// require_once(CONF_DB_LOGIN);
-
-// Load custom libraries
-require(FUNC_BASE);
-// require(FUNC_LOGIN);
-
-// Load error handling and user messages
-require(ERROR_HANDLING);
+require_once(CONF_DB_LOGIN); // DB credentials
+require(FUNC_BASE); // Basic functions
+require(FUNC_LOGIN); // Login & registration functions
+require(ERROR_HANDLING); // Error handling
 
 // Check login status
 if (is_user_logged_in()) {
     // Redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
-} ?>
+}
+
+if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
+
+    // Load POST variables
+    $username = $_POST['loginUsername'];
+    $pwd = $_POST['loginPwd'];
+
+    try_login($username, $pwd);
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -40,7 +46,7 @@ if (is_user_logged_in()) {
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card">
-        <form class="form-signin" action="input_handler.php" method="post">
+        <form class="form-signin" action="index.php" method="post">
             <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="280" height="150">
 
             <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
