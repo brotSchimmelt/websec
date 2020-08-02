@@ -84,9 +84,13 @@ function validate_username($username)
     return true;
 }
 
-function validate_mail($mailAddress)
+function validate_mail($mail)
 {
-    if ((mb_strstr($mailAddress, "@") == "@uni-muenster.de") || ((mb_strstr($mailAddress, "@") == "@wi.uni-muenster.de"))) {
+    // Add other valid domains here:
+    $validDomains = array("@uni-muenster.de", "@wi.uni-muenster.de");
+
+    $needle = mb_strstr($mail, "@");
+    if (in_array($needle, $validDomains)) {
         return true;
     }
     return false;
