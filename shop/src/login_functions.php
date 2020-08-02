@@ -112,6 +112,8 @@ function hash_user_pwd($pwd)
 
 function check_entry_exists($entry, $sql)
 {
+    // Fake user array
+    $fakeUser = array("admin", "elliot", "l337_h4ck3r");
 
     // Get entries from DB
     try {
@@ -126,6 +128,11 @@ function check_entry_exists($entry, $sql)
     if ($entryExists) {
         return true;
     } else {
+
+        // Check fake users
+        if (in_array($entry, $fakeUser)) {
+            return true;
+        }
         return false;
     }
 }
