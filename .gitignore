@@ -1,7 +1,5 @@
 
 .DS_Store
 credentials.txt
-shop/public/test.php
 shop/data/*.sqlite
-shop/public/test2.php
-shop/public/assets/css/test.css
+test*
