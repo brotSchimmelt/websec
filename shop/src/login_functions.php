@@ -412,3 +412,7 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
         }
     }
 }
+
+function set_new_pwd($username, $token)
+{
+}
