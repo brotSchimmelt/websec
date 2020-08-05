@@ -269,14 +269,95 @@ function do_registration($username, $mail, $password)
 
 function get_random_token($length)
 {
-
     if ($length <= 0) {
-        trigger_error("Error: Token length cannot be 0 or negative.");
+        trigger_error("Error: Token length cannot be 0 or negative!");
     }
 
     $token = bin2hex(openssl_random_pseudo_bytes($length));
     if ($token === false) {
-        trigger_error("Error: Random token could not be generated.");
+        trigger_error("Error: Random token could not be generated!");
     }
     return substr($token, 0, $length);
+}
+
+function do_pwd_reset($mail)
+{
+
+    $selector = get_random_token(16); // TODO: add explanation
+    $validator = get_random_token(32); // TODO: add explanation
+    $expires = date('U') + 1200; // Token expires after 20 min (1200 s)
+
+    // URL for redirect to password reset page
+    $url = SITE_URL . "/test_pwd_reset.php?selector=" . $selector . "&validator=" . $validator;
+
+    // Check if an old entry already exists for this mail and delete it
+    if (check_pwd_request_status($mail)) {
+        delete_pwd_request($mail);
+    }
+
+    // Add request to DB
+    add_pwd_request($mail, $selector, $validator, $expires);
+
+    // Send mail with reset instructions to user
+    send_pwd_reset_mail($mail, $url);
+
+    // Show success message
+    header("location: " . "/password_reset.php?success=resetPwd");
+    exit();
+}
+
+function check_pwd_request_status($mail)
+{
+    $sql = "SELECT * FROM `resetPwd` WHERE `user_wwu_email`=?";
+
+    try {
+        $query = get_login_db()->prepare($sql);
+        $query->execute([$mail]);
+    } catch (Exception $e) {
+        header("Location: " . "/password_reset.php" . "?error=sqlError");
+        exit();
+    }
+
+    $entryExists = $query->fetchColumn();
+    return $entryExists ? true : false;
+}
+
+function delete_pwd_request($mail)
+{
+    $sql = "DELETE FROM `resetPwd` WHERE `user_wwu_email`=?";
+    get_login_db()->prepare($sql)->execute([$mail]);
+}
+
+function add_pwd_request($mail, $selector, $validator, $expires)
+{
+    // Hash the validator
+    $hashedToken = hash_user_pwd($validator);
+
+    try {
+        $insertRequest = "INSERT INTO `resetPwd` (`request_id`, `user_wwu_email`, `request_selector`, `request_token`, `request_expiration`) VALUE (NULL, :mail, :selector, :token, :date)";
+        get_login_db()->prepare($insertRequest)->execute([
+            'mail' => $mail,
+            'selector' => $selector,
+            'token' => $hashedToken,
+            'date' => $expires
+        ]);
+    } catch (Exception $e) {
+        header("Location: " . "/password_reset.php" . "?error=sqlError");
+        exit();
+    }
+}
+
+function send_pwd_reset_mail($mail, $resetUrl)
+{
+    $to = $mail;
+    $subject = "Reset your Password | Web Security Challenges";
+    $msg = "<p>You recently requested to reset your password. Use the link below to change it.</p>";
+    $msg .= '<p><a href="' . $resetUrl . '">Reset my password!</p>';
+    $msg .= "<p>This password reset request is only valid for the next <strong>15</strong> minutes.</p>";
+    $msg .= "<p>If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one.</p>";
+    $header = "From: Websec Automailer <websec.automailer@gmail.com>\r\n";
+    $header .= "Reply-To: websec.automailer@gmail.com\r\n";
+    $header .= "Content-type: text/html\r\n";
+
+    mail($to, $subject, $msg, $header);
 }
