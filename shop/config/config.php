@@ -1,7 +1,8 @@
 <?php
 
 define("DS", DIRECTORY_SEPARATOR); // OS independent dir separator
-define("ROOT", $_SERVER['DOCUMENT_ROOT'] . DS); // Web Server root dir
+define("ROOT", $_SERVER['DOCUMENT_ROOT'] . DS); // Web server root dir
+define("SITE_URL", "localhost"); // Current URL to the website
 
 // Locations on app level
 define("SRC", ROOT .  ".." . DS . "src" . DS); // Source dir
