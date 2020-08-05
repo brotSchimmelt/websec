@@ -41,6 +41,6 @@ define("ERROR_HANDLING", SRC . "error_handling.php"); // Functions for error han
 define("MESSAGES", SRC . "messages.php"); // Error messages, user notifications etc.
 
 // Path for frequent redirects
-define("MAIN_PAGE", "/shop" . DS . "main.php");
+define("MAIN_PAGE", "/shop/main.php");
 define("LOGIN_PAGE", "/index.php");
 define("REGISTER_PAGE", "/registration.php");
