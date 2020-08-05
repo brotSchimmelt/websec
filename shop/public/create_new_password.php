@@ -36,16 +36,29 @@ if (is_user_logged_in()) {
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="assets/css/login.css">
 
-    <title>[DUMMY TITLE]</title>
+    <title>WebSec | Create new Password</title>
 </head>
 
-<body>
-    <?php
-    // Load error messages, user notifications etc.
-    require(MESSAGES);
-    ?>
+<body class="text-center">
 
     <!-- HTML content BEGIN -->
+    <div class="jumbotron shadow bg-light login-card">
+        <form class="form-signin" action="registration.php" method="post">
+            <h1 class="h3 mb-3 font-weight-normal">Set a new Password</h1>
+
+            <label for="input-password" class="sr-only">New Password</label>
+            <input type="password" name="password" id="new-password" class="form-control" placeholder=" New Password" required autofocus>
+            <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
+            <br>
+            <label for="confirm-password" class="sr-only">Confirm Password</label>
+            <input type="password" name="confirmPassword" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
+
+            <button type="submit" name="reset-submit" id="register-btn" class="btn btn-lg btn-register btn-block">Set Password</button>
+
+            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
+            <hr class="accent-blue">
+        </form>
+    </div>
     <!-- HTML content END -->
 
     <footer></footer>
