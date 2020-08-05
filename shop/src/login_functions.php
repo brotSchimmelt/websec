@@ -87,7 +87,7 @@ function validate_username($username)
 function validate_mail($mail)
 {
     // Add other valid domains here:
-    $validDomains = array("@uni-muenster.de", "@wi.uni-muenster.de");
+    $validDomains = array("@uni-muenster.de", "@wi.uni-muenster.de", "@gmail.com");
 
     $needle = mb_strstr($mail, "@");
     if (in_array($needle, $validDomains)) {
@@ -184,7 +184,7 @@ function do_login($username, $mail, $adminFlag)
         session_start();
     }
 
-    $token = bin2hex(openssl_random_pseudo_bytes(32));
+    $token = get_random_token(32);
 
     $_SESSION['userToken'] = $token;
     $_SESSION['userName'] = $username;
@@ -243,7 +243,7 @@ function try_registration($username, $mail, $password)
 function do_registration($username, $mail, $password)
 {
     $pwdHash = hash_user_pwd($password);
-    $fakeXSSCookieID = bin2hex(openssl_random_pseudo_bytes(16));
+    $fakeXSSCookieID = get_random_token(16);
 
     try {
         $insertUser = "INSERT INTO users (user_id, user_name, user_wwu_email, user_pwd_hash, is_unlocked, is_admin, timestamp, xss_fake_cookie_id) VALUE (NULL, :user, :mail, :pwd_hash, '0', '0', :timestamp, :cookie_id)";
@@ -265,4 +265,18 @@ function do_registration($username, $mail, $password)
     // redirect back to login page
     header("location: " . LOGIN_PAGE . "?signup=success");
     exit();
+}
+
+function get_random_token($length)
+{
+
+    if ($length <= 0) {
+        trigger_error("Error: Token length cannot be 0 or negative.");
+    }
+
+    $token = bin2hex(openssl_random_pseudo_bytes($length));
+    if ($token === false) {
+        trigger_error("Error: Random token could not be generated.");
+    }
+    return substr($token, 0, $length);
 }
