@@ -8,7 +8,7 @@ printf "## The relevant commands can also be found under: https://docs.docker.co
 user_input=-1
 while (( $user_input < 1 || $user_input > 4 ))
 do
-printf "\n1) Apache error logs 2) Apache access logs \n3) MSMPT logs 4) all of the above\n\n"
+printf "\n1) Apache error logs 2) Apache access logs \n3) MSMPT logs 4) All of the above\n\n"
 printf "Select an option: "
 read user_input
 done
