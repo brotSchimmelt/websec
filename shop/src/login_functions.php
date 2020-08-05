@@ -53,7 +53,7 @@ function check_user_exists($numUsers)
     }
 }
 
-function verify_pwd($pwd, $resultArray)
+function verify_pwd($pwd, $resultArray, $redirect = LOGIN_PAGE)
 {
     $pwdTest = password_verify($pwd, $resultArray['user_pwd_hash']);
     if ($pwdTest) {
@@ -62,13 +62,13 @@ function verify_pwd($pwd, $resultArray)
         // wait for 3 seconds
         sleep(3);
         // send user back if password does not match
-        header("location: " . LOGIN_PAGE . "?error=wrongCredentials");
+        header("location: " . $redirect . "?error=wrongCredentials");
         exit();
     } else {
         // wait for 3 seconds
         sleep(3);
         // just to catch any errors in the 'password_verify' function
-        header("location: " . LOGIN_PAGE . "?error=internalError");
+        header("location: " . $redirect . "?error=internalError");
         exit();
     }
 }
@@ -360,4 +360,55 @@ function send_pwd_reset_mail($mail, $resetUrl)
     $header .= "Content-type: text/html\r\n";
 
     mail($to, $subject, $msg, $header);
+}
+
+
+function change_password($username, $pwd, $newPwd, $confirmPwd)
+{
+
+    $redirectPath = "/user/change_password.php";
+
+    // Check if new password is secure enough
+    if (!validate_pwd($newPwd)) {
+        header("location: " . $redirectPath . "?error=invalidPassword");
+        exit();
+    }
+    // Check password confirmation
+    else if ($newPwd !== $confirmPwd) {
+        header("location: " . $redirectPath . "?error=passwordMismatch");
+        exit();
+    } else {
+
+        // Get password from the DB
+        try {
+            $sql = get_login_db()->prepare("SELECT user_name,user_pwd_hash FROM users WHERE user_name=?");
+            $sql->execute([$username]);
+        } catch (Exception $e) {
+            header("location: " . $redirectPath . "?error=sqlError");
+            exit();
+        }
+
+        // Check if current password is correct
+        $result = $sql->fetch();
+        if (verify_pwd($pwd, $result, $redirect = $redirectPath)) {
+
+            $newPwdHash = hash_user_pwd($newPwd);
+
+            try {
+                $sql = "UPDATE `users` SET `user_pwd_hash`= :hash WHERE `user_name` = :user";
+                $stmt = get_login_db()->prepare($sql);
+                $stmt->execute([
+                    'hash' => $newPwdHash,
+                    'user' => $username
+                ]);
+            } catch (Exception $e) {
+                header("location: " . $redirectPath . "?error=sqlError");
+                exit();
+            }
+
+            // Success message
+            header("location: " . $redirectPath . "?success=changePassword");
+            exit();
+        }
+    }
 }
