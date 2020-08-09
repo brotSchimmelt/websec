@@ -302,7 +302,7 @@ function do_pwd_reset($mail)
     send_pwd_reset_mail($mail, $url);
 
     // Show success message
-    header("location: " . "/password_reset.php?success=resetPwd");
+    header("location: " . LOGIN_PAGE .  "?success=resetPwd");
     exit();
 }
 
