@@ -288,7 +288,7 @@ function do_pwd_reset($mail)
     $expires = date('U') + 1200; // Token expires after 20 min (1200 s)
 
     // URL for redirect to password reset page
-    $url = SITE_URL . "/test_pwd_reset.php?selector=" . $selector . "&validator=" . $validator;
+    $url = SITE_URL . "/create_new_password.php?s=" . $selector . "&v=" . $validator;
 
     // Check if an old entry already exists for this mail and delete it
     if (check_pwd_request_status($mail)) {
@@ -330,7 +330,7 @@ function delete_pwd_request($mail)
 
 function add_pwd_request($mail, $selector, $validator, $expires)
 {
-    // Hash the validator
+    // Hash the validator token
     $hashedToken = hash_user_pwd($validator);
 
     try {
@@ -407,12 +407,112 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
             }
 
             // Success message
-            header("location: " . $redirectPath . "?success=changePassword");
+            header("location: " . $redirectPath . "?success=requestProcessed");
             exit();
         }
     }
 }
 
-function set_new_pwd($username, $token)
+function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
 {
+
+    $completeURI = $requestURI . "?s=" . $selector . "&v=" . $validator;
+
+    if (!validate_new_pwd($pwd, $confirmPwd)) {
+        header("location: " . $completeURI . "&error=invalidPassword");
+        exit();
+    } else if ($pwd !== $confirmPwd) {
+        header("location: " . $completeURI . "&error=passwordMismatch");
+        exit();
+    } else if (!verify_token($selector, $validator, $requestURI)) {
+        header("location: " . LOGIN_PAGE . "?error=invalidToken");
+        exit();
+    } else {
+
+        $pwdHash = hash_user_pwd($pwd);
+        $mail = get_user_mail($selector);
+
+        try {
+            $sql = "UPDATE `users` SET `user_pwd_hash` = :pwd WHERE `user_wwu_email`=:mail";
+            $stmt = get_login_db()->prepare($sql);
+            $stmt->execute([
+                'pwd' => $pwdHash,
+                'mail' => $mail
+            ]);
+        } catch (PDOException $e) {
+            header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=103");
+            exit();
+        }
+
+        header("location: " . LOGIN_PAGE . "?success=pwdReset");
+        exit();
+    }
+}
+
+function validate_new_pwd($pwd, $confirmPwd)
+{
+    if (empty($pwd) || empty($confirmPwd)) {
+
+        return false;
+    } else if (!validate_pwd($pwd)) {
+
+        return false;
+    } else {
+
+        return true;
+    }
+}
+
+function verify_token($selector, $validator, $requestURI)
+{
+    // Check if the tokens are both hexadecimal
+    if (!ctype_xdigit($selector) || !ctype_xdigit($validator)) {
+        return false;
+    }
+
+    $currentDate = date('U');
+
+    // get token from DB by selector
+    try {
+        $sql = "SELECT `request_token` FROM `resetPwd` WHERE `request_selector`=? AND `request_expiration`>=";
+        $sql .= $currentDate;
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$selector]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=100");
+        exit();
+    }
+
+    $count = $stmt->rowCount();
+    if ($count > 1) {
+        header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=101");
+        exit();
+    } else if (!$result) {
+        return false;
+    } else {
+
+        $tokenCheck = password_verify($validator, $result['request_token']);
+        if ($tokenCheck) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+function get_user_mail($selector)
+{
+
+    try {
+        $sql = "SELECT `user_wwu_email` FROM `resetPwd` WHERE `request_selector`=?";
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$selector]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=102");
+        exit();
+    }
+
+    return $result['user_wwu_email'];
 }
