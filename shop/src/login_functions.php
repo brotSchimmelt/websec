@@ -216,7 +216,7 @@ function try_login($username, $pwd)
         if (verify_pwd($pwd, $result)) {
 
             do_login($result['user_name'], $result['user_wwu_email'], $result['is_admin']);
-            header("location: " . MAIN_PAGE . "?login=success");
+            header("location: " . MAIN_PAGE . "?success=login");
             exit();
         }
     }
@@ -263,7 +263,7 @@ function do_registration($username, $mail, $password)
     create_sqli_db($username, $mail);
 
     // redirect back to login page
-    header("location: " . LOGIN_PAGE . "?signup=success");
+    header("location: " . LOGIN_PAGE . "?success=signup");
     exit();
 }
 

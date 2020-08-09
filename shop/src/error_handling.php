@@ -36,6 +36,10 @@ function get_success_msg($success)
             $msg = "You were successfully <b>logged out</b>!";
             return format_msg($msg, $msgType);
             break;
+        case "signup":
+            $msg = "You successfully signed up. Try the <b>login</b> now!";
+            return format_msg($msg, $msgType);
+            break;
         case "resetPwd":
             $msg = "Your password was successfully <b>reset</b>!";
             return format_msg($msg, $msgType);
