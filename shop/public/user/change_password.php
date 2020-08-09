@@ -67,6 +67,8 @@ if (isset($_POST['change-pwd-submit'])) {
         <div>
             <form class="form-signin" action="change_password.php" method="post">
 
+                <?= get_message() ?>
+
                 <label for="input-old-pwd" class="sr-only">Current Password</label>
                 <input type="password" name="pwd" id="pwd" class="form-control" aria-describedby="pwd-help" placeholder="Current Password" required autofocus>
                 <small id="pwd-help" class="form-text text-muted">Please enter your current password.</small>
