@@ -31,7 +31,7 @@ function log_user_out()
     $_SESSION = array();
     session_destroy();
 
-    header("location: " . "/index.php" . "?login=loggedOut");
+    header("location: " . "/index.php" . "?success=logout");
     exit();
 }
 
