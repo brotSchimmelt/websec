@@ -21,10 +21,6 @@ $thisPage = basename(__FILE__);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
-// $simpleError = ""; # TODO: implement error handling for this section in speparat file with case
-// $errorMsg = '<p style="color:red;"><b>Error</b>: Your reset link is invalid. ';
-// $errorMsg .= 'Please message the lecturer with this error and also include your reset link in the mail. ';
-// $errorMsg .= 'Do <b>not</b> post your link in the Learnweb forum!</p>';
 
 // Check if password change was requested
 $tokenTest = post_var_set('selector') && post_var_set('validator');
@@ -67,6 +63,8 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
     <div class="jumbotron shadow bg-light login-card">
         <form class="form-signin" action="<?= $thisPage ?>" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Set a new Password</h1>
+
+            <?= get_message(); ?>
 
             <input type="hidden" name="selector" value="<?= $_GET['s'] ?>">
             <input type="hidden" name="validator" value="<?= $_GET['v'] ?>">

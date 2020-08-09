@@ -47,9 +47,12 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card">
         <form class="form-signin" action="index.php" method="post">
-            <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="280" height="150">
+            <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="210" height="110">
 
             <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
+
+            <?= get_message(); ?>
+
             <label for="input-name" class="sr-only">Username</label>
             <input type="text" name="loginUsername" id="input-name" class="form-control" placeholder="Username" required autofocus>
             <label for="input-password" class="sr-only">Password</label>

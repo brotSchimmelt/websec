@@ -50,6 +50,8 @@ if (isset($_POST['pwd-reset-submit'])) {
         <form class="form-signin" action="password_reset.php" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Reset Your Password</h1>
 
+            <?= get_message(); ?>
+
             <label for="input-mail" class="sr-only">Enter your Mail</label>
             <input type="email" name="inputMail" id="input-mail" class="form-control" aria-describedby="mail-help" placeholder="WWU Mail" required autofocus>
             <div class="pb-3" id="info-text">

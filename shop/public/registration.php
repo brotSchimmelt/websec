@@ -57,18 +57,12 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
 
 <body class="text-center">
 
-    <?php
-    // Load error messages
-    // TODO: Implement with bootstrap alerts
-    if (isset($_GET['error'])) {
-        display_registration_error($_GET['error']);
-    }
-    ?>
-
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card">
         <form class="form-signin" action="registration.php" method="post">
             <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
+
+            <?= get_message(); ?>
 
             <label for="input-name" class="sr-only">Enter your Username</label>
             <input type="text" name="username" id="register-name" class="form-control" aria-describedby="username-help" value="<?= $name_get ?>" placeholder="Username" required autofocus>
