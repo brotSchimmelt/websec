@@ -24,6 +24,6 @@ if (is_user_logged_in()) {
         exit();
     }
 } else {
-    header("location: " . LOGIN_PAGE);
+    header("location: " . LOGIN_PAGE . "?success=logout");
     exit();
 }
