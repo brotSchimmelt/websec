@@ -355,6 +355,8 @@ function send_pwd_reset_mail($mail, $resetUrl)
     $msg .= '<p><a href="' . $resetUrl . '">Reset my password!</p>';
     $msg .= "<p>This password reset request is only valid for the next <strong>15</strong> minutes.</p>";
     $msg .= "<p>If you didn't request this, please ignore this email. Your password won't change until you access the link above and create a new one.</p>";
+    $msg .= "<p>If you cannot open the link above, try copying this link in your browser: ";
+    $msg .= $resetUrl . "</p>";
     $header = "From: Websec Automailer <websec.automailer@gmail.com>\r\n";
     $header .= "Reply-To: websec.automailer@gmail.com\r\n";
     $header .= "Content-type: text/html\r\n";
