@@ -302,7 +302,7 @@ function do_pwd_reset($mail)
     send_pwd_reset_mail($mail, $url);
 
     // Show success message
-    header("location: " . LOGIN_PAGE .  "?success=resetPwd");
+    header("location: " . LOGIN_PAGE .  "?success=requestProcessed");
     exit();
 }
 
@@ -407,7 +407,7 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
             }
 
             // Success message
-            header("location: " . $redirectPath . "?success=requestProcessed");
+            header("location: " . $redirectPath . "?success=pwdChanged");
             exit();
         }
     }
@@ -444,7 +444,7 @@ function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
             exit();
         }
 
-        header("location: " . LOGIN_PAGE . "?success=pwdChanged");
+        header("location: " . LOGIN_PAGE . "?success=resetPwd");
         exit();
     }
 }
