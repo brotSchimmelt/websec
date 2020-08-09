@@ -444,7 +444,7 @@ function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
             exit();
         }
 
-        header("location: " . LOGIN_PAGE . "?success=pwdReset");
+        header("location: " . LOGIN_PAGE . "?success=pwdChanged");
         exit();
     }
 }
