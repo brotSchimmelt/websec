@@ -60,7 +60,7 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
 <body class="text-center">
 
     <!-- HTML content BEGIN -->
-    <div class="jumbotron shadow bg-light login-card">
+    <div class="jumbotron shadow bg-light login-card overflow-auto">
         <form class="form-signin" action="<?= $thisPage ?>" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Set a new Password</h1>
 

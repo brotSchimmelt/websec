@@ -58,7 +58,7 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
 <body class="text-center">
 
     <!-- HTML Content BEGIN -->
-    <div class="jumbotron shadow bg-light login-card">
+    <div class="jumbotron shadow bg-light login-card overflow-auto">
         <form class="form-signin" action="registration.php" method="post">
             <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
 

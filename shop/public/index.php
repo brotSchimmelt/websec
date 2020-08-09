@@ -45,7 +45,7 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 <body class="text-center">
 
     <!-- HTML Content BEGIN -->
-    <div class="jumbotron shadow bg-light login-card">
+    <div class="jumbotron shadow bg-light login-card overflow-auto">
         <form class="form-signin" action="index.php" method="post">
             <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="210" height="110">
 
