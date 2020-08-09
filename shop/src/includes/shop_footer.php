@@ -2,7 +2,7 @@
 <footer class="container py-5">
     <div class="row">
         <div class="col-12 col-md">
-            <a class="py-2d-none d-md-inline-block pb-3" href="main.php" aria-label="Main Page">
+            <a class="py-2d-none d-md-inline-block pb-3" href="/shop/main.php" aria-label="Main Page">
                 <img class="mt-1 mb-2" src="/assets/img/wwu_cysec.png" width="100" height="45">
             </a>
             <small class="d-block mb-3 text-muted">&copy; <?php get_semester() ?></small>

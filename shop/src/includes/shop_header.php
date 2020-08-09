@@ -3,14 +3,14 @@ $num = get_number_of_cart_items();
 ?>
 <nav class="site-header sticky-top py-1" id="main-navbar">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <a class="py-2d-none d-md-inline-block" href="main.php" aria-label="Main Page">
+        <a class="py-2d-none d-md-inline-block" href="/shop/main.php" aria-label="Main Page">
             <img class="mt-1 mb-2" src="/assets/img/wwu_cysec_inverted.png" width="90" height="40">
         </a>
-        <a class="py-2 d-none d-md-inline-block mt-2" href="main.php">Home</a>
-        <a class="py-2 d-none d-md-inline-block mt-2" href="overview.php">Products</a>
-        <a class="py-2 d-none d-md-inline-block mt-2" href="friends.php">Find Your Friends</a>
-        <a class="py-2 d-none d-md-inline-block mt-2" href="contact.php">Support</a>
-        <a class="py-2 d-none d-md-inline-block mt-2" href="cart.php">
+        <a class="py-2 d-none d-md-inline-block mt-2" href="/shop/main.php">Home</a>
+        <a class="py-2 d-none d-md-inline-block mt-2" href="/shop/overview.php">Products</a>
+        <a class="py-2 d-none d-md-inline-block mt-2" href="/shop/friends.php">Find Your Friends</a>
+        <a class="py-2 d-none d-md-inline-block mt-2" href="/shop/contact.php">Support</a>
+        <a class="py-2 d-none d-md-inline-block mt-2" href="/shop/cart.php">
             <span>Cart</span>
             <?php if ($num > 0) : ?>
                 <span class="badge badge-danger"><?= $num < 100 ? $num : "99+" ?></span>
@@ -26,10 +26,11 @@ $num = get_number_of_cart_items();
             Account
         </a>
         <div class="dropdown-menu" aria-labelledby="#navbarDropdown">
-            <a class="dropdown-item" href="scoreboard.php">Scoreboard</a>
-            <a class="dropdown-item" href="reset_db.php">Reset Database</a>
-            <a class="dropdown-item" href="help.php">Help</a>
-            <a class="dropdown-item" href="admin.php">Admin</a>
+            <a class="dropdown-item" href="/user/scoreboard.php">Scoreboard</a>
+            <a class="dropdown-item" href="/user/reset_db.php">Reset Database</a>
+            <a class="dropdown-item" href="/user/change_password.php">Change Password</a>
+            <a class="dropdown-item" href="/shop/help.php">Help</a>
+            <a class="dropdown-item" href="/user/admin.php">Admin</a>
             <a class="dropdown-item" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
         </div>
     </div>
