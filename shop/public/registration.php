@@ -80,7 +80,7 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
 
             <label for="input-password" class="sr-only">Password</label>
             <input type="password" name="password" id="register-password" class="form-control" placeholder="Password" required>
-            <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
+            <small id="password-help" class="form-text text-muted">Please use at least 8 characters.</small>
 
             <label for="confirm-password" class="sr-only">Confirm Password</label>
             <input type="password" name="confirmPassword" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
