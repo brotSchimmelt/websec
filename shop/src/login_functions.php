@@ -228,7 +228,7 @@ function try_registration($username, $mail, $password)
     if (check_entry_exists($username, "SELECT 1 FROM users WHERE user_name = ?")) {
 
         $oldInput = "&mail=" . $mail;
-        header("Location: " . REGISTER_PAGE . "?error=nameTaken" . $oldInput);
+        header("Location: " . REGISTER_PAGE . "?error=nameError" . $oldInput);
         exit();
     } else if (check_entry_exists($mail, "SELECT 1 FROM users WHERE user_wwu_email = ?")) {
 
