@@ -90,6 +90,11 @@ function get_error_msg($error, $errorCode)
             $msg .= "the requirements. Please use only letters and numbers and 2 to 64 characters.";
             return format_msg($msg, $msgType);
             break;
+        case "invalidMailFormat":
+            $msg = "It seems like you are not using a valid e-mail address. ";
+            $msg .= "Please try again with your WWU e-mail address!";
+            return format_msg($msg, $msgType);
+            break;
         case "invalidMail":
             $msg = "It seems like you are not using your WWU e-mail account. ";
             $msg .= "This is necessary for the grading.";
