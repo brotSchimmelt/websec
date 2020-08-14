@@ -1,7 +1,15 @@
 <?php
+/* 
+* PDO Exceptions are not caught in this sections since only admin users should
+* have access.
+* Furthermore, the default PDO Exceptions are exceptional (pun intended) helpful
+* in regards to debugging.
+* They are only caught in the registration/login process to provide extra
+* information to the students that this is indeed an error that has nothing to
+* do with the hacking challenges.
+*/
 
-
-
+// get the number of students from the login database
 function get_num_of_students()
 {
     $sql = "SELECT `user_name` FROM `users`";
@@ -9,6 +17,7 @@ function get_num_of_students()
     return $stmt->rowCount();
 }
 
+// get number of unlocked students from the login database
 function get_num_of_unlocked_students()
 {
     $sql = "SELECT `is_unlocked` FROM `users` WHERE `is_unlocked` = '1'";
@@ -16,6 +25,7 @@ function get_num_of_unlocked_students()
     return $stmt->rowCount();
 }
 
+// get the number of admin users from the login database
 function get_num_of_admins()
 {
     $sql = "SELECT `is_admin` FROM `users` WHERE `is_admin` = '1'";
@@ -23,6 +33,7 @@ function get_num_of_admins()
     return $stmt->rowCount();
 }
 
+// check if a user is unlocked in the database
 function is_user_unlocked_in_db($username)
 {
     $sql = "SELECT `is_unlocked` FROM `users` WHERE `user_name` = :user_name";
@@ -37,6 +48,7 @@ function is_user_unlocked_in_db($username)
     }
 }
 
+// check if a user is an admin
 function is_user_admin_in_db($username)
 {
     $sql = "SELECT `is_admin` FROM `users` WHERE `user_name` = :user_name";
@@ -51,6 +63,7 @@ function is_user_admin_in_db($username)
     }
 }
 
+// get the challenge progress of all students in the database
 function get_total_progress($numOfStudents, $numOfChallenges)
 {
     $sql = "SELECT `user_name` FROM `users`";
@@ -68,6 +81,7 @@ function get_total_progress($numOfStudents, $numOfChallenges)
     return round($totalProgress, 2);
 }
 
+// get challenge progress of one student
 function get_individual_progress($username)
 {
     $xssStatus = check_xss_challenge($username);
@@ -85,6 +99,7 @@ function get_individual_progress($username)
     return $totalStatus;
 }
 
+// get all students with at least one open challenge
 function show_students_with_open_challenges()
 {
     $sql = "SELECT `user_name`, `user_wwu_email`, `is_unlocked`, `is_admin`, `timestamp` FROM users";
@@ -136,8 +151,7 @@ function show_students_with_open_challenges()
     }
 }
 
-
-
+// get all users from the database
 function show_all_user()
 {
     $sql = "SELECT `user_id`, `user_name`, `user_wwu_email`, `is_unlocked`, `is_admin`, `timestamp` FROM users";
