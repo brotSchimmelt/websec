@@ -4,9 +4,9 @@
 * have access.
 * Furthermore, the default PDO Exceptions are exceptional (pun intended) helpful
 * in regards to debugging.
-* They are only caught in the registration/login process to provide extra
-* information to the students that this is indeed an error that has nothing to
-* do with the hacking challenges.
+* They are only caught in the sections accessible by normal users to provide
+* extra information to the students that this is indeed an error, that has no 
+* connection to the hacking challenges and should be reported.
 */
 
 // get the number of students from the login database
@@ -102,14 +102,16 @@ function get_individual_progress($username)
 // get all students with at least one open challenge
 function show_students_with_open_challenges()
 {
-    $sql = "SELECT `user_name`, `user_wwu_email`, `is_unlocked`, `is_admin`, `timestamp` FROM users";
+    $sql = "SELECT `user_name`, `user_wwu_email`, `is_unlocked`, `is_admin`, "
+        . "`timestamp` FROM users";
     $stmt = get_login_db()->query($sql);
 
     $pos = 1;
     while ($row = $stmt->fetch()) {
 
         // check if student did already all the challenges
-        if (get_individual_progress($row['user_name']) == 4) { // 4 is the number of challenges
+        // 4 is the current number of challenges
+        if (get_individual_progress($row['user_name']) == 4) {
             continue;
         }
 
@@ -124,9 +126,15 @@ function show_students_with_open_challenges()
             array_push($status, "SQLi");
         }
 
-        if (!check_crosspost_challenge($row['user_name'] and !check_crosspost_challenge_double($row['user_name']))) {
+        if (!check_crosspost_challenge($row['user_name']
+            and !check_crosspost_challenge_double($row['user_name']))) {
+
             array_push($status, "Crosspost");
-        } else if (check_crosspost_challenge($row['user_name']) and !check_crosspost_challenge_double($row['user_name'])) {
+        } else if (
+            check_crosspost_challenge($row['user_name']) and
+            !check_crosspost_challenge_double($row['user_name'])
+        ) {
+
             array_push($status, "Crosspost*");
         }
 
@@ -140,7 +148,8 @@ function show_students_with_open_challenges()
         echo '<tr class="' . $adminClass . '">';
         echo "<td><strong>" . $pos . ".</strong></td>";
         echo "<td>" . $row['user_name'] . "</td>";
-        echo "<td>" . '<a href="mailto:' . $row['user_wwu_email'] . '">' . $row['user_wwu_email'] . '</a></td>';
+        echo "<td>" . '<a href="mailto:' . $row['user_wwu_email'] . '">'
+            . $row['user_wwu_email'] . '</a></td>';
         echo "<td>" . $openChallenges . "</td>";
         echo "<td>" . $adminFlag . "</td>";
         echo "<td>" . $unlockedFlag . "</td>";
@@ -154,14 +163,17 @@ function show_students_with_open_challenges()
 // get all users from the database
 function show_all_user()
 {
-    $sql = "SELECT `user_id`, `user_name`, `user_wwu_email`, `is_unlocked`, `is_admin`, `timestamp` FROM users";
+    $sql = "SELECT `user_id`, `user_name`, `user_wwu_email`, `is_unlocked`, "
+        . "`is_admin`, `timestamp` FROM users";
     $stmt = get_login_db()->query($sql);
 
     $pos = 1;
     while ($row = $stmt->fetch()) {
 
-        $editBtn = '<button class="btn btn-sm btn-info mr-2" id="' . $row['user_name'] . '-edit">Edit</button>';
-        $deleteBtn = '<button class="btn btn-sm btn-danger" id="' . $row['user_name'] . '-delete">Delete</button>';
+        $editBtn = '<button class="btn btn-sm btn-info mr-2" id="'
+            . $row['user_name'] . '-edit">Edit</button>';
+        $deleteBtn = '<button class="btn btn-sm btn-danger" id="'
+            . $row['user_name'] . '-delete">Delete</button>';
 
 
         $adminFlag = $row['is_admin'] == 1 ? "Yes" : "No";
