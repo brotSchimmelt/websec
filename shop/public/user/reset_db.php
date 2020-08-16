@@ -25,6 +25,18 @@ if (!is_user_logged_in()) {
 // Load POST or GET variables and sanitize input BELOW this comment
 $username = $_SESSION['userName'];
 
+if (isset($_POST['simplexss']) && isset($_POST['doit-simplexss'])) {
+    reset_reflective_xss_db($username);
+}
+if (isset($_POST['storedxss']) && isset($_POST['doit-storedxss'])) {
+    reset_stored_xss_db($username);
+}
+if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
+    reset_sqli_db($username);
+}
+if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
+    reset_csrf_db($username);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -104,29 +116,6 @@ $username = $_SESSION['userName'];
         <hr><br>
     </div>
     <!-- HTML Content END -->
-
-    <?php
-
-    if (isset($_POST['simplexss']) && isset($_POST['doit-simplexss'])) {
-        reset_reflective_xss_db($username);
-    }
-    if (isset($_POST['storedxss']) && isset($_POST['doit-storedxss'])) {
-        reset_stored_xss_db($username);
-    }
-    if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
-        reset_sqli_db($username);
-    }
-    if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
-        reset_csrf_db($username);
-    }
-
-
-
-
-
-
-    ?>
-
 
     <?php
     // Load shop footer
