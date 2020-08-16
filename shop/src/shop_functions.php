@@ -12,75 +12,119 @@ function get_shop_db()
     try {
         $dbShop = new PDO(DSN_SHOP, DB_USER_SHOP, DB_PWD_SHOP, OPTIONS_SHOP);
     } catch (PDOException $e) {
-        exit("Unable to connect to the database :(");
+        $msg = "The connection to our database could not be established.";
+        display_exception_msg($msg, "020");
+        exit();
     }
     return $dbShop;
 }
 
+// get the number of cart items
 function get_number_of_cart_items()
 {
     $sql = "SELECT SUM(`quantity`) FROM `cart` WHERE user_name=?";
-    $stmt = get_shop_db()->prepare($sql);
-    $stmt->execute([$_SESSION['userName']]);
 
-    return $stmt->fetchColumn();
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([$_SESSION['userName']]);
+        return $stmt->fetchColumn();
+    } catch (PDOException $e) {
+        trigger_error("Code Error: The number of cart items could not be fetched.");
+        return 0;
+    }
 }
 
+// add product to shopping cart
 function add_product_to_cart($productID, $quantity)
 {
 
     // add existing product to cart
     if (is_product_in_cart($productID)) {
 
-        $quantityQuery = "SELECT `quantity` FROM `cart` WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
-        $stmtQuantity = get_shop_db()->prepare($quantityQuery);
-        $stmtQuantity->execute([
-            'prod_id' => $productID,
-            'user_name' => $_SESSION['userName']
-        ]);
-        $result = $stmtQuantity->fetch();
+        $quantityQuery = "SELECT `quantity` FROM `cart` WHERE `prod_id` = "
+            . ":prod_id AND `user_name` = :user_name";
+
+        try {
+            $stmtQuantity = get_shop_db()->prepare($quantityQuery);
+            $stmtQuantity->execute([
+                'prod_id' => $productID,
+                'user_name' => $_SESSION['userName']
+            ]);
+            $result = $stmtQuantity->fetch();
+        } catch (PDOException $e) {
+            display_exception_msg($e->getMessage(), "151");
+            exit();
+        }
 
         if (($result['quantity'] + $quantity) >= 3) {
             $quantity = 3;
-            $sql = "UPDATE `cart` SET `quantity` = :quantity, `timestamp` = :date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
+            $sql = "UPDATE `cart` SET `quantity` = :quantity, `timestamp` = "
+                . ":date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
         } else if (($result['quantity'] + $quantity) <= 0) {
             $quantity = 1;
-            $sql = "UPDATE `cart` SET `quantity` = :quantity, `timestamp` = :date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
+            $sql = "UPDATE `cart` SET `quantity` = :quantity, `timestamp` "
+                . "= :date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
         } else {
-            $sql = "UPDATE `cart` SET `quantity` = `quantity` + :quantity, `timestamp` = :date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
+            $sql = "UPDATE `cart` SET `quantity` = `quantity` + :quantity, "
+                . "`timestamp` = :date WHERE `prod_id` = :prod_id AND "
+                . "`user_name` = :user_name";
         }
-
-        $stmt = get_shop_db()->prepare($sql);
-        $stmt->execute([
-            'prod_id' => $productID,
-            'user_name' => $_SESSION['userName'],
-            'quantity' => $quantity,
-            'date' => date("Y-m-d H:i:s")
-        ]);
+        try {
+            $stmt = get_shop_db()->prepare($sql);
+            $stmt->execute([
+                'prod_id' => $productID,
+                'user_name' => $_SESSION['userName'],
+                'quantity' => $quantity,
+                'date' => date("Y-m-d H:i:s")
+            ]);
+        } catch (PDOException $e) {
+            display_exception_msg($e->getMessage(), "152");
+            exit();
+        }
         // add new product to cart
     } else {
         // check if quantity sent by user is not greater than 3
         $quantity = $quantity > 3 ? 3 : $quantity;
-        $sql = "INSERT INTO `cart` (`position_id`, `prod_id`, `user_name`, `quantity`, `timestamp`) VALUES (NULL, :prod_id, :user_name, :quantity, :date)";
-        $stmt = get_shop_db()->prepare($sql);
-        $stmt->execute([
-            'prod_id' => $productID,
-            'user_name' => $_SESSION['userName'],
-            'quantity' => $quantity,
-            'date' => date("Y-m-d H:i:s")
-        ]);
+
+        $sql = "INSERT INTO `cart` (`position_id`, `prod_id`, `user_name`, "
+            . "`quantity`, `timestamp`) VALUES "
+            . "(NULL, :prod_id, :user_name, :quantity, :date)";
+
+        try {
+            $stmt = get_shop_db()->prepare($sql);
+            $stmt->execute([
+                'prod_id' => $productID,
+                'user_name' => $_SESSION['userName'],
+                'quantity' => $quantity,
+                'date' => date("Y-m-d H:i:s")
+            ]);
+        } catch (PDOException $e) {
+            display_exception_msg($e->getMessage(), "153");
+            exit();
+        }
     }
 }
 
-
+// check if product type is already in the cart
 function is_product_in_cart($productID)
 {
     $sql = "SELECT * FROM `cart` WHERE user_name=:user_name AND prod_id=:prod_id";
-    $stmt = get_shop_db()->prepare($sql);
-    $stmt->execute(['user_name' => $_SESSION['userName'], 'prod_id' => $productID]);
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute(
+            [
+                'user_name' => $_SESSION['userName'],
+                'prod_id' => $productID
+            ]
+        );
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "154");
+        exit();
+    }
 
     $num = $stmt->rowCount();
-
+    // TODO: Ternary return 
     if ($num > 0) {
         return true;
     } else {
@@ -88,11 +132,17 @@ function is_product_in_cart($productID)
     }
 }
 
-
+// get all products from the product database
 function show_products($productsPerRow)
 {
-    $sql = "SELECT prod_id, prod_title, prod_description, price, img_path FROM products";
-    $result = get_shop_db()->query($sql);
+    $sql = "SELECT prod_id, prod_title, prod_description, "
+        . "price, img_path FROM products";
+    try {
+        $result = get_shop_db()->query($sql);
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "155");
+        exit();
+    }
 
 
     $done = false; // is used in product_preview.php
@@ -101,7 +151,8 @@ function show_products($productsPerRow)
 
         $i = $productsPerRow;
         while ($i > 0) {
-            if ($i != $productsPerRow) { // don't load a new prod if the first hasn't been displayed yet
+            // don't load a new prod if the first hasn't been displayed yet
+            if ($i != $productsPerRow) {
                 $row = $result->fetch();
             }
             include(INCL . "product_preview.php");
@@ -111,24 +162,36 @@ function show_products($productsPerRow)
     }
 }
 
-
+// show current content of the users shopping cart
 function show_cart_content()
 {
 
-    $sqlCart = "SELECT `prod_id`, `quantity`, `timestamp` FROM `cart` WHERE `user_name` = :user_name";
-    $stmtCart = get_shop_db()->prepare($sqlCart);
-    $stmtCart->execute(['user_name' => $_SESSION['userName']]);
-    $cart = $stmtCart->fetchAll();
+    $sqlCart = "SELECT `prod_id`, `quantity`, `timestamp` FROM "
+        . "`cart` WHERE `user_name` = :user_name";
+    try {
+        $stmtCart = get_shop_db()->prepare($sqlCart);
+        $stmtCart->execute(['user_name' => $_SESSION['userName']]);
+        $cart = $stmtCart->fetchAll();
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "156");
+        exit();
+    }
 
     $i = 0;
     $totalPrice = 0;
     foreach ($cart as $row) {
 
         $prodID = $row['prod_id'];
-        $sqlProducts = "SELECT `prod_title`, `price`, `img_path` FROM `products` WHERE `prod_id` = :prod_id";
-        $stmtProd = get_shop_db()->prepare($sqlProducts);
-        $stmtProd->execute(['prod_id' => $prodID]);
-        $product = $stmtProd->fetch();
+        $sqlProducts = "SELECT `prod_title`, `price`, `img_path` FROM "
+            . "`products` WHERE `prod_id` = :prod_id";
+        try {
+            $stmtProd = get_shop_db()->prepare($sqlProducts);
+            $stmtProd->execute(['prod_id' => $prodID]);
+            $product = $stmtProd->fetch();
+        } catch (PDOException $e) {
+            display_exception_msg($e->getMessage(), "157");
+            exit();
+        }
 
         $rowPrice = $row['quantity'] * $product['price'];
         $i++;
@@ -142,16 +205,23 @@ function show_cart_content()
         echo '<td>' . $rowPrice . ' &euro;</td>';
         echo "</tr>";
     }
-    echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3) . "<td><strong>" . $totalPrice . " &euro;</strong></td></tr>";
+    echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3)
+        . "<td><strong>" . $totalPrice . " &euro;</strong></td></tr>";
 }
 
-
+// check if there are no products in the shopping cart
 function is_cart_empty()
 {
-    $sqlCart = "SELECT `prod_id`, `quantity`, `timestamp` FROM `cart` WHERE `user_name` = :user_name";
-    $stmtCart = get_shop_db()->prepare($sqlCart);
-    $stmtCart->execute(['user_name' => $_SESSION['userName']]);
-    $cart = $stmtCart->fetchAll();
+    $sqlCart = "SELECT `prod_id`, `quantity`, `timestamp` "
+        . "FROM `cart` WHERE `user_name` = :user_name";
+    try {
+        $stmtCart = get_shop_db()->prepare($sqlCart);
+        $stmtCart->execute(['user_name' => $_SESSION['userName']]);
+        $cart = $stmtCart->fetchAll();
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "158");
+        exit();
+    }
 
     if ($cart && $stmtCart->rowCount() > 0) {
         return true;
@@ -159,28 +229,39 @@ function is_cart_empty()
     return false;
 }
 
-
+// return the number of cart items
 function get_num_of_cart_items()
 {
     $sql = "SELECT SUM(quantity) FROM `cart` WHERE `user_name` = :user_name";
-    $stmt = get_shop_db()->prepare($sql);
-    $stmt->execute(['user_name' => $_SESSION['userName']]);
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute(['user_name' => $_SESSION['userName']]);
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "159");
+        exit();
+    }
 
     return $stmt->fetchColumn();
 }
 
-
-
+// display the product search results
 function show_search_results($searchTerm, $productsPerRow)
 {
-    $sql = "SELECT `prod_id`, `prod_title`, `prod_description`, `price`, `img_path` FROM `products` WHERE `prod_title` LIKE :needle";
-    $stmt = get_shop_db()->prepare($sql);
-    $needle = "%" . $searchTerm . "%";
-    $stmt->bindValue(':needle', $needle, PDO::PARAM_STR);
-    $stmt->execute();
+    $sql = "SELECT `prod_id`, `prod_title`, `prod_description`, `price`, "
+        . "`img_path` FROM `products` WHERE `prod_title` LIKE :needle";
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $needle = "%" . $searchTerm . "%";
+        $stmt->bindValue(':needle', $needle, PDO::PARAM_STR);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "160");
+        exit();
+    }
 
     if ($stmt->rowCount() <= 0) {
-        echo '<div class="con-center con-search">sorry, seems like we have no products that match your search request :(</div>';
+        echo '<div class="con-center con-search">sorry, seems "
+        ."like we have no products that match your search request :(</div>';
     }
 
 
@@ -190,7 +271,8 @@ function show_search_results($searchTerm, $productsPerRow)
 
         $i = $productsPerRow;
         while ($i > 0) {
-            if ($i != $productsPerRow) { // don't load a new prod if the first hasn't been displayed yet
+            // don't load a new prod if the first hasn't been displayed yet
+            if ($i != $productsPerRow) {
                 $row = $stmt->fetch();
             }
             include(INCL . "product_preview.php");

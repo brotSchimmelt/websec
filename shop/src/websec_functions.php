@@ -1,5 +1,7 @@
 <?php
+// TODO: Add correct error handling
 
+// trim string to include only valid characters
 function slug($z)
 {
     $z = strtolower($z);
@@ -8,23 +10,28 @@ function slug($z)
     return trim($z, '-');
 }
 
+// set challenge cookie for user
 function set_fake_cookie($username)
 {
     $cookieName = "SessionCookieID";
+
+    $sql = "SELECT `xss_fake_cookie_id` FROM "
+        . "users WHERE `user_name`=:user_name";
+
     try {
-        $sql = "SELECT `xss_fake_cookie_id` FROM users WHERE `user_name`=:user_name";
         $stmt = get_login_db()->prepare($sql);
         $stmt->execute(['user_name' => $username]);
-
         $result = $stmt->fetch();
         $fakeID = $result['xss_fake_cookie_id'];
-
-        setcookie($cookieName, $fakeID);
-    } catch (Exception $e) {
-        echo "error: Sorry, it seems like we encountered a problem while setting your cookies. Please report this error.";
+    } catch (PDOException $e) {
+        $msg = "The cookie for the XSS challenge could not be set.";
+        display_exception_msg($msg, "112");
+        exit();
     }
+    setcookie($cookieName, $fakeID);
 }
 
+// create SQLite database for the SQLi challenge 
 function create_sqli_db($username, $mail)
 {
 
@@ -39,16 +46,28 @@ function create_sqli_db($username, $mail)
 
         $fakePwdHash = str_shuffle(str_repeat("superSecureFakePasswordHash13579", 2));
 
-        $database->exec('CREATE TABLE users (username text NOT NULL, password text, email text, role text NOT NULL);');
-        $database->exec("INSERT INTO users (username,password,email,role) VALUES ('admin','admin','admin@admin.admin','admin');");
-        $database->exec("INSERT INTO users (username,password,email,role) VALUES ('elliot','toor','alderson@allsafe.con','user');");
-        $database->exec("INSERT INTO users (username,password,email,role) VALUES ('l337_h4ck3r','password123','girly95@hotmail.con','user');");
-        $database->exec("INSERT INTO users (username,password,email,role) VALUES ('" . $username . "','" . $fakePwdHash . "','" . $mail . "','user');");
+        $database->exec('CREATE TABLE users (username text NOT NULL, 
+        password text, email text, role text NOT NULL);');
+
+        $database->exec("INSERT INTO users (username,password,email,role) 
+        VALUES ('admin','admin','admin@admin.admin','admin');");
+
+        $database->exec("INSERT INTO users (username,password,email,role) 
+        VALUES ('elliot','toor','alderson@allsafe.con','user');");
+
+        $database->exec("INSERT INTO users (username,password,email,role) 
+        VALUES ('l337_h4ck3r','password123','girly95@hotmail.con','user');");
+
+        $database->exec("INSERT INTO users (username,password,email,role) 
+        VALUES ('" . $username . "','" . $fakePwdHash . "','" . $mail . "','user');");
     } else {
-        echo "error: database was not created!";
+        throw new Exception("SQLite database could not be created.");
     }
 }
 
+// SQLi challenge
+// TODO: Add premium user instead of admin
+// TODO: Add exception and error handling
 function query_sqli_db()
 {
     $searchTerm = $_POST['sqli'];
@@ -67,8 +86,6 @@ function query_sqli_db()
         $queries = explode(';', $searchQuery);
 
         foreach ($queries as $q) {
-
-            // Debug: echo "query: " . $q . "<br>";
 
             $pos1 = strpos($q, "SELECT");
             $pos2 = strpos($q, "INSERT");
@@ -106,25 +123,35 @@ function query_sqli_db()
     }
 }
 
+// display the product comments
 function show_xss_comments()
 {
     include(INCL . "comments.php");
 }
 
-
+// add product comment
 function add_comment_to_db($comment, $author)
 {
-    $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, `rating`, `timestamp`) VALUES (NULL, :author, :comment, :rating, :timestamp)";
-    $stmt = get_shop_db()->prepare($sql);
-    $stmt->execute([
-        'author' => $author,
-        'comment' => $comment,
-        'rating' => 5,
-        'timestamp' => date("Y-m-d H:i:s")
-    ]);
+    $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, "
+        . "`rating`, `timestamp`) VALUES "
+        . "(NULL, :author, :comment, :rating, :timestamp)";
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([
+            'author' => $author,
+            'comment' => $comment,
+            'rating' => 5,
+            'timestamp' => date("Y-m-d H:i:s")
+        ]);
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "161");
+        exit();
+    }
 }
 
-
+// CSRF Challenge
+// TODO: Add error & exception handling
 function process_csrf($userName, $userPost)
 {
     $referrer = $_SERVER['HTTP_REFERER'];
@@ -139,8 +166,6 @@ function process_csrf($userName, $userPost)
             $stmt = get_shop_db()->prepare($sql);
             $stmt->execute(['user_name' => $userName]);
             $numOfResults = $stmt->rowCount();
-
-
 
             if ($numOfResults < 1) {
 
@@ -174,62 +199,78 @@ function process_csrf($userName, $userPost)
     }
 }
 
-
-
+// Reset XSS challenge
 function reset_reflective_xss_db($username)
 {
-    $newFakeCookieID = bin2hex(openssl_random_pseudo_bytes(16));
+    include_once(FUNC_LOGIN);
 
-    if ($newFakeCookieID) {
-        try {
-            $sql = "UPDATE `users` SET `xss_fake_cookie_id`=:new_cookie WHERE `user_name` = :user_name";
-            get_login_db()->prepare($sql)->execute([
-                'new_cookie' => $newFakeCookieID,
-                'user_name' => $username
-            ]);
-            echo "success: The database for the reflective XSS challenge was successfully reset.";
-        } catch (Exception $e) {
-            echo "error: Sorry, the database could not be reset. Please report this error!";
-        }
-    } else {
-        echo "error: Sorry, it seems like the internal function for cookie creation is broken. Please report this error.";
+    try {
+        $newFakeCookieID = get_random_token(16);
+    } catch (Exception $e) {
+        display_exception_msg($e->getMessage());
+        exit();
     }
+
+    $sql = "UPDATE `users` SET `xss_fake_cookie_id`=:new_cookie "
+        . "WHERE `user_name` = :user_name";
+
+    try {
+        get_login_db()->prepare($sql)->execute([
+            'new_cookie' => $newFakeCookieID,
+            'user_name' => $username
+        ]);
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "113");
+        exit();
+    }
+
+    echo "success: The database for the reflective XSS challenge "
+        . "was successfully reset.";
 }
 
+// Reset stored XSS challenge
 function reset_stored_xss_db($username)
 {
     $sql = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
     try {
         get_shop_db()->prepare($sql)->execute(['user_name' => $username]);
-        echo "success: The database for the stored XSS challenge was successfully reset.";
-    } catch (Exception $e) {
-        echo "error: Sorry, your XSS comment database could not be reset. Please report this error.";
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "114");
+        exit();
     }
+
+    echo "success: The database for the stored XSS challenge was "
+        . "successfully reset.";
 }
 
+// Reset SQLi challenge
 function reset_sqli_db($username)
 {
+    $mail = $_SESSION['userMail'];
+
     try {
-        $mail = $_SESSION['userMail'];
         create_sqli_db($username, $mail);
-        echo "The SQL injection database was successfully reset.";
     } catch (Exception $e) {
-        echo "error: Seems like it went something wrong while we tried to reset your SQL injection database. Please report this error.";
+        display_exception_msg($e->getMessage(), "052");
+        exit();
     }
+    echo "The SQL injection database was successfully reset.";
 }
 
+// reset CSRF challenge
 function reset_csrf_db($username)
 {
     $sql = "DELETE FROM `csrf_posts` WHERE `user_name` = :user_name";
+
     try {
         get_shop_db()->prepare($sql)->execute(['user_name' => $username]);
-        echo "success: The database for the CSRF challenge was successfully reset.";
-    } catch (Exception $e) {
-        echo "error: Sorry, your CSRF database could not be reset. Please report this error.";
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "114");
     }
+    echo "success: The database for the CSRF challenge was successfully reset.";
 }
 
-
+// check if the XSS challenge was solved
 function check_xss_challenge($username)
 {
     $challengeStatus = false;
@@ -241,14 +282,15 @@ function check_xss_challenge($username)
         $stmt->execute(['user_name' => $username]);
 
         if (!$result = $stmt->fetch()) {
-            echo "error: User in XSS challenge was not found. Please report this error.";
+            trigger_error("Code Error: No entry found for " . $username
+                . " in XSS challenge.");
             return $challengeStatus;
         } else {
             $fakeID = $result['xss_fake_cookie_id'];
         }
-    } catch (Exception $e) {
-        echo "error: Sorry, your status regarding the XSS challenge could not be fetch from the user database. Please report this error.";
-        return $challengeStatus;
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "115");
+        exit();
     }
 
     $sql = "SELECT `text` FROM `xss_comments` WHERE `author` = :user_name";
@@ -261,14 +303,15 @@ function check_xss_challenge($username)
                 $challengeStatus = true;
             }
         }
-    } catch (Exception $e) {
-        echo "error: Sorry, your status regarding the XSS challenge could not be fetch from the challenge database. Please report this error.";
-        return $challengeStatus;
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "116");
+        exit();
     }
 
     return $challengeStatus;
 }
 
+// check if the SQLi challenge is solved
 function check_sqli_challenge($username)
 {
 
@@ -282,65 +325,69 @@ function check_sqli_challenge($username)
         $result = $database->query($sql);
         $row = $result->fetchArray();
         if ($row) {
-            $challengeStatus = True;
+            $challengeStatus = true;
         }
     } else {
-        echo "error: Your SQLi database could not be found. Please reset your database and report this error.";
+        trigger_error("Code Error: SQLi Database for " . $username
+            . " was not found.");
         return $challengeStatus;
     }
 
     return $challengeStatus;
 }
 
+// check if CSRF challenge was solved
 function check_crosspost_challenge($username)
 {
 
     $challengeStatus = false;
 
+    $sql = "SELECT `message` FROM `csrf_posts` WHERE `user_name` = :user_name";
+
     try {
-        $sql = "SELECT `message` FROM `csrf_posts` WHERE `user_name` = :user_name";
         $stmt = get_shop_db()->prepare($sql);
         $stmt->execute(['user_name' => $username]);
 
         if ($result = $stmt->fetchColumn()) {
             $challengeStatus = true;
         }
-        return $challengeStatus;
-    } catch (Exception $e) {
-        echo "error: Sorry, we could not establish a connection to the CSRF database. Please report this error.";
-        return $challengeStatus;
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "117");
+        exit();
     }
     return $challengeStatus;
 }
 
+// check if CSRF challenge was solved with the correct referer
 function check_crosspost_challenge_double($username)
 {
     $challengeStatus = false;
 
+    $sql = "SELECT `referrer` FROM `csrf_posts` WHERE `user_name` = :user_name";
+
     try {
-        $sql = "SELECT `referrer` FROM `csrf_posts` WHERE `user_name` = :user_name";
         $stmt = get_shop_db()->prepare($sql);
         $stmt->execute(['user_name' => $username]);
+    } catch (PDOException $e) {
+        display_exception_msg($e->getMessage(), "118");
+        exit();
+    }
 
-        $needle1 = "product.php";
-        $needle2 = "overview.php";
-        $needle3 = "friends.php";
+    $needle1 = "product.php";
+    $needle2 = "overview.php";
+    $needle3 = "friends.php";
 
-        while ($row = $stmt->fetch()) {
+    while ($row = $stmt->fetch()) {
 
-            $haystack = $row['referrer'];
-            $pos1 = strpos($haystack, $needle1);
-            $pos2 = strpos($haystack, $needle2);
-            $pos3 = strpos($haystack, $needle3);
+        $haystack = $row['referrer'];
+        $pos1 = strpos($haystack, $needle1);
+        $pos2 = strpos($haystack, $needle2);
+        $pos3 = strpos($haystack, $needle3);
 
-            if ($pos1 !== false || $pos2 !== false || $pos3 !== false) {
-                $challengeStatus = true;
-                return $challengeStatus;
-            }
+        if ($pos1 !== false || $pos2 !== false || $pos3 !== false) {
+            $challengeStatus = true;
+            return $challengeStatus;
         }
-    } catch (Exception $e) {
-        echo "error: Sorry, we could not establish a connection to the CSRF database. Please report this error.";
-        return $challengeStatus;
     }
     return $challengeStatus;
 }

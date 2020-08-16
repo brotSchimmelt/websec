@@ -5,7 +5,7 @@
  * 
  * Uses the credentials defined in the config.php file.
  *
- * @return \PDO the database connection.
+ * @return \PDO the login database connection.
  */
 function get_login_db()
 {
@@ -18,11 +18,8 @@ function get_login_db()
     try {
         $dbLogin = new PDO(DSN_LOGIN, DB_USER_LOGIN, DB_PWD_LOGIN, OPTIONS_LOGIN);
     } catch (PDOException $e) {
-        echo "<b>Error Message</b>: Sorry, the connection to our database "
-            . "could not be established.<br>";
-        echo "<b>Note</b>: If this error persists, please post it to the "
-            . "Learnweb forum.<br> ";
-        echo "<b>Error Code</b>: 010";
+        $msg = "The connection to our database could not be established.";
+        display_exception_msg($msg, "010");
         exit();
     }
     return $dbLogin;
@@ -139,9 +136,7 @@ function hash_user_pwd($pwd)
     $hash = password_hash($pwd, PASSWORD_DEFAULT, ['cost' => 13]);
     // check if the hash was successfully created
     if (!$hash) {
-        throw new Exception("<b>Error Message</b>: Hash creation failed.<br> "
-            . "<b>Note</b>: If this error persists, please post it to the "
-            . "Learnweb forum.<br> ");
+        throw new Exception("Hash creation failed.");
     }
     return $hash;
 }
@@ -156,7 +151,7 @@ function check_entry_exists($entry, $sql)
     try {
         $duplicateQuery = get_login_db()->prepare($sql);
         $duplicateQuery->execute([$entry]);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=0102");
         exit();
     }
@@ -222,8 +217,7 @@ function do_login($username, $mail, $adminFlag)
     try {
         $token = get_random_token(32);
     } catch (Exception $e) {
-        echo $e->getMessage();
-        echo "<b>Note</b>: Please report this error in the Learnweb forum.";
+        display_exception_msg($e->getMessage());
         exit();
     }
 
@@ -246,7 +240,7 @@ function try_login($username, $pwd)
     try {
         $stmt = get_login_db()->prepare($sql);
         $stmt->execute([$username]);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=103");
         exit();
     }
@@ -298,24 +292,23 @@ function do_registration($username, $mail, $password)
     try {
         $pwdHash = hash_user_pwd($password);
     } catch (Exception $e) {
-        echo $e->getMessage();
-        echo "<b>Error Code</b>: 031";
+        display_exception_msg($e->getMessage(), "031");
         exit();
     }
 
     try {
         $fakeXSSCookieID = get_random_token(16);
     } catch (Exception $e) {
-        echo $e->getMessage();
-        echo "<b>Note</b>: Please report this error in the Learnweb forum.";
+        display_exception_msg($e->getMessage());
         exit();
     }
 
+    $insertUser = "INSERT INTO users (user_id, user_name, "
+        . "user_wwu_email, user_pwd_hash, is_unlocked, is_admin, timestamp,"
+        . " xss_fake_cookie_id) VALUE (NULL, :user, :mail, :pwd_hash, '0', "
+        . "'0', :timestamp, :cookie_id)";
+
     try {
-        $insertUser = "INSERT INTO users (user_id, user_name, "
-            . "user_wwu_email, user_pwd_hash, is_unlocked, is_admin, timestamp,"
-            . " xss_fake_cookie_id) VALUE (NULL, :user, :mail, :pwd_hash, '0', "
-            . "'0', :timestamp, :cookie_id)";
         get_login_db()->prepare($insertUser)->execute([
             'user' => $username,
             'mail' => $mail,
@@ -323,13 +316,18 @@ function do_registration($username, $mail, $password)
             'timestamp' => date("Y-m-d H:i:s"),
             'cookie_id' => $fakeXSSCookieID
         ]);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=104");
         exit();
     }
 
-    // Create personal DB for SQLi challenge
-    create_sqli_db($username, $mail);
+    try {
+        // Create personal DB for SQLi challenge
+        create_sqli_db($username, $mail);
+    } catch (Exception $e) {
+        display_exception_msg($e->getMessage(), "051");
+    }
+
 
     // redirect back to login page
     header("location: " . LOGIN_PAGE . "?success=signup");
@@ -345,7 +343,7 @@ function get_random_token($length)
 
     $token = bin2hex(openssl_random_pseudo_bytes($length));
     if ($token === false) {
-        throw new Exception("<b>Error Message</b>: Token creation failed.<br> ");
+        throw new Exception("Token creation failed.");
     }
 
     // trim the new token to the predefined length
@@ -359,8 +357,7 @@ function do_pwd_reset($mail)
         $selector = get_random_token(16); // to select user from the database
         $validator = get_random_token(32); // to validate password reset request
     } catch (Exception $e) {
-        echo $e->getMessage();
-        echo "<b>Note</b>: Please report this error in the Learnweb forum.";
+        display_exception_msg($e->getMessage());
         exit();
     }
 
@@ -394,7 +391,7 @@ function check_pwd_request_status($mail)
     try {
         $query = get_login_db()->prepare($sql);
         $query->execute([$mail]);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         header("location: " . "/password_reset.php" . "?error=sqlError"
             . "&code=105");
         exit();
@@ -407,10 +404,11 @@ function check_pwd_request_status($mail)
 // delete password reset request from the database
 function delete_pwd_request($mail)
 {
+    $sql = "DELETE FROM `resetPwd` WHERE `user_wwu_email`=?";
+
     try {
-        $sql = "DELETE FROM `resetPwd` WHERE `user_wwu_email`=?";
         get_login_db()->prepare($sql)->execute([$mail]);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         header("location: " . "/password_reset.php" . "?error=sqlError"
             . "&code=106");
         exit();
@@ -424,22 +422,21 @@ function add_pwd_request($mail, $selector, $validator, $expires)
     try {
         $hashedToken = hash_user_pwd($validator);
     } catch (Exception $e) {
-        echo $e->getMessage();
-        echo "<b>Error Code</b>: 032";
+        display_exception_msg($e->getMessage(), "032");
         exit();
     }
+    $insertRequest = "INSERT INTO `resetPwd` (`request_id`,"
+        . "`user_wwu_email`, `request_selector`, `request_token`,"
+        . "`request_expiration`) VALUE (NULL, :mail, :selector, :token, :date)";
 
     try {
-        $insertRequest = "INSERT INTO `resetPwd` (`request_id`,"
-            . "`user_wwu_email`, `request_selector`, `request_token`,"
-            . "`request_expiration`) VALUE (NULL, :mail, :selector, :token, :date)";
         get_login_db()->prepare($insertRequest)->execute([
             'mail' => $mail,
             'selector' => $selector,
             'token' => $hashedToken,
             'date' => $expires
         ]);
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         header("location: " . "/password_reset.php" . "?error=sqlError"
             . "&code=107");
         exit();
@@ -491,7 +488,7 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
         try {
             $stmt = get_login_db()->prepare($sql);
             $stmt->execute([$username]);
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             header("location: " . $redirectPath . "?error=sqlError" . "&code=108");
             exit();
         }
@@ -503,8 +500,7 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
             try {
                 $newPwdHash = hash_user_pwd($newPwd);
             } catch (Exception $e) {
-                echo $e->getMessage();
-                echo "<b>Error Code</b>: 033";
+                display_exception_msg($e->getMessage(), "033");
                 exit();
             }
 
@@ -516,7 +512,7 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
                     'hash' => $newPwdHash,
                     'user' => $username
                 ]);
-            } catch (Exception $e) {
+            } catch (PDOException $e) {
                 header("location: " . $redirectPath . "?error=sqlError"
                     . "&code=109");
                 exit();
@@ -549,15 +545,15 @@ function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
         try {
             $pwdHash = hash_user_pwd($pwd);
         } catch (Exception $e) {
-            echo $e->getMessage();
-            echo "<b>Error Code</b>: 034";
+            display_exception_msg($e->getMessage(), "034");
             exit();
         }
         $mail = get_user_mail($selector);
 
+        $sql = "UPDATE `users` SET `user_pwd_hash` = :pwd WHERE "
+            . "`user_wwu_email`=:mail";
+
         try {
-            $sql = "UPDATE `users` SET `user_pwd_hash` = :pwd WHERE "
-                . "`user_wwu_email`=:mail";
             $stmt = get_login_db()->prepare($sql);
             $stmt->execute([
                 'pwd' => $pwdHash,
@@ -598,11 +594,12 @@ function verify_token($selector, $validator, $requestURI)
 
     $currentDate = date('U');
 
+    $sql = "SELECT `request_token` FROM `resetPwd` WHERE "
+        . "`request_selector`=? AND `request_expiration`>="
+        . $currentDate;
+
     // get token from DB by selector
     try {
-        $sql = "SELECT `request_token` FROM `resetPwd` WHERE "
-            . "`request_selector`=? AND `request_expiration`>=";
-        $sql .= $currentDate;
         $stmt = get_login_db()->prepare($sql);
         $stmt->execute([$selector]);
         $result = $stmt->fetch();
@@ -632,9 +629,9 @@ function verify_token($selector, $validator, $requestURI)
 // get the corresponding user e-mail to a given selector token
 function get_user_mail($selector)
 {
+    $sql = "SELECT `user_wwu_email` FROM `resetPwd` WHERE `request_selector`=?";
 
     try {
-        $sql = "SELECT `user_wwu_email` FROM `resetPwd` WHERE `request_selector`=?";
         $stmt = get_login_db()->prepare($sql);
         $stmt->execute([$selector]);
         $result = $stmt->fetch();
