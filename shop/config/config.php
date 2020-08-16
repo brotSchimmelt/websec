@@ -37,7 +37,7 @@ define("FUNC_SHOP", SRC . "shop_functions.php"); // Functions for products, cart
 define("FUNC_WEBSEC", SRC . "websec_functions.php"); // Functions for websec challenges
 
 // Errors
-define("ERROR_HANDLING", SRC . "error_handling.php"); // Functions for error handling
+define("ERROR_HANDLING", SRC . "error_functions.php"); // Functions for error handling
 define("MESSAGES", SRC . "messages.php"); // Error messages, user notifications etc.
 
 // Path for frequent redirects
