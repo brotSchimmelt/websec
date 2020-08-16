@@ -36,6 +36,14 @@ if (isset($_GET['xss'])) {
 $productsPerRow = 3;
 $searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
 
+if (isset($_POST['add-preview'])) {
+
+    $productID = filter_input(INPUT_POST, 'product_id');
+    $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_INT);
+    add_product_to_cart($productID, $quantity);
+    header("location: " . "/shop/overview.php" . "?success=prodAdded");
+    exit();
+}
 
 ?>
 <!doctype html>

@@ -25,7 +25,7 @@ if (!$done) :
                     <!-- <a href="#" class="btn btn-outline-light btn-sm">Detail Page</a> -->
                     <a href="product.php?id= <?= $row['prod_id']  ?>" class="btn btn-wwu-primary btn-sm">Detail Page</a>
 
-                    <form action="/input_handler.php" method="post">
+                    <form action="overview.php" method="post">
                         <div class="form-row">
 
                             <div class="col btn-col">

@@ -38,6 +38,15 @@ $productData = $stmt->fetch();
 if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
     add_comment_to_db($_POST['userComment'], $_SESSION['userName']);
 }
+if (isset($_POST['add-product'])) {
+
+    $productID = filter_input(INPUT_POST, 'product_id');
+    $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_INT);
+    add_product_to_cart($productID, $quantity);
+    header("location: " . "/shop/product.php?id=" . $productID . "&success=prodAdded");
+    exit();
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -98,7 +107,7 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
                     <div class="p-4 align-self-start">
                         <strong><?= $productData['price'] ?> &euro;</strong>
                     </div>
-                    <form action="/input_handler.php" method="post">
+                    <form action="product.php" method="post">
                         <div class="p-4 align-self-start">
                             <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="3" placeholder="-" required>
 
