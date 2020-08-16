@@ -1,5 +1,6 @@
 <?php
 
+// get error or success GET variables
 function get_message()
 {
     // Check if success is set
@@ -16,7 +17,11 @@ function get_message()
 
         // Check if the error comes with an optional error code
         if (isset($_GET['code']) && !empty($_GET['code'])) {
-            $errorCode = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_NUMBER_INT);
+            $errorCode = filter_input(
+                INPUT_GET,
+                'code',
+                FILTER_SANITIZE_NUMBER_INT
+            );
         }
 
         return get_error_msg($error, $errorCode);
@@ -27,6 +32,7 @@ function get_message()
     }
 }
 
+// return success message to given success type
 function get_success_msg($success)
 {
     $msgType = "success";
@@ -45,8 +51,10 @@ function get_success_msg($success)
             return format_msg($msg, $msgType);
             break;
         case "requestProcessed":
-            $msg = "<b>Success! </b>If your e-mail address is linked to an active account, ";
-            $msg .= "you will receive an e-mail with further instructions on how to reset your password.";
+            $msg = "<b>Success! </b>If your e-mail address is linked to an ";
+            $msg .= "active account, ";
+            $msg .= "you will receive an e-mail with further instructions on ";
+            $msg .= "how to reset your password.";
             return format_msg($msg, $msgType);
             break;
         case "pwdChanged":
@@ -59,6 +67,7 @@ function get_success_msg($success)
     }
 }
 
+// return error message to given error type
 function get_error_msg($error, $errorCode)
 {
     $msgType = "error";
@@ -66,7 +75,8 @@ function get_error_msg($error, $errorCode)
     switch ($error) {
         case "sqlError":
             $msg = "Oh no! There was an error in the database. ";
-            $msg .= "Please report this error in the Learnweb forum. Include this error code: <b>";
+            $msg .= "Please report this error in the Learnweb forum. ";
+            $msg .= "Include this error code: <b>";
             $msg .= $errorCode . "</b>";
             return format_msg($msg, $msgType);
             break;
@@ -80,14 +90,15 @@ function get_error_msg($error, $errorCode)
             return format_msg($msg, $msgType);
             break;
         case "invalidNameAndMail":
-            $msg = "It seems like your user name <b>and</b> your e-mail address do not fulfill ";
-            $msg .= "the requirements. Please choose a different user name and use your ";
-            $msg .= "WWU e-mail account.";
+            $msg = "It seems like your user name <b>and</b> your e-mail ";
+            $msg .= "address do not fulfill the requirements. Please choose a ";
+            $msg .= "different user name and use your WWU e-mail account.";
             return format_msg($msg, $msgType);
             break;
         case "invalidUsername":
             $msg = "It seems like your user name does not fulfill ";
-            $msg .= "the requirements. Please use only letters and numbers and 2 to 64 characters.";
+            $msg .= "the requirements. Please use only letters and numbers ";
+            $msg .= "and 2 to 64 characters.";
             return format_msg($msg, $msgType);
             break;
         case "invalidMailFormat":
@@ -114,19 +125,22 @@ function get_error_msg($error, $errorCode)
             return format_msg($msg, $msgType);
             break;
         case "mailTaken":
-            $msg = "This e-mail address is already taken. If you forgot your password, ";
+            $msg = "This e-mail address is already taken. If you forgot ";
+            $msg .= "your password, ";
             $msg .= "you can reset it ";
             $msg .= '<a href="password_reset.php">here</a>.';
             return format_msg($msg, $msgType);
             break;
         case "invalidToken":
-            $msg = "Sorry, it seems like your reset link is not working. Please request a ";
+            $msg = "Sorry, it seems like your reset link is not working. ";
+            $msg .= "Please request a ";
             $msg .= '<a href="password_reset.php">new link here</a>. ';
             $msg .= "If the error persists, contact your lecturer.";
             return format_msg($msg, $msgType);
             break;
         case "missingToken":
-            $msg = "Sorry, it seems like your reset link does not contain the necessary tokens. ";
+            $msg = "Sorry, it seems like your reset link does not contain ";
+            $msg .= "the necessary tokens. ";
             $msg .= "Please try the link from the mail again. ";
             $msg .= "If the error persists, request a ";
             $msg .= '<a href="password_reset.php">new link here</a> ';
@@ -134,12 +148,13 @@ function get_error_msg($error, $errorCode)
             return format_msg($msg, $msgType);
             break;
         default:
-            $msg = "An unknown <b>error</b> occurred. Please report this in the Learnweb forum.";
+            $msg = "An unknown <b>error</b> occurred. Please report this ";
+            $msg .= "in the Learnweb forum.";
             return format_msg($msg, $msgType);
     }
 }
 
-
+// format user message
 function format_msg($msgString, $msgType)
 {
 
@@ -155,4 +170,34 @@ function format_msg($msgString, $msgType)
         default:
             return sprintf($format, "info", $msgString);
     }
+}
+
+// display and format exception messages
+function display_exception_msg($msg = null, $errorCode = null, $note = null)
+{
+    // html for the error page
+    include(INCL . "error_page.php");
+
+    // default messages
+    if (is_null($msg)) {
+        $msg = "An unexpected error occurred.";
+    }
+    if (is_null($note)) {
+        $note = 'If this error persists, please post it to the '
+            . '<a href="https://www.uni-muenster.de/LearnWeb/learnweb2/" '
+            . 'target="_blank">Learnweb</a> forum.';
+    }
+
+    echo "<strong>Error Message</strong>: " . $msg . "<br><br>";
+    echo "<strong>Note</strong>: " . $note . "<br><br>";
+
+    if (!is_null($errorCode)) {
+        echo "<strong>Error Code</strong>: " . $errorCode . "<br><br>";
+    }
+
+    // link to main.php
+    echo '<br><br><hr><a href="../shop/main.php">Back to the Shop</a>';
+
+    // close off error page
+    echo "</div></body></html>";
 }
