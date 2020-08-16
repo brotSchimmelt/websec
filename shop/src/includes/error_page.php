@@ -18,7 +18,7 @@
     <!-- Headline -->
     <br><br><br>
     <div class="doc-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Oh Snap :(</h1>
+        <h1 class="display-3">Oh Snap :(</h1>
         <p class="lead">Sorry, this was not supposed to happen.</p>
     </div>
 
