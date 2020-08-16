@@ -27,12 +27,7 @@ class ComposerStaticInit6180f6c1f4d7d4a246c357ab68aceaad
         ),
         'P' => 
         array (
-            'Psr\\Log\\' => 8,
             'Prophecy\\' => 9,
-        ),
-        'M' => 
-        array (
-            'Monolog\\' => 8,
         ),
         'D' => 
         array (
@@ -56,17 +51,9 @@ class ComposerStaticInit6180f6c1f4d7d4a246c357ab68aceaad
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
         'Prophecy\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
-        ),
-        'Monolog\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -79,7 +66,6 @@ class ComposerStaticInit6180f6c1f4d7d4a246c357ab68aceaad
     );
 
     public static $classMap = array (
-        'Email' => __DIR__ . '/../..' . '/src/Email.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/AssertionFailedError.php',
