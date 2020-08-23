@@ -173,24 +173,37 @@ function format_msg($msgString, $msgType)
 }
 
 // display and format exception messages
-function display_exception_msg($msg = null, $errorCode = null, $note = null)
+function display_exception_msg($exception, $errorCode = null, $note = null)
 {
     // html for the error page
     include(INCL . "error_page.php");
 
-    // default messages
-    if (is_null($msg)) {
+    // default message
+    if (is_null($exception) || !($exception instanceof Exception)) {
         $msg = "An unexpected error occurred.";
+        echo "<strong>Error Message</strong>: " . $msg . "<br><br>";
     }
+    // display exception information
+    if ($exception instanceof Exception) {
+        echo "<strong>Error Message</strong>: "
+            . $exception->getMessage() . "<br>";
+        echo "<strong>File</strong>: "
+            . $exception->getFile() . "<br>";
+        echo "<strong>Line</strong>: "
+            . $exception->getLine() . "<br>";
+        echo "<strong>Trace</strong>: "
+            . $exception->getTraceAsString() . "<br><br>";
+    }
+
+    // additional information about the error
     if (is_null($note)) {
         $note = 'If this error persists, please post it to the '
             . '<a href="https://www.uni-muenster.de/LearnWeb/learnweb2/" '
             . 'target="_blank">Learnweb</a> forum.';
     }
-
-    echo "<strong>Error Message</strong>: " . $msg . "<br><br>";
     echo "<strong>Note</strong>: " . $note . "<br><br>";
 
+    // custom error code
     if (!is_null($errorCode)) {
         echo "<strong>Error Code</strong>: " . $errorCode . "<br><br>";
     }
