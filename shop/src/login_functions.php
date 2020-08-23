@@ -16,7 +16,7 @@ function get_login_db()
     }
 
     try {
-        $dbLogin = new PDO("DSN_LOGIN", DB_USER_LOGIN, DB_PWD_LOGIN, OPTIONS_LOGIN);
+        $dbLogin = new PDO(DSN_LOGIN, DB_USER_LOGIN, DB_PWD_LOGIN, OPTIONS_LOGIN);
     } catch (PDOException $e) {
         $note = "The connection to our database could not be established. "
             . 'If this error persists, please post it to the '
