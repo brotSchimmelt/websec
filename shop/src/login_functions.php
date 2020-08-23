@@ -232,6 +232,8 @@ function do_login($username, $mail, $adminFlag)
     if ($adminFlag == 1) {
         $_SESSION['userIsAdmin'] = $adminFlag;
     }
+
+    update_last_login($username);
 }
 
 // validate all user input for login
@@ -656,4 +658,23 @@ function get_user_mail($selector)
     }
 
     return $result['user_wwu_email'];
+}
+
+// update the field last login in the users table with current timestamp
+function update_last_login($username)
+{
+    $sql = "UPDATE `users` SET last_login=:timestamp WHERE `user_name`=:user";
+    $timestamp = date("Y-m-d H:i:s");
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([
+            'timestamp' => $timestamp,
+            'user' => $username
+        ]);
+    } catch (PDOException $e) {
+        trigger_error("Code Error: last_login field could not be updated.");
+        header("location: " . LOGIN_PAGE);
+        exit();
+    }
 }
