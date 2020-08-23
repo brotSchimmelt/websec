@@ -25,7 +25,7 @@ function set_fake_cookie($username)
         $fakeID = $result['xss_fake_cookie_id'];
     } catch (PDOException $e) {
         $msg = "The cookie for the XSS challenge could not be set.";
-        display_exception_msg($msg, "112");
+        display_exception_msg($e, "112");
         exit();
     }
     setcookie($cookieName, $fakeID);
@@ -145,7 +145,7 @@ function add_comment_to_db($comment, $author)
             'timestamp' => date("Y-m-d H:i:s")
         ]);
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "161");
+        display_exception_msg($e, "161");
         exit();
     }
 }
@@ -207,7 +207,7 @@ function reset_reflective_xss_db($username)
     try {
         $newFakeCookieID = get_random_token(16);
     } catch (Exception $e) {
-        display_exception_msg($e->getMessage());
+        display_exception_msg($e);
         exit();
     }
 
@@ -220,7 +220,7 @@ function reset_reflective_xss_db($username)
             'user_name' => $username
         ]);
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "113");
+        display_exception_msg($e, "113");
         exit();
     }
 
@@ -235,7 +235,7 @@ function reset_stored_xss_db($username)
     try {
         get_shop_db()->prepare($sql)->execute(['user_name' => $username]);
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "114");
+        display_exception_msg($e, "114");
         exit();
     }
 
@@ -251,7 +251,7 @@ function reset_sqli_db($username)
     try {
         create_sqli_db($username, $mail);
     } catch (Exception $e) {
-        display_exception_msg($e->getMessage(), "052");
+        display_exception_msg($e, "052");
         exit();
     }
     echo "The SQL injection database was successfully reset.";
@@ -265,7 +265,7 @@ function reset_csrf_db($username)
     try {
         get_shop_db()->prepare($sql)->execute(['user_name' => $username]);
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "114");
+        display_exception_msg($e, "114");
     }
     echo "success: The database for the CSRF challenge was successfully reset.";
 }
@@ -289,7 +289,7 @@ function check_xss_challenge($username)
             $fakeID = $result['xss_fake_cookie_id'];
         }
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "115");
+        display_exception_msg($e, "115");
         exit();
     }
 
@@ -304,7 +304,7 @@ function check_xss_challenge($username)
             }
         }
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "116");
+        display_exception_msg($e, "116");
         exit();
     }
 
@@ -352,7 +352,7 @@ function check_crosspost_challenge($username)
             $challengeStatus = true;
         }
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "117");
+        display_exception_msg($e, "117");
         exit();
     }
     return $challengeStatus;
@@ -369,7 +369,7 @@ function check_crosspost_challenge_double($username)
         $stmt = get_shop_db()->prepare($sql);
         $stmt->execute(['user_name' => $username]);
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "118");
+        display_exception_msg($e, "118");
         exit();
     }
 

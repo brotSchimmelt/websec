@@ -12,8 +12,11 @@ function get_shop_db()
     try {
         $dbShop = new PDO(DSN_SHOP, DB_USER_SHOP, DB_PWD_SHOP, OPTIONS_SHOP);
     } catch (PDOException $e) {
-        $msg = "The connection to our database could not be established.";
-        display_exception_msg($msg, "020");
+        $note = "The connection to our database could not be established. "
+            . 'If this error persists, please post it to the '
+            . '<a href="https://www.uni-muenster.de/LearnWeb/learnweb2/" '
+            . 'target="_blank">Learnweb</a> forum.';
+        display_exception_msg(null, "020", $note);
         exit();
     }
     return $dbShop;
@@ -52,7 +55,7 @@ function add_product_to_cart($productID, $quantity)
             ]);
             $result = $stmtQuantity->fetch();
         } catch (PDOException $e) {
-            display_exception_msg($e->getMessage(), "151");
+            display_exception_msg($e, "151");
             exit();
         }
 
@@ -78,7 +81,7 @@ function add_product_to_cart($productID, $quantity)
                 'date' => date("Y-m-d H:i:s")
             ]);
         } catch (PDOException $e) {
-            display_exception_msg($e->getMessage(), "152");
+            display_exception_msg($e, "152");
             exit();
         }
         // add new product to cart
@@ -99,7 +102,7 @@ function add_product_to_cart($productID, $quantity)
                 'date' => date("Y-m-d H:i:s")
             ]);
         } catch (PDOException $e) {
-            display_exception_msg($e->getMessage(), "153");
+            display_exception_msg($e, "153");
             exit();
         }
     }
@@ -119,7 +122,7 @@ function is_product_in_cart($productID)
             ]
         );
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "154");
+        display_exception_msg($e, "154");
         exit();
     }
 
@@ -140,7 +143,7 @@ function show_products($productsPerRow)
     try {
         $result = get_shop_db()->query($sql);
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "155");
+        display_exception_msg($e, "155");
         exit();
     }
 
@@ -173,7 +176,7 @@ function show_cart_content()
         $stmtCart->execute(['user_name' => $_SESSION['userName']]);
         $cart = $stmtCart->fetchAll();
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "156");
+        display_exception_msg($e, "156");
         exit();
     }
 
@@ -189,7 +192,7 @@ function show_cart_content()
             $stmtProd->execute(['prod_id' => $prodID]);
             $product = $stmtProd->fetch();
         } catch (PDOException $e) {
-            display_exception_msg($e->getMessage(), "157");
+            display_exception_msg($e, "157");
             exit();
         }
 
@@ -219,7 +222,7 @@ function is_cart_empty()
         $stmtCart->execute(['user_name' => $_SESSION['userName']]);
         $cart = $stmtCart->fetchAll();
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "158");
+        display_exception_msg($e, "158");
         exit();
     }
 
@@ -237,7 +240,7 @@ function get_num_of_cart_items()
         $stmt = get_shop_db()->prepare($sql);
         $stmt->execute(['user_name' => $_SESSION['userName']]);
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "159");
+        display_exception_msg($e, "159");
         exit();
     }
 
@@ -255,7 +258,7 @@ function show_search_results($searchTerm, $productsPerRow)
         $stmt->bindValue(':needle', $needle, PDO::PARAM_STR);
         $stmt->execute();
     } catch (PDOException $e) {
-        display_exception_msg($e->getMessage(), "160");
+        display_exception_msg($e, "160");
         exit();
     }
 

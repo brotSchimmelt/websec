@@ -16,10 +16,13 @@ function get_login_db()
     }
 
     try {
-        $dbLogin = new PDO(DSN_LOGIN, DB_USER_LOGIN, DB_PWD_LOGIN, OPTIONS_LOGIN);
+        $dbLogin = new PDO("DSN_LOGIN", DB_USER_LOGIN, DB_PWD_LOGIN, OPTIONS_LOGIN);
     } catch (PDOException $e) {
-        $msg = "The connection to our database could not be established.";
-        display_exception_msg($msg, "010");
+        $note = "The connection to our database could not be established. "
+            . 'If this error persists, please post it to the '
+            . '<a href="https://www.uni-muenster.de/LearnWeb/learnweb2/" '
+            . 'target="_blank">Learnweb</a> forum.';
+        display_exception_msg(null, "010", $note);
         exit();
     }
     return $dbLogin;
@@ -217,7 +220,7 @@ function do_login($username, $mail, $adminFlag)
     try {
         $token = get_random_token(32);
     } catch (Exception $e) {
-        display_exception_msg($e->getMessage());
+        display_exception_msg($e);
         exit();
     }
 
@@ -292,14 +295,14 @@ function do_registration($username, $mail, $password)
     try {
         $pwdHash = hash_user_pwd($password);
     } catch (Exception $e) {
-        display_exception_msg($e->getMessage(), "031");
+        display_exception_msg($e, "031");
         exit();
     }
 
     try {
         $fakeXSSCookieID = get_random_token(16);
     } catch (Exception $e) {
-        display_exception_msg($e->getMessage());
+        display_exception_msg($e);
         exit();
     }
 
@@ -325,7 +328,7 @@ function do_registration($username, $mail, $password)
         // Create personal DB for SQLi challenge
         create_sqli_db($username, $mail);
     } catch (Exception $e) {
-        display_exception_msg($e->getMessage(), "051");
+        display_exception_msg($e, "051");
     }
 
 
@@ -357,7 +360,7 @@ function do_pwd_reset($mail)
         $selector = get_random_token(16); // to select user from the database
         $validator = get_random_token(32); // to validate password reset request
     } catch (Exception $e) {
-        display_exception_msg($e->getMessage());
+        display_exception_msg($e);
         exit();
     }
 
@@ -422,7 +425,7 @@ function add_pwd_request($mail, $selector, $validator, $expires)
     try {
         $hashedToken = hash_user_pwd($validator);
     } catch (Exception $e) {
-        display_exception_msg($e->getMessage(), "032");
+        display_exception_msg($e, "032");
         exit();
     }
     $insertRequest = "INSERT INTO `resetPwd` (`request_id`,"
@@ -500,7 +503,7 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
             try {
                 $newPwdHash = hash_user_pwd($newPwd);
             } catch (Exception $e) {
-                display_exception_msg($e->getMessage(), "033");
+                display_exception_msg($e, "033");
                 exit();
             }
 
@@ -545,7 +548,7 @@ function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
         try {
             $pwdHash = hash_user_pwd($pwd);
         } catch (Exception $e) {
-            display_exception_msg($e->getMessage(), "034");
+            display_exception_msg($e, "034");
             exit();
         }
         $mail = get_user_mail($selector);
