@@ -13,16 +13,16 @@ function slug($z)
 // set challenge cookie for user
 function set_fake_cookie($username)
 {
-    $cookieName = "SessionCookieID";
+    $cookieName = "XSS_Challenge_Cookie";
 
-    $sql = "SELECT `xss_fake_cookie_id` FROM "
-        . "users WHERE `user_name`=:user_name";
+    $sql = "SELECT `challenge_cookie` FROM "
+        . "fakeCookie WHERE `user_name`=:user_name";
 
     try {
         $stmt = get_login_db()->prepare($sql);
         $stmt->execute(['user_name' => $username]);
         $result = $stmt->fetch();
-        $fakeID = $result['xss_fake_cookie_id'];
+        $fakeID = $result['challenge_cookie'];
     } catch (PDOException $e) {
         $msg = "The cookie for the XSS challenge could not be set.";
         display_exception_msg($e, "112");
@@ -205,18 +205,18 @@ function reset_reflective_xss_db($username)
     include_once(FUNC_LOGIN);
 
     try {
-        $newFakeCookieID = get_random_token(16);
+        $newChallengeCookie = get_random_token(16);
     } catch (Exception $e) {
         display_exception_msg($e);
         exit();
     }
 
-    $sql = "UPDATE `users` SET `xss_fake_cookie_id`=:new_cookie "
+    $sql = "UPDATE `fakeCookie` SET `challenge_cookie`=:new_cookie "
         . "WHERE `user_name` = :user_name";
 
     try {
         get_login_db()->prepare($sql)->execute([
-            'new_cookie' => $newFakeCookieID,
+            'new_cookie' => $newChallengeCookie,
             'user_name' => $username
         ]);
     } catch (PDOException $e) {
@@ -276,7 +276,8 @@ function check_xss_challenge($username)
     $challengeStatus = false;
     $fakeID = 'youShouldNotGetThisCookiePleaseReportInLearnweb';
 
-    $sql = "SELECT `xss_fake_cookie_id` FROM users WHERE user_name = :user_name";
+    $sql = "SELECT `challenge_cookie` FROM fakeCookie WHERE "
+        . "user_name = :user_name";
     try {
         $stmt = get_login_db()->prepare($sql);
         $stmt->execute(['user_name' => $username]);
@@ -286,7 +287,7 @@ function check_xss_challenge($username)
                 . " in XSS challenge.");
             return $challengeStatus;
         } else {
-            $fakeID = $result['xss_fake_cookie_id'];
+            $fakeID = $result['challenge_cookie'];
         }
     } catch (PDOException $e) {
         display_exception_msg($e, "115");
