@@ -300,27 +300,39 @@ function do_registration($username, $mail, $password)
     }
 
     try {
-        $fakeXSSCookieID = get_random_token(16);
+        $XSSChallengeCookie = get_random_token(16);
     } catch (Exception $e) {
         display_exception_msg($e);
         exit();
     }
 
     $insertUser = "INSERT INTO users (user_id, user_name, "
-        . "user_wwu_email, user_pwd_hash, is_unlocked, is_admin, timestamp,"
-        . " xss_fake_cookie_id) VALUE (NULL, :user, :mail, :pwd_hash, '0', "
-        . "'0', :timestamp, :cookie_id)";
+        . "user_wwu_email, user_pwd_hash, is_unlocked, is_admin, timestamp, "
+        . " last_login) VALUE (NULL, :user, :mail, :pwd_hash, '0', "
+        . "'0', :timestamp, NULL)";
 
     try {
         get_login_db()->prepare($insertUser)->execute([
             'user' => $username,
             'mail' => $mail,
             'pwd_hash' => $pwdHash,
-            'timestamp' => date("Y-m-d H:i:s"),
-            'cookie_id' => $fakeXSSCookieID
+            'timestamp' => date("Y-m-d H:i:s")
         ]);
     } catch (PDOException $e) {
         header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=104");
+        exit();
+    }
+
+    $insertCookie = "INSERT INTO fakeCookie (id, user_name, "
+        . "challenge_cookie) VALUE (NULL, :user, :cookie)";
+
+    try {
+        get_login_db()->prepare($insertCookie)->execute([
+            'user' => $username,
+            'cookie' => $XSSChallengeCookie
+        ]);
+    } catch (PDOException $e) {
+        header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=119");
         exit();
     }
 
