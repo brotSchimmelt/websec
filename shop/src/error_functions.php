@@ -214,3 +214,28 @@ function display_exception_msg($exception, $errorCode = null, $note = null)
     // close off error page
     echo "</div></body></html>";
 }
+
+
+function display_warning_msg($msg)
+{
+    // html for the error page
+    include(INCL . "error_page.php");
+
+    // start container
+    echo '<div class="container text-center">';
+
+    // display warning text
+    echo "<strong>Warning</strong>: " . $msg . "<br><br>";
+    echo 'If this warning persists, please post it to the '
+        . '<a href="https://www.uni-muenster.de/LearnWeb/learnweb2/" '
+        . 'target="_blank">Learnweb</a> forum.<br><br>';
+
+    // closer container
+    echo "</div>";
+
+    // link to main.php
+    echo '<br><br><hr><a href="../shop/main.php">Back to the Shop</a>';
+
+    // close off error page
+    echo "</div></body></html>";
+}

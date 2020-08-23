@@ -4,6 +4,7 @@ session_start();
 // includes
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require(FUNC_BASE);
+require(ERROR_HANDLING);
 
 if (is_user_logged_in()) {
 
@@ -11,16 +12,16 @@ if (is_user_logged_in()) {
     if (isset($_SESSION['userToken']) && (!empty($_SESSION['userToken']))) {
         $sessionToken = $_SESSION['userToken'];
     } else {
-        // TODO: Add error message handling with separate site
-        echo "<h4>WARNING: Logout was unsuccessful. Session token is not set!</h4>";
+        $warning = "Logout was unsuccessful. Session token is not set!";
+        display_warning_msg($warning);
         exit();
     }
 
     if (hash_equals($sessionToken, $urlToken)) {
         log_user_out();
     } else {
-        // TODO: Add error message handling with separate site
-        echo "<h4>WARNING: Logout was unsuccessful. Token mismatch!</h4>";
+        $warning = "Logout was unsuccessful. Token mismatch!";
+        display_warning_msg($warning);
         exit();
     }
 } else {
