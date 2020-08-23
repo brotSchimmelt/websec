@@ -119,6 +119,7 @@ error= ...
 - **116**: The XSS Comment could not be fetched from the databse. See query in ```function check_xss_challenge```
 - **117**: The CSRF posts could not be fetched from the databse. See query in ```function check_crosspost_challenge```
 - **118**: The CSRF referrer could not be fetched from the databse. See query in ```function check_crosspost_challenge_double```
+- **119**: The XSS challenge cookie could not be inserted into the database during registration. See query in ```function do_registration```
 
 *[Shop Database]*
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```
