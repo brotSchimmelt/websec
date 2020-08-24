@@ -121,6 +121,7 @@ error= ...
 - **118**: The CSRF referrer could not be fetched from the databse. See query in ```function check_crosspost_challenge_double```
 - **119**: The XSS challenge cookie could not be inserted into the database during registration. See query in ```function do_registration```
 - **120**: The user could not be unlocked. See query in ```function unlock_user```
+- **121**: The user cookies could not be fetched from the database. See query in ```function set_user_cookies```
 
 *[Shop Database]*
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```
