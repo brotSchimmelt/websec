@@ -210,7 +210,7 @@ function validate_registration_input($username, $mail, $password, $confirmPasswo
 }
 
 // log user in
-function do_login($username, $mail, $adminFlag)
+function do_login($username, $mail, $adminFlag, $unlockedFlag)
 {
     if (session_status() == PHP_SESSION_NONE) {
         // Session has not yet started
@@ -233,6 +233,10 @@ function do_login($username, $mail, $adminFlag)
         $_SESSION['userIsAdmin'] = $adminFlag;
     }
 
+    if ($unlockedFlag == 1) {
+        $_SESSION['userIsUnlocked'] = $unlockedFlag;
+    }
+
     update_last_login($username);
 }
 
@@ -240,7 +244,7 @@ function do_login($username, $mail, $adminFlag)
 function try_login($username, $pwd)
 {
     // Get pwd and username from DB
-    $sql = "SELECT user_name,user_pwd_hash,user_wwu_email,is_admin ";
+    $sql = "SELECT user_name,user_pwd_hash,user_wwu_email,is_admin,is_unlocked ";
     $sql .= "FROM users WHERE user_name=?";
     try {
         $stmt = get_login_db()->prepare($sql);
@@ -261,7 +265,8 @@ function try_login($username, $pwd)
             do_login(
                 $result['user_name'],
                 $result['user_wwu_email'],
-                $result['is_admin']
+                $result['is_admin'],
+                $result['is_unlocked']
             );
             header("location: " . MAIN_PAGE . "?success=login");
             exit();
@@ -343,6 +348,7 @@ function do_registration($username, $mail, $password)
         create_sqli_db($username, $mail);
     } catch (Exception $e) {
         display_exception_msg($e, "051");
+        exit();
     }
 
 
@@ -663,7 +669,7 @@ function get_user_mail($selector)
 // update the field last login in the users table with current timestamp
 function update_last_login($username)
 {
-    $sql = "UPDATE `users` SET last_login=:timestamp WHERE `user_name`=:user";
+    $sql = "UPDATE `users` SET `last_login`=:timestamp WHERE `user_name`=:user";
     $timestamp = date("Y-m-d H:i:s");
 
     try {
