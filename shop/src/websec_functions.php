@@ -11,6 +11,7 @@ function slug($z)
 }
 
 // set challenge cookie for user
+// TODO: Delete ? Cookies are now set during login
 function set_fake_cookie($username)
 {
     $cookieName = "XSS_Your_Session";
@@ -24,7 +25,6 @@ function set_fake_cookie($username)
         $result = $stmt->fetch();
         $fakeID = $result['reflective_xss'];
     } catch (PDOException $e) {
-        $msg = "The cookie for the XSS challenge could not be set.";
         display_exception_msg($e, "112");
         exit();
     }
