@@ -13,16 +13,16 @@ function slug($z)
 // set challenge cookie for user
 function set_fake_cookie($username)
 {
-    $cookieName = "XSS_Challenge_Cookie";
+    $cookieName = "XSS_Your_Session";
 
-    $sql = "SELECT `challenge_cookie` FROM "
+    $sql = "SELECT `reflective_xss` FROM "
         . "fakeCookie WHERE `user_name`=:user_name";
 
     try {
         $stmt = get_login_db()->prepare($sql);
         $stmt->execute(['user_name' => $username]);
         $result = $stmt->fetch();
-        $fakeID = $result['challenge_cookie'];
+        $fakeID = $result['reflective_xss'];
     } catch (PDOException $e) {
         $msg = "The cookie for the XSS challenge could not be set.";
         display_exception_msg($e, "112");
@@ -211,7 +211,7 @@ function reset_reflective_xss_db($username)
         exit();
     }
 
-    $sql = "UPDATE `fakeCookie` SET `challenge_cookie`=:new_cookie "
+    $sql = "UPDATE `fakeCookie` SET `reflective_xss`=:new_cookie "
         . "WHERE `user_name` = :user_name";
 
     try {
@@ -276,7 +276,7 @@ function check_xss_challenge($username)
     $challengeStatus = false;
     $fakeID = 'youShouldNotGetThisCookiePleaseReportInLearnweb';
 
-    $sql = "SELECT `challenge_cookie` FROM fakeCookie WHERE "
+    $sql = "SELECT `reflective_xss` FROM fakeCookie WHERE "
         . "user_name = :user_name";
     try {
         $stmt = get_login_db()->prepare($sql);
@@ -287,7 +287,7 @@ function check_xss_challenge($username)
                 . " in XSS challenge.");
             return $challengeStatus;
         } else {
-            $fakeID = $result['challenge_cookie'];
+            $fakeID = $result['reflective_xss'];
         }
     } catch (PDOException $e) {
         display_exception_msg($e, "115");

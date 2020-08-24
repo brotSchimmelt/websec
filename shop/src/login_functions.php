@@ -331,7 +331,7 @@ function do_registration($username, $mail, $password)
     }
 
     $insertCookie = "INSERT INTO fakeCookie (id, user_name, "
-        . "challenge_cookie) VALUE (NULL, :user, :cookie)";
+        . "reflective_xss) VALUE (NULL, :user, :cookie)";
 
     try {
         get_login_db()->prepare($insertCookie)->execute([
