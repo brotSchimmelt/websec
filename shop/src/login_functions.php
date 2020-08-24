@@ -684,3 +684,19 @@ function update_last_login($username)
         exit();
     }
 }
+
+// check if registration is enabled
+function is_registration_enabled()
+{
+    $file = CON . "registration_disabled";
+
+    return file_exists($file) ? false : true;
+}
+
+// check if login is enabled
+function is_login_enabled()
+{
+    $file = CON . "login_disabled";
+
+    return file_exists($file) ? false : true;
+}
