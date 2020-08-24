@@ -4,7 +4,7 @@ session_start(); // Needs to be called first on every page
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP); // Credentials for the shop db
-require_once(CONF_DB_LOGIN);
+require_once(CONF_DB_LOGIN); // Credentials for the users db
 
 // Load custom libraries
 require(FUNC_BASE);
@@ -30,13 +30,12 @@ if (!is_user_unlocked()) {
 
 // Load POST or GET variables and sanitize input BELOW this comment
 $userName = $_SESSION['userName'];
-set_fake_cookie($userName);
+// set_fake_cookie($userName); --> obsolete, since cookies are already set
 
 if (isset($_GET['xss'])) {
     $searchTerm = filter_input(INPUT_GET, 'xss', FILTER_SANITIZE_SPECIAL_CHARS);
     $rawSearchTerm = $_GET['xss'];
 }
-
 
 // Other variables
 $productsPerRow = 3;
@@ -50,7 +49,6 @@ if (isset($_POST['add-preview'])) {
     header("location: " . "/shop/overview.php" . "?success=prodAdded");
     exit();
 }
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -117,6 +115,12 @@ if (isset($_POST['add-preview'])) {
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
+    if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
+        echo "
+            <script>
+                $('#xss-solution').modal('show')
+            </script>";
+    }
     ?>
 </body>
 
