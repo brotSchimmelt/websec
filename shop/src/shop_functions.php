@@ -263,8 +263,8 @@ function show_search_results($searchTerm, $productsPerRow)
     }
 
     if ($stmt->rowCount() <= 0) {
-        echo '<div class="con-center con-search">sorry, seems "
-        ."like we have no products that match your search request :(</div>';
+        echo '<div class="con-center con-search">Sorry, it seems '
+            . 'like we have no products that match your search request :(</div>';
     }
 
 
