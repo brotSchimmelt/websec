@@ -3,9 +3,11 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_LOGIN);
 
 // Load custom libraries
 require(FUNC_BASE);
+require(FUNC_LOGIN);
 require(FUNC_SHOP);
 
 // Load error handling and user messages
@@ -21,6 +23,12 @@ if (!is_user_logged_in()) {
 // Load POST or GET variables and sanitize input BELOW this comment
 $username = $_SESSION['userName'];
 $num = get_number_of_cart_items();
+$thisPage = basename(__FILE__);
+
+// check if user read the instructions
+if (isset($_POST['unlock-submit'])) {
+    unlock_user($username);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -40,20 +48,20 @@ $num = get_number_of_cart_items();
 </head>
 
 <body>
-
     <?php
     // Load navbar
     require_once(HEADER_SHOP);
     // Load error messages, user notifications etc.
     require(MESSAGES);
+
+    // check if user is unlocked
+    if (!is_user_unlocked()) {
+        require_once(INCL . "modal_greeting.php");
+        $scriptFlag = true;
+    } else {
+        $scriptFlag = false;
+    }
     ?>
-
-    <!-- <script>
-        $(document).ready(function() {
-            $("#greeting-modal").modal('show');
-        });
-    </script> -->
-
     <header id="main-header">
         <div class="dark-overlay">
             <div id="home-inner">
@@ -277,20 +285,16 @@ $num = get_number_of_cart_items();
         </div>
     </section>
 
-
-
-
-
-
     <?php
     // Load shop footer
     require(FOOTER_SHOP);
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
+    if ($scriptFlag) {
+        echo "<script>$('#greeting').modal('show')</script>";
+    }
     ?>
 </body>
-
-
 
 </html>
