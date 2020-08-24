@@ -25,10 +25,15 @@ function is_user_admin()
 }
 
 // Check if user is unlocked
-// TODO: add session var and if false redirect to overview page
 function is_user_unlocked()
 {
-    return true;
+    if (
+        is_user_logged_in() && isset($_SESSION['userIsUnlocked'])
+        && $_SESSION['userIsUnlocked'] == 1
+    ) {
+        return true;
+    }
+    return false;
 }
 
 // Log the user out
@@ -56,4 +61,21 @@ function get_semester()
     }
 
     echo $moduleName . $semester . $year;
+}
+
+function unlock_user($username)
+{
+    // update database
+    $sql = "UPDATE `users` SET `is_unlocked`=1 WHERE `user_name`=?";
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "120");
+        exit();
+    }
+
+    // update session
+    $_SESSION['userIsUnlocked'] = 1;
 }
