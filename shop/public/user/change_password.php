@@ -13,10 +13,16 @@ require(FUNC_LOGIN);
 // Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check admin status
+// Check login status
 if (!is_user_logged_in()) {
     // Redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
+    exit();
+}
+
+// check if user is unlocked
+if (!is_user_unlocked()) {
+    header("location: " . MAIN_PAGE);
     exit();
 }
 

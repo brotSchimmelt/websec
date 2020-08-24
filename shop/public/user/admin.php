@@ -7,9 +7,16 @@ require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 // Load custom libraries
 require(FUNC_BASE);
 
+// check admin status
 if (is_user_logged_in() && is_user_admin()) {
 
     header("location: " . "/admin/dashboard.php");
+    exit();
+}
+
+// check if user is unlocked
+if (!is_user_unlocked()) {
+    header("location: " . MAIN_PAGE);
     exit();
 }
 ?>

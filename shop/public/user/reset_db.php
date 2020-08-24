@@ -22,6 +22,12 @@ if (!is_user_logged_in()) {
     exit();
 }
 
+// check if user is unlocked
+if (!is_user_unlocked()) {
+    header("location: " . MAIN_PAGE);
+    exit();
+}
+
 // Load POST or GET variables and sanitize input BELOW this comment
 $username = $_SESSION['userName'];
 
