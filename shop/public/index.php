@@ -8,6 +8,17 @@ require(FUNC_BASE); // Basic functions
 require(FUNC_LOGIN); // Login & registration functions
 require(ERROR_HANDLING); // Error handling
 
+// check if login is disabled
+if (!is_login_enabled()) {
+
+    $_SESSION = array();
+    session_destroy();
+
+    $name = "Login";
+    include(INCL . "login_disabled.php");
+    exit();
+}
+
 // Check login status
 if (is_user_logged_in()) {
     // Redirect to shop main page

@@ -9,6 +9,17 @@ require(FUNC_LOGIN); // Login & registration functions
 require(FUNC_WEBSEC); // Functions for the challenges
 require(ERROR_HANDLING); // Error handling
 
+// check if registration is disabled
+if (!is_registration_enabled()) {
+
+    $_SESSION = array();
+    session_destroy();
+
+    $name = "Registration";
+    include(INCL . "login_disabled.php");
+    exit();
+}
+
 // Check login status
 if (is_user_logged_in()) {
     // Redirect to shop main page
