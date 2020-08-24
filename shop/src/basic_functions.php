@@ -44,7 +44,7 @@ function log_user_out()
     session_destroy();
 
     // delete cookies
-    setcookie("XSS_Your_Session", "");
+    setcookie("XSS_Your_Session", "", time() - 10800);
 
     header("location: " . "/index.php" . "?success=logout");
     exit();
