@@ -62,6 +62,12 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
             <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
 
+            <noscript>
+                <div class="alert alert-warning shadow" role="alert">
+                    You need to enabled <strong>Java Script</strong> in your browser in order to complete the challenges.
+                </div>
+            </noscript>
+
             <?= get_message(); ?>
 
             <label for="input-name" class="sr-only">Username</label>
