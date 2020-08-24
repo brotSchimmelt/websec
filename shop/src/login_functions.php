@@ -238,6 +238,8 @@ function do_login($username, $mail, $adminFlag, $unlockedFlag)
     }
 
     update_last_login($username);
+
+    set_user_cookies($username);
 }
 
 // validate all user input for login
@@ -307,7 +309,8 @@ function do_registration($username, $mail, $password)
     }
 
     try {
-        $XSSChallengeCookie = get_random_token(16);
+        $reflectiveXSSCookie = get_random_token(16);
+        $storedXSSCookie = get_random_token(16);
     } catch (Exception $e) {
         display_exception_msg($e);
         exit();
@@ -331,12 +334,13 @@ function do_registration($username, $mail, $password)
     }
 
     $insertCookie = "INSERT INTO fakeCookie (id, user_name, "
-        . "reflective_xss) VALUE (NULL, :user, :cookie)";
+        . "reflective_xss, stored_xss) VALUE (NULL, :user, :reflective, :stored)";
 
     try {
         get_login_db()->prepare($insertCookie)->execute([
             'user' => $username,
-            'cookie' => $XSSChallengeCookie
+            'reflective' => $reflectiveXSSCookie,
+            'stored' => $storedXSSCookie
         ]);
     } catch (PDOException $e) {
         header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=119");
@@ -699,4 +703,25 @@ function is_login_enabled()
     $file = CON . "login_disabled";
 
     return file_exists($file) ? false : true;
+}
+
+// set XSS challenge cookies
+function set_user_cookies($username)
+{
+    // get cookies from database
+    $sql = "SELECT `reflective_xss`,`stored_xss` FROM `fakeCookie` WHERE "
+        . "`user_name`=?";
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=121");
+        exit();
+    }
+
+    // set cookies
+    setcookie("XSS_Your_Session", $result['reflective_xss']);
+    $_SESSION['reflectiveXSS'] = $result['reflective_xss'];
+    $_SESSION['storedXSS'] = $result['stored_xss'];
 }
