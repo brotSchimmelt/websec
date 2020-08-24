@@ -39,8 +39,12 @@ function is_user_unlocked()
 // Log the user out
 function log_user_out()
 {
+    // delete Session
     $_SESSION = array();
     session_destroy();
+
+    // delete cookies
+    setcookie("XSS_Your_Session", "");
 
     header("location: " . "/index.php" . "?success=logout");
     exit();
