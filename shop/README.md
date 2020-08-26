@@ -115,16 +115,17 @@ error= ...
 - **112**: The XSS cookie could not be set. See the query in ```function set_fake_cookie```
 - **113**: The Challenge cookie could not be reset by the user. See query in ```function reset_reflective_xss_db```
 - **114**: The CSRF entries for a user could not be deleted from the database. See query in ```function reset_csrf_db```
-- **115**: The fake cookie could not be fetched from the users table. See query in ```function check_xss_challenge```
-- **116**: The XSS Comment could not be fetched from the databse. See query in ```function check_xss_challenge```
+- **115**: The fake cookie could not be fetched from the users table. See query in ```function check_reflective_xss_challenge```
+- **116**: The XSS Comment could not be fetched from the databse. See query in ```function check_reflective_xss_challenge```
 - **117**: The CSRF posts could not be fetched from the databse. See query in ```function check_crosspost_challenge```
 - **118**: The CSRF referrer could not be fetched from the databse. See query in ```function check_crosspost_challenge_double```
 - **119**: The XSS challenge cookie could not be inserted into the database during registration. See query in ```function do_registration```. Is there already an entry for that particular user name?
 - **120**: The user could not be unlocked. See query in ```function unlock_user```
 - **121**: The user cookies could not be fetched from the database. See query in ```function set_user_cookies```
 - **122**: The challenge status row for the new user could not be inserted into the database. See query in ```function do_registration```
-- **123**: The user cookies could not be fetched from the database. See query in ```function check_xss_challenge```
-- **124**: The challenge status for the reflective XSS challenge could not be updated. See query in ```function set_reflective_xss_status```
+- **123**: The user cookies could not be fetched from the database. See query in ```function check_reflective_xss_challenge```
+- **124**: The challenge status could not be updated. See query in ```function set_challenge_status```
+- **125**: The challenge status could not be fetched. See query in ```function lookup_challenge_status```
 
 *[Shop Database]*
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```
