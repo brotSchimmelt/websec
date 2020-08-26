@@ -73,6 +73,9 @@
 
 
 <?php
+/*
+* Java Script for modals
+*/
 // show modal with field to enter solution
 if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
     echo "
