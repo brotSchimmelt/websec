@@ -124,6 +124,7 @@ error= ...
 - **121**: The user cookies could not be fetched from the database. See query in ```function set_user_cookies```
 - **122**: The challenge status row for the new user could not be inserted into the database. See query in ```function do_registration```
 - **123**: The user cookies could not be fetched from the database. See query in ```function check_xss_challenge```
+- **124**: The challenge status for the reflective XSS challenge could not be updated. See query in ```function set_reflective_xss_status```
 
 *[Shop Database]*
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```
