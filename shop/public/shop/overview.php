@@ -140,7 +140,6 @@ if (isset($_POST['add-preview'])) {
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
-
     // Load error messages, user notifications etc.
     require(MESSAGES);
     ?>
