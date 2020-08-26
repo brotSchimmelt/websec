@@ -287,8 +287,8 @@ function check_reflective_xss_challenge($username, $cookie)
         exit();
     }
 
-    // check if cookies are identical
-    return $result['reflective_xss'] == $cookie ? true : false;
+    // check if correct cookie is entered
+    return strpos($cookie, $result['reflective_xss']) !== false ? true : false;
 
     // OLD CODE:
     /*
