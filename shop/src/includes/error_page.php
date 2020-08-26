@@ -25,4 +25,4 @@
     <br><br>
 
     <!-- Content Container -->
-    <div class="container">
+    <div class="container text-left">
