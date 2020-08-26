@@ -266,13 +266,32 @@ function reset_csrf_db($username)
         get_shop_db()->prepare($sql)->execute(['user_name' => $username]);
     } catch (PDOException $e) {
         display_exception_msg($e, "114");
+        exit();
     }
     echo "success: The database for the CSRF challenge was successfully reset.";
 }
 
 // check if the XSS challenge was solved
-function check_xss_challenge($username)
+function check_reflective_xss_challenge($username, $cookie)
 {
+
+    // get cookie from db
+    $sql = "SELECT `reflective_xss` FROM `fakeCookie` WHERE `user_name`=?";
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        display_exception_msg($e, "123");
+        exit();
+    }
+
+    // check if cookies are identical
+    return $result['reflective_xss'] == $cookie ? true : false;
+
+    // OLD CODE:
+    /*
     $challengeStatus = false;
     $fakeID = 'youShouldNotGetThisCookiePleaseReportInLearnweb';
 
@@ -310,6 +329,7 @@ function check_xss_challenge($username)
     }
 
     return $challengeStatus;
+    */
 }
 
 // check if the SQLi challenge is solved
@@ -391,4 +411,45 @@ function check_crosspost_challenge_double($username)
         }
     }
     return $challengeStatus;
+}
+
+// set challenge status in the database to solved
+function set_challenge_status($challenge, $username)
+{
+    // filter challenge name since prepared statements do not work for
+    // table names etc.
+    $challengeField = filter_var($challenge, FILTER_SANITIZE_SPECIAL_CHARS);
+
+    $sql = "UPDATE `challengeStatus` SET " . $challengeField . "=1 WHERE "
+        . "`user_name`=?";
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "124");
+        exit();
+    }
+}
+
+// lookup challenge status in the database
+function lookup_challenge_status($challenge, $username)
+{
+    // filter challenge name since prepared statements do not work for
+    // table names etc.
+    $challengeField = filter_var($challenge, FILTER_SANITIZE_SPECIAL_CHARS);
+
+    $sql = "SELECT " . $challengeField . " FROM `challengeStatus` WHERE "
+        . "`user_name`=?";
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        display_exception_msg($e, "125");
+        exit();
+    }
+
+    // check if challenge was already solved
+    return $result[$challengeField] == 1 ? true : false;
 }
