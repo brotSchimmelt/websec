@@ -35,6 +35,7 @@ $productsPerRow = 3;
 $searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
 $challengeFailed = false;
 $solved = false;
+$showSuccessModal = false;
 
 // check if a search term was entered
 if (isset($_GET['xss'])) {
