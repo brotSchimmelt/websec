@@ -96,8 +96,6 @@ if (isset($_POST['add-preview'])) {
     <?php
     // Load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
-    require(MESSAGES);
     ?>
 
     <!-- Page Content BEGIN -->
@@ -142,27 +140,9 @@ if (isset($_POST['add-preview'])) {
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
-    // show modal with field to enter solution
-    if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
-        echo "
-            <script>
-                $('#xss-solution').modal('show')
-            </script>";
-    }
-    // show failure modal
-    if ($challengeFailed) {
-        echo "
-            <script>
-                $('#xss-wrong').modal('show')
-            </script>";
-    }
-    // show success modal
-    if ($showSuccessModal) {
-        echo "
-            <script>
-                $('#challenge-success').modal('show')
-            </script>";
-    }
+
+    // Load error messages, user notifications etc.
+    require(MESSAGES);
     ?>
     <!-- JavaScript END -->
 </body>
