@@ -7,14 +7,13 @@
  */
 
 .site-header {
-    background-color: rgba(46, 109, 134, 1);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
 }
 
-.dropdown-menu {
+/* .dropdown-menu {
     background-color: rgba(46, 109, 134, 1);
-}
+} */
 
 .dropdown-menu a:hover {
     background-color: rgba(255, 255, 255, 0.2);
