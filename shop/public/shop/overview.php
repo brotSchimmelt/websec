@@ -28,21 +28,45 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// Load POST, GET or other variables and sanitize the input if necessary BELOW this comment
 $userName = $_SESSION['userName'];
-// set_fake_cookie($userName); --> obsolete, since cookies are already set
+$thisPage = basename(__FILE__);
+$productsPerRow = 3;
+$searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
+$challengeFailed = false;
+$solved = false;
 
+// check if a search term was entered
 if (isset($_GET['xss'])) {
     $searchTerm = filter_input(INPUT_GET, 'xss', FILTER_SANITIZE_SPECIAL_CHARS);
     $rawSearchTerm = $_GET['xss'];
 }
 
-// Other variables
-$productsPerRow = 3;
-$searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
+// check if cookie was entered in modal
+if (isset($_POST['xss-cookie'])) {
+    $cookie = filter_input(INPUT_POST, 'xss-cookie', FILTER_SANITIZE_SPECIAL_CHARS);
 
+    // check if cookie is correct
+    if (check_reflective_xss_challenge($userName, $cookie)) {
+
+        // set challenge to solved
+        set_challenge_status("reflective_xss", $userName);
+
+        // show success modal!
+        $showSuccessModal = true;
+    } else {
+        // show failure modal
+        $challengeFailed = true;
+    }
+}
+
+// check if reflective xss challenge was already solved
+if (lookup_challenge_status("reflective_xss", $userName)) {
+    $solved = true;
+}
+
+// check if a product was added to the cart
 if (isset($_POST['add-preview'])) {
-
     $productID = filter_input(INPUT_POST, 'product_id');
     $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_INT);
     add_product_to_cart($productID, $quantity);
@@ -69,7 +93,6 @@ if (isset($_POST['add-preview'])) {
 </head>
 
 <body>
-
     <?php
     // Load navbar
     require(HEADER_SHOP);
@@ -78,13 +101,18 @@ if (isset($_POST['add-preview'])) {
     ?>
 
     <!-- Page Content BEGIN -->
-    <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Reflective XSS</a>
+    <?php if (!$solved) : ?>
+        <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Reflective XSS</a>
+    <?php else : ?>
+        <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">Reflective XSS</a>
+    <?php endif; ?>
 
     <!-- Search form -->
     <div class="con-center con-search">
         <h2 class="display-4">Product Search</h2>
-        <form action="overview.php" method="get">
-            <input class="form-control" type="text" name="xss" placeholder="Search for Products" aria-label="Search" autofocus>
+        <form action="<?= $thisPage ?>" method="get">
+            <input class="form-control" type="text" name="xss" placeholder="Search for Products" aria-label="Search" autofocus <?= $solved ? "disabled" : "" ?>>
+            <?= $solved ? "<br>You have already solved this challenge!" : "" ?>
         </form>
         <?php if ($searchFieldWasUsed) : ?>
             <p>You searched for <strong><?= $rawSearchTerm ?></strong></p>
@@ -105,23 +133,38 @@ if (isset($_POST['add-preview'])) {
             <?php show_products($productsPerRow) ?>
         </section>
     <?php endif; ?>
-
     <!-- Page Content END -->
 
-
+    <!-- JavaScript BEGIN -->
     <?php
     // Load shop footer
     require(FOOTER_SHOP);
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
+    // show modal with field to enter solution
     if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
         echo "
             <script>
                 $('#xss-solution').modal('show')
             </script>";
     }
+    // show failure modal
+    if ($challengeFailed) {
+        echo "
+            <script>
+                $('#xss-wrong').modal('show')
+            </script>";
+    }
+    // show success modal
+    if ($showSuccessModal) {
+        echo "
+            <script>
+                $('#challenge-success').modal('show')
+            </script>";
+    }
     ?>
+    <!-- JavaScript END -->
 </body>
 
 </html>
