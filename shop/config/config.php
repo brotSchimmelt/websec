@@ -44,3 +44,4 @@ define("MESSAGES", SRC . "messages.php"); // Error messages, user notifications 
 define("MAIN_PAGE", "/shop/main.php");
 define("LOGIN_PAGE", "/index.php");
 define("REGISTER_PAGE", "/registration.php");
+define("SCORE", "/user/scoreboard.php");
