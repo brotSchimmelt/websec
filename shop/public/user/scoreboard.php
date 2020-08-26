@@ -32,10 +32,11 @@ if (!is_user_unlocked()) {
 $username = $_SESSION['userName'];
 
 // Challenge variables
-$solvedXSS = check_xss_challenge($username);
-$solvedSQLi = check_sqli_challenge($username);
-$solvedCrosspost = check_crosspost_challenge($username);
-$solvedCrosspostDoubleCheck = check_crosspost_challenge_double($username);
+$solvedXSS = lookup_challenge_status("reflective_xss", $username);
+$solvedStoredXSS = lookup_challenge_status("stored_xss", $username);
+$solvedSQLi = lookup_challenge_status("sqli", $username);
+$solvedCrosspost = lookup_challenge_status("csrf", $username);
+$solvedCrosspostDoubleCheck = lookup_challenge_status("csrf_referrer", $username);
 
 ?>
 <!doctype html>
