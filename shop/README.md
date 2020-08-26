@@ -119,9 +119,10 @@ error= ...
 - **116**: The XSS Comment could not be fetched from the databse. See query in ```function check_xss_challenge```
 - **117**: The CSRF posts could not be fetched from the databse. See query in ```function check_crosspost_challenge```
 - **118**: The CSRF referrer could not be fetched from the databse. See query in ```function check_crosspost_challenge_double```
-- **119**: The XSS challenge cookie could not be inserted into the database during registration. See query in ```function do_registration```
+- **119**: The XSS challenge cookie could not be inserted into the database during registration. See query in ```function do_registration```. Is there already an entry for that particular user name?
 - **120**: The user could not be unlocked. See query in ```function unlock_user```
 - **121**: The user cookies could not be fetched from the database. See query in ```function set_user_cookies```
+- **122**: The challenge status row for the new user could not be inserted into the database. See query in ```function do_registration```
 
 *[Shop Database]*
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```
