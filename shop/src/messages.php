@@ -69,3 +69,29 @@
     </div>
 </div>
 <!--END-->
+
+
+
+<?php
+// show modal with field to enter solution
+if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
+    echo "
+<script>
+    $('#xss-solution').modal('show')
+</script>";
+}
+// show failure modal
+if ($challengeFailed) {
+    echo "
+<script>
+    $('#xss-wrong').modal('show')
+</script>";
+}
+// show success modal
+if ($showSuccessModal) {
+    echo "
+<script>
+    $('#challenge-success').modal('show')
+</script>";
+}
+?>
