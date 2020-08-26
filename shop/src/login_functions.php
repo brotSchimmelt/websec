@@ -316,6 +316,7 @@ function do_registration($username, $mail, $password)
         exit();
     }
 
+    // insert user into the database
     $insertUser = "INSERT INTO users (user_id, user_name, "
         . "user_wwu_email, user_pwd_hash, is_unlocked, is_admin, timestamp, "
         . " last_login) VALUE (NULL, :user, :mail, :pwd_hash, '0', "
@@ -333,6 +334,7 @@ function do_registration($username, $mail, $password)
         exit();
     }
 
+    // insert cookies into the database
     $insertCookie = "INSERT INTO fakeCookie (id, user_name, "
         . "reflective_xss, stored_xss) VALUE (NULL, :user, :reflective, :stored)";
 
@@ -347,11 +349,26 @@ function do_registration($username, $mail, $password)
         exit();
     }
 
+    // Create personal DB for SQLi challenge
     try {
-        // Create personal DB for SQLi challenge
         create_sqli_db($username, $mail);
     } catch (Exception $e) {
         display_exception_msg($e, "051");
+        exit();
+    }
+
+    // set challenge status
+    $insertChallenge = "INSERT INTO `challengeStatus` (`id`, `user_name`, "
+        . "`reflective_xss_solved`, `stored_xss_solved`, `sqli_solved`, "
+        . "`csrf_solved`, `csrf_referrer_solved`) VALUE (NULL, :user, 0, 0, "
+        . "0, 0, 0)";
+
+    try {
+        get_login_db()->prepare($insertChallenge)->execute([
+            'user' => $username
+        ]);
+    } catch (PDOException $e) {
+        header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=119");
         exit();
     }
 
