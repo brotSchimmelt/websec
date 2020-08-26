@@ -84,7 +84,7 @@ function get_total_progress($numOfStudents, $numOfChallenges)
 // get challenge progress of one student
 function get_individual_progress($username)
 {
-    $xssStatus = check_xss_challenge($username);
+    $xssStatus = lookup_challenge_status("reflective_xss", $username);
     $sqliStatus = check_sqli_challenge($username);
     $csrfStatus = check_crosspost_challenge($username);
     $csrfStatusReferrer = check_crosspost_challenge_double($username);
@@ -118,7 +118,7 @@ function show_students_with_open_challenges()
         // get every open challenge
         $status = array();
 
-        if (!check_xss_challenge($row['user_name'])) {
+        if (!lookup_challenge_status("reflective_xss", $row['user_name'])) {
             array_push($status, "XSS");
         }
 
