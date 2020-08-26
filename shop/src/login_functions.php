@@ -359,9 +359,8 @@ function do_registration($username, $mail, $password)
 
     // set challenge status
     $insertChallenge = "INSERT INTO `challengeStatus` (`id`, `user_name`, "
-        . "`reflective_xss_solved`, `stored_xss_solved`, `sqli_solved`, "
-        . "`csrf_solved`, `csrf_referrer_solved`) VALUE (NULL, :user, 0, 0, "
-        . "0, 0, 0)";
+        . "`reflective_xss`, `stored_xss`, `sqli`, `csrf`, `csrf_referrer`) "
+        . "VALUE (NULL, :user, 0, 0, 0, 0, 0)";
 
     try {
         get_login_db()->prepare($insertChallenge)->execute([
