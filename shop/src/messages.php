@@ -1,35 +1,71 @@
-<!--Modal: Login with Avatar Form-->
+<!--Modal: Reflective XSS Enter Cookie-->
 <div class="modal fade" id="xss-solution" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
         <!--Content-->
         <div class="modal-content">
 
             <!--Header-->
-            <!-- <div class="modal-header">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%281%29.jpg" alt="avatar" class="img-responsive">
-            </div> -->
-            <!--Body-->
-            <div class="modal-body text-center mb-1">
-
-                <h5 class="mt-1 mb-2">Enter Cookie</h5>
-
-                <div class="md-form ml-0 mr-0">
-                    <p>Have you found the XSS session cookie?</p>
-                    <input type="text" id="form29" placeholder="XSS_Your_Session" autofocus>
-                </div>
-
-                <div class="text-center mt-4">
-                    <button class="btn btn-primary">Send</button>
-                </div>
+            <div class="modal-header">
+                <h5 class="mt-2">Enter Cookie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
 
+            <!--Body-->
+            <div class="modal-body text-center mb-1">
+                <div class="md-form ml-0 mr-0">
+                    <form class="form-signin" action="<?= $thisPage ?>" method="post">
+                        <p>Have you found the XSS session cookie?</p>
+                        <input type="text" name="xss-cookie" id="xss-cookie" placeholder="XSS_Your_Session" autofocus>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary" name="xss-cookie-submit" id="xss-cookie-submit">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <!--/.Content-->
     </div>
 </div>
-<!--Modal: Login with Avatar Form-->
-
-<!-- <div class="text-center">
-    <a href="" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#modalLoginAvatar">Launch
-        Modal Login with Avatar</a>
-</div> -->
+<!--END-->
+<!--Modal: Reflective XSS Cookie Wrong-->
+<div class="modal fade" tabindex="-1" role="dialog" id="xss-wrong" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Wrong Cookie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Sorry, that was not correct. Please try again!</p>
+                <p><strong>Hint</strong>: The cookie you are looking for is called <i>XSS_Your_Session</i>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--Modal: Reflective XSS Cookie Challenge SOLVED-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Congratulation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You have solved this challenge!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
