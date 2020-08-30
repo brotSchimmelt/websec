@@ -1,6 +1,12 @@
 <?php
+
+require_once(CONF_DB_SHOP);
+require_once(CONF_DB_LOGIN);
+require_once(FUNC_WEBSEC);
+require_once(FUNC_SHOP);
+
 $num = get_number_of_cart_items();
-if (isset($_SESSION['sqliSolved'])) {
+if (lookup_challenge_status("sqli", $_SESSION['userName'])) {
     $color = "rgba(145, 174, 100, 1)";
     $premiumAccount = "PREMIUM ACCOUNT";
 } else {
@@ -36,7 +42,7 @@ if (isset($_SESSION['sqliSolved'])) {
         </a>
 
         <a class="nav-link dropdown-toggle mt-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <?php if (!isset($_SESSION['sqliSolved'])) : ?>
+            <?php if (!lookup_challenge_status("sqli", $_SESSION['userName'])) : ?>
                 <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-person-circle pb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
                     <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
