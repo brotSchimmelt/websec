@@ -132,6 +132,10 @@ function show_xss_comments()
 // add product comment
 function add_comment_to_db($comment, $author)
 {
+
+    // check if already one comment from the current user exists
+    check_user_comment_exists($author);
+
     $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, "
         . "`rating`, `timestamp`) VALUES "
         . "(NULL, :author, :comment, :rating, :timestamp)";
@@ -452,4 +456,32 @@ function lookup_challenge_status($challenge, $username)
 
     // check if challenge was already solved
     return $result[$challengeField] == 1 ? true : false;
+}
+
+// ensure that only one comment per user exists in the database
+function check_user_comment_exists($username)
+{
+    $sql = "SELECT `comment_id` FROM `xss_comments` WHERE `author`=?";
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([$username]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "162");
+        exit();
+    }
+
+    // delete old comment
+    if ($stmt->fetch()) {
+
+        $deleteSql = "DELETE FROM `xss_comments` WHERE `author`=?";
+
+        try {
+            $stmt = get_shop_db()->prepare($deleteSql);
+            $stmt->execute([$username]);
+        } catch (PDOException $e) {
+            display_exception_msg($e, "163");
+            exit();
+        }
+    }
 }
