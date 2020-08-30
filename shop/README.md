@@ -139,7 +139,8 @@ error= ...
 - **159**: The number of cart items could not be returned. See query in ```function get_num_of_cart_items```
 - **160**: The product search results could not be displayed. See query in ```function show_search_results```
 - **161**: Product comment could not be added to the database. See query in ```function add_comment_to_db```
-
+- **162**: Product comment could not be fetched from the database. See query in ```function check_user_comment_exists```
+- **163**: Product comment could not be deleted. See query in ```check_user_comment_exists```
 
 
 
