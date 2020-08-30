@@ -18,7 +18,12 @@ if (!$done) :
         <div class="card mb-4 shadow">
             <img class="card-img-top" src="https://placeimg.com/300/180/animals" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title"><?= $row['prod_title'] ?></h5>
+                <h5 class="card-title"><?= $row['prod_title'] ?>
+                    <?php if (!$solvedStoredXSS) : ?>
+                        <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)" class="badge badge-pill badge-warning shadow-sm mr-3" target="_blank">Stored XSS</a>
+                    <?php else : ?>
+                        <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm mr-3">Stored XSS</a>
+                    <?php endif; ?></h5>
                 <hr>
                 <p class="card-text"><?= $row['prod_description'] ?></p>
                 <div class="prod-btn">

@@ -147,6 +147,8 @@ function show_products($productsPerRow)
         exit();
     }
 
+    $solvedStoredXSS = lookup_challenge_status("stored_xss", $_SESSION['userName']);
+
 
     $done = false; // is used in product_preview.php
     while ($row = $result->fetch()) {
