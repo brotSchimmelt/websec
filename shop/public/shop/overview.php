@@ -97,6 +97,8 @@ if (isset($_POST['add-preview'])) {
     <?php
     // Load navbar
     require(HEADER_SHOP);
+    // Load error messages, user notifications etc.
+    require(MESSAGES);
     ?>
 
     <!-- Page Content BEGIN -->
@@ -111,7 +113,7 @@ if (isset($_POST['add-preview'])) {
         <h2 class="display-4">Product Search</h2>
         <form action="<?= $thisPage ?>" method="get">
             <input class="form-control" type="text" name="xss" placeholder="Search for Products" aria-label="Search" autofocus <?= $solved ? "disabled" : "" ?>>
-            <?= $solved ? "<br>You have already solved this challenge!" : "" ?>
+            <?= $solved ? $alertProductSearch : "" ?>
         </form>
         <?php if ($searchFieldWasUsed) : ?>
             <p>You searched for <strong><?= $rawSearchTerm ?></strong></p>
@@ -141,8 +143,6 @@ if (isset($_POST['add-preview'])) {
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
-    // Load error messages, user notifications etc.
-    require(MESSAGES);
     ?>
     <!-- JavaScript END -->
 </body>
