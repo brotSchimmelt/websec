@@ -43,8 +43,13 @@ function log_user_out()
     $_SESSION = array();
     session_destroy();
 
-    // delete cookies
-    setcookie("XSS_Your_Session", "", time() - 10800);
+    $cookiePath = array("/", "/shop", "/user", "/admin");
+
+    // delete all 'XSS_Your_Session' and 'XSS_Stolen_Session' cookies
+    foreach ($cookiePath as $path) {
+        setcookie("XSS_Your_Session", "", time() - 10800, $path);
+        setcookie("XSS_Stolen_Session", "", time() - 10800, $path);
+    }
 
     header("location: " . "/index.php" . "?success=logout");
     exit();
