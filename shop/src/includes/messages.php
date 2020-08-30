@@ -77,5 +77,4 @@ $alertProductSearch = '<br>
     is currently disabled!
 </div>';
 ?>
-
 <!--END-->
