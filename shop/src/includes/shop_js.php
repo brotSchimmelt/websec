@@ -30,3 +30,15 @@ if (isset($showSuccessModal)) {
 </script>";
     }
 }
+
+// show XSS | welcome back modal
+if (isset($_SESSION['showStoredXSSModal'])) {
+    if ($_SESSION['showStoredXSSModal'] == 0) {
+        echo "
+        <script>
+            $('#xss-elliot').modal('show')
+        </script>";
+
+        $_SESSION['showStoredXSSModal'] = 1;
+    }
+}
