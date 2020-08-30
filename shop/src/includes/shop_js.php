@@ -42,3 +42,15 @@ if (isset($_SESSION['showStoredXSSModal'])) {
         $_SESSION['showStoredXSSModal'] = 1;
     }
 }
+
+// show stored XSS success modal
+if (isset($_SESSION['showSuccessModalXSS'])) {
+    if ($_SESSION['showSuccessModalXSS'] == 0) {
+        echo "
+        <script>
+            $('#challenge-success-stored-xss').modal('show')
+        </script>";
+
+        $_SESSION['showSuccessModalXSS'] = 1;
+    }
+}
