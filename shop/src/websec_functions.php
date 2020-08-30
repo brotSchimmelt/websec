@@ -499,7 +499,12 @@ function compare_cookies($username)
         if ($_COOKIE['XSS_Stolen_Session'] == $_SESSION['storedXSS']) {
 
             if (!isset($_SESSION['showStoredXSSModal'])) {
+
+                // set modal flag to not shown
                 $_SESSION['showStoredXSSModal'] = 0;
+
+                // set up fake cart
+                update_cart($username);
             }
         } elseif ($_COOKIE['XSS_Stolen_Session'] == $_SESSION['reflectiveXSS']) {
 
@@ -552,26 +557,36 @@ function update_cart($username)
         display_exception_msg($e, "165");
         exit();
     }
+
+    // set fake cart
+    $_SESSION['fakeCart'] = true;
 }
 
+// check if the stored xss challenge was solved
+function check_stored_xss_challenge($username)
+{
 
-// compare cookies --> check
-// first: check if already solved with lookup ... check
-// if challenge = show modal with "welcome back Elliot..."
-// if normal = nothing
-// else = set_cookie to normal and display error modal with explanation
+    $sql = "SELECT `position_id` FROM `cart` WHERE `user_name`=? "
+        . "AND `prod_id`=2";
 
-// show modal() aka step 1 solved --> check
-// set modal flag (modal is there and JS is added)
-// show link to Product overview page
+    try {
 
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        display_exception_msg($e, "");
+        exit();
+    }
 
-// function update cart
-// call empty cart
-// add content
+    if ($result) {
+        // set challenge to passed
+        set_challenge_status("stored_xss", $username);
 
-// function empty cart
+        // set fake cart flag to false so cart can work normally again
+        $_SESSION['fakeCart'] = false;
 
-// check if cart has Banana Slicer
-// show challenge success
-// set solved Flag
+        // set flag for success modal
+        $showSuccessModal = true;
+    }
+}
