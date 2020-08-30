@@ -544,7 +544,7 @@ function update_cart($username)
     $productQuantity = array('32', '1', '5', '3');
 
     try {
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < count($productsToAdd); $i++) {
             $stmt = get_shop_db()->prepare($sql);
             $stmt->execute([
                 'prod_id' => $productsToAdd[$i],
