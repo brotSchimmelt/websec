@@ -17,7 +17,7 @@ while ($row = $stmt->fetch()) :
                         </div>
                         <div class="float-left meta">
                             <div class="title h5">
-                                <a href="#"><b><?= $row['author'] ?></b></a>
+                                <strong><?= $row['author'] ?></strong>
                                 made a comment.
                             </div>
                             <h6 class="text-muted time"><?= $row['post_time'] ?></h6>
@@ -30,4 +30,5 @@ while ($row = $stmt->fetch()) :
             </div>
         </div>
     </div>
+    <br>
 <?php endwhile; ?>
