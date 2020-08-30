@@ -486,16 +486,54 @@ function check_user_comment_exists($username)
     }
 }
 
+function compare_cookies($username)
+{
 
-// compare cookies
-// first: check if already solved with lookup ...
+    if (isset($_COOKIE['XSS_Stolen_Session'])) {
+
+        // set flag that the user set the cookie for the stored xss challenge
+        $_SESSION['xssCookieSet'] = 1;
+
+        // check if right cookie is set
+        if ($_COOKIE['XSS_Stolen_Session'] == $_SESSION['storedXSS']) {
+
+            if (!isset($_SESSION['showStoredXSSModal'])) {
+                $_SESSION['showStoredXSSModal'] = 0;
+            }
+        } elseif ($_COOKIE['XSS_Stolen_Session'] == $_SESSION['reflectiveXSS']) {
+
+            // error: user entered wrong XSS cookie 
+            echo "<script>alert('You should set the XSS_Stolen_Session cookie "
+                . "to the value you obtained from the comment field. Not the "
+                . "value from the XSS_Your_Session cookie. Please try "
+                . "again.');</script>";
+        } else {
+
+            // error: user entered completely wrong cookie value
+            echo "<script>alert('Sorry, the cookie you have set does not match "
+                . "the XSS challenge cookies for your user. Please try again. If "
+                . "this error persists, please report it in the Learnweb forum "
+                . "together with the cookie you tried to set and your "
+                . "method.');</script>";
+        }
+    } else {
+
+        // cookie for stored xss challenge is not yet set by user in this session
+        $_SESSION['xssCookieSet'] = 0;
+    }
+}
+
+
+// compare cookies --> check
+// first: check if already solved with lookup ... check
 // if challenge = show modal with "welcome back Elliot..."
 // if normal = nothing
 // else = set_cookie to normal and display error modal with explanation
 
-// show modal() aka step 1 solved
+// show modal() aka step 1 solved --> check
 // set modal flag (modal is there and JS is added)
 // show link to Product overview page
+
 
 // function update cart
 // call empty cart
