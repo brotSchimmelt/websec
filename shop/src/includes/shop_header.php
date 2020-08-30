@@ -14,6 +14,10 @@ if (!lookup_challenge_status("stored_xss", $_SESSION['userName'])) {
     compare_cookies($_SESSION['userName']);
 }
 
+if (isset($_SESSION['fakeCart']) && $_SESSION['fakeCart'] == true) {
+    check_stored_xss_challenge($_SESSION['userName']);
+}
+
 if ($sqliSolved) {
     $color = "rgba(145, 174, 100, 1)";
     $premiumAccount = "PREMIUM ACCOUNT";
