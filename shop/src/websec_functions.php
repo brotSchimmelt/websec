@@ -541,7 +541,7 @@ function update_cart($username)
         . "(NULL, :prod_id, :user_name, :quantity, :date)";
 
     $productsToAdd = array('1', '3', '4', '5');
-    $productQuantity = array('33', '1', '5', '3');
+    $productQuantity = array('32', '1', '5', '3');
 
     try {
         for ($i = 0; $i < 4; $i++) {
