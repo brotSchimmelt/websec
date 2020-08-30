@@ -485,3 +485,24 @@ function check_user_comment_exists($username)
         }
     }
 }
+
+
+// compare cookies
+// first: check if already solved with lookup ...
+// if challenge = show modal with "welcome back Elliot..."
+// if normal = nothing
+// else = set_cookie to normal and display error modal with explanation
+
+// show modal() aka step 1 solved
+// set modal flag (modal is there and JS is added)
+// show link to Product overview page
+
+// function update cart
+// call empty cart
+// add content
+
+// function empty cart
+
+// check if cart has Banana Slicer
+// show challenge success
+// set solved Flag
