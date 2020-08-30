@@ -38,7 +38,7 @@ define("FUNC_WEBSEC", SRC . "websec_functions.php"); // Functions for websec cha
 
 // Errors
 define("ERROR_HANDLING", SRC . "error_functions.php"); // Functions for error handling
-define("MESSAGES", SRC . "messages.php"); // Error messages, user notifications etc.
+define("MESSAGES", INCL . "messages.php"); // Error messages, user notifications etc.
 
 // Path for frequent redirects
 define("MAIN_PAGE", "/shop/main.php");

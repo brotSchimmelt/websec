@@ -69,39 +69,13 @@
     </div>
 </div>
 <!--END-->
-
-
-
+<!--Alert: Product Search is closed -->
 <?php
-/*
-* Java Script for modals
-*/
-// show modal with field to enter solution
-if (isset($searchFieldWasUsed)) {
-    if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
-        echo "
-<script>
-    $('#xss-solution').modal('show')
-</script>";
-    }
-}
-
-// show failure modal
-if (isset($challengeFailed)) {
-    if ($challengeFailed) {
-        echo "
-<script>
-    $('#xss-wrong').modal('show')
-</script>";
-    }
-}
-// show success modal
-if (isset($showSuccessModal)) {
-    if ($showSuccessModal) {
-        echo "
-<script>
-    $('#challenge-success').modal('show')
-</script>";
-    }
-}
+$alertProductSearch = '<br>
+<div class="alert alert-warning shadow-sm" role="alert">
+    <b>Warning</b>: Due to recent hacker attacks, the product search function 
+    is currently disabled!
+</div>';
 ?>
+
+<!--END-->
