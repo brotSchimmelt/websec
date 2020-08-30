@@ -1,6 +1,7 @@
 <?php
 
-$sql = "SELECT `author`, `text`, `rating`, `timestamp` FROM xss_comments";
+$sql = "SELECT `author`, `text`, `rating`, `timestamp`, `post_time` "
+    . "FROM xss_comments";
 $stmt = get_shop_db()->prepare($sql);
 $stmt->execute();
 
@@ -19,7 +20,7 @@ while ($row = $stmt->fetch()) :
                                 <a href="#"><b><?= $row['author'] ?></b></a>
                                 made a comment.
                             </div>
-                            <h6 class="text-muted time">1 day ago</h6>
+                            <h6 class="text-muted time"><?= $row['post_time'] ?></h6>
                         </div>
                     </div>
                     <div class="post-description">
