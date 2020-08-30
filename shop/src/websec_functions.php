@@ -586,7 +586,7 @@ function check_stored_xss_challenge($username)
         // set fake cart flag to false so cart can work normally again
         $_SESSION['fakeCart'] = false;
 
-        // set flag for success modal
-        $showSuccessModal = true;
+        // set modal flag to not shown
+        $_SESSION['showSuccessModalXSS'] = 0;
     }
 }
