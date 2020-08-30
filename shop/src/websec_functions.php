@@ -486,6 +486,7 @@ function check_user_comment_exists($username)
     }
 }
 
+// compare the set cookies with the solution cookies
 function compare_cookies($username)
 {
 
@@ -520,6 +521,36 @@ function compare_cookies($username)
 
         // cookie for stored xss challenge is not yet set by user in this session
         $_SESSION['xssCookieSet'] = 0;
+    }
+}
+
+// set the users current cart to the fake cart
+function update_cart($username)
+{
+
+    // empty the current cart of the user
+    empty_cart($username);
+
+    $sql = "INSERT INTO `cart` (`position_id`, `prod_id`, `user_name`, "
+        . "`quantity`, `timestamp`) VALUES "
+        . "(NULL, :prod_id, :user_name, :quantity, :date)";
+
+    $productsToAdd = array('1', '3', '4', '5');
+    $productQuantity = array('33', '1', '5', '3');
+
+    try {
+        for ($i = 0; $i < 4; $i++) {
+            $stmt = get_shop_db()->prepare($sql);
+            $stmt->execute([
+                'prod_id' => $productsToAdd[$i],
+                'user_name' => $username,
+                'quantity' => $productQuantity[$i],
+                'date' => date("Y-m-d H:i:s")
+            ]);
+        }
+    } catch (Exception $e) {
+        display_exception_msg($e, "165");
+        exit();
     }
 }
 
