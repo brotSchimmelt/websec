@@ -4,10 +4,12 @@ session_start(); // Needs to be called first on every page
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP);
+require_once(CONF_DB_LOGIN);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
 
 // Load error handling and user messages
@@ -52,6 +54,7 @@ if (isset($_POST['add-product'])) {
     header("location: " . "/shop/product.php?id=" . $productID . "&success=prodAdded");
     exit();
 }
+$solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 
 ?>
 <!doctype html>
@@ -83,7 +86,11 @@ if (isset($_POST['add-product'])) {
 
 
     <!-- HTML Content BEGIN -->
-    <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Stored XSS</a>
+    <?php if (!$solved) : ?>
+        <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Stored XSS</a>
+    <?php else : ?>
+        <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">Stored XSS</a>
+    <?php endif; ?>
 
     <div class="con-center con-search jumbotron shadow container">
         <div class="row">
@@ -136,10 +143,11 @@ if (isset($_POST['add-product'])) {
                 <input class="form-control review-name" type="text" name="username" value="<?= $_SESSION['userName']; ?>" disabled><br>
                 <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
                 Your Review:<br><br>
-                <input class="form-control review-text" type="text" name="userComment" size="50"><br>
-                <input class="btn btn-wwu-primary" type="submit" value="Submit Comment">
+                <input class="form-control review-text" type="text" name="userComment" size="50" <?= $solved ? "disabled" : "" ?>><br>
+                <input class="btn btn-wwu-primary" type="submit" value="Submit Comment" <?= $solved ? "disabled" : "" ?>>
             </div>
         </form>
+        <?= $solved ? $alertCommentField : "" ?>
     </div>
 
     <?php require(INCL . "comments.php"); ?>
