@@ -78,3 +78,12 @@ $alertProductSearch = '<br>
 </div>';
 ?>
 <!--END-->
+<!--Alert: Product Search is closed -->
+<?php
+$alertCommentField = '<br>
+<div class="alert alert-warning shadow-sm" role="alert">
+    <b>Warning</b>: Due to recent hacker attacks, the comment function 
+    is currently disabled!
+</div>';
+?>
+<!--END-->
