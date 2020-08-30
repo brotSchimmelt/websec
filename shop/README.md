@@ -141,6 +141,8 @@ error= ...
 - **161**: Product comment could not be added to the database. See query in ```function add_comment_to_db```
 - **162**: Product comment could not be fetched from the database. See query in ```function check_user_comment_exists```
 - **163**: Product comment could not be deleted. See query in ```check_user_comment_exists```
+- **164**: Cart could not be emptied. See query in ```empty_cart```
+- **165**: Fake products could not be added to the cart. See query in ```update_cart```
 
 
 
