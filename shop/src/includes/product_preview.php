@@ -37,7 +37,7 @@ if (!$done) :
                                 <input type="submit" class="btn btn-wwu-cart btn-sm" name="add-preview" value="Add To Cart">
                             </div>
                             <div class="col btn-col">
-                                <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="3" placeholder="-" required>
+                                <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="10" placeholder="-" required>
                                 <input type="hidden" name="product_id" value="<?= $row['prod_id'] ?>">
                             </div>
                         </div>

@@ -59,8 +59,9 @@ function add_product_to_cart($productID, $quantity)
             exit();
         }
 
-        if (($result['quantity'] + $quantity) >= 3) {
-            $quantity = 3;
+        // max quantity for a product is 1024
+        if (($result['quantity'] + $quantity) >= 1024) {
+            $quantity = 1024;
             $sql = "UPDATE `cart` SET `quantity` = :quantity, `timestamp` = "
                 . ":date WHERE `prod_id` = :prod_id AND `user_name` = :user_name";
         } else if (($result['quantity'] + $quantity) <= 0) {
@@ -87,7 +88,7 @@ function add_product_to_cart($productID, $quantity)
         // add new product to cart
     } else {
         // check if quantity sent by user is not greater than 3
-        $quantity = $quantity > 3 ? 3 : $quantity;
+        $quantity = $quantity > 10 ? 10 : $quantity;
 
         $sql = "INSERT INTO `cart` (`position_id`, `prod_id`, `user_name`, "
             . "`quantity`, `timestamp`) VALUES "
