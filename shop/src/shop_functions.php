@@ -286,3 +286,18 @@ function show_search_results($searchTerm, $productsPerRow)
         echo "</div>";
     }
 }
+
+// empty the current cart of the user
+function empty_cart($username)
+{
+
+    $sql = "DELETE FROM `cart` WHERE `user_name`=?";
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([$username]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "164");
+        exit();
+    }
+}
