@@ -126,7 +126,6 @@ error= ...
 - **123**: The user cookies could not be fetched from the database. See query in ```function check_reflective_xss_challenge```
 - **124**: The challenge status could not be updated. See query in ```function set_challenge_status```
 - **125**: The challenge status could not be fetched. See query in ```function lookup_challenge_status```
-- **126**: The Cookie for the stored XSS challenge could not be fetched. See query in ```function get_stored_xss_cookie```
 
 *[Shop Database]*
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```

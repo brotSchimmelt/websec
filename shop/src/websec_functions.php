@@ -137,7 +137,7 @@ function add_comment_to_db($comment, $author)
     check_user_comment_exists($author);
 
     // filter user comment and check if correct script attack is used
-    $filteredComment = filter_comment($comment, $author);
+    $filteredComment = filter_comment($comment);
 
     $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, "
         . "`rating`, `timestamp`) VALUES "
@@ -609,34 +609,16 @@ function check_stored_xss_challenge($username)
 }
 
 // check if user comment contains XSS attack
-function filter_comment($comment, $username)
+function filter_comment($comment)
 {
     if (!empty($comment) && preg_match("/document.cookie/", $comment)) {
 
 
-        $cookie = get_stored_xss_cookie($username);
+        $cookie = $_SESSION['storedXSS'];
 
         return "<script>alert('XSS_STOLEN_SESSION=" . $cookie . "');</script>";
     } else {
 
         return $comment;
     }
-}
-
-// get the cookie for the stored XSS challenge
-function get_stored_xss_cookie($username)
-{
-    $sql = "SELECT `stored_xss` FROM `fakeCookie` WHERE `user_name`=?";
-
-    try {
-
-        $stmt = get_login_db()->prepare($sql);
-        $stmt->execute([$username]);
-        $result = $stmt->fetch();
-    } catch (PDOException $e) {
-        display_exception_msg($e, "126");
-        exit();
-    }
-
-    return $result['stored_xss'];
 }
