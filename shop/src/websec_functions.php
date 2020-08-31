@@ -525,6 +525,20 @@ function compare_cookies($username)
                 . "together with the cookie you tried to set and your "
                 . "method.');</script>";
         }
+        /* 
+        * user set the right value to the wrong cookie
+        * technically this is not the intended solution but it will do the trick
+        */
+    } elseif ($_COOKIE['XSS_YOUR_SESSION'] == $_SESSION['storedXSS']) {
+
+        if (!isset($_SESSION['showStoredXSSModal'])) {
+
+            // set up fake cart
+            update_cart($username);
+
+            // set modal flag to not shown
+            $_SESSION['showStoredXSSModal'] = 0;
+        }
     } else {
 
         // cookie for stored xss challenge is not yet set by user in this session
