@@ -43,13 +43,9 @@ function log_user_out()
     $_SESSION = array();
     session_destroy();
 
-    $cookiePath = array("/", "/shop", "/user", "/admin");
-
-    // delete all 'XSS_YOUR_SESSION' and 'XSS_STOLEN_SESSION' cookies
-    foreach ($cookiePath as $path) {
-        setcookie("XSS_YOUR_SESSION", "", time() - 10800, $path);
-        setcookie("XSS_STOLEN_SESSION", "", time() - 10800, $path);
-    }
+    // make sure all cookies are deleted after logout
+    delete_all_challenge_cookies();
+    delete_all_cookies();
 
     header("location: " . "/index.php" . "?success=logout");
     exit();
@@ -87,4 +83,29 @@ function unlock_user($username)
 
     // update session
     $_SESSION['userIsUnlocked'] = 1;
+}
+
+// delete all cookies for the XSS challenges
+function delete_all_challenge_cookies()
+{
+    $cookiePath = array("/", "/shop", "/user", "/admin");
+
+    // delete all 'XSS_YOUR_SESSION' and 'XSS_STOLEN_SESSION' cookies
+    foreach ($cookiePath as $path) {
+        setcookie("XSS_YOUR_SESSION", "", time() - 10800, $path);
+        setcookie("XSS_STOLEN_SESSION", "", time() - 10800, $path);
+    }
+}
+
+// delete all cookies set
+function delete_all_cookies()
+{
+
+    $cookiePath = array("/", "/shop", "/user", "/admin");
+
+    foreach ($_COOKIE as $key => $value) {
+        foreach ($cookiePath as $path) {
+            setcookie($key, $value, time() - 10800, $path);
+        }
+    }
 }
