@@ -38,6 +38,11 @@ $solvedSQLi = lookup_challenge_status("sqli", $username);
 $solvedCrosspost = lookup_challenge_status("csrf", $username);
 $solvedCrosspostDoubleCheck = lookup_challenge_status("csrf_referrer", $username);
 
+// challenge status for the user
+$echoGreen = '<span style="color:green;">Solved</span>';
+$echoRed = '<span style="color:red;">Stil Open</span>';
+$echoOrange = '<span style="color:orange;">Probably Solved</span>';
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -82,31 +87,31 @@ $solvedCrosspostDoubleCheck = lookup_challenge_status("csrf_referrer", $username
             </thead>
             <tbody>
                 <tr>
-                    <td>XSS (combined)</td>
-                    <td> <?php if ($solvedXSS) {
-                                echo "Solved";
-                            } else {
-                                echo "Still Open";
-                            } ?>
+                    <td>Reflective XSS</td>
+                    <td>
+                        <?= $solvedXSS ? $echoGreen : $echoRed ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Stored XSS</td>
+                    <td>
+                        <?= $solvedStoredXSS ? $echoGreen : $echoRed ?>
                     </td>
                 </tr>
                 <tr>
                     <td>SQLi</td>
-                    <td> <?php if ($solvedSQLi) {
-                                echo "Solved";
-                            } else {
-                                echo "Still Open";
-                            } ?>
+                    <td>
+                        <?= $solvedSQLi ? $echoGreen : $echoRed ?>
                     </td>
                 </tr>
                 <tr>
-                    <td>Support Form Hack</td>
+                    <td>CSRF</td>
                     <td> <?php if ($solvedCrosspost && $solvedCrosspostDoubleCheck) {
-                                echo "Solved";
+                                echo $echoGreen;
                             } elseif ($solvedCrosspost || $solvedCrosspostDoubleCheck) {
-                                echo "probably solved";
+                                echo $echoOrange;
                             } else {
-                                echo "Still Open";
+                                echo $echoRed;
                             } ?>
                     </td>
                 </tr>
