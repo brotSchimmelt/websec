@@ -523,7 +523,8 @@ function compare_cookies($username)
                 . "the XSS challenge cookies for your user. Please try again. If "
                 . "this error persists, please report it in the Learnweb forum "
                 . "together with the cookie you tried to set and your "
-                . "method.');</script>";
+                . "method. You can also try and reset this challenge in the menu"
+                . ".');</script>";
         }
         /* 
         * user set the right value to the wrong cookie
