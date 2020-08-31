@@ -503,11 +503,11 @@ function compare_cookies($username)
 
             if (!isset($_SESSION['showStoredXSSModal'])) {
 
-                // set modal flag to not shown
-                $_SESSION['showStoredXSSModal'] = 0;
-
                 // set up fake cart
                 update_cart($username);
+
+                // set modal flag to not shown
+                $_SESSION['showStoredXSSModal'] = 0;
             }
         } elseif ($_COOKIE['XSS_STOLEN_SESSION'] == $_SESSION['reflectiveXSS']) {
 
