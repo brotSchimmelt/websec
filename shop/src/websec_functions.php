@@ -14,7 +14,7 @@ function slug($z)
 // TODO: Delete ? Cookies are now set during login
 function set_fake_cookie($username)
 {
-    $cookieName = "XSS_Your_Session";
+    $cookieName = "XSS_YOUR_SESSION";
 
     $sql = "SELECT `reflective_xss` FROM "
         . "fakeCookie WHERE `user_name`=:user_name";
@@ -490,13 +490,13 @@ function check_user_comment_exists($username)
 function compare_cookies($username)
 {
 
-    if (isset($_COOKIE['XSS_Stolen_Session'])) {
+    if (isset($_COOKIE['XSS_STOLEN_SESSION'])) {
 
         // set flag that the user set the cookie for the stored xss challenge
         $_SESSION['xssCookieSet'] = 1;
 
         // check if right cookie is set
-        if ($_COOKIE['XSS_Stolen_Session'] == $_SESSION['storedXSS']) {
+        if ($_COOKIE['XSS_STOLEN_SESSION'] == $_SESSION['storedXSS']) {
 
             if (!isset($_SESSION['showStoredXSSModal'])) {
 
@@ -506,12 +506,12 @@ function compare_cookies($username)
                 // set up fake cart
                 update_cart($username);
             }
-        } elseif ($_COOKIE['XSS_Stolen_Session'] == $_SESSION['reflectiveXSS']) {
+        } elseif ($_COOKIE['XSS_STOLEN_SESSION'] == $_SESSION['reflectiveXSS']) {
 
             // error: user entered wrong XSS cookie 
-            echo "<script>alert('You should set the XSS_Stolen_Session cookie "
+            echo "<script>alert('You should set the XSS_STOLEN_SESSION cookie "
                 . "to the value you obtained from the comment field. Not the "
-                . "value from the XSS_Your_Session cookie. Please try "
+                . "value from the XSS_YOUR_SESSION cookie. Please try "
                 . "again.');</script>";
         } else {
 

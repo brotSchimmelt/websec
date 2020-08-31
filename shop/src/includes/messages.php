@@ -17,7 +17,7 @@
                 <div class="md-form ml-0 mr-0">
                     <form class="form-signin" action="<?= $thisPage ?>" method="post">
                         <p>Have you found the XSS session cookie?</p>
-                        <input type="text" name="xss-cookie" id="xss-cookie" placeholder="XSS_Your_Session" autofocus>
+                        <input type="text" name="xss-cookie" id="xss-cookie" placeholder="XSS_YOUR_SESSION" autofocus>
                         <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary" name="xss-cookie-submit" id="xss-cookie-submit">Send</button>
                         </div>
@@ -40,7 +40,7 @@
             </div>
             <div class="modal-body">
                 <p>Sorry, that was not correct. Please try again!</p>
-                <p><strong>Hint</strong>: The cookie you are looking for is called <i>XSS_Your_Session</i>.</p>
+                <p><strong>Hint</strong>: The cookie you are looking for is called <i>XSS_YOUR_SESSION</i>.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Okay</button>

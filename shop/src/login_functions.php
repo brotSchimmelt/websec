@@ -737,7 +737,7 @@ function set_user_cookies($username)
     }
 
     // set cookies
-    setcookie("XSS_Your_Session", $result['reflective_xss']);
+    setcookie("XSS_YOUR_SESSION", $result['reflective_xss']);
     $_SESSION['reflectiveXSS'] = $result['reflective_xss'];
     $_SESSION['storedXSS'] = $result['stored_xss'];
 }
