@@ -87,25 +87,25 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
             </thead>
             <tbody>
                 <tr>
-                    <td>Reflective XSS</td>
+                    <td><a class="text-muted" href="/shop/overview.php">Reflective XSS</a></td>
                     <td>
                         <?= $solvedXSS ? $echoGreen : $echoRed ?>
                     </td>
                 </tr>
                 <tr>
-                    <td>Stored XSS</td>
+                    <td><a class="text-muted" href="/shop/product.php">Stored XSS</a></td>
                     <td>
                         <?= $solvedStoredXSS ? $echoGreen : $echoRed ?>
                     </td>
                 </tr>
                 <tr>
-                    <td>SQLi</td>
+                    <td><a class="text-muted" href="/shop/friends.php">SQLi</a></td>
                     <td>
                         <?= $solvedSQLi ? $echoGreen : $echoRed ?>
                     </td>
                 </tr>
                 <tr>
-                    <td>CSRF</td>
+                    <td><a class="text-muted" href="/shop/contact.php">CSRF</a></td>
                     <td> <?php if ($solvedCrosspost && $solvedCrosspostDoubleCheck) {
                                 echo $echoGreen;
                             } elseif ($solvedCrosspost || $solvedCrosspostDoubleCheck) {
