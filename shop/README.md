@@ -99,6 +99,7 @@ error= ...
 - **051**: SQLite database could not be created. Check ```function create_sqli_db```
 - **052**: The SQLite database could not be reset by the user. Check ```function create_sqli_db```
 - **053**: Users could not be added to the SQLite database. Check ```function create_sqli_db```
+- **054**: The SQLite database could not be queried by the user. Check ```function query_sqli_db```
 
 **1xx**: A SQL query could not be processed by the login or shop database.
 *[Login Database]*
