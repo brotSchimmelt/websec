@@ -209,8 +209,11 @@ function process_csrf($userName, $userPost)
 // Reset XSS challenge
 function reset_reflective_xss_db($username)
 {
-    include_once(FUNC_LOGIN);
 
+    // unset all challenge cookies
+    delete_all_challenge_cookies();
+
+    // generate new value for stored XSS challenge cookie
     try {
         $newChallengeCookie = get_random_token(16);
     } catch (Exception $e) {
@@ -218,6 +221,7 @@ function reset_reflective_xss_db($username)
         exit();
     }
 
+    // set new cookie in the database
     $sql = "UPDATE `fakeCookie` SET `reflective_xss`=:new_cookie "
         . "WHERE `user_name` = :user_name";
 
@@ -231,11 +235,29 @@ function reset_reflective_xss_db($username)
         exit();
     }
 
-    echo "success: The database for the reflective XSS challenge "
-        . "was successfully reset.";
+    // update stored XSS cookie in Session
+    $_SESSION['storedXSS'] = $newChallengeCookie;
+
+    // set new cookie
+    setcookie("XSS_YOUR_SESSION", $newChallengeCookie, 0, "/");
+
+    // unset challenge progress in database
+    set_challenge_status("reflective_xss", $username, $status = 0);
+
+    // show success modal
+    return true;
 }
 
 // Reset stored XSS challenge
+// TODO: add new implementation
+// unset 1 challenge cookie
+// generate 1 new cookie/ token
+// update `fakeCookie` with new value
+// update new cookie in $_SESSION
+// delete comment in Database
+// empty cart
+// call (new) function unset_challenge_status($challenge, $username)
+// create Modal
 function reset_stored_xss_db($username)
 {
     $sql = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
@@ -421,14 +443,19 @@ function check_crosspost_challenge_double($username)
 }
 
 // set challenge status in the database to solved
-function set_challenge_status($challenge, $username)
+function set_challenge_status($challenge, $username, $status = 1)
 {
     // filter challenge name since prepared statements do not work for
     // table names etc.
     $challengeField = filter_var($challenge, FILTER_SANITIZE_SPECIAL_CHARS);
+    $challengeStatus = filter_var($status, FILTER_SANITIZE_NUMBER_INT);
 
-    $sql = "UPDATE `challengeStatus` SET " . $challengeField . "=1 WHERE "
-        . "`user_name`=?";
+    // check if challenge status is either 0 or 1
+    $challengeStatus = ($challengeStatus != 1) ? 0 : 1;
+
+    $sql = "UPDATE `challengeStatus` SET " . $challengeField . "="
+        . $challengeStatus . " WHERE `user_name`=?";
+
     try {
         $stmt = get_login_db()->prepare($sql);
         $stmt->execute([$username]);
@@ -547,7 +574,7 @@ function compare_cookies($username)
     }
 }
 
-// set the users current cart to the fake cart
+// set the users current cart to the 'fake' cart
 function update_cart($username)
 {
 
@@ -558,6 +585,7 @@ function update_cart($username)
         . "`quantity`, `timestamp`) VALUES "
         . "(NULL, :prod_id, :user_name, :quantity, :date)";
 
+    // products that are added to the new 'fake' cart
     $productsToAdd = array('1', '3', '4', '5');
     $productQuantity = array('32', '1', '5', '3');
 

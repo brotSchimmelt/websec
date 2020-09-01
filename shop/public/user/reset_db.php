@@ -32,7 +32,7 @@ if (!is_user_unlocked()) {
 $username = $_SESSION['userName'];
 
 if (isset($_POST['simplexss']) && isset($_POST['doit-simplexss'])) {
-    reset_reflective_xss_db($username);
+    $resetStoredXSSModal = reset_reflective_xss_db($username);
 }
 if (isset($_POST['storedxss']) && isset($_POST['doit-storedxss'])) {
     reset_stored_xss_db($username);
@@ -74,10 +74,8 @@ if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
     <!-- HTML Content BEGIN -->
     <div class="con-search">
         <h4>RESET REFLECTIVE XSS</h4>
-        This will <strong>delete all your achievements</strong>!<br>
+        <strong>Warning: </strong>This will delete your progress for this challenge and set new cookies.<br><br>
         <form action="reset_db.php" method="post">
-            your name:
-            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
             <input type="hidden" name="doit-simplexss" value="1">
             <input type="hidden" name="simplexss" value="1">
             <input type="submit" value="RESET REFLECTIVE XSS CHALLENGE">

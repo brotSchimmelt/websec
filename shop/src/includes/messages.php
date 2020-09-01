@@ -113,6 +113,26 @@
     </div>
 </div>
 <!--END-->
+<!--Modal: Reflective XSS Challenge Reset Success-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-reflective-success" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Challenge successfully reset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>The database for the reflective XSS challenge was successfully reset and all relevant cookies were changed.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
 <!--Alert: Product Search is closed -->
 <?php
 $alertProductSearch = '<br>
