@@ -213,7 +213,7 @@ function reset_reflective_xss_db($username)
     // unset all challenge cookies
     delete_all_challenge_cookies();
 
-    // generate new value for stored XSS challenge cookie
+    // generate new value for reflective XSS challenge cookie
     try {
         $newChallengeCookie = get_random_token(16);
     } catch (Exception $e) {
@@ -235,8 +235,8 @@ function reset_reflective_xss_db($username)
         exit();
     }
 
-    // update stored XSS cookie in Session
-    $_SESSION['storedXSS'] = $newChallengeCookie;
+    // update reflective XSS cookie in Session
+    $_SESSION['reflectiveXSS'] = $newChallengeCookie;
 
     // set new cookie
     setcookie("XSS_YOUR_SESSION", $newChallengeCookie, 0, "/");
@@ -249,27 +249,55 @@ function reset_reflective_xss_db($username)
 }
 
 // Reset stored XSS challenge
-// TODO: add new implementation
-// unset 1 challenge cookie
-// generate 1 new cookie/ token
-// update `fakeCookie` with new value
-// update new cookie in $_SESSION
-// delete comment in Database
-// empty cart
-// call (new) function unset_challenge_status($challenge, $username)
-// create Modal
 function reset_stored_xss_db($username)
 {
-    $sql = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
+
+    // delete all challenge cookies and set unrelated cookie again
+    delete_all_challenge_cookies();
+    setcookie("XSS_YOUR_SESSION", $_SESSION['reflectiveXSS'], 0, "/");
+
+    // generate new value for stored XSS challenge cookie
     try {
-        get_shop_db()->prepare($sql)->execute(['user_name' => $username]);
+        $newChallengeCookie = get_random_token(16);
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+
+    // set new cookie in the database
+    $sqlCookie = "UPDATE `fakeCookie` SET `stored_xss`=:new_cookie "
+        . "WHERE `user_name` = :user_name";
+
+    try {
+        get_login_db()->prepare($sqlCookie)->execute([
+            'new_cookie' => $newChallengeCookie,
+            'user_name' => $username
+        ]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "113");
+        exit();
+    }
+
+    // update stored XSS cookie in Session
+    $_SESSION['storedXSS'] = $newChallengeCookie;
+
+    // delete user comments in database
+    $sqlComment = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
+    try {
+        get_shop_db()->prepare($sqlComment)->execute(['user_name' => $username]);
     } catch (PDOException $e) {
         display_exception_msg($e, "114");
         exit();
     }
 
-    echo "success: The database for the stored XSS challenge was "
-        . "successfully reset.";
+    // empty the current cart of the user
+    empty_cart($username);
+
+    // unset challenge progress in database
+    set_challenge_status("stored_xss", $username, $status = 0);
+
+    // show success modal
+    return true;
 }
 
 // Reset SQLi challenge

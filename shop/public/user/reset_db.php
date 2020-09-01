@@ -32,10 +32,10 @@ if (!is_user_unlocked()) {
 $username = $_SESSION['userName'];
 
 if (isset($_POST['simplexss']) && isset($_POST['doit-simplexss'])) {
-    $resetStoredXSSModal = reset_reflective_xss_db($username);
+    $resetReflectiveXSSModal = reset_reflective_xss_db($username);
 }
 if (isset($_POST['storedxss']) && isset($_POST['doit-storedxss'])) {
-    reset_stored_xss_db($username);
+    $resetStoredXSSModal = reset_stored_xss_db($username);
 }
 if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
     reset_sqli_db($username);

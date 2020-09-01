@@ -56,6 +56,17 @@ if (isset($_SESSION['showSuccessModalXSS'])) {
 }
 
 // show reset reflective XSS success modal
+if (isset($resetReflectiveXSSModal)) {
+    if ($resetReflectiveXSSModal) {
+        echo "
+<script>
+    $('#reset-reflective-success').modal('show')
+</script>";
+        echo "awesome success";
+    }
+}
+
+// show reset stored XSS success modal
 if (isset($resetStoredXSSModal)) {
     if ($resetStoredXSSModal) {
         echo "
