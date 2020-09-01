@@ -149,6 +149,8 @@ error= ...
 - **163**: Product comment could not be deleted. See query in ```check_user_comment_exists```
 - **164**: Cart could not be emptied. See query in ```empty_cart```
 - **165**: Fake products could not be added to the cart. See query in ```update_cart```
+- **166**: Crosspost table could not be accessed. 
+- **167**: Entry could not be added to the Crosspost table.
 
 
 
