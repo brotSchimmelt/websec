@@ -10,27 +10,6 @@ function slug($z)
     return trim($z, '-');
 }
 
-// set challenge cookie for user
-// TODO: Delete ? Cookies are now set during login
-function set_fake_cookie($username)
-{
-    $cookieName = "XSS_YOUR_SESSION";
-
-    $sql = "SELECT `reflective_xss` FROM "
-        . "fakeCookie WHERE `user_name`=:user_name";
-
-    try {
-        $stmt = get_login_db()->prepare($sql);
-        $stmt->execute(['user_name' => $username]);
-        $result = $stmt->fetch();
-        $fakeID = $result['reflective_xss'];
-    } catch (PDOException $e) {
-        display_exception_msg($e, "112");
-        exit();
-    }
-    setcookie($cookieName, $fakeID);
-}
-
 // create SQLite database for the SQLi challenge 
 function create_sqli_db($username, $mail)
 {
