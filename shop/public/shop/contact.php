@@ -29,7 +29,7 @@ if (!is_user_unlocked()) {
 // Load POST or GET variables and sanitize input BELOW this comment
 $postRequestSent = false;
 if (isset($_POST['uname']) && isset($_POST['userPost'])) {
-    $userName = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
+    $username = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
     $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
 
     $postRequestSent = true;
@@ -86,7 +86,7 @@ if (isset($_POST['uname']) && isset($_POST['userPost'])) {
 
     <?php
     if ($postRequestSent) {
-        process_csrf($userName, $userPost);
+        process_csrf($username, $userPost);
     }
     ?>
     <!-- HTML Content END -->
