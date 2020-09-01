@@ -26,20 +26,30 @@ function create_sqli_db($username, $mail)
         // fake password hash that is shown to the user in SQLi challenge
         $fakePwdHash = str_shuffle("superSecureFakePasswordHash13579");
 
-        $database->exec('CREATE TABLE users (username text NOT NULL, 
-        password text, email text, user_status text NOT NULL);');
+        // add users to the SQLi database
+        try {
+            $database->exec('CREATE TABLE users (username text NOT NULL, '
+                . 'password text, email text, wishlist text, user_status '
+                . 'text NOT NULL);');
 
-        $database->exec("INSERT INTO users (username,password,email,role) 
-        VALUES ('admin','admin','admin@admin.admin','standard');");
+            $database->exec("INSERT INTO users (username,password,email,role) "
+                . "VALUES ('admin','admin','admin@admin.admin', 'new Mug', "
+                . "'standard');");
 
-        $database->exec("INSERT INTO users (username,password,email,role) 
-        VALUES ('elliot','toor','alderson@allsafe.con','standard');");
+            $database->exec("INSERT INTO users (username,password,email,role) "
+                . "VALUES ('elliot','toor','alderson@allsafe.con', "
+                . "'Banana Slicer', 'standard');");
 
-        $database->exec("INSERT INTO users (username,password,email,role) 
-        VALUES ('l337_h4ck3r','password123','girly95@hotmail.con','premium');");
+            $database->exec("INSERT INTO users (username,password,email,role) "
+                . "VALUES ('l337_h4ck3r','password123','girly95@hotmail.con', "
+                . "'T-Shirt', 'premium');");
 
-        $database->exec("INSERT INTO users (username,password,email,role) 
-        VALUES ('" . $username . "','" . $fakePwdHash . "','" . $mail . "','standard');");
+            $database->exec("INSERT INTO users (username,password,email,role) "
+                . "VALUES ('" . $username . "','" . $fakePwdHash . "','"
+                . $mail . "', 'empty','standard');");
+        } catch (Exception $e) {
+            display_exception_msg($e, "053");
+        }
     } else {
         throw new Exception("SQLite database could not be created.");
     }
