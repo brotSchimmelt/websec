@@ -83,7 +83,9 @@ $solved = lookup_challenge_status("sqli", $_SESSION['userName']);
             <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
         </form>
         <br>
-        <small><strong>Info:</strong> We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</small>
+        <small><strong>Info:</strong> We value our users' privacy.
+            If you entered a username in the search field and there is no corresponding user then nothing is displayed.
+        </small>
     </div>
 
     <?php
