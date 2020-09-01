@@ -102,6 +102,8 @@ error= ...
 - **054**: The SQLite database could not be queried by the user. Check ```function query_sqli_db```
 - **055**: UPDATE or INSERT query written by the user could not be processed in the SQLite database. Check ```function query_sqli_db```
 - **056**: SELECT query could not be processed by the SQLite database. Check ```function query_sqli_db```
+- **057**: Status of the SQLi challenge could not be check in the SQLite database. See ```function check_sqli_challenge```
+- **058**: SQLite database does not exist for this user.
 
 **1xx**: A SQL query could not be processed by the login or shop database.
 *[Login Database]*
