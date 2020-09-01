@@ -76,7 +76,12 @@ if (isset($_POST['sqli'])) {
 
     <?php
     if (isset($_POST['sqli']) && (!empty($_POST['sqli']))) {
-        query_sqli_db($searchTerm);
+        try {
+            $queryResultModal = query_sqli_db($searchTerm);
+        } catch (Exception $e) {
+            display_exception_msg($e, "054");
+            exit();
+        }
     }
     ?>
     <!-- HTML Content END -->

@@ -32,21 +32,21 @@ function create_sqli_db($username, $mail)
                 . 'password text, email text, wishlist text, user_status '
                 . 'text NOT NULL);');
 
-            $database->exec("INSERT INTO users (username,password,email,role) "
-                . "VALUES ('admin','admin','admin@admin.admin', 'new Mug', "
-                . "'standard');");
+            $database->exec("INSERT INTO users (username,password,email,"
+                . "wishlist, user_status) VALUES ('admin','admin',"
+                . "'admin@admin.admin', 'new Mug', 'standard');");
 
-            $database->exec("INSERT INTO users (username,password,email,role) "
-                . "VALUES ('elliot','toor','alderson@allsafe.con', "
-                . "'Banana Slicer', 'standard');");
+            $database->exec("INSERT INTO users (username,password,email,"
+                . "wishlist, user_status) VALUES ('elliot','toor', "
+                . "'alderson@allsafe.con', 'Banana Slicer', 'standard');");
 
-            $database->exec("INSERT INTO users (username,password,email,role) "
-                . "VALUES ('l337_h4ck3r','password123','girly95@hotmail.con', "
-                . "'T-Shirt', 'premium');");
+            $database->exec("INSERT INTO users (username,password,email,"
+                . "wishlist, user_status) VALUES ('l337_h4ck3r','password123',"
+                . "'girly95@hotmail.con', 'T-Shirt', 'premium');");
 
-            $database->exec("INSERT INTO users (username,password,email,role) "
-                . "VALUES ('" . $username . "','" . $fakePwdHash . "','"
-                . $mail . "', 'empty','standard');");
+            $database->exec("INSERT INTO users (username,password,email,"
+                . "wishlist, user_status) VALUES ('" . $username . "','"
+                . $fakePwdHash . "','" . $mail . "', 'empty','standard');");
         } catch (Exception $e) {
             display_exception_msg($e, "053");
         }
@@ -55,46 +55,82 @@ function create_sqli_db($username, $mail)
     }
 }
 
-// SQLi challenge
-// TODO: Add premium user instead of admin
-// TODO: Add exception and error handling
+// query the SQLite database
 function query_sqli_db()
 {
+    // get search term and user database
     $searchTerm = $_POST['sqli'];
     $userDbPath = DAT . $_SESSION['userName'] . ".sqlite";
 
+    // queries
     $countUserQuery = "SELECT COUNT(*) FROM `users`;";
-    $countAdminQuery = "SELECT COUNT(*) FROM `users` WHERE role='admin';";
-    $searchQuery = 'SELECT username,email FROM users WHERE username="' . $searchTerm . '";';
+    $countPremiumQuery = "SELECT COUNT(*) FROM `users` WHERE user_status='premium';";
+    $searchQuery = 'SELECT username,email,wishlist FROM users WHERE '
+        . 'username="' . $searchTerm . '";';
 
+    // connect to database
     $database = new SQLite3($userDbPath);
     if ($database) {
 
+        // count combined and premium users before search query execution
         $numOfUsersBefore = $database->querySingle($countUserQuery);
-        $numOfAdminsBefore = $database->querySingle($countAdminQuery);
+        $numOfPremiumBefore = $database->querySingle($countPremiumQuery);
 
+        // split all entered queries in array
         $queries = explode(';', $searchQuery);
 
         foreach ($queries as $q) {
 
+            // allowed SQL
             $pos1 = strpos($q, "SELECT");
             $pos2 = strpos($q, "INSERT");
-            if ($pos1 === false && $pos2 === false) {
+            $pos3 = strpos($q, "UPDATE");
+
+            if ($pos1 === false && $pos2 === false && $pos3 === false) {
+
+                // skip any query with unhallowed or without SQL 
                 continue;
-            } else if ($pos2 !== false) {
-                $database->query($q);
+            } else if ($pos2 !== false || $pos3 !== false) {
+
+                // execute data manipulating query
+                try {
+                    $database->query($q);
+                } catch (Exception $e) {
+                    display_exception_msg($e, "055");
+                    exit();
+                }
             } else {
-                $result = $database->query($q);
+
+                // execute SELECT query
+                try {
+                    $result = $database->query($q);
+                } catch (Exception $e) {
+                    display_exception_msg($e, "056");
+                    exit();
+                }
                 while ($row = $result->fetchArray()) {
                     echo '<div class="con-center con-search">';
-                    echo '<h4 class="display-5">Looks like we found your friend!</h4><br>';
-                    echo "Here are his/her contact infos!<br>";
+                    echo '<h4 class="display-5">Looks like we found your '
+                        . 'friend!</h4><br>';
+                    echo "Here are his/her contact infos and wishlist items!<br>";
 
+                    // iterate SELECT results
                     foreach ($row as $key => $value) {
                         if (is_numeric($key)) {
+
+                            // skip IDs
                             continue;
                         }
-                        if ($key == "username" || $key == "email" || $key == "password" || $key == "role") {
+
+                        // output results abstracted from the original search query
+                        // so SELECT * (...) gives all attributes back
+                        if (
+                            $key == "username"
+                            || $key == "email"
+                            || $key == "password"
+                            || $key == "wishlist"
+                            || $key == "user_status"
+                        ) {
                             echo "$key = $value <br>";
                         }
                     }
@@ -103,13 +139,40 @@ function query_sqli_db()
                 }
             }
         }
-        if ($database->querySingle($countAdminQuery) > $numOfAdminsBefore) {
-            echo "message: Great! You added a new admin user and completed the challenge!";
+        // count new premium users
+        if ($database->querySingle($countPremiumQuery) > $numOfPremiumBefore) {
+
+            try {
+                $challengeStatus = check_sqli_challenge($_SESSION['userName']);
+            } catch (Exception $e) {
+                display_exception_msg($e, "058");
+                exit();
+            }
+            // check if user is premium
+            if ($challengeStatus) {
+
+                // set challenge to solved in database
+                set_challenge_status("sqli", $_SESSION['userName']);
+
+                // code for showing challenge success modal
+                return 0;
+            }
+
+            // code for showing info modal
+            return 1;
         } else if ($database->querySingle($countUserQuery) > $numOfUsersBefore) {
-            echo "message: Seems like you successfully added a new user to the database! Now try to insert a user with the role <strong>admin</strong>.";
+
+            // code for showing info modal
+            return 2;
         }
     } else {
-        echo 'You seem to have an error in your SQL query: ' . htmlentities($searchTerm);
+        $msg = "You seem to have an error in your SQL query: "
+            . htmlentities($searchTerm);
+
+        throw new Exception($msg);
+
+        // return code for unexpected behaviour
+        return -1;
     }
 }
 
@@ -389,14 +452,21 @@ function check_sqli_challenge($username)
     $database = new SQLite3($pathToSQLiDB);
     if ($database) {
 
-        $sql = 'SELECT * FROM users WHERE role="admin" and username != "admin";';
-        $result = $database->query($sql);
-        $row = $result->fetchArray();
-        if ($row) {
+        // check if the user account is premium
+        $sql = "SELECT COUNT(*) FROM `users` WHERE `user_status`='premium' AND "
+            . "`username`='" . $username . "';";
+        try {
+            $result = $database->querySingle($sql);
+        } catch (Exception $e) {
+            display_exception_msg($e, "057");
+            exit();
+        }
+
+        if ($result > 0) {
             $challengeStatus = true;
         }
     } else {
-        trigger_error("Code Error: SQLi Database for " . $username
+        throw new Exception("SQLi Database for " . $username
             . " was not found.");
         return $challengeStatus;
     }

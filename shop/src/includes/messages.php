@@ -153,6 +153,67 @@
     </div>
 </div>
 <!--END-->
+<!--Modal: SQLi Challenge SOLVED-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-sqli" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Congratulation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You have solved the SQLi challenge!</p>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button> -->
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="return RefreshPage();">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--Modal: SQLi Challenge Info Wrong Premium User-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-sqli-wrong-premium" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>It is nice of you that you upgraded another user to premium, but the challenge is to upgrade yourself.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--Modal: SQLi Challenge Info User Added But No Premium-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-sqli-wrong-user" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You have added a new user to the database. Now try to upgrade yourself to premium.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
 <!--Alert: Product Search is closed -->
 <?php
 $alertProductSearch = '<br>
