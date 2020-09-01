@@ -20,7 +20,7 @@ if (!$done) :
             <div class="card-body">
                 <h5 class="card-title"><?= $row['prod_title'] ?>
                     <?php if (!$solvedStoredXSS) : ?>
-                        <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)" class="badge badge-pill badge-warning shadow-sm mr-3" target="_blank">Stored XSS</a>
+                        <a href="product.php?id= <?= $row['prod_id'] ?>" class="badge badge-pill badge-warning shadow-sm mr-3">Stored XSS</a>
                     <?php else : ?>
                         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm mr-3">Stored XSS</a>
                     <?php endif; ?></h5>
@@ -28,7 +28,7 @@ if (!$done) :
                 <p class="card-text"><?= $row['prod_description'] ?></p>
                 <div class="prod-btn">
                     <!-- <a href="#" class="btn btn-outline-light btn-sm">Detail Page</a> -->
-                    <a href="product.php?id= <?= $row['prod_id']  ?>" class="btn btn-wwu-primary btn-sm">Detail Page</a>
+                    <a href="product.php?id= <?= $row['prod_id'] ?>" class="btn btn-wwu-primary btn-sm">Detail Page</a>
 
                     <form action="overview.php" method="post">
                         <div class="form-row">
