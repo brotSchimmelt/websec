@@ -1,4 +1,8 @@
-<!--Modal: Reflective XSS Enter Cookie-->
+<?php
+/*
+* Modals
+*/
+$modalInputXSSCookie = '<!--Modal: Input - Reflective XSS Cookie-->
 <div class="modal fade" id="xss-solution" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
         <!--Content-->
@@ -27,8 +31,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Reflective XSS Cookie Wrong-->
+<!--Modal END-->';
+$modalErrorXSSCookieWrong = '<!--Modal: Error - Reflective XSS Cookie Wrong-->
 <div class="modal fade" tabindex="-1" role="dialog" id="xss-wrong" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -48,8 +52,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Reflective XSS Cookie Challenge SOLVED-->
+<!--Modal END-->';
+$modalSuccessReflectiveXSS = '<!--Modal: Success - Reflective XSS Cookie Challenge SOLVED-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -68,8 +72,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Stored XSS | Welcome Elliot-->
+<!--Modal END-->';
+$modalInfoStolenSession = '<!--Modal: Info - Stolen Session Elliot-->
 <div class="modal fade" tabindex="-1" role="dialog" id="xss-elliot" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -92,8 +96,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Stored XSS Cookie Challenge SOLVED-->
+<!--Modal END-->';
+$modalSuccessStoredXSS = '<!--Modal: Success - Stored XSS Cookie Challenge SOLVED-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-stored-xss" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -112,8 +116,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Reflective XSS Challenge Reset Success-->
+<!--Modal END-->';
+$modalSuccessResetReflectiveXSS = '<!--Modal: Success - Reset Reflective XSS Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-reflective-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -132,8 +136,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Reflective XSS Challenge Reset Success-->
+<!--Modal END-->';
+$modalSuccessResetStoredXSS = '<!--Modal: Success- Reset Stored XSS Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-stored-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -152,8 +156,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: SQLi Challenge Reset Success-->
+<!--Modal END-->';
+$modalSuccessResetSQLi = '<!--Modal: Success - Reset SQLi Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-sqli-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -172,8 +176,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: SQLi Challenge SOLVED-->
+<!--Modal END-->';
+$modalSuccessSQLi = '<!--Modal: Success - SQLi Challenge SOLVED-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-sqli" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -192,8 +196,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: SQLi Challenge Info Wrong Premium User-->
+<!--Modal END-->';
+$modalInfoSQLiWrongUser = '<!--Modal: Info - SQLi Wrong Premium User-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-sqli-wrong-premium" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -212,8 +216,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: SQLi Challenge Info User Added But No Premium-->
+<!--Modal END-->';
+$modalInfoNoPremium = '<!--Modal: Info - SQLi User Added But No Premium-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-sqli-wrong-user" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -232,8 +236,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Challenge Success CSRF -->
+<!--Modal END-->';
+$modalSuccessCSRF = '<!--Modal: Success - CSRF Challenge SOLVED-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -252,8 +256,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Challenge Success CSRF | wrong referrer -->
+<!--Modal END-->';
+$modalSuccessCSRFWrongReferrer = '<!--Modal: Success - CSRF Challenge SOLVED (but wrong referrer)-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf-referrer" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -276,8 +280,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Challenge Success CSRF | wrong message -->
+<!--Modal END-->';
+$modalSuccessCSRFWrongMessage = '<!--Modal: Success - CSRF Challenge SOLVED (but wrong message)-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf-pwned" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -288,7 +292,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>You should have sent 'pwned' but ok. Challenge passed!</p>
+                <p>You should have sent <i>pwned</i> but ok. Challenge passed!</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
@@ -296,8 +300,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Challenge CSRF Info | already post in database-->
+<!--Modal END-->';
+$modalInfoCSRFAlreadyPosted = '<!--Modal: Info - CSRF Challenge already post in database-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-csrf-already-posted" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -316,8 +320,8 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Modal: Challenge CSRF Info | user mismatch-->
+<!--Modal END-->';
+$modalErrorCSRFUserMismatch = '<!--Modal: Error - CSRF Challenge user mismatch-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-csrf-user-mismatch" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -336,31 +340,23 @@
         </div>
     </div>
 </div>
-<!--END-->
-<!--Alert: Product Search is closed -->
-<?php
+<!--Modal END-->';
+
+/*
+* Alerts
+*/
 $alertProductSearch = '<br>
 <div class="alert alert-warning shadow-sm" role="alert">
     <b>Warning</b>: Due to recent hacker attacks, the product search function 
     is currently disabled!
 </div>';
-?>
-<!--END-->
-<!--Alert: Product Search is closed -->
-<?php
 $alertCommentField = '<br>
 <div class="alert alert-warning shadow-sm" role="alert">
     <b>Warning</b>: Due to recent hacker attacks, the comment function 
     is currently disabled!
 </div>';
-?>
-<!--END-->
-<!-- Alert: Contact field has been used -->
-<?php
 $alertContactField = '<br>
 <div class="alert alert-info shadow" role="alert">
     <b>Thank You!</b> We have received your request and will come back to you
     very soon.<br>Very soon! Really! One day...<br>or never.
 </div>';
-?>
-<!--END-->
