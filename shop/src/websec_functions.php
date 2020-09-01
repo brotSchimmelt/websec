@@ -23,22 +23,23 @@ function create_sqli_db($username, $mail)
     $database = new SQLite3($dbName);
     if ($database) {
 
-        $fakePwdHash = str_shuffle(str_repeat("superSecureFakePasswordHash13579", 2));
+        // fake password hash that is shown to the user in SQLi challenge
+        $fakePwdHash = str_shuffle("superSecureFakePasswordHash13579");
 
         $database->exec('CREATE TABLE users (username text NOT NULL, 
-        password text, email text, role text NOT NULL);');
+        password text, email text, user_status text NOT NULL);');
 
         $database->exec("INSERT INTO users (username,password,email,role) 
-        VALUES ('admin','admin','admin@admin.admin','admin');");
+        VALUES ('admin','admin','admin@admin.admin','standard');");
 
         $database->exec("INSERT INTO users (username,password,email,role) 
-        VALUES ('elliot','toor','alderson@allsafe.con','user');");
+        VALUES ('elliot','toor','alderson@allsafe.con','standard');");
 
         $database->exec("INSERT INTO users (username,password,email,role) 
-        VALUES ('l337_h4ck3r','password123','girly95@hotmail.con','user');");
+        VALUES ('l337_h4ck3r','password123','girly95@hotmail.con','premium');");
 
         $database->exec("INSERT INTO users (username,password,email,role) 
-        VALUES ('" . $username . "','" . $fakePwdHash . "','" . $mail . "','user');");
+        VALUES ('" . $username . "','" . $fakePwdHash . "','" . $mail . "','standard');");
     } else {
         throw new Exception("SQLite database could not be created.");
     }
