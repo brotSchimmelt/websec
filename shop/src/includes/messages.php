@@ -177,6 +177,26 @@ $modalSuccessResetSQLi = '<!--Modal: Success - Reset SQLi Challenge-->
     </div>
 </div>
 <!--Modal END-->';
+$modalSuccessResetCSRF = '<!--Modal: Success - Reset CSRF Challenge-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-csrf-success" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Challenge successfully reset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>The database for the CSRF challenge was successfully reset.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal END-->';
 $modalSuccessSQLi = '<!--Modal: Success - SQLi Challenge SOLVED-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-sqli" aria-hidden="true">
     <div class="modal-dialog" role="document">

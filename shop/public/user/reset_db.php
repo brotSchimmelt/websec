@@ -41,7 +41,7 @@ if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
     $resetSQLiModal = reset_sqli_db($username);
 }
 if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
-    reset_csrf_db($username);
+    $resetCSRFModal = reset_csrf_db($username);
 }
 ?>
 <!doctype html>

@@ -82,7 +82,7 @@ if (isset($_POST['uname']) && isset($_POST['userPost'])) {
             <input type="text" name="userPost" size="30" disabled><br><br>
             <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
         </form>
-        <?= isset($_SESSION['contactUsed']) ? $alertContactField : "" ?>
+        <?= (isset($_SESSION['contactUsed']) && $_SESSION['contactUsed'] == true) ? $alertContactField : "" ?>
     </div>
 
     <?php

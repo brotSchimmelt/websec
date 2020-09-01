@@ -411,7 +411,16 @@ function reset_csrf_db($username)
         display_exception_msg($e, "114");
         exit();
     }
-    echo "success: The database for the CSRF challenge was successfully reset.";
+
+    // unset session variable
+    $_SESSION['contactUsed'] = false;
+
+    // unset challenge status in database
+    set_challenge_status("csrf", $username, $status = 0);
+    set_challenge_status("csrf_referrer", $username, $status = 0);
+
+    // show success modal
+    return true;
 }
 
 // check if the XSS challenge was solved

@@ -75,6 +75,14 @@ if (isset($resetSQLiModal)) {
     }
 }
 
+// reset CSRF success modal
+if (isset($resetCSRFModal)) {
+    if ($resetCSRFModal) {
+        echo $modalSuccessResetCSRF;
+        echo "<script>$('#reset-csrf-success').modal('show')</script>";
+    }
+}
+
 // challenge modals for SQLi challenge
 if (isset($queryResultModal)) {
     if ($queryResultModal == 0) {
