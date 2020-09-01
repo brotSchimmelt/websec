@@ -73,6 +73,35 @@ if (isset($resetStoredXSSModal)) {
 <script>
     $('#reset-reflective-success').modal('show')
 </script>";
-        echo "awesome success";
     }
 }
+
+// show challenge modals for SQLi challenge
+if (isset($queryResultModal)) {
+    if ($queryResultModal == 0) {
+        // success
+        echo "
+<script>
+    $('#challenge-success-sqli').modal('show')
+</script>";
+    } elseif ($queryResultModal == 1) {
+        // wrong user premium
+        echo "
+<script>
+    $('#challenge-info-sqli-wrong-premium').modal('show')
+</script>";
+    } elseif ($queryResultModal == 2) {
+        // user added but no premium user
+        echo "
+<script>
+    $('#challenge-info-sqli-wrong-user').modal('show')
+</script>";
+    }
+} ?>
+
+<script>
+    // refresh the page
+    function RefreshPage() {
+        window.location.reload(true);
+    }
+</script>
