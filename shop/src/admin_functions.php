@@ -85,7 +85,7 @@ function get_total_progress($numOfStudents, $numOfChallenges)
 function get_individual_progress($username)
 {
     $xssStatus = lookup_challenge_status("reflective_xss", $username);
-    $sqliStatus = check_sqli_challenge($username);
+    $sqliStatus = lookup_challenge_status("sqli", $username);
     $csrfStatus = check_crosspost_challenge($username);
     $csrfStatusReferrer = check_crosspost_challenge_double($username);
 
@@ -122,7 +122,7 @@ function show_students_with_open_challenges()
             array_push($status, "XSS");
         }
 
-        if (!check_sqli_challenge($row['user_name'])) {
+        if (!lookup_challenge_status("sqli", $row['user_name'])) {
             array_push($status, "SQLi");
         }
 
