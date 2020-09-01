@@ -38,7 +38,7 @@ if (isset($_POST['storedxss']) && isset($_POST['doit-storedxss'])) {
     $resetStoredXSSModal = reset_stored_xss_db($username);
 }
 if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
-    reset_sqli_db($username);
+    $resetSQLiModal = reset_sqli_db($username);
 }
 if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
     reset_csrf_db($username);

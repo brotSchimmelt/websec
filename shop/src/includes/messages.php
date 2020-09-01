@@ -153,6 +153,26 @@
     </div>
 </div>
 <!--END-->
+<!--Modal: SQLi Challenge Reset Success-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-sqli-success" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Challenge successfully reset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>The database for the SQLi challenge was successfully reset.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
 <!--Modal: SQLi Challenge SOLVED-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-sqli" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -167,7 +187,6 @@
                 <p>You have solved the SQLi challenge!</p>
             </div>
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button> -->
                 <button type="button" class="btn btn-success" data-dismiss="modal" onclick="return RefreshPage();">Okay</button>
             </div>
         </div>

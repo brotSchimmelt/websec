@@ -76,6 +76,16 @@ if (isset($resetStoredXSSModal)) {
     }
 }
 
+// show reset SQLi success modal
+if (isset($resetSQLiModal)) {
+    if ($resetSQLiModal) {
+        echo "
+<script>
+    $('#reset-sqli-success').modal('show')
+</script>";
+    }
+}
+
 // show challenge modals for SQLi challenge
 if (isset($queryResultModal)) {
     if ($queryResultModal == 0) {

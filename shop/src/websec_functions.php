@@ -364,7 +364,11 @@ function reset_sqli_db($username)
         display_exception_msg($e, "052");
         exit();
     }
-    echo "The SQL injection database was successfully reset.";
+
+    set_challenge_status("sqli", $username, $status = 0);
+
+    // show success modal
+    return true;
 }
 
 // reset CSRF challenge
