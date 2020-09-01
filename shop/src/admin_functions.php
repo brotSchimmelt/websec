@@ -86,8 +86,8 @@ function get_individual_progress($username)
 {
     $xssStatus = lookup_challenge_status("reflective_xss", $username);
     $sqliStatus = lookup_challenge_status("sqli", $username);
-    $csrfStatus = check_crosspost_challenge($username);
-    $csrfStatusReferrer = check_crosspost_challenge_double($username);
+    $csrfStatus = lookup_challenge_status("csrf", $username);
+    $csrfStatusReferrer = lookup_challenge_status("csrf_referrer", $username);
 
     // integer from 0 to 4 indicating the overall success
     $totalStatus = 0; // 0 means nothing was accomplished
@@ -126,13 +126,15 @@ function show_students_with_open_challenges()
             array_push($status, "SQLi");
         }
 
-        if (!check_crosspost_challenge($row['user_name']
-            and !check_crosspost_challenge_double($row['user_name']))) {
+        if (
+            !lookup_challenge_status("csrf", $row['user_name'])
+            and !lookup_challenge_status("csrf_referrer", $row['user_name'])
+        ) {
 
             array_push($status, "Crosspost");
         } else if (
-            check_crosspost_challenge($row['user_name']) and
-            !check_crosspost_challenge_double($row['user_name'])
+            lookup_challenge_status("csrf", $row['user_name']) and
+            !lookup_challenge_status("csrf_referrer", $row['user_name'])
         ) {
 
             array_push($status, "Crosspost*");
