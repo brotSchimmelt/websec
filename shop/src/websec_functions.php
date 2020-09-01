@@ -210,52 +210,81 @@ function add_comment_to_db($comment, $author)
     }
 }
 
-// CSRF Challenge
-// TODO: Add error & exception handling
-function process_csrf($userName, $userPost)
+// process the user post for the CSRF challenge
+function process_csrf($username, $userPost)
 {
     $referrer = $_SERVER['HTTP_REFERER'];
+
+    // pages with open text forms
     $pos1 = strpos($referrer, "product.php");
     $pos2 = strpos($referrer, "overview.php");
     $pos3 = strpos($referrer, "friends.php");
-    if ($pos1 != false || $pos2 != false || $pos3 != false) {
 
-        if ($userName == $_SESSION['userName']) {
+    if ($username == $_SESSION['userName']) {
 
-            $sql = "SELECT `user_name` FROM `csrf_posts` WHERE `user_name` = :user_name";
-            $stmt = get_shop_db()->prepare($sql);
-            $stmt->execute(['user_name' => $userName]);
+        // check matching entries in the database
+        $SelectSql = "SELECT `user_name` FROM `csrf_posts` WHERE `user_name` = "
+            . ":user_name";
+        try {
+            $stmt = get_shop_db()->prepare($SelectSql);
+            $stmt->execute(['user_name' => $username]);
             $numOfResults = $stmt->rowCount();
+        } catch (PDOException $e) {
+            display_exception_msg($e, "166");
+            exit();
+        }
 
-            if ($numOfResults < 1) {
+        // check if user already made a post
+        if ($numOfResults < 1) {
 
-                $pwnedSent = ($userPost == "pwned") ? true : false;
+            // check if the right message was used
+            $pwnedSent = ($userPost == "pwned") ? true : false;
 
-                $sql = "INSERT INTO `csrf_posts` (`post_id`,`user_name`,`message`,`referrer`,`timestamp`) VALUES (NULL, :user_name, :message, :referrer, :timestamp)";
-                $stmt = get_shop_db()->prepare($sql);
+            // insert user post to database
+            $InsertSql = "INSERT INTO `csrf_posts` (`post_id`,`user_name`,"
+                . "`message`,`referrer`,`timestamp`) VALUES (NULL, "
+                . ":user_name, :message, :referrer, :timestamp)";
+
+            try {
+                $stmt = get_shop_db()->prepare($InsertSql);
                 $stmt->execute([
-                    'user_name' => $userName,
+                    'user_name' => $username,
                     'message' => $userPost,
                     'referrer' => $referrer,
                     'timestamp' => date("Y-m-d H:i:s")
                 ]);
-                echo '<h4>Thank You!</h4>We have received your request and will come back to you very soon.<br>Very soon! Really!<br>One day..<br>or never.';
+            } catch (PDOException $e) {
+                display_exception_msg($e, "167");
+                exit();
+            }
 
-                if (!$pwnedSent) {
-                    echo "message: you should have sent 'pwned' but ok. Challenge passed!";
-                } else {
-                    echo "message: Challenge passed!";
-                }
+            // mark contact form as used
+            $_SESSION['contactUsed'] = true;
+
+            // set challenge to 'solved'
+            if ($pos1 !== false || $pos2 !== false || $pos3 !== false) {
+                set_challenge_status("csrf", $username);
+                set_challenge_status("csrf_referrer", $username);
             } else {
-                echo "message: You have already posted a request.";
+                // wrong referrer; still passed
+                set_challenge_status("csrf", $username);
+                return 4;
+            }
+
+            if (!$pwnedSent) {
+                // wrong message; still passed
+                return 1;
+            } else {
+                // challenge passed
+                return 0;
             }
         } else {
-            // wrong user
-            echo 'error: user mismatch';
+            // already a post in the database
+            return 3;
         }
     } else {
-        // referrer incorrect
-        echo '<h4>Something went wrong!</h4>You tried to contact us but the form is disabled.<br>Sorry, you will have to find another way..<br>Do not manipulate the disabled form!';
+        // wrong user
+        return 2;
     }
 }
 

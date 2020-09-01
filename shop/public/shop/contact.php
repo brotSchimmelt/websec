@@ -82,11 +82,12 @@ if (isset($_POST['uname']) && isset($_POST['userPost'])) {
             <input type="text" name="userPost" size="30" disabled><br><br>
             <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
         </form>
+        <?= isset($_SESSION['contactUsed']) ? $alertContactField : "" ?>
     </div>
 
     <?php
     if ($postRequestSent) {
-        process_csrf($username, $userPost);
+        $csrfResult = process_csrf($username, $userPost);
     }
     ?>
     <!-- HTML Content END -->

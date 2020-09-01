@@ -233,6 +233,110 @@
     </div>
 </div>
 <!--END-->
+<!--Modal: Challenge Success CSRF -->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Congratulation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You have solved the CSRF challenge.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--Modal: Challenge Success CSRF | wrong referrer -->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf-referrer" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Congratulation, I guess</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You have probably solved the CSRF challenge. <b>But</b> it seems like you
+                    manipulated the contact form or used a special tool. It is up to the lecturer
+                    to decide if you passed this challenge or not.</p>
+                <p>You can also try this challenge again if you use the reset function.
+                    <i>Hint: </i>Try to utilize a text form on one of the other Websec Shop pages.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--Modal: Challenge Success CSRF | wrong message -->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf-pwned" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Congratulation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You should have sent 'pwned' but ok. Challenge passed!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--Modal: Challenge CSRF Info | already post in database-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-csrf-already-posted" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You have already posted a request. If you want to try again, you can reset the challenge in the account menu.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--Modal: Challenge CSRF Info | user mismatch-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-csrf-user-mismatch" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>It seems like you are trying to post a request for different user. Please use only your own user account and try again.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
 <!--Alert: Product Search is closed -->
 <?php
 $alertProductSearch = '<br>
@@ -248,6 +352,15 @@ $alertCommentField = '<br>
 <div class="alert alert-warning shadow-sm" role="alert">
     <b>Warning</b>: Due to recent hacker attacks, the comment function 
     is currently disabled!
+</div>';
+?>
+<!--END-->
+<!-- Alert: Contact field has been used -->
+<?php
+$alertContactField = '<br>
+<div class="alert alert-info shadow" role="alert">
+    <b>Thank You!</b> We have received your request and will come back to you
+    very soon.<br>Very soon! Really! One day...<br>or never.
 </div>';
 ?>
 <!--END-->
