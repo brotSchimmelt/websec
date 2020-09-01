@@ -3,10 +3,12 @@ session_start(); // Needs to be called first on every page
 
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+require_once(CONF_DB_LOGIN);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
 
 // Load error handling and user messages
@@ -29,6 +31,9 @@ if (!is_user_unlocked()) {
 if (isset($_POST['sqli'])) {
     $searchTerm = filter_input(INPUT_POST, 'sqli', FILTER_SANITIZE_SPECIAL_CHARS);
 }
+
+// Variables
+$solved = lookup_challenge_status("sqli", $_SESSION['userName']);
 
 ?>
 <!doctype html>
@@ -59,7 +64,14 @@ if (isset($_POST['sqli'])) {
 
 
     <!-- HTML Content BEGIN -->
-    <a href="https://en.wikipedia.org/wiki/SQL_injection" class="badge badge-pill badge-success shadow-sm" target="_blank">SQL Injection</a>
+    <?php if (!$solved) : ?>
+        <a href="https://en.wikipedia.org/wiki/SQL_injection" class="badge badge-pill badge-warning shadow-sm" target="_blank">SQL Injection</a>
+    <?php else : ?>
+        <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">SQL Injection</a>
+    <?php endif; ?>
+
+
+
 
     <div class="con-center con-search">
         <h4 class=display-4>Find your Friends</h4>
