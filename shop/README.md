@@ -100,6 +100,8 @@ error= ...
 - **052**: The SQLite database could not be reset by the user. Check ```function create_sqli_db```
 - **053**: Users could not be added to the SQLite database. Check ```function create_sqli_db```
 - **054**: The SQLite database could not be queried by the user. Check ```function query_sqli_db```
+- **055**: UPDATE or INSERT query written by the user could not be processed in the SQLite database. Check ```function query_sqli_db```
+- **056**: SELECT query could not be processed by the SQLite database. Check ```function query_sqli_db```
 
 **1xx**: A SQL query could not be processed by the login or shop database.
 *[Login Database]*
