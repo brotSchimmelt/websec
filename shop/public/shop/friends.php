@@ -79,8 +79,8 @@ $solved = lookup_challenge_status("sqli", $_SESSION['userName']);
         We got you! Just use our absolutely privacy conform search form:
         <br><br>
         <form action="friends.php" method="post">
-            <!-- <input type="text" name="sqli" value=""> -->
             <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" autofocus>
+            <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
         </form>
         <br>
         <small><strong>Info:</strong> We value our users' privacy. If you entered a username in the search field and there is no corresponding user then nothing is displayed.</small>
