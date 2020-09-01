@@ -399,47 +399,6 @@ function check_reflective_xss_challenge($username, $cookie)
 
     // check if correct cookie is entered
     return strpos($cookie, $result['reflective_xss']) !== false ? true : false;
-
-    // OLD CODE:
-    /*
-    $challengeStatus = false;
-    $fakeID = 'youShouldNotGetThisCookiePleaseReportInLearnweb';
-
-    $sql = "SELECT `reflective_xss` FROM fakeCookie WHERE "
-        . "user_name = :user_name";
-    try {
-        $stmt = get_login_db()->prepare($sql);
-        $stmt->execute(['user_name' => $username]);
-
-        if (!$result = $stmt->fetch()) {
-            trigger_error("Code Error: No entry found for " . $username
-                . " in XSS challenge.");
-            return $challengeStatus;
-        } else {
-            $fakeID = $result['reflective_xss'];
-        }
-    } catch (PDOException $e) {
-        display_exception_msg($e, "115");
-        exit();
-    }
-
-    $sql = "SELECT `text` FROM `xss_comments` WHERE `author` = :user_name";
-    try {
-        $stmt = get_shop_db()->prepare($sql);
-        $stmt->execute(['user_name' => $username]);
-        while ($row = $stmt->fetch()) {
-            $haystack = htmlentities($row['text']);
-            if (preg_match("/alert\(.*$fakeID.*\)/i", $haystack)) {
-                $challengeStatus = true;
-            }
-        }
-    } catch (PDOException $e) {
-        display_exception_msg($e, "116");
-        exit();
-    }
-
-    return $challengeStatus;
-    */
 }
 
 // check if the SQLi challenge is solved
