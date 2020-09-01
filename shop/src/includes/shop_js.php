@@ -8,7 +8,7 @@
 /*
 * Java Script for modals
 */
-// show modal with field to enter reflective XSS solution
+// input modal for reflective XSS challenge
 if (isset($searchFieldWasUsed)) {
     if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
         echo $modalInputXSSCookie;
@@ -16,14 +16,14 @@ if (isset($searchFieldWasUsed)) {
     }
 }
 
-// show reflective XSS failure modal
+// error modal for reflective XSS challenge
 if (isset($challengeFailed)) {
     if ($challengeFailed) {
         echo $modalErrorXSSCookieWrong;
         echo "<script>$('#xss-wrong').modal('show')</script>";
     }
 }
-// show reflective XSS success modal
+// success modal for reflective XSS challenge
 if (isset($showSuccessModal)) {
     if ($showSuccessModal) {
         echo $modalSuccessReflectiveXSS;
@@ -31,7 +31,7 @@ if (isset($showSuccessModal)) {
     }
 }
 
-// show XSS | welcome back modal
+// stored XSS | welcome back modal
 if (isset($_SESSION['showStoredXSSModal'])) {
     if ($_SESSION['showStoredXSSModal'] == 0) {
         echo $modalInfoStolenSession;
@@ -41,7 +41,7 @@ if (isset($_SESSION['showStoredXSSModal'])) {
     }
 }
 
-// show stored XSS success modal
+// stored XSS success modal
 if (isset($_SESSION['showSuccessModalXSS'])) {
     if ($_SESSION['showSuccessModalXSS'] == 0) {
         echo $modalSuccessStoredXSS;
@@ -51,7 +51,7 @@ if (isset($_SESSION['showSuccessModalXSS'])) {
     }
 }
 
-// show reset reflective XSS success modal
+// reset reflective XSS success modal
 if (isset($resetReflectiveXSSModal)) {
     if ($resetReflectiveXSSModal) {
         echo $modalSuccessResetReflectiveXSS;
@@ -59,7 +59,7 @@ if (isset($resetReflectiveXSSModal)) {
     }
 }
 
-// show reset stored XSS success modal
+// reset stored XSS success modal
 if (isset($resetStoredXSSModal)) {
     if ($resetStoredXSSModal) {
         echo $modalSuccessResetStoredXSS;
@@ -67,7 +67,7 @@ if (isset($resetStoredXSSModal)) {
     }
 }
 
-// show reset SQLi success modal
+// reset SQLi success modal
 if (isset($resetSQLiModal)) {
     if ($resetSQLiModal) {
         echo $modalSuccessResetSQLi;
@@ -75,7 +75,7 @@ if (isset($resetSQLiModal)) {
     }
 }
 
-// show challenge modals for SQLi challenge
+// challenge modals for SQLi challenge
 if (isset($queryResultModal)) {
     if ($queryResultModal == 0) {
         // success
@@ -94,7 +94,7 @@ if (isset($queryResultModal)) {
     }
 }
 
-// show challenge modals for CSRF challenge
+// challenge modals for CSRF challenge
 if (isset($csrfResult)) {
     if ($csrfResult == 0) {
         // success
