@@ -4,10 +4,12 @@ session_start(); // Needs to be called first on every page
 // Load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP);
+require_once(CONF_DB_LOGIN);
 
 // Load custom libraries
 require(FUNC_BASE);
 require(FUNC_SHOP);
+require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
 
 // Load error handling and user messages
@@ -27,7 +29,9 @@ if (!is_user_unlocked()) {
 }
 
 // Load POST or GET variables and sanitize input BELOW this comment
+$solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 $postRequestSent = false;
+
 if (isset($_POST['uname']) && isset($_POST['userPost'])) {
     $username = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
     $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -63,7 +67,12 @@ if (isset($_POST['uname']) && isset($_POST['userPost'])) {
 
 
     <!-- HTML Content BEGIN -->
-    <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" class="badge badge-pill badge-warning shadow-sm" target="_blank">CSRF</a>
+    <?php if (!$solved) : ?>
+        <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" class="badge badge-pill badge-warning shadow-sm" target="_blank">CSRF</a>
+    <?php else : ?>
+        <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">CSRF</a>
+    <?php endif; ?>
+
     <div class="con-search">
         <h2 class="display-4">Contact Our Support Team</h2>
         We are here for you every day, twentyfour hours a day, 365 days a year!
