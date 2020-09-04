@@ -143,11 +143,10 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                 <input class="form-control review-name" type="text" name="username" value="<?= $_SESSION['userName']; ?>" disabled><br>
                 <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
                 Your Review:<br><br>
-                <input class="form-control review-text" type="text" name="userComment" size="50" <?= $solved ? "disabled" : "" ?>><br>
-                <input class="btn btn-wwu-primary" type="submit" value="Submit Comment" <?= $solved ? "disabled" : "" ?>>
+                <input class="form-control review-text" type="text" name="userComment" size="50"><br>
+                <input class="btn btn-wwu-primary" type="submit" value="Submit Comment">
             </div>
         </form>
-        <?= $solved ? $alertCommentField : "" ?>
     </div>
 
     <?php require(INCL . "comments.php"); ?>
