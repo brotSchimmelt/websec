@@ -440,7 +440,7 @@ function check_reflective_xss_challenge($username, $cookie)
     }
 
     // check if correct cookie is entered
-    return strpos($cookie, $result['reflective_xss']) !== false ? true : false;
+    return stripos($cookie, $result['reflective_xss']) !== false ? true : false;
 }
 
 // check if the SQLi challenge is solved
