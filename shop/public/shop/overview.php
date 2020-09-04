@@ -14,6 +14,7 @@ require(FUNC_WEBSEC);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
+require(MESSAGES);
 
 // Check login status
 if (!is_user_logged_in()) {
@@ -74,6 +75,9 @@ if (isset($_POST['add-preview'])) {
     header("location: " . "/shop/overview.php" . "?success=prodAdded");
     exit();
 }
+
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -90,6 +94,8 @@ if (isset($_POST['add-preview'])) {
     <link rel="stylesheet" href="/assets/css/shop.css">
     <link rel="stylesheet" href="/assets/css/card.css">
 
+
+
     <title>Websec | Overview</title>
 </head>
 
@@ -97,9 +103,16 @@ if (isset($_POST['add-preview'])) {
     <?php
     // Load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
-    require(MESSAGES);
+
+    if ($searchFieldWasUsed) {
+        echo $modalInputXSSCookie;
+    }
     ?>
+    <!-- JavaScript -->
+    <?php
+    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript 
+    ?>
+    <script src="/assets/js/reflective_xss.js"></script>
 
     <!-- Page Content BEGIN -->
     <?php if (!$solved) : ?>
@@ -141,7 +154,6 @@ if (isset($_POST['add-preview'])) {
     // Load shop footer
     require(FOOTER_SHOP);
     // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
     ?>
     <!-- JavaScript END -->
