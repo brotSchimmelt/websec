@@ -82,7 +82,7 @@ window.confirm = function (message) {
         console.log("The request could not be processed!");
         console.log("This was the message: " + message);
         console.log("This was the response: " + response);
-        return AlertXSS("This should not have happened :/ Please report this error to the Learnweb forum.")
+        return AlertXSS("This should not have happened :/ Please report this error to the Learnweb forum. Error code: 061")
     });
 
 };

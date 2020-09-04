@@ -105,6 +105,9 @@ error= ...
 - **057**: Status of the SQLi challenge could not be check in the SQLite database. See ```function check_sqli_challenge```
 - **058**: SQLite database does not exist for this user.
 
+**061**: The $.post request in ```stored_xss.js``` failed. Either the form handler was moved or the user found a way to break the JavaScript.
+
+
 **1xx**: A SQL query could not be processed by the login or shop database.
 *[Login Database]*
 - **101**: User e-mail could not be fetched from the resetPwd table. See query in ```function get_user_mail```
