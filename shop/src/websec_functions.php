@@ -607,62 +607,62 @@ function check_user_comment_exists($username)
 }
 
 // compare the set cookies with the solution cookies
-function compare_cookies($username)
-{
+// function compare_cookies($username)
+// {
 
-    if (isset($_COOKIE['XSS_STOLEN_SESSION'])) {
+//     if (isset($_COOKIE['XSS_STOLEN_SESSION'])) {
 
-        // set flag that the user set the cookie for the stored xss challenge
-        $_SESSION['xssCookieSet'] = 1;
+//         // set flag that the user set the cookie for the stored xss challenge
+//         $_SESSION['xssCookieSet'] = 1;
 
-        // check if right cookie is set
-        if ($_COOKIE['XSS_STOLEN_SESSION'] == $_SESSION['storedXSS']) {
+//         // check if right cookie is set
+//         if ($_COOKIE['XSS_STOLEN_SESSION'] == $_SESSION['storedXSS']) {
 
-            if (!isset($_SESSION['showStoredXSSModal'])) {
+//             if (!isset($_SESSION['showStoredXSSModal'])) {
 
-                // set up fake cart
-                update_cart($username);
+//                 // set up fake cart
+//                 update_cart($username);
 
-                // set modal flag to not shown
-                $_SESSION['showStoredXSSModal'] = 0;
-            }
-        } elseif ($_COOKIE['XSS_STOLEN_SESSION'] == $_SESSION['reflectiveXSS']) {
+//                 // set modal flag to not shown
+//                 $_SESSION['showStoredXSSModal'] = 0;
+//             }
+//         } elseif ($_COOKIE['XSS_STOLEN_SESSION'] == $_SESSION['reflectiveXSS']) {
 
-            // error: user entered wrong XSS cookie 
-            echo "<script>alert('You should set the XSS_STOLEN_SESSION cookie "
-                . "to the value you obtained from the comment field. Not the "
-                . "value from the XSS_YOUR_SESSION cookie. Please try "
-                . "again.');</script>";
-        } else {
+//             // error: user entered wrong XSS cookie 
+//             echo "<script>alert('You should set the XSS_STOLEN_SESSION cookie "
+//                 . "to the value you obtained from the comment field. Not the "
+//                 . "value from the XSS_YOUR_SESSION cookie. Please try "
+//                 . "again.');</script>";
+//         } else {
 
-            // error: user entered completely wrong cookie value
-            echo "<script>alert('Sorry, the cookie you have set does not match "
-                . "the XSS challenge cookies for your user. Please try again. If "
-                . "this error persists, please report it in the Learnweb forum "
-                . "together with the cookie you tried to set and your "
-                . "method. You can also try and reset this challenge in the menu"
-                . ".');</script>";
-        }
-        /* 
-        * user set the right value to the wrong cookie
-        * technically this is not the intended solution but it will do the trick
-        */
-    } elseif ($_COOKIE['XSS_YOUR_SESSION'] == $_SESSION['storedXSS']) {
+//             // error: user entered completely wrong cookie value
+//             echo "<script>alert('Sorry, the cookie you have set does not match "
+//                 . "the XSS challenge cookies for your user. Please try again. If "
+//                 . "this error persists, please report it in the Learnweb forum "
+//                 . "together with the cookie you tried to set and your "
+//                 . "method. You can also try and reset this challenge in the menu"
+//                 . ".');</script>";
+//         }
+//         /* 
+//         * user set the right value to the wrong cookie
+//         * technically this is not the intended solution but it will do the trick
+//         */
+//     } elseif ($_COOKIE['XSS_YOUR_SESSION'] == $_SESSION['storedXSS']) {
 
-        if (!isset($_SESSION['showStoredXSSModal'])) {
+//         if (!isset($_SESSION['showStoredXSSModal'])) {
 
-            // set up fake cart
-            update_cart($username);
+//             // set up fake cart
+//             update_cart($username);
 
-            // set modal flag to not shown
-            $_SESSION['showStoredXSSModal'] = 0;
-        }
-    } else {
+//             // set modal flag to not shown
+//             $_SESSION['showStoredXSSModal'] = 0;
+//         }
+//     } else {
 
-        // cookie for stored xss challenge is not yet set by user in this session
-        $_SESSION['xssCookieSet'] = 0;
-    }
-}
+//         // cookie for stored xss challenge is not yet set by user in this session
+//         $_SESSION['xssCookieSet'] = 0;
+//     }
+// }
 
 // set the users current cart to the 'fake' cart
 function update_cart($username)
@@ -742,3 +742,25 @@ function check_stored_xss_challenge($username)
 //         return $comment;
 //     }
 // }
+
+
+function compare_cookies($username)
+{
+    // iterate through all cookies
+    foreach ($_COOKIE as $cookie => $value) {
+
+        // check if one cookie has the stored XSS challenge cookies value
+        $pos1 = stripos($value, $_SESSION['storedXSS']);
+        if ($pos1 !== false) {
+
+            // check if 'welcome back, elliot' modal has already been shown
+            if (!isset($_SESSION['showStoredXSSModal'])) {
+
+                // set up fake cart
+                update_cart($username);
+                // set modal flag to not shown
+                $_SESSION['showStoredXSSModal'] = 0;
+            }
+        }
+    }
+}
