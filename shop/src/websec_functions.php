@@ -430,21 +430,16 @@ function reset_csrf_db($username)
 // check if the XSS challenge was solved
 function check_reflective_xss_challenge($username, $cookie)
 {
-
-    // get cookie from db
-    $sql = "SELECT `reflective_xss` FROM `fakeCookie` WHERE `user_name`=?";
-
-    try {
-        $stmt = get_login_db()->prepare($sql);
-        $stmt->execute([$username]);
-        $result = $stmt->fetch();
-    } catch (PDOException $e) {
-        display_exception_msg($e, "123");
-        exit();
+    // check if cookie is equal to reflective xss cookie
+    if (stripos($cookie, $_SESSION['reflectiveXSS']) !== false) {
+        return true;
+    } elseif (stripos($cookie, $_SESSION['storedXSS']) !== false) {
+        // check if cookie is equal to stored xss cookie 
+        // if user solved this challenge first)
+        return true;
+    } else {
+        return false;
     }
-
-    // check if correct cookie is entered
-    return stripos($cookie, $result['reflective_xss']) !== false ? true : false;
 }
 
 // check if the SQLi challenge is solved
