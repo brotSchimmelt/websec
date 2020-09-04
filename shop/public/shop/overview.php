@@ -29,7 +29,7 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST, GET or other variables and sanitize the input if necessary BELOW this comment
+// local variables
 $userName = $_SESSION['userName'];
 $thisPage = basename(__FILE__);
 $productsPerRow = 3;
