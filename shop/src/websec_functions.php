@@ -376,6 +376,9 @@ function reset_stored_xss_db($username)
     // empty the current cart of the user
     empty_cart($username);
 
+    // reset modal flag
+    unset($_SESSION['showStoredXSSModal']);
+
     // unset challenge progress in database
     set_challenge_status("stored_xss", $username, $status = 0);
 
