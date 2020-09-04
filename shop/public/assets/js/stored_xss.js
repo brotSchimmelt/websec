@@ -13,7 +13,13 @@ window.alert = function (message) {
         if (response != 1) {
             return AlertXSS(response);
         } else {
-            return AlertXSS("No attack detected. Your message was: " + message);
+            var userMessage;
+            if (message.includes("XSS_YOUR_SESSION")) {
+                userMessage = "document.cookie";
+            } else {
+                userMessage = message;
+            }
+            return AlertXSS("No attack detected. Your message was: '" + userMessage + "'");
         }
     });
     request.fail(function (response) {
@@ -35,7 +41,13 @@ window.prompt = function (message) {
         if (response != 1) {
             return AlertXSS(response);
         } else {
-            return AlertXSS("No attack detected. Your message was: " + message);
+            var userMessage;
+            if (message.includes("XSS_YOUR_SESSION")) {
+                userMessage = "document.cookie";
+            } else {
+                userMessage = message;
+            }
+            return AlertXSS("No attack detected. Your message was: '" + userMessage + "'");
         }
     });
     request.fail(function (response) {
@@ -57,7 +69,13 @@ window.confirm = function (message) {
         if (response != 1) {
             return AlertXSS(response);
         } else {
-            return AlertXSS("No attack detected. Your message was: " + message);
+            var userMessage;
+            if (message.includes("XSS_YOUR_SESSION")) {
+                userMessage = "document.cookie";
+            } else {
+                userMessage = message;
+            }
+            return AlertXSS("No attack detected. Your message was: '" + userMessage + "'");
         }
     });
     request.fail(function (response) {

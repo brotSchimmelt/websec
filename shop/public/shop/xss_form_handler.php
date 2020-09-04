@@ -7,12 +7,15 @@ session_start();
 */
 if (isset($_POST['storedXSSMessage'])) {
 
-    // check generously for 'evildomain/payload.js'
-    $pos1 = stripos($_POST['storedXSSMessage'], "payload");
-    $pos2 = stripos($_POST['storedXSSMessage'], "evil");
-    $pos3 = stripos($_POST['storedXSSMessage'], "domain");
+    $haystack = (string)$_POST['storedXSSMessage'];
 
-    if ($pos1 !== false && $pos2 !== false && $pos3 !== false) {
+    // check generously for 'evildomain/payload.js'
+    $pos1 = stripos($haystack, "payload");
+    $pos2 = stripos($haystack, "evil");
+    $pos3 = stripos($haystack, "domain");
+    $pos4 = stripos($haystack, "document.cookie");
+
+    if (($pos1 !== false && $pos2 !== false && $pos3 !== false) || $pos4 !== false) {
 
         // save that the XSS alert was used by user
         $_SESSION['storedXSSAlertShown'] = true;
