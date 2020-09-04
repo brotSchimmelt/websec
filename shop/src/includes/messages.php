@@ -21,7 +21,7 @@ $modalInputXSSCookie = '<!--Modal: Input - Reflective XSS Cookie-->
                 <div class="md-form ml-0 mr-0">
                     <form class="form-signin" action="overview.php" method="post">
                         <p>Have you found the XSS session cookie?</p>
-                        <input type="text" name="xss-cookie" id="xss-cookie" placeholder="XSS_YOUR_SESSION" autofocus>
+                        <input class="form-control" type="text" name="xss-cookie" id="xss-cookie" placeholder="XSS_YOUR_SESSION" autofocus required>
                         <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary" name="xss-cookie-submit" id="xss-cookie-submit">Send</button>
                         </div>
