@@ -370,6 +370,10 @@ $alertProductSearch = '<br>
     <b>Warning</b>: Due to recent hacker attacks, the product search function 
     is currently disabled!
 </div>';
+$alertProductComment = '<br>
+<div class="alert alert-warning shadow-sm" role="alert">
+    <b>Warning</b>: Due to recent hacker attacks, we were forced to delete some user comments!
+</div>';
 $alertContactField = '<br>
 <div class="alert alert-info shadow" role="alert">
     <b>Thank You!</b> We have received your request and will come back to you

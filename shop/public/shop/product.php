@@ -154,6 +154,12 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                 <input class="btn btn-wwu-primary" type="submit" value="Submit Comment">
             </div>
         </form>
+        <?php
+        // display warning after challenge is completed that user comment was deleted
+        if ($solved) {
+            echo $alertProductComment;
+        }
+        ?>
     </div>
 
     <?php require(INCL . "comments.php"); ?>
