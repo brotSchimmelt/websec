@@ -705,12 +705,12 @@ function update_cart($username)
 function check_stored_xss_challenge($username)
 {
 
-    $sql = "SELECT `position_id` FROM `cart` WHERE `user_name`=? "
+    $sqlProduct = "SELECT `position_id` FROM `cart` WHERE `user_name`=? "
         . "AND `prod_id`=2";
 
     try {
 
-        $stmt = get_shop_db()->prepare($sql);
+        $stmt = get_shop_db()->prepare($sqlProduct);
         $stmt->execute([$username]);
         $result = $stmt->fetch();
     } catch (PDOException $e) {
@@ -727,6 +727,17 @@ function check_stored_xss_challenge($username)
 
         // set modal flag to not shown
         $_SESSION['showSuccessModalXSS'] = 0;
+
+        // delete user comments in database
+        $sqlComment = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
+        try {
+            get_shop_db()->prepare($sqlComment)->execute(
+                ['user_name' => $username]
+            );
+        } catch (PDOException $e) {
+            display_exception_msg($e, "114");
+            exit();
+        }
     }
 }
 
