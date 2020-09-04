@@ -352,7 +352,7 @@ $modalErrorCSRFUserMismatch = '<!--Modal: Error - CSRF Challenge user mismatch--
                 </button>
             </div>
             <div class="modal-body">
-                <p>It seems like you are trying to post a request for different user. Please use only your own user account and try again.</p>
+                <p>It seems like you are trying to post a request for different user. It should look like the user "Elliot" made the request.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>

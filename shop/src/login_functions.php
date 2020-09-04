@@ -229,6 +229,9 @@ function do_login($username, $mail, $adminFlag, $unlockedFlag)
     $_SESSION['userMail'] = $mail;
     $_SESSION['userLoginStatus'] = 1;
 
+    // set user to exploit for CSRF challenge
+    $_SESSION['userCSRF'] = "elliot";
+
     if ($adminFlag == 1) {
         $_SESSION['userIsAdmin'] = $adminFlag;
     }

@@ -212,7 +212,7 @@ function add_comment_to_db($comment, $author)
 }
 
 // process the user post for the CSRF challenge
-function process_csrf($username, $userPost)
+function process_csrf($uname, $userPost, $username)
 {
     $referrer = $_SERVER['HTTP_REFERER'];
 
@@ -221,7 +221,8 @@ function process_csrf($username, $userPost)
     $pos2 = strpos($referrer, "overview.php");
     $pos3 = strpos($referrer, "friends.php");
 
-    if ($username == $_SESSION['userName']) {
+    // check if user 'elliot' is used for the CSRF
+    if (stripos($_SESSION['userCSRF'], $uname) !== false) {
 
         // check matching entries in the database
         $SelectSql = "SELECT `user_name` FROM `csrf_posts` WHERE `user_name` = "
@@ -258,9 +259,6 @@ function process_csrf($username, $userPost)
                 display_exception_msg($e, "167");
                 exit();
             }
-
-            // mark contact form as used
-            $_SESSION['contactUsed'] = true;
 
             // set challenge to 'solved'
             if ($pos1 !== false || $pos2 !== false || $pos3 !== false) {
@@ -415,9 +413,6 @@ function reset_csrf_db($username)
         display_exception_msg($e, "114");
         exit();
     }
-
-    // unset session variable
-    $_SESSION['contactUsed'] = false;
 
     // unset challenge status in database
     set_challenge_status("csrf", $username, $status = 0);

@@ -28,16 +28,19 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
-$solved = lookup_challenge_status("csrf", $_SESSION['userName']);
-$postRequestSent = false;
+// check if post was made and contact field still open
+if (isset($_POST['uname']) && isset($_POST['userPost']) && !lookup_challenge_status("csrf", $_SESSION['userName'])) {
 
-if (isset($_POST['uname']) && isset($_POST['userPost'])) {
-    $username = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
+    // filter post input
+    $uname = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
     $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
 
-    $postRequestSent = true;
+    $csrfResult = process_csrf($uname, $userPost, $_SESSION['userName']);
 }
+
+// check if challenge was solved
+$solved = lookup_challenge_status("csrf", $_SESSION['userName']);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -91,14 +94,8 @@ if (isset($_POST['uname']) && isset($_POST['userPost'])) {
             <input type="text" name="userPost" size="30" disabled><br><br>
             <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
         </form>
-        <?= (isset($_SESSION['contactUsed']) && $_SESSION['contactUsed'] == true) ? $alertContactField : "" ?>
+        <?= $solved ? $alertContactField : "" ?>
     </div>
-
-    <?php
-    if ($postRequestSent) {
-        $csrfResult = process_csrf($username, $userPost);
-    }
-    ?>
     <!-- HTML Content END -->
 
 
