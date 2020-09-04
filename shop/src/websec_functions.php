@@ -189,8 +189,9 @@ function add_comment_to_db($comment, $author)
     // check if already one comment from the current user exists
     check_user_comment_exists($author);
 
+    // old: updated with JS implementation
     // filter user comment and check if correct script attack is used
-    $filteredComment = filter_comment($comment);
+    // $filteredComment = filter_comment($comment);
 
     $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, "
         . "`rating`, `timestamp`) VALUES "
@@ -200,7 +201,7 @@ function add_comment_to_db($comment, $author)
         $stmt = get_shop_db()->prepare($sql);
         $stmt->execute([
             'author' => $author,
-            'comment' => $filteredComment,
+            'comment' => $comment,
             'rating' => 5,
             'timestamp' => date("Y-m-d H:i:s")
         ]);
@@ -726,17 +727,18 @@ function check_stored_xss_challenge($username)
     }
 }
 
-// check if user comment contains XSS attack
-function filter_comment($comment)
-{
-    if (!empty($comment) && preg_match("/document.cookie/", $comment)) {
+// now replaced with JS implementation
+// // check if user comment contains XSS attack
+// function filter_comment($comment)
+// {
+//     if (!empty($comment) && preg_match("/document.cookie/", $comment)) {
 
 
-        $cookie = $_SESSION['storedXSS'];
+//         $cookie = $_SESSION['storedXSS'];
 
-        return "<script>alert('XSS_STOLEN_SESSION=" . $cookie . "');</script>";
-    } else {
+//         return "<script>alert('XSS_STOLEN_SESSION=" . $cookie . "');</script>";
+//     } else {
 
-        return $comment;
-    }
-}
+//         return $comment;
+//     }
+// }
