@@ -18,7 +18,7 @@ if (isset($_POST['storedXSSMessage'])) {
         $_SESSION['storedXSSAlertShown'] = true;
 
         $msg = "The payload worked! You obtained 1 stolen session cookie. "
-            . $_SESSION['myTest'];
+            . "XSS_STOLEN_SESSION=" . $_SESSION['storedXSS'];
 
         // echo is the preferred way to return a response to a $.post() request
         echo $msg;
