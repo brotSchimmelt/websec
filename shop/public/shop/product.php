@@ -73,6 +73,14 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     <link rel="stylesheet" href="/assets/css/card.css">
     <link rel="stylesheet" href="/assets/css/comment.css">
 
+    <!-- JavaScript -->
+    <?php
+    // Load JavaScript
+    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
+    require_once(JS_SHOP); // Custom JavaScript
+    ?>
+    <script src="/assets/js/stored_xss.js"></script>
+
     <title>Websec | Products</title>
 </head>
 
@@ -155,9 +163,6 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     <?php
     // Load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
     ?>
 </body>
 
