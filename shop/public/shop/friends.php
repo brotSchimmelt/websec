@@ -27,11 +27,6 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
-if (isset($_POST['sqli'])) {
-    $searchTerm = filter_input(INPUT_POST, 'sqli', FILTER_SANITIZE_SPECIAL_CHARS);
-}
-
 // Variables
 $solved = lookup_challenge_status("sqli", $_SESSION['userName']);
 
@@ -89,7 +84,13 @@ $solved = lookup_challenge_status("sqli", $_SESSION['userName']);
     </div>
 
     <?php
+
+    // positioned down here since the results are directly echoed out
     if (isset($_POST['sqli']) && (!empty($_POST['sqli']))) {
+
+        // filter script tags etc.
+        $searchTerm = filter_input(INPUT_POST, 'sqli', FILTER_SANITIZE_SPECIAL_CHARS);
+
         try {
             $queryResultModal = query_sqli_db($searchTerm);
         } catch (Exception $e) {
