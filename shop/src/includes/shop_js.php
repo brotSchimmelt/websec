@@ -9,12 +9,12 @@
 * Java Script for modals
 */
 // input modal for reflective XSS challenge
-if (isset($searchFieldWasUsed)) {
-    if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
-        echo $modalInputXSSCookie;
-        echo "<script>$('#xss-solution').modal('show')</script>";
-    }
-}
+// if (isset($searchFieldWasUsed)) {
+//     if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
+//         echo $modalInputXSSCookie;
+//         echo "<script>$('#xss-solution').modal('show')</script>";
+//     }
+// }
 
 // error modal for reflective XSS challenge
 if (isset($challengeFailed)) {
