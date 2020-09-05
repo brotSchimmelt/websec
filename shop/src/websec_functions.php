@@ -212,8 +212,13 @@ function add_comment_to_db($comment, $author)
 }
 
 // process the user post for the CSRF challenge
-function process_csrf($uname, $userPost, $username)
+function process_csrf($uname, $userPost, $username, $userTokenCSRF)
 {
+    $difficulty = get_global_difficulty();
+
+    $fakeCSRFToken = get_fake_CSRF_token($username);
+
+    // get referrer to ensure user used 'open' form
     $referrer = $_SERVER['HTTP_REFERER'];
 
     // pages with open text forms
@@ -221,8 +226,19 @@ function process_csrf($uname, $userPost, $username)
     $pos2 = strpos($referrer, "overview.php");
     $pos3 = strpos($referrer, "friends.php");
 
-    // check if user 'elliot' is used for the CSRF
-    if (stripos($_SESSION['userCSRF'], $uname) !== false) {
+    // check used token
+    if ($difficulty == "hard") {
+        // token from SQLi challenge
+        $tokenCheck = $fakeCSRFToken == $userTokenCSRF;
+    } else {
+        // default token was sent
+        $tokenCheck = $_SESSION['fakeCSRFToken'] == $userTokenCSRF;
+    }
+
+    $userCheck = (stripos($_SESSION['userCSRF'], $uname) !== false);
+
+    // check if user 'elliot' is used for the CSRF challenge and the right token
+    if ($userCheck && $tokenCheck) {
 
         // check matching entries in the database
         $SelectSql = "SELECT `user_name` FROM `csrf_posts` WHERE `user_name` = "
@@ -262,11 +278,20 @@ function process_csrf($uname, $userPost, $username)
 
             // set challenge to 'solved'
             if ($pos1 !== false || $pos2 !== false || $pos3 !== false) {
-                set_challenge_status("csrf", $username);
-                set_challenge_status("csrf_referrer", $username);
+                if ($difficulty == "hard") {
+                    set_challenge_status("csrf_hard", $username);
+                    set_challenge_status("csrf_referrer_hard", $username);
+                } else {
+                    set_challenge_status("csrf", $username);
+                    set_challenge_status("csrf_referrer", $username);
+                }
             } else {
                 // wrong referrer; still passed
-                set_challenge_status("csrf", $username);
+                if ($difficulty == "hard") {
+                    set_challenge_status("csrf_hard", $username);
+                } else {
+                    set_challenge_status("csrf", $username);
+                }
                 return 4;
             }
 
@@ -767,4 +792,22 @@ function compare_cookies($username)
             }
         }
     }
+}
+
+// get fake CSRF token from the database
+function get_fake_CSRF_token($username)
+{
+
+    $sql = "SELECT `fake_token` FROM `fakeCookie` WHERE `user_name`=?";
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        display_exception_msg($e);
+        exit();
+    }
+
+    return $result['fake_token'];
 }

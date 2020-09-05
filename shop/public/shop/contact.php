@@ -34,8 +34,9 @@ if (isset($_POST['uname']) && isset($_POST['userPost']) && !lookup_challenge_sta
     // filter post input
     $uname = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
     $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
+    $userTokenCSRF = filter_input(INPUT_POST, 'utoken', FILTER_SANITIZE_SPECIAL_CHARS);
 
-    $csrfResult = process_csrf($uname, $userPost, $_SESSION['userName']);
+    $csrfResult = process_csrf($uname, $userPost, $_SESSION['userName'], $userTokenCSRF);
 }
 
 // check if challenge was solved
@@ -90,6 +91,8 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
             your name:
             <input type="text" name="username" value="<?= $_SESSION['userName'] ?>" disabled><br>
             <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+            <!-- Hint: token only relevant when challenge is set to hard! Otherwise, ignore it.-->
+            <input type="hidden" name="utoken" value="<?= $_SESSION['fakeCSRFToken']; ?>">
             your message for us:
             <input type="text" name="userPost" size="30" disabled><br><br>
             <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>

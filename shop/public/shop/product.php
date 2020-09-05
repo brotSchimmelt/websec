@@ -175,6 +175,8 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                 Your Name:
                 <input class="form-control review-name" type="text" name="username" value="<?= $_SESSION['userName']; ?>" disabled><br>
                 <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                <!-- Hint: token only relevant when CSRF challenge is set to hard! Otherwise, ignore it.-->
+                <input type="hidden" name="utoken" value="<?= $_SESSION['fakeCSRFToken']; ?>">
                 Your Review:<br><br>
                 <input class="form-control review-text" type="text" name="userComment" size="50"><br>
                 <input class="btn btn-wwu-primary" type="submit" value="Submit Comment">

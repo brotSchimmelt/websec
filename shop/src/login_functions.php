@@ -231,6 +231,8 @@ function do_login($username, $mail, $adminFlag, $unlockedFlag)
 
     // set user to exploit for CSRF challenge
     $_SESSION['userCSRF'] = "elliot";
+    // set fake CSRF token for 'hard' difficulty
+    $_SESSION['fakeCSRFToken'] = str_shuffle("fakeUserToken13579");
 
     if ($adminFlag == 1) {
         $_SESSION['userIsAdmin'] = $adminFlag;
@@ -314,6 +316,7 @@ function do_registration($username, $mail, $password)
     try {
         $reflectiveXSSCookie = get_random_token(16);
         $storedXSSCookie = get_random_token(16);
+        $fakeTokenCSRF = get_random_token(16);
     } catch (Exception $e) {
         display_exception_msg($e);
         exit();
@@ -338,14 +341,16 @@ function do_registration($username, $mail, $password)
     }
 
     // insert cookies into the database
-    $insertCookie = "INSERT INTO fakeCookie (id, user_name, "
-        . "reflective_xss, stored_xss) VALUE (NULL, :user, :reflective, :stored)";
+    $insertCookie = "INSERT INTO `fakeCookie` (`id`, `user_name`, "
+        . "`reflective_xss`, `stored_xss`, `fake_token`) VALUE (NULL, :user, "
+        . ":reflective, :stored, :token)";
 
     try {
         get_login_db()->prepare($insertCookie)->execute([
             'user' => $username,
             'reflective' => $reflectiveXSSCookie,
-            'stored' => $storedXSSCookie
+            'stored' => $storedXSSCookie,
+            'token' => $fakeTokenCSRF
         ]);
     } catch (PDOException $e) {
         header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=119");
@@ -360,10 +365,11 @@ function do_registration($username, $mail, $password)
         exit();
     }
 
-    // set challenge status
+    // set initial challenge status
     $insertChallenge = "INSERT INTO `challengeStatus` (`id`, `user_name`, "
-        . "`reflective_xss`, `stored_xss`, `sqli`, `csrf`, `csrf_referrer`) "
-        . "VALUE (NULL, :user, 0, 0, 0, 0, 0)";
+        . "`reflective_xss`, `stored_xss`, `sqli`, `csrf`, `csrf_referrer`, "
+        . "`reflective_xss_hard`, `stored_xss_hard`, `sqli_hard`, `csrf_hard`, "
+        . "`csrf_referrer_hard`) VALUE (NULL, :user, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
 
     try {
         get_login_db()->prepare($insertChallenge)->execute([
@@ -373,7 +379,6 @@ function do_registration($username, $mail, $password)
         header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=119");
         exit();
     }
-
 
     // redirect back to login page
     header("location: " . LOGIN_PAGE . "?success=signup");
