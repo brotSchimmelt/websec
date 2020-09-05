@@ -109,3 +109,24 @@ function delete_all_cookies()
         }
     }
 }
+
+// get the current value for the global challenge difficulty
+function get_global_difficulty()
+{
+    // load settings.json path from config.php
+    $file = SETTINGS;
+    if (file_exists($file)) {
+
+        // load settings as assoc array
+        $settings = json_decode(file_get_contents($file), true);
+
+        // check if difficulty is set to hard
+        if ($settings['difficulty']['hard']) {
+            return "hard";
+        } else {
+            return "normal";
+        }
+    } else {
+        throw new Exception("Settings.json could not be opened or found.");
+    }
+}
