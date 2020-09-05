@@ -37,11 +37,26 @@ $searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : f
 $challengeFailed = false;
 $solved = false;
 $showSuccessModal = false;
+// get level of difficulty
+$difficulty = get_global_difficulty();
 
 // check if a search term was entered
 if (isset($_GET['xss'])) {
     $searchTerm = filter_input(INPUT_GET, 'xss', FILTER_SANITIZE_SPECIAL_CHARS);
     $rawSearchTerm = $_GET['xss'];
+
+    if ($difficulty == "hard") {
+        // filter '<script>' and '<SCRIPT>'tags
+        // solution for all tested browsers: <img src="" onerror=javascript:alert(document.cookie)>
+        $rawSearchTerm = str_ireplace("<script>", "", $rawSearchTerm);
+
+        /*
+        * Alternative: filter only '<script>' and '<SCRIPT>'
+        * str_replace("<script>,"", $rawSearchTerm)
+        * str_replace("<SCRIPT>,"", $rawSearchTerm)
+        * Solution for all browsers: <ScRiPt>alert(document.cookie)</ScRiPt>
+        */
+    }
 }
 
 // check if cookie was entered in modal
@@ -52,7 +67,12 @@ if (isset($_POST['xss-cookie'])) {
     if (check_reflective_xss_challenge($userName, $cookie)) {
 
         // set challenge to solved
-        set_challenge_status("reflective_xss", $userName);
+        if ($difficulty == "hard") {
+            set_challenge_status("reflective_xss_hard", $userName);
+        } else {
+            set_challenge_status("reflective_xss", $userName);
+        }
+
 
         // show success modal!
         $showSuccessModal = true;
@@ -75,9 +95,6 @@ if (isset($_POST['add-preview'])) {
     header("location: " . "/shop/overview.php" . "?success=prodAdded");
     exit();
 }
-
-
-
 ?>
 <!doctype html>
 <html lang="en">
