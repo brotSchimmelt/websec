@@ -32,6 +32,7 @@ $name_get = get_var_set('username') ? $_GET['username'] : "";
 $name_get = htmlentities($name_get);
 $mail_get = get_var_set('mail') ? $_GET['mail'] : "";
 $mail_get = htmlentities($mail_get);
+$difficulty = get_global_difficulty();
 
 // Check if POST variables are set
 if (post_var_set('username') && post_var_set('mail') && post_var_set('password') && post_var_set('confirmPassword')) {
@@ -96,8 +97,22 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
             <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
             <hr class="accent-blue">
         </form>
+        <small>
+            Challenge Difficulty Level:
+            <span title="The difficulty is set by the lecturer." data-toggle="tooltip" data-trigger="hover" data-placement="bottom">
+                <strong><?= $difficulty ?></strong>
+            </span>
+        </small>
     </div>
     <!-- HTML Content END -->
 </body>
+<?php
+include_once(JS_BOOTSTRAP);
+?>
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 </html>
