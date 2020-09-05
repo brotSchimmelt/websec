@@ -46,12 +46,12 @@ if (isset($_GET['xss'])) {
     $rawSearchTerm = $_GET['xss'];
 
     if ($difficulty == "hard") {
-        // filter '<script>' and '<SCRIPT>' tags (case insensitive)
+        // filter all '<script>' tags (case insensitive)
         // solution for all tested browsers: <img src="" onerror=javascript:alert(document.cookie)>
         $rawSearchTerm = str_ireplace("<script>", "", $rawSearchTerm);
 
         /*
-        * Alternative: filter only '<script>' and '<SCRIPT>'
+        * Alternative: filter only '<script>' and '<SCRIPT>' tags
         * str_replace("<script>","", $rawSearchTerm)
         * str_replace("<SCRIPT>","", $rawSearchTerm)
         * Solution for all browsers: <ScRiPt>alert(document.cookie)</ScRiPt>
