@@ -423,7 +423,7 @@ function reset_csrf_db($username)
 }
 
 // check if the XSS challenge was solved
-function check_reflective_xss_challenge($username, $cookie)
+function check_reflective_xss_challenge($cookie)
 {
     // check if cookie is equal to reflective xss cookie
     if (stripos($cookie, $_SESSION['reflectiveXSS']) !== false) {

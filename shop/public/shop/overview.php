@@ -64,7 +64,7 @@ if (isset($_POST['xss-cookie'])) {
     $cookie = filter_input(INPUT_POST, 'xss-cookie', FILTER_SANITIZE_SPECIAL_CHARS);
 
     // check if cookie is correct
-    if (check_reflective_xss_challenge($userName, $cookie)) {
+    if (check_reflective_xss_challenge($cookie)) {
 
         // set challenge to solved
         if ($difficulty == "hard") {
