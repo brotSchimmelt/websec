@@ -26,6 +26,10 @@ if (is_user_logged_in()) {
     exit();
 }
 
+// variables
+$difficulty = get_global_difficulty();
+
+// check if login was tried
 if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
     // Load POST variables
@@ -83,9 +87,23 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
             <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
             <hr class="accent-blue">
         </form>
+        <small>
+            Challenge Difficulty Level:
+            <span title="The difficulty is set by the lecturer." data-toggle="tooltip" data-trigger="hover" data-placement="bottom">
+                <strong><?= $difficulty ?></strong>
+            </span>
+        </small>
     </div>
     <!-- HTML Content END -->
-
 </body>
+
+<?php
+include_once(JS_BOOTSTRAP);
+?>
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 </html>
