@@ -379,3 +379,7 @@ $alertContactField = '<br>
     <b>Thank You!</b> We have received your request and will come back to you
     very soon.<br>Very soon! Really! One day...<br>or never.
 </div>';
+$alertScoreboardAllSolved = '<br>
+<div class="alert alert-success shadow" role="alert">
+    <b>Congratulation!</b> You solved every challenge in this shop. Good job!
+</div>';

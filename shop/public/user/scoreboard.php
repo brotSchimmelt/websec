@@ -47,6 +47,11 @@ if ($difficulty == "normal") {
     $solvedCrosspostDoubleCheck = lookup_challenge_status("csrf_referrer_hard", $username);
 }
 
+// check if all challenges were solved
+$allChallengesSolved = ($solvedXSS && $solvedStoredXSS && $solvedSQLi
+    && $solvedCrosspost && $solvedCrosspostDoubleCheck) ? true : false;
+
+
 // challenge status for the user
 $echoGreen = '<span style="color:green;">Solved</span>';
 $echoRed = '<span style="color:red;">Stil Open</span>';
@@ -87,6 +92,9 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
         <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>
             The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
         <br>
+
+        <?= $allChallengesSolved ? $alertScoreboardAllSolved : "" ?>
+
         <table class="table table-striped shadow">
             <thead class="my-head">
                 <tr>
@@ -115,13 +123,15 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
                 </tr>
                 <tr>
                     <td><a class="text-muted" href="/shop/contact.php">CSRF</a></td>
-                    <td> <?php if ($solvedCrosspost && $solvedCrosspostDoubleCheck) {
+                    <td> <?php
+                            if ($solvedCrosspost && $solvedCrosspostDoubleCheck) {
                                 echo $echoGreen;
                             } elseif ($solvedCrosspost || $solvedCrosspostDoubleCheck) {
                                 echo $echoOrange;
                             } else {
                                 echo $echoRed;
-                            } ?>
+                            }
+                            ?>
                     </td>
                 </tr>
             </tbody>
