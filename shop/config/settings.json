@@ -6,7 +6,6 @@
         "disabled": false
     },
     "difficulty": {
-        "normal": true,
         "hard": false
     }
 }
