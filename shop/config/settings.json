@@ -1,0 +1,12 @@
+{
+    "login": {
+        "disabled": false
+    },
+    "registration": {
+        "disabled": false
+    },
+    "difficulty": {
+        "normal": true,
+        "hard": false
+    }
+}
