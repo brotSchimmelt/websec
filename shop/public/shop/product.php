@@ -41,10 +41,36 @@ $stmt = get_shop_db()->prepare($sql);
 $stmt->execute(['prod_id' => $productID]);
 $productData = $stmt->fetch();
 
+// difficulty
+$difficulty = get_global_difficulty();
+
 
 // functions
 if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
-    add_comment_to_db($_POST['userComment'], $_SESSION['userName']);
+
+    if ($difficulty == "hard") {
+
+        // filter all '<script>' tags (case insensitive)
+        // solution for all tested browsers: <img src="" onerror=javascript:alert(document.cookie)>
+        $filteredComment = str_ireplace("<script>", "", $_POST['userComment']);
+
+        /*
+        * Alternative: filter only '<script>' and '<SCRIPT>' tags
+        * str_replace("<script>","", $rawSearchTerm)
+        * str_replace("<SCRIPT>","", $rawSearchTerm)
+        * Solution for all browsers: <ScRiPt>alert(document.cookie)</ScRiPt>
+        */
+
+        // additionally filter 'alert' command
+        // solution: use confirm() or prompt()
+        $filteredComment = str_replace("alert", "", $filteredComment);
+
+        // add filtered comment to database
+        add_comment_to_db($filteredComment, $_SESSION['userName']);
+    } else {
+        // normal difficulty
+        add_comment_to_db($_POST['userComment'], $_SESSION['userName']);
+    }
 }
 if (isset($_POST['add-product'])) {
 
