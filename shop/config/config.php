@@ -13,9 +13,10 @@ define("BIN", ROOT .  ".." . DS . "docs" . DS); // Command Line Utility dir (cur
 define("CON", ROOT .  ".." . DS . "config" . DS); // Configuration dir
 define("DAT", ROOT .  ".." . DS . "data" . DS); // Database dir for the sql injection challenge
 
-// Database configurations
+// Database configurations and settings
 define("CONF_DB_LOGIN", CON . "db_login.php"); // Login database credentials
 define("CONF_DB_SHOP", CON . "db_shop.php"); // Shop database credentials
+define("SETTINGS", CON . "settings.json"); // Settings file for difficulty and login/registration
 
 // Subfolders in src/
 define("INCL", SRC . "includes" . DS);  // Includes dir
