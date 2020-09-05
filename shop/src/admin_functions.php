@@ -194,3 +194,23 @@ function show_all_user()
         $pos++;
     }
 }
+
+// set new global difficulty level in settings.php
+function set_global_difficulty($difficulty)
+{
+    // load settings.json path from config.php
+    $file = SETTINGS;
+    if (file_exists($file)) {
+
+        // load settings as assoc array
+        $settings = json_decode(file_get_contents($file), true);
+
+        // translate parameter to difficulty level
+        $settings['difficulty']['hard'] = ($difficulty == "hard") ? true : false;
+
+        // write new settings file in place
+        file_put_contents($file, json_encode($settings));
+    } else {
+        throw new Exception("Settings.json could not be opened or found.");
+    }
+}
