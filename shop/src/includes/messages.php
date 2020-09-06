@@ -117,6 +117,26 @@ $modalSuccessStoredXSS = '<!--Modal: Success - Stored XSS Cookie Challenge SOLVE
     </div>
 </div>
 <!--Modal END-->';
+$modalSuccessResetAll = '<!--Modal: Success - Reset Reflective XSS Challenge-->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-reflective-success" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">All challenges successfully reset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>All challenges have successfully been reset.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal END-->';
 $modalSuccessResetReflectiveXSS = '<!--Modal: Success - Reset Reflective XSS Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-reflective-success" aria-hidden="true">
     <div class="modal-dialog" role="document">

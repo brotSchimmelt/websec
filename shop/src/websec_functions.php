@@ -493,6 +493,21 @@ function reset_csrf_db($username)
     return true;
 }
 
+// reset all challenges
+function reset_all_challenges($username)
+{
+    // catch all unnecessary modals
+    $emptyVar = false;
+
+    // reset all challenges
+    $emptyVar = reset_reflective_xss_db($username);
+    $emptyVar = reset_stored_xss_db($username);
+    $emptyVar = reset_sqli_db($username);
+    $emptyVar = reset_csrf_db($username);
+
+    return true;
+}
+
 // check if the XSS challenge was solved
 function check_reflective_xss_challenge($cookie)
 {

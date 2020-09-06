@@ -43,6 +43,9 @@ if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
 if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
     $resetCSRFModal = reset_csrf_db($username);
 }
+if (isset($_POST['all']) && isset($_POST['doit-all'])) {
+    $resetAllModal = reset_all_challenges($username);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -115,6 +118,17 @@ if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
             <input type="hidden" name="doit-csrf" value="1">
             <input type="hidden" name="csrf" value="1">
             <input type="submit" value="RESET SUPPORT CONTACT">
+        </form>
+        <br>
+        <hr><br>
+        <h4>RESET ALL CHALLENGES</h4>
+        This will <strong>delete all your achievements</strong>!<br>
+        <form action="reset_db.php" method="post">
+            your name:
+            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
+            <input type="hidden" name="doit-all" value="1">
+            <input type="hidden" name="all" value="1">
+            <input type="submit" value="RESET ALL CHALLENGES">
         </form>
         <br><br>
         <hr><br>
