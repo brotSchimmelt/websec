@@ -29,6 +29,7 @@ if (!is_user_unlocked()) {
 
 // Variables
 $solved = lookup_challenge_status("sqli", $_SESSION['userName']);
+$difficulty = get_global_difficulty();
 
 ?>
 <!doctype html>
@@ -74,7 +75,7 @@ $solved = lookup_challenge_status("sqli", $_SESSION['userName']);
         We got you! Just use our absolutely privacy conform search form:
         <br><br>
         <form action="friends.php" method="post">
-            <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" autofocus>
+            <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" <?= $difficulty == "hard" ? 'maxlength="10"' : "" ?> autofocus>
             <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
         </form>
         <br>
