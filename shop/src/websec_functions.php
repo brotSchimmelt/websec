@@ -14,6 +14,8 @@ function slug($z)
 function create_sqli_db($username, $mail)
 {
 
+    $currentDifficulty = get_global_difficulty();
+
     $dbName = DAT . slug($username) . ".sqlite";
 
     if (file_exists($dbName)) {
@@ -26,29 +28,80 @@ function create_sqli_db($username, $mail)
         // fake password hash that is shown to the user in SQLi challenge
         $fakePwdHash = str_shuffle("superSecureFakePasswordHash13579");
 
-        // add users to the SQLi database
-        try {
-            $database->exec('CREATE TABLE users (username text NOT NULL, '
-                . 'password text, email text, wishlist text, user_status '
-                . 'text NOT NULL);');
+        // add users to the SQLi database on normal difficulty
+        if ($currentDifficulty != "hard") {
+            try {
+                $database->exec('CREATE TABLE users (username text NOT NULL, '
+                    . 'password text, email text, wishlist text, user_status '
+                    . 'text NOT NULL);');
 
-            $database->exec("INSERT INTO users (username,password,email,"
-                . "wishlist, user_status) VALUES ('admin','admin',"
-                . "'admin@admin.admin', 'new Mug', 'standard');");
+                $database->exec("INSERT INTO users (username,password,email,"
+                    . "wishlist, user_status) VALUES ('admin','admin',"
+                    . "'admin@admin.admin', 'new Mug', 'standard');");
 
-            $database->exec("INSERT INTO users (username,password,email,"
-                . "wishlist, user_status) VALUES ('elliot','toor', "
-                . "'alderson@allsafe.con', 'Banana Slicer', 'standard');");
+                $database->exec("INSERT INTO users (username,password,email,"
+                    . "wishlist, user_status) VALUES ('elliot','toor', "
+                    . "'alderson@allsafe.con', 'Banana Slicer', 'standard');");
 
-            $database->exec("INSERT INTO users (username,password,email,"
-                . "wishlist, user_status) VALUES ('l337_h4ck3r','password123',"
-                . "'girly95@hotmail.con', 'T-Shirt', 'premium');");
+                $database->exec("INSERT INTO users (username,password,email,"
+                    . "wishlist, user_status) VALUES ('l337_h4ck3r','password123',"
+                    . "'girly95@hotmail.con', 'T-Shirt', 'premium');");
 
-            $database->exec("INSERT INTO users (username,password,email,"
-                . "wishlist, user_status) VALUES ('" . $username . "','"
-                . $fakePwdHash . "','" . $mail . "', 'empty','standard');");
-        } catch (Exception $e) {
-            display_exception_msg($e, "053");
+                $database->exec("INSERT INTO users (username,password,email,"
+                    . "wishlist, user_status) VALUES ('" . $username . "','"
+                    . $fakePwdHash . "','" . $mail . "', 'empty','standard');");
+            } catch (Exception $e) {
+                display_exception_msg($e, "053");
+            }
+        } else {
+            // add users to the SQLi database on hard difficulty
+            try {
+
+                // generate Tokens
+                $challengeToken = get_fake_CSRF_token($username);
+                $genericToken = "GenericFakeToken159";
+
+                $database->exec('CREATE TABLE users (username text NOT NULL, '
+                    . 'password text, email text, wishlist text, token '
+                    . 'text NOT NULL);');
+
+                $database->exec('CREATE TABLE premium_users (username text NOT '
+                    . 'NULL, status text NOT NULL);');
+
+                $database->exec("INSERT INTO users (username,password,email,"
+                    . "wishlist, token) VALUES ('admin','admin',"
+                    . "'admin@admin.admin', 'new Mug', '"
+                    . str_shuffle($genericToken) . "');");
+
+                $database->exec("INSERT INTO premium_users (username,status) "
+                    . "VALUES ('admin','standard');");
+
+                $database->exec("INSERT INTO users (username,password,email,"
+                    . "wishlist, token) VALUES ('elliot','toor',"
+                    . "'alderson@allsafe.con', 'Banana Slicer', '"
+                    . $challengeToken . "');");
+
+                $database->exec("INSERT INTO premium_users (username,status) "
+                    . "VALUES ('elliot','standard');");
+
+                $database->exec("INSERT INTO users (username,password,email,"
+                    . "wishlist, token) VALUES ('l337_h4ck3r','password123',"
+                    . "'girly95@hotmail.con', 'T-Shirt', '"
+                    . str_shuffle($genericToken) . "');");
+
+                $database->exec("INSERT INTO premium_users (username,status) "
+                    . "VALUES ('l337_h4ck3r','premium');");
+
+                $database->exec("INSERT INTO users (username,password,email,"
+                    . "wishlist, token) VALUES ('" . $username . "','"
+                    . $fakePwdHash . "', '" . $mail . "', 'empty', '"
+                    . str_shuffle($genericToken) . "');");
+
+                $database->exec("INSERT INTO premium_users (username,status) "
+                    . "VALUES ('" . $username . "','standard');");;
+            } catch (Exception $e) {
+                display_exception_msg($e, "053");
+            }
         }
     } else {
         throw new Exception("SQLite database could not be created.");
@@ -56,17 +109,16 @@ function create_sqli_db($username, $mail)
 }
 
 // query the SQLite database
-function query_sqli_db()
+function query_sqli_db($searchTerm)
 {
-    // get search term and user database
-    $searchTerm = $_POST['sqli'];
+    // get user database
     $userDbPath = DAT . $_SESSION['userName'] . ".sqlite";
 
     // queries
     $countUserQuery = "SELECT COUNT(*) FROM `users`;";
     $countPremiumQuery = "SELECT COUNT(*) FROM `users` WHERE user_status='premium';";
-    $searchQuery = 'SELECT username,email,wishlist FROM users WHERE '
-        . 'username="' . $searchTerm . '";';
+    $searchQuery = "SELECT username,email,wishlist FROM users WHERE "
+        . "username='" . $searchTerm . "';";
 
     // connect to database
     $database = new SQLite3($userDbPath);
@@ -88,7 +140,7 @@ function query_sqli_db()
 
             if ($pos1 === false && $pos2 === false && $pos3 === false) {
 
-                // skip any query with unhallowed or without SQL 
+                // skip any query with not allowed statements or without SQL 
                 continue;
             } else if ($pos2 !== false || $pos3 !== false) {
 
@@ -108,34 +160,32 @@ function query_sqli_db()
                     display_exception_msg($e, "056");
                     exit();
                 }
-                while ($row = $result->fetchArray()) {
-                    echo '<div class="con-center con-search">';
-                    echo '<h4 class="display-5">Looks like we found your '
-                        . 'friend!</h4><br>';
-                    echo "Here are his/her contact infos and wishlist items!<br>";
+                try {
+                    while ($row = $result->fetchArray()) {
+                        echo '<div class="con-center con-search">';
+                        echo '<h4 class="display-5">Looks like we found your '
+                            . 'friend!</h4><br>';
+                        echo "Here are his/her contact infos and wishlist items!<br>";
 
-                    // iterate SELECT results
-                    foreach ($row as $key => $value) {
-                        if (is_numeric($key)) {
+                        // iterate SELECT results
+                        foreach ($row as $key => $value) {
+                            if (is_numeric($key)) {
 
-                            // skip IDs
-                            continue;
+                                // skip IDs
+                                continue;
+                            }
+                            // output results
+                            echo htmlentities($key) . " = " . htmlentities($value) . "<br>";
                         }
-
-                        // output results abstracted from the original search query
-                        // so SELECT * (...) gives all attributes back
-                        if (
-                            $key == "username"
-                            || $key == "email"
-                            || $key == "password"
-                            || $key == "wishlist"
-                            || $key == "user_status"
-                        ) {
-                            echo "$key = $value <br>";
-                        }
+                        echo "</div>";
+                        echo "<br><hr><br>";
                     }
+                    // catch any fatal sql error
+                } catch (Throwable $t) {
+                    echo '<div class="con-center con-search">';
+                    echo "It seems like there was a problem with your search term: <br>"
+                        . htmlentities($searchTerm);
                     echo "</div>";
-                    echo "<br><hr><br>";
                 }
             }
         }
@@ -151,8 +201,13 @@ function query_sqli_db()
             // check if user is premium
             if ($challengeStatus) {
 
-                // set challenge to solved in database
-                set_challenge_status("sqli", $_SESSION['userName']);
+                if (get_global_difficulty() == "hard") {
+                    // set challenge to solved in database
+                    set_challenge_status("sqli_hard", $_SESSION['userName']);
+                } else {
+                    // set challenge to solved in database
+                    set_challenge_status("sqli", $_SESSION['userName']);
+                }
 
                 // code for showing challenge success modal
                 return 0;

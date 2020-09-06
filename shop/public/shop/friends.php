@@ -90,7 +90,7 @@ $difficulty = get_global_difficulty();
     if (isset($_POST['sqli']) && (!empty($_POST['sqli']))) {
 
         // filter script tags etc.
-        $searchTerm = filter_input(INPUT_POST, 'sqli', FILTER_SANITIZE_SPECIAL_CHARS);
+        $searchTerm = $_POST['sqli'];
 
         try {
             $queryResultModal = query_sqli_db($searchTerm);
