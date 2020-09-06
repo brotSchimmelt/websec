@@ -285,8 +285,8 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
         // token from SQLi challenge
         $tokenCheck = $fakeCSRFToken == $userTokenCSRF;
     } else {
-        // default token was sent
-        $tokenCheck = $_SESSION['fakeCSRFToken'] == $userTokenCSRF;
+        // token is irrelevant for 'normal' difficulty
+        $tokenCheck = true;
     }
 
     $userCheck = (stripos($_SESSION['userCSRF'], $uname) !== false);
