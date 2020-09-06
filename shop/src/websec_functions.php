@@ -56,7 +56,6 @@ function create_sqli_db($username, $mail)
         } else {
             // add users to the SQLi database on hard difficulty
             try {
-
                 // generate Tokens
                 $challengeToken = get_fake_CSRF_token($username);
                 $genericToken = "GenericFakeToken159";
@@ -114,9 +113,16 @@ function query_sqli_db($searchTerm)
     // get user database
     $userDbPath = DAT . $_SESSION['userName'] . ".sqlite";
 
+    // get current challenge difficulty
+    $challengeDifficulty = get_global_difficulty();
+
     // queries
+    if ($challengeDifficulty == "hard") {
+        $countPremiumQuery = "SELECT COUNT(*) FROM `premium_users` WHERE status='premium';";
+    } else {
+        $countPremiumQuery = "SELECT COUNT(*) FROM `users` WHERE user_status='premium';";
+    }
     $countUserQuery = "SELECT COUNT(*) FROM `users`;";
-    $countPremiumQuery = "SELECT COUNT(*) FROM `users` WHERE user_status='premium';";
     $searchQuery = "SELECT username,email,wishlist FROM users WHERE "
         . "username='" . $searchTerm . "';";
 
@@ -201,7 +207,7 @@ function query_sqli_db($searchTerm)
             // check if user is premium
             if ($challengeStatus) {
 
-                if (get_global_difficulty() == "hard") {
+                if ($challengeDifficulty == "hard") {
                     // set challenge to solved in database
                     set_challenge_status("sqli_hard", $_SESSION['userName']);
                 } else {
@@ -520,6 +526,8 @@ function check_reflective_xss_challenge($cookie)
 // check if the SQLi challenge is solved
 function check_sqli_challenge($username)
 {
+    // get current difficulty
+    $difficulty = get_global_difficulty();
 
     $challengeStatus = false;
     $pathToSQLiDB = DAT . $username . ".sqlite";
@@ -527,9 +535,16 @@ function check_sqli_challenge($username)
     $database = new SQLite3($pathToSQLiDB);
     if ($database) {
 
-        // check if the user account is premium
-        $sql = "SELECT COUNT(*) FROM `users` WHERE `user_status`='premium' AND "
-            . "`username`='" . $username . "';";
+        if ($difficulty == "hard") {
+            // check if the user account is premium on hard
+            $sql = "SELECT COUNT(*) FROM `premium_users` WHERE `status`='premium' AND "
+                . "`username`='" . $username . "';";
+        } else {
+            // check if the user account is premium on normal
+            $sql = "SELECT COUNT(*) FROM `users` WHERE `user_status`='premium' AND "
+                . "`username`='" . $username . "';";
+        }
+
         try {
             $result = $database->querySingle($sql);
         } catch (Exception $e) {
