@@ -10,17 +10,11 @@ require_once(FUNC_BASE);
 $num = get_number_of_cart_items();
 
 // check SQLi and stored XSS challenge status
-if (get_global_difficulty() == "hard") {
-    $sqliSolved = lookup_challenge_status("sqli_hard", $_SESSION['userName']);
-    if (!lookup_challenge_status("stored_xss_hard", $_SESSION['userName'])) {
-        compare_cookies($_SESSION['userName']);
-    }
-} else {
-    $sqliSolved = lookup_challenge_status("sqli", $_SESSION['userName']);
-    if (!lookup_challenge_status("stored_xss", $_SESSION['userName'])) {
-        compare_cookies($_SESSION['userName']);
-    }
+$sqliSolved = lookup_challenge_status("sqli", $_SESSION['userName']);
+if (!lookup_challenge_status("stored_xss", $_SESSION['userName'])) {
+    compare_cookies($_SESSION['userName']);
 }
+
 
 if (isset($_SESSION['fakeCart']) && $_SESSION['fakeCart'] == true) {
     check_stored_xss_challenge($_SESSION['userName']);

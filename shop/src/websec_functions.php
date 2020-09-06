@@ -113,11 +113,8 @@ function query_sqli_db($searchTerm)
     // get user database
     $userDbPath = DAT . $_SESSION['userName'] . ".sqlite";
 
-    // get current challenge difficulty
-    $challengeDifficulty = get_global_difficulty();
-
     // queries
-    if ($challengeDifficulty == "hard") {
+    if (get_global_difficulty() == "hard") {
         $countPremiumQuery = "SELECT COUNT(*) FROM `premium_users` WHERE status='premium';";
     } else {
         $countPremiumQuery = "SELECT COUNT(*) FROM `users` WHERE user_status='premium';";
@@ -207,13 +204,9 @@ function query_sqli_db($searchTerm)
             // check if user is premium
             if ($challengeStatus) {
 
-                if ($challengeDifficulty == "hard") {
-                    // set challenge to solved in database
-                    set_challenge_status("sqli_hard", $_SESSION['userName']);
-                } else {
-                    // set challenge to solved in database
-                    set_challenge_status("sqli", $_SESSION['userName']);
-                }
+                // set challenge to solved in database
+                set_challenge_status("sqli", $_SESSION['userName']);
+
 
                 // code for showing challenge success modal
                 return 0;
@@ -339,20 +332,12 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
 
             // set challenge to 'solved'
             if ($pos1 !== false || $pos2 !== false || $pos3 !== false) {
-                if ($difficulty == "hard") {
-                    set_challenge_status("csrf_hard", $username);
-                    set_challenge_status("csrf_referrer_hard", $username);
-                } else {
-                    set_challenge_status("csrf", $username);
-                    set_challenge_status("csrf_referrer", $username);
-                }
+                set_challenge_status("csrf", $username);
+                set_challenge_status("csrf_referrer", $username);
             } else {
                 // wrong referrer; still passed
-                if ($difficulty == "hard") {
-                    set_challenge_status("csrf_hard", $username);
-                } else {
-                    set_challenge_status("csrf", $username);
-                }
+                set_challenge_status("csrf", $username);
+
                 return 4;
             }
 

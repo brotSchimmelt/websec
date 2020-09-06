@@ -67,11 +67,8 @@ if (isset($_POST['xss-cookie'])) {
     if (check_reflective_xss_challenge($cookie)) {
 
         // set challenge to solved
-        if ($difficulty == "hard") {
-            set_challenge_status("reflective_xss_hard", $userName);
-        } else {
-            set_challenge_status("reflective_xss", $userName);
-        }
+        set_challenge_status("reflective_xss", $userName);
+
 
 
         // show success modal!

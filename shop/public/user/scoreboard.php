@@ -32,20 +32,12 @@ if (!is_user_unlocked()) {
 $username = $_SESSION['userName'];
 $difficulty = get_global_difficulty();
 
-// Challenge variables
-if ($difficulty == "normal") {
-    $solvedXSS = lookup_challenge_status("reflective_xss", $username);
-    $solvedStoredXSS = lookup_challenge_status("stored_xss", $username);
-    $solvedSQLi = lookup_challenge_status("sqli", $username);
-    $solvedCrosspost = lookup_challenge_status("csrf", $username);
-    $solvedCrosspostDoubleCheck = lookup_challenge_status("csrf_referrer", $username);
-} else {
-    $solvedXSS = lookup_challenge_status("reflective_xss_hard", $username);
-    $solvedStoredXSS = lookup_challenge_status("stored_xss_hard", $username);
-    $solvedSQLi = lookup_challenge_status("sqli_hard", $username);
-    $solvedCrosspost = lookup_challenge_status("csrf_hard", $username);
-    $solvedCrosspostDoubleCheck = lookup_challenge_status("csrf_referrer_hard", $username);
-}
+// get challenge variables
+$solvedXSS = lookup_challenge_status("reflective_xss", $username);
+$solvedStoredXSS = lookup_challenge_status("stored_xss", $username);
+$solvedSQLi = lookup_challenge_status("sqli", $username);
+$solvedCrosspost = lookup_challenge_status("csrf", $username);
+$solvedCrosspostDoubleCheck = lookup_challenge_status("csrf_referrer", $username);
 
 // check if all challenges were solved
 $allChallengesSolved = ($solvedXSS && $solvedStoredXSS && $solvedSQLi
