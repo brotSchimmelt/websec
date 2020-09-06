@@ -628,6 +628,10 @@ function set_challenge_status($challenge, $username, $status = 1)
     $challengeField = filter_var($challenge, FILTER_SANITIZE_SPECIAL_CHARS);
     $challengeStatus = filter_var($status, FILTER_SANITIZE_NUMBER_INT);
 
+    if (get_global_difficulty() == "hard") {
+        $challengeField = $challengeField . "_hard";
+    }
+
     // check if challenge status is either 0 or 1
     $challengeStatus = ($challengeStatus != 1) ? 0 : 1;
 
@@ -649,6 +653,10 @@ function lookup_challenge_status($challenge, $username)
     // filter challenge name since prepared statements do not work for
     // table names etc.
     $challengeField = filter_var($challenge, FILTER_SANITIZE_SPECIAL_CHARS);
+
+    if (get_global_difficulty() == "hard") {
+        $challengeField = $challengeField . "_hard";
+    }
 
     $sql = "SELECT " . $challengeField . " FROM `challengeStatus` WHERE "
         . "`user_name`=?";
