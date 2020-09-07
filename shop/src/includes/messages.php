@@ -1,5 +1,27 @@
 <?php
 /*
+* Alerts
+*/
+$alertProductSearch = '<br>
+<div class="alert alert-warning shadow-sm" role="alert">
+    <b>Warning</b>: Due to recent hacker attacks, the product search function 
+    is currently disabled!
+</div>';
+$alertProductComment = '<br>
+<div class="alert alert-warning shadow-sm" role="alert">
+    <b>Warning</b>: Due to recent hacker attacks, we were forced to delete some user comments!
+</div>';
+$alertContactField = '<br>
+<div class="alert alert-info shadow" role="alert">
+    <b>Thank You!</b> We have received your request and will come back to you
+    very soon.<br>Very soon! Really! One day...<br>or never.
+</div>';
+$alertScoreboardAllSolved = '<br>
+<div class="alert alert-success shadow" role="alert">
+    <b>Congratulation!</b> You solved every challenge in this shop. Good job!
+</div>';
+
+/*
 * Modals
 */
 $modalInputXSSCookie = '<!--Modal: Input - Reflective XSS Cookie-->
@@ -387,25 +409,27 @@ $modalErrorCSRFUserMismatch = '<!--Modal: Error - CSRF Challenge user mismatch--
     </div>
 </div>
 <!--Modal END-->';
+$modalConfirmDeleteCart = '<!--Modal: Info - Confirm to delete your cart-->
+<div class="modal fade" tabindex="-1" role="dialog" id="delete-cart" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <p>Are you sure you want to delete all items in your cart?</p>
 
-/*
-* Alerts
-*/
-$alertProductSearch = '<br>
-<div class="alert alert-warning shadow-sm" role="alert">
-    <b>Warning</b>: Due to recent hacker attacks, the product search function 
-    is currently disabled!
-</div>';
-$alertProductComment = '<br>
-<div class="alert alert-warning shadow-sm" role="alert">
-    <b>Warning</b>: Due to recent hacker attacks, we were forced to delete some user comments!
-</div>';
-$alertContactField = '<br>
-<div class="alert alert-info shadow" role="alert">
-    <b>Thank You!</b> We have received your request and will come back to you
-    very soon.<br>Very soon! Really! One day...<br>or never.
-</div>';
-$alertScoreboardAllSolved = '<br>
-<div class="alert alert-success shadow" role="alert">
-    <b>Congratulation!</b> You solved every challenge in this shop. Good job!
-</div>';
+            </div>
+            <div class="modal-footer">
+            <form action="cart.php" method="post">
+                <input type="hidden" name="doit-delete" value="1">
+                <input class="btn btn-danger btn" type="submit" value="Delete all items">
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal END-->';

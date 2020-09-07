@@ -11,6 +11,7 @@ require(FUNC_SHOP);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
+require(MESSAGES);
 
 // Check login status
 if (!is_user_logged_in()) {
@@ -25,7 +26,10 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// check if cart should be emptied
+if (isset($_POST['doit-delete'])) {
+    empty_cart($_SESSION['userName']);
+}
 
 ?>
 <!doctype html>
@@ -49,10 +53,10 @@ if (!is_user_unlocked()) {
 <body>
 
     <?php
+    // load cart modal
+    echo $modalConfirmDeleteCart;
     // Load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
-    require(MESSAGES);
     ?>
 
     <!-- HTML Content BEGIN -->
@@ -86,11 +90,10 @@ if (!is_user_unlocked()) {
             </table>
         </div>
         <div class="cart-center con-center">
-            <a class="btn btn-danger btn" href="">Delete all items</a>
-            <!-- <a class="btn btn-wwu-primary btn" href="" disabled>Checkout</a> -->
-            <input class="btn btn-wwu-primary" type="submit" value="Checkout" disabled>
-            <br><br>
-            <p><small>Due to recent hacker attacks our shop is currently closed! Don't worry, we will remember your cart items the next visit.</small></p>
+            <button class="btn btn-danger btn" data-toggle="modal" data-target="#delete-cart">Delete all items</button>
+            <span data-content="Due to recent hacker attacks our shop is currently closed! Don't worry, we will remember your cart items the next visit." data-toggle="popover" data-trigger="hover">
+                <button class="btn btn-wwu-primary" style="pointer-events: none;" disabled>Checkout</button>
+            </span>
         </div>
     <?php endif; ?>
     <!-- HTML Content END -->
