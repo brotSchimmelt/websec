@@ -115,18 +115,30 @@ function get_global_difficulty()
 {
     // load settings.json path from config.php
     $file = SETTINGS;
-    if (file_exists($file)) {
+    try {
+        if (file_exists($file)) {
 
-        // load settings as assoc array
-        $settings = json_decode(file_get_contents($file), true);
+            // load settings as assoc array
+            $settings = json_decode(file_get_contents($file), true);
 
-        // check if difficulty is set to hard
-        if ($settings['difficulty']['hard']) {
-            return "hard";
+            // check if difficulty setting is boolean
+            if (!is_bool($settings['difficulty']['hard'])) {
+                throw new Exception(
+                    "Level of difficulty in settings.json is not a boolean value."
+                );
+            }
+
+            // check if difficulty is set to hard
+            if ($settings['difficulty']['hard']) {
+                return "hard";
+            } else {
+                return "normal";
+            }
         } else {
-            return "normal";
+            throw new Exception("Settings.json could not be opened or found.");
         }
-    } else {
-        throw new Exception("Settings.json could not be opened or found.");
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
     }
 }
