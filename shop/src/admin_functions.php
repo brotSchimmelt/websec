@@ -103,7 +103,7 @@ function get_individual_progress($username)
 function show_students_with_open_challenges()
 {
     $sql = "SELECT `user_name`, `user_wwu_email`, `is_unlocked`, `is_admin`, "
-        . "`timestamp` FROM users";
+        . "`last_login` FROM users";
     $stmt = get_login_db()->query($sql);
 
     $pos = 1;
@@ -155,7 +155,7 @@ function show_students_with_open_challenges()
         echo "<td>" . $openChallenges . "</td>";
         echo "<td>" . $adminFlag . "</td>";
         echo "<td>" . $unlockedFlag . "</td>";
-        echo "<td>" . $row['timestamp'] . "</td>";
+        echo "<td>" . $row['last_login'] . "</td>";
         echo "</tr>";
 
         $pos++;

@@ -132,7 +132,7 @@ $numOfStudents = get_num_of_students();
                                                 <td><strong>Open Challenges</strong></td>
                                                 <td><strong>Is Admin</strong></td>
                                                 <td><strong>Is Unlocked</strong></td>
-                                                <td><strong>Last Activity</strong> <span class="badge badge-danger">Not Implemented</span></td>
+                                                <td><strong>Last Activity</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
