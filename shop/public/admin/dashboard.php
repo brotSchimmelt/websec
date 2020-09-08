@@ -119,8 +119,8 @@ $numOfStudents = get_num_of_students();
                                                 <td><strong>Username</strong></td>
                                                 <td><strong>Mail</strong> <i>(with mailto link)</i></td>
                                                 <td><strong>Open Challenges</strong></td>
-                                                <td><strong>Is Admin</strong></td>
-                                                <td><strong>Is Unlocked</strong></td>
+                                                <td><strong>Admin</strong></td>
+                                                <td><strong>Unlocked</strong></td>
                                                 <td><strong>Last Activity</strong></td>
                                             </tr>
                                         </thead>
