@@ -94,21 +94,10 @@ $numOfStudents = get_num_of_students();
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">Current difficulty for the callenges</h5>
+                                    <h5 class="display-5">Global Challenge Difficulty</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form action="dashboard.php" method="post">
-                                        <select name="difficulty">
-                                            <option value="easy">Easy</option>
-                                            <option value="medium">Medium</option>
-                                            <option value="legend">Legendary</option>
-                                            <option value="user-chosen">User Chosen</option>
-                                        </select>
-                                        <input type="checkbox" id="chooser-enabled" name="chooser-enabled" checked>
-                                        <label for="chooser-enabled">Disable Choice for User</label>
-                                        <input type="submit" value="Set">
-                                    </form>
-                                    <span class="badge badge-danger">Not Implemented</span>
+                                    Level of difficulty: <strong><?= get_global_difficulty() ?></strong>
                                 </div>
                             </div>
                         </div>
