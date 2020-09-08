@@ -41,11 +41,7 @@ function is_user_unlocked_in_db($username)
     $stmt->execute(['user_name' => $username]);
     $result = $stmt->fetch();
 
-    if ($result['is_unlocked'] == 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return ($result['is_unlocked'] == 1) ? true : false;
 }
 
 // check if a user is an admin
@@ -56,11 +52,7 @@ function is_user_admin_in_db($username)
     $stmt->execute(['user_name' => $username]);
     $result = $stmt->fetch();
 
-    if ($result['is_admin'] == 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return ($result['is_admin'] == 1) ? true : false;
 }
 
 // get the challenge progress of all students in the database
