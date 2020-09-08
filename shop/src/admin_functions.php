@@ -162,6 +162,87 @@ function show_students_with_open_challenges()
     }
 }
 
+// get all challenge statuses for the students
+function show_solved_challenges()
+{
+    $sql = "SELECT `user_name`, `user_wwu_email`, `is_admin`, `last_login`, "
+        . "`timestamp` FROM users";
+    $stmt = get_login_db()->query($sql);
+
+    $pos = 1;
+    while ($row = $stmt->fetch()) {
+
+        // exclude admin users
+        if (is_user_admin_in_db($row['user_name'])) {
+            continue;
+        }
+
+        // get every solved challenge
+        $status = array();
+
+        if (lookup_challenge_status("reflective_xss", $row['user_name'])) {
+            array_push($status, "Reflective XSS");
+        }
+
+        if (lookup_challenge_status("stored_xss", $row['user_name'])) {
+            array_push($status, "Stored XSS");
+        }
+
+        if (lookup_challenge_status("sqli", $row['user_name'])) {
+            array_push($status, "SQLi");
+        }
+
+        if (
+            lookup_challenge_status("csrf", $row['user_name'])
+            and lookup_challenge_status("csrf_referrer", $row['user_name'])
+        ) {
+            array_push($status, "Crosspost");
+        } else if (
+            lookup_challenge_status("csrf", $row['user_name']) and
+            !lookup_challenge_status("csrf_referrer", $row['user_name'])
+        ) {
+            array_push($status, "Crosspost*");
+        }
+
+        // format array
+        if (empty($status)) {
+            array_push($status, "-");
+        }
+
+        // get referrer and message
+        $CSRFSQL = "SELECT `referrer`,`message` FROM `csrf_posts` WHERE "
+            . "`user_name`=?";
+        $CSRFStmt = get_shop_db()->prepare($CSRFSQL);
+        $CSRFStmt->execute([$row['user_name']]);
+        $CSRFResult = $CSRFStmt->fetch();
+
+        // format referrer and message
+        if (!$CSRFResult) {
+            $referrer = "-";
+            $message = "-";
+        } else {
+            $referrerURL = parse_url($CSRFResult['referrer']);
+            $referrer = $referrerURL['path']; // shorten referrer
+            $message = $CSRFResult['message'];
+        }
+
+        // build output string
+        $solvedChallenges = implode(", ", $status);
+
+        // make table row entry
+        echo "<td><strong>" . $pos . ".</strong></td>";
+        echo "<td>" . $row['user_name'] . "</td>";
+        echo "<td>" .  $row['user_wwu_email'] . "</td>";
+        echo "<td>" . $solvedChallenges . "</td>";
+        echo "<td>" . $referrer . "</td>";
+        echo "<td>" . $message . "</td>";
+        echo "<td>" . get_global_difficulty()  . "</td>";
+        echo "</tr>";
+
+        $pos++;
+    }
+}
+
 // get all users from the database
 function show_all_user()
 {

@@ -11,12 +11,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= ($here == "user_management") ? "active" : ""; ?>" href="user_management.php">
-                    <span data-feather="users"></span>
-                    User Management
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link <?= ($here == "results") ? "active" : ""; ?>" href="results.php">
                     <span data-feather="file"></span>
                     Results
