@@ -70,7 +70,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                 <div class="card-body">
                                     <form action="export_json.php" method="post">
                                         <input type="hidden" name="exportJSON" value="1">
-                                        <input class="btn btn-info" type="submit" value="Export Results as JSON">
+                                        <input class="btn btn-info" type="submit" value="Download Results as JSON">
                                     </form>
                                 </div>
                             </div>
