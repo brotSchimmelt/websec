@@ -116,7 +116,7 @@ function show_students_with_open_challenges()
             array_push($status, "Reflective XSS");
         }
 
-        if (!lookup_challenge_status("stored", $row['user_name'])) {
+        if (!lookup_challenge_status("stored_xss", $row['user_name'])) {
             array_push($status, "Stored XSS");
         }
 
