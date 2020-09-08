@@ -76,14 +76,16 @@ function get_total_progress($numOfStudents, $numOfChallenges)
 // get challenge progress of one student
 function get_individual_progress($username)
 {
-    $xssStatus = lookup_challenge_status("reflective_xss", $username);
+    $xssReflectiveStatus = lookup_challenge_status("reflective_xss", $username);
+    $xssStoredStatus = lookup_challenge_status("stored_xss", $username);
     $sqliStatus = lookup_challenge_status("sqli", $username);
     $csrfStatus = lookup_challenge_status("csrf", $username);
     $csrfStatusReferrer = lookup_challenge_status("csrf_referrer", $username);
 
-    // integer from 0 to 4 indicating the overall success
+    // integer from 0 to 5 indicating the overall success
     $totalStatus = 0; // 0 means nothing was accomplished
-    $totalStatus = $xssStatus ? ++$totalStatus : $totalStatus;
+    $totalStatus = $xssReflectiveStatus ? ++$totalStatus : $totalStatus;
+    $totalStatus = $xssStoredStatus ? ++$totalStatus : $totalStatus;
     $totalStatus = $sqliStatus ? ++$totalStatus : $totalStatus;
     $totalStatus = $csrfStatus ? ++$totalStatus : $totalStatus;
     $totalStatus = $csrfStatusReferrer ? ++$totalStatus : $totalStatus;
@@ -102,8 +104,8 @@ function show_students_with_open_challenges()
     while ($row = $stmt->fetch()) {
 
         // check if student did already all the challenges
-        // 4 is the current number of challenges
-        if (get_individual_progress($row['user_name']) == 4) {
+        // 5 is the current number of challenges
+        if (get_individual_progress($row['user_name']) == 5) {
             continue;
         }
 
@@ -111,7 +113,11 @@ function show_students_with_open_challenges()
         $status = array();
 
         if (!lookup_challenge_status("reflective_xss", $row['user_name'])) {
-            array_push($status, "XSS");
+            array_push($status, "Reflective XSS");
+        }
+
+        if (!lookup_challenge_status("stored", $row['user_name'])) {
+            array_push($status, "Stored XSS");
         }
 
         if (!lookup_challenge_status("sqli", $row['user_name'])) {
