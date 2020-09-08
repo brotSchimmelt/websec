@@ -52,12 +52,6 @@
                     info.php
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="settings"></span>
-                    Log Files
-                </a>
-            </li>
         </ul>
     </div>
 </nav>
