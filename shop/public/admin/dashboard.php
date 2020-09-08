@@ -86,7 +86,7 @@ $numOfStudents = get_num_of_students();
                                 <div class="card-header">
                                     <h5 class="display-5">Total progress of all registered students</h5>
                                 </div>
-                                <div class="card-body"><strong><?= get_total_progress($numOfStudents, 5) . "%" ?></strong>
+                                <div class="card-body"><strong><?= get_total_progress($numOfStudents, 4) . "%" ?></strong>
                                     of all challenges solved
                                 </div>
                             </div>

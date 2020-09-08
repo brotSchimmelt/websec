@@ -63,6 +63,11 @@ function get_total_progress($numOfStudents, $numOfChallenges)
 
     $absoluteProgress = 0;
     while ($row = $stmt->fetch()) {
+
+        if (is_user_admin_in_db($row['user_name'])) {
+            $numOfStudents -= 1;
+            continue;
+        }
         $absoluteProgress += get_individual_progress($row['user_name']);
     }
 
@@ -80,15 +85,13 @@ function get_individual_progress($username)
     $xssStoredStatus = lookup_challenge_status("stored_xss", $username);
     $sqliStatus = lookup_challenge_status("sqli", $username);
     $csrfStatus = lookup_challenge_status("csrf", $username);
-    $csrfStatusReferrer = lookup_challenge_status("csrf_referrer", $username);
 
-    // integer from 0 to 5 indicating the overall success
+    // integer from 0 to 4 indicating the overall success
     $totalStatus = 0; // 0 means nothing was accomplished
     $totalStatus = $xssReflectiveStatus ? ++$totalStatus : $totalStatus;
     $totalStatus = $xssStoredStatus ? ++$totalStatus : $totalStatus;
     $totalStatus = $sqliStatus ? ++$totalStatus : $totalStatus;
     $totalStatus = $csrfStatus ? ++$totalStatus : $totalStatus;
-    $totalStatus = $csrfStatusReferrer ? ++$totalStatus : $totalStatus;
 
     return $totalStatus;
 }
@@ -105,7 +108,7 @@ function show_students_with_open_challenges()
 
         // check if student did already all the challenges
         // 5 is the current number of challenges
-        if (get_individual_progress($row['user_name']) == 5) {
+        if (get_individual_progress($row['user_name']) == 4) {
             continue;
         }
 
