@@ -310,3 +310,34 @@ function set_registration_status($status)
         exit();
     }
 }
+
+// get the results of all users as JSON
+function get_results_as_json()
+{
+    $sql = "SELECT `user_name`, `user_wwu_email`, `is_admin` FROM `users`";
+    $stmt = get_login_db()->query($sql);
+
+    // initialize JSON
+    $json = array();
+
+    while ($row = $stmt->fetch()) {
+
+        // exclude admin users
+        if (is_user_admin_in_db($row['user_name'])) {
+            continue;
+        }
+
+        // get results
+        $solvedChallenges = get_solved_challenges($row['user_name']);
+        $CSRFResults = get_csrf_challenge_data($row['user_name']);
+
+        // make JSON file
+        $json[$row['user_wwu_email']]['username'] = $row['user_name'];
+        $json[$row['user_wwu_email']]['solved_challenges'] = $solvedChallenges;
+        $json[$row['user_wwu_email']]['csrf_referrer'] = $CSRFResults['referrer'];
+        $json[$row['user_wwu_email']]['csrf_message'] = $CSRFResults['message'];
+        $json[$row['user_wwu_email']]['difficulty'] = get_global_difficulty();
+    }
+
+    return json_encode($json);
+}

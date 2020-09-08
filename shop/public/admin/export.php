@@ -65,10 +65,13 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">Export User Results</h5><span class="badge badge-danger">Not Implemented</span>
+                                    <h5 class="display-5">Export User Results</h5>
                                 </div>
                                 <div class="card-body">
-                                    <i>JSON, PDF ...</i>
+                                    <form action="export_json.php" method="post">
+                                        <input type="hidden" name="exportJSON" value="1">
+                                        <input class="btn btn-info" type="submit" value="Export Results as JSON">
+                                    </form>
                                 </div>
                             </div>
                         </div>
