@@ -77,16 +77,19 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
             <?= get_message(); ?>
 
             <label for="input-name" class="sr-only">Enter your Username</label>
-            <input type="text" name="username" id="register-name" class="form-control" aria-describedby="username-help" value="<?= $name_get ?>" placeholder="Username" required autofocus>
-            <small id="username-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
+            <input type="text" name="username" id="register-name" class="form-control" aria-describedby="username-help" value="<?= $name_get ?>" placeholder="Username" data-content="Please use only letters and numbers and 2 to 64 characters." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>
+            <!-- <small id="username-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small> -->
+            <br>
 
             <label for="input-mail" class="sr-only">Enter your Mail</label>
-            <input type="email" name="mail" id="register-mail" class="form-control" aria-describedby="mail-help" value="<?= $mail_get ?>" placeholder="WWU Mail" required>
-            <small id="mail-help" class="form-text text-muted">Please use your <em>@uni-muenster.de</em> mail address.</small>
+            <input type="email" name="mail" id="register-mail" class="form-control" aria-describedby="mail-help" value="<?= $mail_get ?>" placeholder="WWU Mail" data-content="Please use your @uni-muenster.de mail address." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>
+            <!-- <small id="mail-help" class="form-text text-muted">Please use your <em>@uni-muenster.de</em> mail address.</small> -->
+            <br>
 
             <label for="input-password" class="sr-only">Password</label>
-            <input type="password" name="password" id="register-password" class="form-control" placeholder="Password" required>
-            <small id="password-help" class="form-text text-muted">Please use at least 8 characters.</small>
+            <input type="password" name="password" id="register-password" class="form-control" placeholder="Password" data-content="Please use at least 8 characters." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>
+            <!-- <small id="password-help" class="form-text text-muted">Please use at least 8 characters.</small> -->
+            <br>
 
             <label for="confirm-password" class="sr-only">Confirm Password</label>
             <input type="password" name="confirmPassword" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
@@ -110,8 +113,13 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
 include_once(JS_BOOTSTRAP);
 ?>
 <script>
+    // JS for Popover and Tooltip to call all functions
+    // BOOTSTRAP_JS must be loaded before this scripts
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
+    });
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover();
     });
 </script>
 
