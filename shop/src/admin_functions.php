@@ -198,19 +198,47 @@ function show_all_user()
 // set new global difficulty level in settings.php
 function set_global_difficulty($difficulty)
 {
-    // load settings.json path from config.php
-    $file = SETTINGS;
-    if (file_exists($file)) {
 
-        // load settings as assoc array
-        $settings = json_decode(file_get_contents($file), true);
+    // translate input to valid setting value
+    $newValue = ($difficulty == "hard") ? true : false;
 
-        // translate parameter to difficulty level
-        $settings['difficulty']['hard'] = ($difficulty == "hard") ? true : false;
+    try {
+        // set new value
+        set_setting('difficulty', 'hard', $newValue);
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
 
-        // write new settings file in place
-        file_put_contents($file, json_encode($settings));
-    } else {
-        throw new Exception("Settings.json could not be opened or found.");
+// set login status
+function set_login_status($status)
+{
+
+    // translate input to valid setting value
+    $newValue = !$status;
+
+    try {
+        // set new value
+        set_setting('login', 'disabled', $newValue);
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
+
+// set registration status
+function set_registration_status($status)
+{
+
+    // translate input to valid setting value
+    $newValue = !$status;
+
+    try {
+        // set new value
+        set_setting('registration', 'disabled', $newValue);
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
     }
 }

@@ -715,22 +715,6 @@ function update_last_login($username)
     }
 }
 
-// check if registration is enabled
-function is_registration_enabled()
-{
-    $file = CON . "registration_disabled";
-
-    return file_exists($file) ? false : true;
-}
-
-// check if login is enabled
-function is_login_enabled()
-{
-    $file = CON . "login_disabled";
-
-    return file_exists($file) ? false : true;
-}
-
 // set XSS challenge cookies
 function set_user_cookies($username)
 {

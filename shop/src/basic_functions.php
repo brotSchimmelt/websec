@@ -113,32 +113,88 @@ function delete_all_cookies()
 // get the current value for the global challenge difficulty
 function get_global_difficulty()
 {
-    // load settings.json path from config.php
-    $file = SETTINGS;
     try {
-        if (file_exists($file)) {
+        // get setting
+        $setting = get_setting('difficulty', 'hard');
 
-            // load settings as assoc array
-            $settings = json_decode(file_get_contents($file), true);
-
-            // check if difficulty setting is boolean
-            if (!is_bool($settings['difficulty']['hard'])) {
-                throw new Exception(
-                    "Level of difficulty in settings.json is not a boolean value."
-                );
-            }
-
-            // check if difficulty is set to hard
-            if ($settings['difficulty']['hard']) {
-                return "hard";
-            } else {
-                return "normal";
-            }
+        // check if difficulty is set to hard
+        if ($setting === true) {
+            return "hard";
         } else {
-            throw new Exception("Settings.json could not be opened or found.");
+            return "normal";
         }
     } catch (Exception $e) {
         display_exception_msg($e);
         exit();
+    }
+}
+
+// check if registration is enabled
+function is_registration_enabled()
+{
+    try {
+        // return inverted setting value
+        return !get_setting("registration", "disabled");
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
+
+// check if login is enabled
+function is_login_enabled()
+{
+    try {
+        // return inverted setting value
+        return !get_setting("login", "disabled");
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
+
+// wrapper function to read in JSON settings
+function get_setting($setting, $subsetting)
+{
+    // load path to settings.json
+    $file = SETTINGS;
+
+    // load settings as assoc array
+    $json = read_json_file($file);
+
+    // check if setting is boolean
+    if (!is_bool($json[$setting][$subsetting])) {
+        throw new Exception($setting . ":" . $subsetting .
+            " in settings.json is not a boolean value.");
+    }
+
+    return $json[$setting][$subsetting];
+}
+
+// wrapper function to write to JSON settings
+function set_setting($setting, $subsetting, $newValue)
+{
+    // load path to settings.json
+    $file = SETTINGS;
+
+    // load settings as assoc array
+    $json = read_json_file($file);
+
+    // set new value
+    $json[$setting][$subsetting] = $newValue;
+
+    // write new settings file in place
+    file_put_contents($file, json_encode($json));
+}
+
+// read json file as assoc array
+function read_json_file($file)
+{
+    // read file in
+    if (file_exists($file)) {
+        // load settings as assoc array
+        return json_decode(file_get_contents($file), true);
+    } else {
+        throw new Exception($file . " could not be opened.");
     }
 }
