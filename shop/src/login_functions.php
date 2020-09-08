@@ -250,14 +250,20 @@ function do_login($username, $mail, $adminFlag, $unlockedFlag)
 }
 
 // validate all user input for login
-function try_login($username, $pwd)
+function try_login($userInput, $pwd)
 {
-    // Get pwd and username from DB
-    $sql = "SELECT user_name,user_pwd_hash,user_wwu_email,is_admin,is_unlocked ";
-    $sql .= "FROM users WHERE user_name=?";
+    // check if user used email or username for login
+    if (filter_var($userInput, FILTER_VALIDATE_EMAIL)) {
+        $sql = "SELECT user_name,user_pwd_hash,user_wwu_email,is_admin,is_unlocked ";
+        $sql .= "FROM users WHERE user_wwu_email=?";
+    } else {
+        $sql = "SELECT user_name,user_pwd_hash,user_wwu_email,is_admin,is_unlocked ";
+        $sql .= "FROM users WHERE user_name=?";
+    }
+
     try {
         $stmt = get_login_db()->prepare($sql);
-        $stmt->execute([$username]);
+        $stmt->execute([$userInput]);
     } catch (PDOException $e) {
         header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=103");
         exit();
