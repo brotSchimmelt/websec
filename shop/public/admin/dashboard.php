@@ -145,18 +145,6 @@ $numOfStudents = get_num_of_students();
                         </div>
                     </div>
                     <br><br>
-                    <div class="row">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="display-5">Challenges Over Time</h5>
-                                    <hr>
-                                    <span class="badge badge-danger">Not Implemented</span>
-                                    <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </main>
         </div>
