@@ -241,39 +241,6 @@ function show_solved_challenges()
     }
 }
 
-// get all users from the database
-function show_all_user()
-{
-    $sql = "SELECT `user_id`, `user_name`, `user_wwu_email`, `is_unlocked`, "
-        . "`is_admin`, `timestamp` FROM users";
-    $stmt = get_login_db()->query($sql);
-
-    $pos = 1;
-    while ($row = $stmt->fetch()) {
-
-        $editBtn = '<button class="btn btn-sm btn-info mr-2" id="'
-            . $row['user_name'] . '-edit">Edit</button>';
-        $deleteBtn = '<button class="btn btn-sm btn-danger" id="'
-            . $row['user_name'] . '-delete">Delete</button>';
-
-
-        $adminFlag = $row['is_admin'] == 1 ? "Yes" : "No";
-        $unlockedFlag = $row['is_unlocked'] == 1 ? "Yes" : "No";
-        echo "<tr>";
-        echo "<td><strong>" . $pos . ".</strong></td>";
-        echo "<td>" . $row['user_id'] . "</td>";
-        echo "<td>" . $row['user_name'] . "</td>";
-        echo "<td>" . $row['user_wwu_email'] . "</td>";
-        echo "<td>" . $adminFlag . "</td>";
-        echo "<td>" . $unlockedFlag . "</td>";
-        echo "<td>" . $row['timestamp'] . "</td>";
-        echo "<td>" . $editBtn . $deleteBtn . "</td>";
-        echo "</tr>";
-
-        $pos++;
-    }
-}
-
 // set new global difficulty level in settings.php
 function set_global_difficulty($difficulty)
 {
