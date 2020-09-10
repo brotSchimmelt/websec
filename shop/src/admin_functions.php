@@ -103,7 +103,7 @@ function get_individual_progress($username)
 function show_students_with_open_challenges()
 {
     $sql = "SELECT `user_name`, `user_wwu_email`, `is_unlocked`, `is_admin`, "
-        . "`last_login` FROM users";
+        . "`last_login`, `timestamp` FROM users";
     $stmt = get_login_db()->query($sql);
 
     $pos = 1;
@@ -117,10 +117,18 @@ function show_students_with_open_challenges()
 
         $openChallenges = get_open_challenges($row['user_name']);
 
-        // make table row entry
+        // format row entries
         $adminClass = $row['is_admin'] == 1 ? "is-admin" : "";
-        $adminFlag = $row['is_admin'] == 1 ? "Yes" : "No";
-        $unlockedFlag = $row['is_unlocked'] == 1 ? "Yes" : "No";
+        $adminFlag = $row['is_admin'] == 1 ?
+            '<span style="color:red">Yes</span>' :
+            '<span style="color:green">No</span>';
+        $unlockedFlag = $row['is_unlocked'] == 1 ?
+            '<span style="color:green">Yes</span>' :
+            '<span style="color:orange">No</span>';
+        $lastActivity = (!empty($row['last_login'])) ? $row['last_login'] :
+            $row['timestamp'];
+
+        // echo table content
         echo '<tr class="' . $adminClass . '">';
         echo "<td><strong>" . $pos . ".</strong></td>";
         echo "<td>" . $row['user_name'] . "</td>";
@@ -129,7 +137,7 @@ function show_students_with_open_challenges()
         echo "<td>" . $openChallenges . "</td>";
         echo "<td>" . $adminFlag . "</td>";
         echo "<td>" . $unlockedFlag . "</td>";
-        echo "<td>" . $row['last_login'] . "</td>";
+        echo "<td>" . $lastActivity . "</td>";
         echo "</tr>";
 
         $pos++;

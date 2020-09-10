@@ -115,7 +115,7 @@ $numOfStudents = get_num_of_students();
                                     <table class="table table-bordered table-striped filteredtable">
                                         <thead>
                                             <tr>
-                                                <td><strong>Position</strong></td>
+                                                <td><strong>Pos.</strong></td>
                                                 <td><strong>Username</strong></td>
                                                 <td><strong>Mail</strong> <i>(with mailto link)</i></td>
                                                 <td><strong>Open Challenges</strong></td>
