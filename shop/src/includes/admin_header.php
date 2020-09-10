@@ -17,7 +17,7 @@
         </li>
         <li class="nav-item text-nowrap">
             <!-- <a class="nav-link" href="#">Logout</a> -->
-            <a class="btn btn-outline-warning btn-sm" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
+            <a class="btn btn-outline-warning btn-sm mr-2 mt-1 mb-1 ml-3" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
         </li>
     </ul>
 </nav>
