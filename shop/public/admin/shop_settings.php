@@ -200,7 +200,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">Blocked usernames and allowed mail addresses</h5>
+                                    <h5 class="display-5">Blocked Usernames and Allowed Mail Addresses</h5>
                                 </div>
                                 <div class="card-body">
                                     <p>
