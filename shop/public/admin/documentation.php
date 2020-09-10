@@ -42,7 +42,7 @@ if (!is_user_admin()) {
             <a class="p-2 text-dark" href="../shop/main.php">Back to the Shop</a>
             <a class="p-2 text-dark" href="dashboard.php">Back to the Dashboard</a>
         </nav>
-        <a class="btn btn-outline-secondary" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
+        <a class="btn btn-outline-light" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
     </div>
 
     <!-- Headline -->
