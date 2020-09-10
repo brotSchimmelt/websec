@@ -29,6 +29,8 @@ $username = $_SESSION['userName'];
 // Other php variables
 $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
 $numOfStudents = get_num_of_students();
+$registrationStatus = is_registration_enabled() ? "enabled" : "disabled";
+$loginStatus = is_login_enabled() ? "enabled" : "disabled";
 
 ?>
 <!doctype html>
@@ -94,10 +96,12 @@ $numOfStudents = get_num_of_students();
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">Global Challenge Difficulty</h5>
+                                    <h5 class="display-5">Global Settings</h5>
                                 </div>
                                 <div class="card-body">
-                                    Level of difficulty: <strong><?= get_global_difficulty() ?></strong>
+                                    Level of difficulty: <strong><?= get_global_difficulty() ?></strong><br>
+                                    Registration is currently: <strong><?= $registrationStatus ?></strong><br>
+                                    Login is currently: <strong><?= $loginStatus ?></strong>
                                 </div>
                             </div>
                         </div>
