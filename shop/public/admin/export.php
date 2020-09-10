@@ -75,7 +75,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                     <br>
                                     <form action="export_file.php" method="post">
                                         <input type="hidden" name="exportPDF" value="1">
-                                        <input class="btn btn btn-info" type="submit" value="PDF">
+                                        <input class="btn btn btn-info" type="submit" value="PDF"><span class="badge badge-danger">not yet implemented</span>
                                     </form>
                                 </div>
                             </div>
