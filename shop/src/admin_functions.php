@@ -352,3 +352,39 @@ function get_results_as_json()
 
     return json_encode($json);
 }
+
+// set new blocked usernames list in settings.json
+function set_blocked_usernames($list)
+{
+    try {
+        // set new value
+        set_setting('usernames', 'deny_list', $list);
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
+
+// set new allowed domains list in settings.json
+function set_allowed_domains($list)
+{
+    try {
+        // set new value
+        set_setting('domains', 'allow_list', $list);
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
+
+// set new blocked username list in settings.json
+function set_badge_link($challenge, $link)
+{
+    try {
+        // set new value
+        set_setting('badge_links', $challenge, $link);
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
