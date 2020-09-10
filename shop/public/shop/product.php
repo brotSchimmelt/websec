@@ -120,7 +120,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 
     <!-- HTML Content BEGIN -->
     <?php if (!$solved) : ?>
-        <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Stored XSS</a>
+        <a href="<?= get_challenge_badge_link('stored_xss') ?>" class="badge badge-pill badge-warning shadow-sm" target="_blank">Stored XSS</a>
     <?php else : ?>
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">Stored XSS</a>
     <?php endif; ?>

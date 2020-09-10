@@ -72,7 +72,7 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 
     <!-- HTML Content BEGIN -->
     <?php if (!$solved) : ?>
-        <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" class="badge badge-pill badge-warning shadow-sm" target="_blank">CSRF</a>
+        <a href="<?= get_challenge_badge_link('csrf') ?>" class="badge badge-pill badge-warning shadow-sm" target="_blank">CSRF</a>
     <?php else : ?>
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">CSRF</a>
     <?php endif; ?>

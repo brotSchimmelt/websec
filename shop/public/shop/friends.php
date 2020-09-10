@@ -61,7 +61,7 @@ $difficulty = get_global_difficulty();
 
     <!-- HTML Content BEGIN -->
     <?php if (!$solved) : ?>
-        <a href="https://en.wikipedia.org/wiki/SQL_injection" class="badge badge-pill badge-warning shadow-sm" target="_blank">SQL Injection</a>
+        <a href="<?= get_challenge_badge_link('sqli') ?>" class="badge badge-pill badge-warning shadow-sm" target="_blank">SQL Injection</a>
     <?php else : ?>
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">SQL Injection</a>
     <?php endif; ?>

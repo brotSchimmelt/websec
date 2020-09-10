@@ -130,7 +130,7 @@ if (isset($_POST['add-preview'])) {
 
     <!-- Page Content BEGIN -->
     <?php if (!$solved) : ?>
-        <a href="https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)" class="badge badge-pill badge-warning shadow-sm" target="_blank">Reflective XSS</a>
+        <a href="<?= get_challenge_badge_link('reflective_xss') ?>" class="badge badge-pill badge-warning shadow-sm" target="_blank">Reflective XSS</a>
     <?php else : ?>
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">Reflective XSS</a>
     <?php endif; ?>
