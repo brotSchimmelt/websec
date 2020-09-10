@@ -9,10 +9,10 @@
         "hard": false
     },
     "badge_links": {
-        "reflective_xss": "https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)",
-        "stored_xss": "https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)",
-        "sqli": "https://en.wikipedia.org/wiki/SQL_injection",
-        "csrf": "https://en.wikipedia.org/wiki/Cross-site_request_forgery"
+        "reflective_xss": "https:\/\/en.wikipedia.org\/wiki\/Cross-site_scripting#Non-persistent_(reflected)",
+        "stored_xss": "https:\/\/en.wikipedia.org\/wiki\/Cross-site_scripting#Persistent_(or_stored)",
+        "sqli": "https:\/\/en.wikipedia.org\/wiki\/SQL_injection",
+        "csrf": "https:\/\/en.wikipedia.org\/wiki\/Cross-site_request_forgery"
     },
     "domains": {
         "allow_list": [
