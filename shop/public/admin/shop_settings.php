@@ -21,10 +21,32 @@ if (!is_user_admin()) {
 // Load POST or GET variables and sanitize input BELOW this comment
 $username = $_SESSION['userName'];
 
+// process setting requests
+if (isset($_POST['update-login'])) {
+    if ($_POST['loginRadios'] == "enable") {
+        set_login_status(true);
+    } else {
+        set_login_status(false);
+    }
+}
+if (isset($_POST['update-registration'])) {
+    if ($_POST['registrationRadios'] == "enable") {
+        set_registration_status(true);
+    } else {
+        set_registration_status(false);
+    }
+}
+if (isset($_POST['update-difficulty'])) {
+    if ($_POST['diffRadios'] == "normal") {
+        set_global_difficulty("normal");
+    } else {
+        set_global_difficulty("hard");
+    }
+}
+
 // Other php variables
 $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
 $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -78,38 +100,38 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                         <div class="col">
                                             <form action="shop_settings.php" method="post">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="diffRadios" id="normalRadio" value="normal" <?= is_login_enabled() ? "checked" : "" ?>>
-                                                    <label class="form-check-label" for="normalRadio">
+                                                    <input class="form-check-input" type="radio" name="loginRadios" id="enLoginRadio" value="enable" <?= is_login_enabled() ? "checked" : "" ?>>
+                                                    <label class="form-check-label" for="enLoginRadio">
                                                         Enable Login
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="diffRadios" id="hardRadio" value="hard" <?= is_login_enabled() ? "" : "checked" ?>>
-                                                    <label class="form-check-label" for="hardRadio">
+                                                    <input class="form-check-input" type="radio" name="loginRadios" id="disLoginRadio" value="disable" <?= is_login_enabled() ? "" : "checked" ?>>
+                                                    <label class="form-check-label" for="disLoginRadio">
                                                         Disable Login
                                                     </label>
                                                 </div>
                                                 <br>
-                                                <input type="hidden" name="update-difficulty" value="1">
+                                                <input type="hidden" name="update-login" value="1">
                                                 <button type="submit" class="btn btn-sm btn-info">Update</button>
                                             </form>
                                         </div>
                                         <div class="col">
                                             <form action="shop_settings.php" method="post">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="diffRadios" id="normalRadio" value="normal" <?= is_registration_enabled() ? "checked" : "" ?>>
-                                                    <label class="form-check-label" for="normalRadio">
+                                                    <input class="form-check-input" type="radio" name="registrationRadios" id="enRegistrationRadio" value="enable" <?= is_registration_enabled() ? "checked" : "" ?>>
+                                                    <label class="form-check-label" for="enRegistrationRadio">
                                                         Enable Registration
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="diffRadios" id="hardRadio" value="hard" <?= is_registration_enabled() ? "" : "checked" ?>>
-                                                    <label class="form-check-label" for="hardRadio">
+                                                    <input class="form-check-input" type="radio" name="registrationRadios" id="disRegistrationRadio" value="disable" <?= is_registration_enabled() ? "" : "checked" ?>>
+                                                    <label class="form-check-label" for="disRegistrationRadio">
                                                         Disable Registration
                                                     </label>
                                                 </div>
                                                 <br>
-                                                <input type="hidden" name="update-difficulty" value="1">
+                                                <input type="hidden" name="update-registration" value="1">
                                                 <button type="submit" class="btn btn-sm btn-info">Update</button>
                                             </form>
                                         </div>
