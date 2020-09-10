@@ -48,6 +48,7 @@ $numOfStudents = get_num_of_students();
     <title>Admin | Dashboard</title>
 
     <script>
+        // source: https://www.sitepoint.com/community/t/auto-height-iframe-content-script/67843/4
         function resizeIframe(obj) {
             obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
         }
