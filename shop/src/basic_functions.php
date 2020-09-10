@@ -258,3 +258,37 @@ function read_json_file($file)
         throw new Exception($file . " could not be opened.");
     }
 }
+
+// remove all unnecessary characters from a given string
+function make_clean_array($str)
+{
+    // delete whitespace
+    $str = str_replace(" ", "", $str);
+
+    // check if list is empty
+    if (empty($str)) {
+        return array();
+    }
+
+    // return array with 1 element
+    if (strpos($str, ",") === false) {
+        return [$str];
+    }
+
+    // remove last character if it is a coma
+    $done = false;
+    while (!$done) {
+
+        if ($str[strlen($str) - 1] == ",") {
+            $str = substr($str, 0, -1);
+        } else {
+            $done = true;
+        }
+    }
+
+    // make string into array
+    $arr = explode(",", $str);
+
+    // filter empty or false elements from the array
+    return array_filter($arr);
+}

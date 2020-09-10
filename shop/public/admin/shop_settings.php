@@ -43,6 +43,24 @@ if (isset($_POST['update-difficulty'])) {
         set_global_difficulty("hard");
     }
 }
+if (isset($_POST['update-usernames'])) {
+    $nameList = make_clean_array($_POST['input-usernames']);
+    set_blocked_usernames($nameList);
+}
+if (isset($_POST['update-domains'])) {
+    $domainList = make_clean_array($_POST['input-domains']);
+    set_allowed_domains($domainList);
+}
+if (isset($_POST['update-badge'])) {
+    $reflectiveXSS = (filter_var($_POST['input-reflective-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-reflective-xss'] : "https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)";
+    $storedXSS = (filter_var($_POST['input-stored-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-stored-xss'] : "https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)";
+    $sqli = (filter_var($_POST['input-sqli'], FILTER_VALIDATE_URL)) ? $_POST['input-sqli'] : "https://en.wikipedia.org/wiki/SQL_injection";
+    $csrf = (filter_var($_POST['input-csrf'], FILTER_VALIDATE_URL)) ? $_POST['input-csrf'] : "https://en.wikipedia.org/wiki/Cross-site_request_forgery";
+    set_badge_link("reflective_xss", $reflectiveXSS);
+    set_badge_link("stored_xss", $storedXSS);
+    set_badge_link("sqli", $sqli);
+    set_badge_link("csrf", $csrf);
+}
 
 // Other php variables
 $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
@@ -166,7 +184,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                                 </div>
                                                 <br>
                                                 <input type="hidden" name="update-difficulty" value="1">
-                                                <button type="submit" class="btn btn-sm btn-info" title="Attention!" data-content="You should reset the hole shop system in order to avoid unexpected behaviour for the users. You can do so by running the 'docker-compose down -v' command followed by 'docker-compose up -d'." data-toggle="popover" data-trigger="hover" data-placement="top">
+                                                <button type="submit" class="btn btn-sm btn-info" title="Attention!" data-content="You should reset the hole shop system when you change the difficulty in order to avoid unexpected behaviour for the users. You can do so by running the 'docker-compose down -v' command followed by 'docker-compose up -d'." data-toggle="popover" data-trigger="hover" data-placement="top">
                                                     Update
                                                 </button>
                                             </form>
@@ -182,12 +200,33 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">Blocked usernames and allowed domains</h5>
+                                    <h5 class="display-5">Blocked usernames and allowed mail addresses</h5>
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique, voluptates. Placeat quasi harum, dignissimos ab vero error! Tempore saepe asperiores veritatis tempora eius. Dolore, eum!
+                                        Here are all usernames that are blocked during registration. You can add new ones by appending them in the field below. The names will be processed case insensitive.
                                     </p>
+                                    <div class="text-center">
+                                        <form action="shop_settings.php" method="post">
+                                            <input type="text" class="form-control" name="input-usernames" value="<?= implode(', ', get_blocked_usernames()) ?>">
+                                            <input type="hidden" name="update-usernames" value="1">
+                                            <br>
+                                            <button class="btn btn-info" type="submit">Update</button>
+                                        </form>
+                                    </div>
+                                    <br><br>
+                                    <p>
+                                        This list contains all domains that are allowed for the mail addresses during registration. You can add new ones by appending them in the field below.
+                                    </p>
+                                    <div class="text-center">
+                                        <form action="shop_settings.php" method="post">
+                                            <input type="text" class="form-control" name="input-domains" value="<?= implode(', ', get_allowed_domains()) ?>">
+                                            <input type="hidden" name="update-domains" value="1">
+                                            <br>
+                                            <button class="btn btn-info" type="submit">Update</button>
+                                        </form>
+                                    </div>
+                                    <br>
                                 </div>
                             </div>
                         </div>
@@ -201,8 +240,24 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique, voluptates. Placeat quasi harum, dignissimos ab vero error! Tempore saepe asperiores veritatis tempora eius. Dolore, eum!
+                                        Here you can set the links for the challenge badges. By default the links are set to the corresponding wikipedia articles.
                                     </p>
+                                    <br>
+                                    <form action="shop_settings.php" method="post">
+                                        <label for="input-reflective-xss"><strong>Link Reflective XSS:</strong></label>
+                                        <input type="text" class="form-control" name="input-reflective-xss" value="<?= get_challenge_badge_link("reflective_xss") ?>"><br>
+                                        <label for="input-stored-xss"><strong>Link Stored XSS:</strong></label>
+                                        <input type="text" class="form-control" name="input-stored-xss" value="<?= get_challenge_badge_link("stored_xss") ?>"><br>
+                                        <label for="input-sqli"><strong>Link SQLi:</strong></label>
+                                        <input type="text" class="form-control" name="input-sqli" value="<?= get_challenge_badge_link("sqli") ?>"><br>
+                                        <label for="input-csrf"><strong>Link CSRF:</strong></label>
+                                        <input type="text" class="form-control" name="input-csrf" value="<?= get_challenge_badge_link("csrf") ?>">
+                                        <br>
+                                        <input type="hidden" name="update-badge" value="1">
+                                        <div class="text-center">
+                                            <button class="btn btn-info" type="submit">Update</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
