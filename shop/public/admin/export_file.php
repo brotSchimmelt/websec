@@ -14,10 +14,7 @@ require(FUNC_SHOP);
 require(FUNC_WEBSEC);
 
 // check if export to JSON was requested
-if (!isset($_POST['exportJSON'])) {
-    header("location: " . "results.php");
-    exit();
-} else {
+if (isset($_POST['exportJSON'])) {
     // download JSON file
     header("Content-disposition: attachment; filename=results_"
         . date("H-i-s_d-m-Y") . ".json");
@@ -32,4 +29,15 @@ if (!isset($_POST['exportJSON'])) {
     }
 
     echo $json;
+} else if ($_POST['exportPDF']) {
+    // download PDF file
+    header("Content-disposition: attachment; filename=results_"
+        . date("H-i-s_d-m-Y") . ".pdf");
+    header("Content-type: application/pdf");
+
+    // do PDF export with jsPDF
+
+} else {
+    header("location: " . "results.php");
+    exit();
 }
