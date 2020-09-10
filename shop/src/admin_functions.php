@@ -377,7 +377,7 @@ function set_allowed_domains($list)
     }
 }
 
-// set new blocked username list in settings.json
+// set new badge link for a challenge
 function set_badge_link($challenge, $link)
 {
     try {
