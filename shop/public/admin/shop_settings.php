@@ -65,19 +65,67 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">General Settings</h5><span class="badge badge-danger">Not Implemented</span>
+                                    <h5 class="display-5">Login / Registration</h5>
                                 </div>
                                 <div class="card-body">
-                                    <ul>
-                                        <li>Set valid mail addresses for students</li>
-                                        <li>Set help links for the challenges</li>
-                                        <li>Add or change products</li>
-                                    </ul>
+                                    <?php
+                                    $registrationStatus = is_registration_enabled() ? "enabled" : "disabled";
+                                    $loginStatus = is_login_enabled() ? "enabled" : "disabled";
+                                    ?>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, dolorem!</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, aliquam?</p>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, iure.</p>
+                                </div>
+                                <p class=text-center>
+                                    Registration is currently <strong><?= $registrationStatus ?></strong>.<br>
+                                    Login is currently <strong><?= $loginStatus ?></strong>.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="display-5">Level of Difficulty</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, saepe deleniti!</p>
+                                </div>
+                                <p class="text-center">
+                                    Difficulty is currently set to <strong><?= get_global_difficulty() ?></strong>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="display-5">Blocked usernames and allowed domains</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique, voluptates. Placeat quasi harum, dignissimos ab vero error! Tempore saepe asperiores veritatis tempora eius. Dolore, eum!
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <br><br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="display-5">Badge Links</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique, voluptates. Placeat quasi harum, dignissimos ab vero error! Tempore saepe asperiores veritatis tempora eius. Dolore, eum!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
