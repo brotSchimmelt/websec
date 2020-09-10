@@ -73,7 +73,10 @@ function get_total_progress($numOfStudents, $numOfChallenges)
 
     // calculate overall percentage
     $maxPoints = $numOfChallenges * $numOfStudents;
-    $totalProgress = $absoluteProgress / $maxPoints * 100;
+
+    // check if there is at least 1 normal (non-admin) user
+    $totalProgress = ($numOfStudents == 0) ? 0 :
+        $absoluteProgress / $maxPoints * 100;
 
     return round($totalProgress, 2);
 }
