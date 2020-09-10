@@ -59,16 +59,15 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
                 <div class="jumbotron shadow">
-                    <h1>Export Data</h1>
+                    <h1 class="display-4">Export Data</h1>
                     <hr>
                     <div class="row">
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">Export User Results</h5>
+                                    <h5 class="display-5">Download Results</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>The results can either be downloaded as JSON or PDF file:</p>
                                     <form action="export_file.php" method="post">
                                         <input type="hidden" name="exportJSON" value="1">
                                         <input class="btn btn btn-info" type="submit" value="JSON">

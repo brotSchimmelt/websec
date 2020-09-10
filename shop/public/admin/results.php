@@ -64,7 +64,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
                 <div class="jumbotron shadow">
-                    <h1>Student Results</h1>
+                    <h1 class="display-4">Student Results</h1>
                     <hr>
 
                     <div class="row">
