@@ -23,6 +23,8 @@ $username = $_SESSION['userName'];
 
 // Other php variables
 $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
+$checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -68,18 +70,51 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                     <h5 class="display-5">Login / Registration</h5>
                                 </div>
                                 <div class="card-body">
-                                    <?php
-                                    $registrationStatus = is_registration_enabled() ? "enabled" : "disabled";
-                                    $loginStatus = is_login_enabled() ? "enabled" : "disabled";
-                                    ?>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, dolorem!</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, aliquam?</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, iure.</p>
+                                    <p>
+                                        Here you can disable or enable the user login and registration system.
+                                        The users will be redirected to an error page with an appropriated message.
+                                    </p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <form action="shop_settings.php" method="post">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="diffRadios" id="normalRadio" value="normal" <?= is_login_enabled() ? "checked" : "" ?>>
+                                                    <label class="form-check-label" for="normalRadio">
+                                                        Enable Login
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="diffRadios" id="hardRadio" value="hard" <?= is_login_enabled() ? "" : "checked" ?>>
+                                                    <label class="form-check-label" for="hardRadio">
+                                                        Disable Login
+                                                    </label>
+                                                </div>
+                                                <br>
+                                                <input type="hidden" name="update-difficulty" value="1">
+                                                <button type="submit" class="btn btn-sm btn-info">Update</button>
+                                            </form>
+                                        </div>
+                                        <div class="col">
+                                            <form action="shop_settings.php" method="post">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="diffRadios" id="normalRadio" value="normal" <?= is_registration_enabled() ? "checked" : "" ?>>
+                                                    <label class="form-check-label" for="normalRadio">
+                                                        Enable Registration
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="diffRadios" id="hardRadio" value="hard" <?= is_registration_enabled() ? "" : "checked" ?>>
+                                                    <label class="form-check-label" for="hardRadio">
+                                                        Disable Registration
+                                                    </label>
+                                                </div>
+                                                <br>
+                                                <input type="hidden" name="update-difficulty" value="1">
+                                                <button type="submit" class="btn btn-sm btn-info">Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p class=text-center>
-                                    Registration is currently <strong><?= $registrationStatus ?></strong>.<br>
-                                    Login is currently <strong><?= $loginStatus ?></strong>.
-                                </p>
                             </div>
                         </div>
                         <div class="col">
@@ -88,11 +123,35 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                     <h5 class="display-5">Level of Difficulty</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, saepe deleniti!</p>
+                                    <p>
+                                        Here you can set the global difficulty for the challenges.<br>
+                                    </p>
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col">
+                                            <form action="shop_settings.php" method="post">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="diffRadios" id="normalRadio" value="normal" <?= $checkDifficulty ? "checked" : "" ?>>
+                                                    <label class="form-check-label" for="normalRadio">
+                                                        Normal Difficulty
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="diffRadios" id="hardRadio" value="hard" <?= $checkDifficulty ? "" : "checked" ?>>
+                                                    <label class="form-check-label" for="hardRadio">
+                                                        Hard Difficulty
+                                                    </label>
+                                                </div>
+                                                <br>
+                                                <input type="hidden" name="update-difficulty" value="1">
+                                                <button type="submit" class="btn btn-sm btn-info" title="Attention!" data-content="You should reset the hole shop system in order to avoid unexpected behaviour for the users. You can do so by running the 'docker-compose down -v' command followed by 'docker-compose up -d'." data-toggle="popover" data-trigger="hover" data-placement="top">
+                                                    Update
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="col"></div>
+                                    </div>
                                 </div>
-                                <p class="text-center">
-                                    Difficulty is currently set to <strong><?= get_global_difficulty() ?></strong>.
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -130,14 +189,17 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
             </main>
         </div>
     </div>
-    <!-- HTML Content END -->
-
-
     <?php
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_ADMIN); // Custom JavaScript
     ?>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+    <!-- HTML Content END -->
 </body>
 
 </html>
