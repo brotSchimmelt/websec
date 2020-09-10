@@ -7,5 +7,17 @@
     },
     "difficulty": {
         "hard": false
+    },
+    "badge_links": {
+        "reflective_xss": "",
+        "stored_xss": "",
+        "sqli": "",
+        "csrf": ""
+    },
+    "domains": {
+        "allow_list": []
+    },
+    "usernames": {
+        "deny_list": []
     }
 }
