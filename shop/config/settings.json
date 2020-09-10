@@ -15,9 +15,17 @@
         "csrf": ""
     },
     "domains": {
-        "allow_list": []
+        "allow_list": [
+            "@uni-muenster.de",
+            "@wi.uni-muenster.de",
+            "@gmail.com"
+        ]
     },
     "usernames": {
-        "deny_list": []
+        "deny_list": [
+            "admin",
+            "elliot",
+            "l337_h4ck3r"
+        ]
     }
 }
