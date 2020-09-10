@@ -153,6 +153,39 @@ function is_login_enabled()
     }
 }
 
+// get link for the challenge from the settings.json
+function get_challenge_badge_link($challenge)
+{
+    try {
+        return get_setting("badge_links", $challenge);
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
+
+// get list of allowed domains for registration from the settings.json
+function get_allowed_domains()
+{
+    try {
+        return get_setting("domains", "allow_list");
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
+
+// get list of blocked usernames for registration from settings.json
+function get_blocked_usernames()
+{
+    try {
+        return get_setting("usernames", "deny_list");
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
+
 // wrapper function to read in JSON settings
 function get_setting($setting, $subsetting)
 {
@@ -162,10 +195,22 @@ function get_setting($setting, $subsetting)
     // load settings as assoc array
     $json = read_json_file($file);
 
-    // check if setting is boolean
-    if (!is_bool($json[$setting][$subsetting])) {
-        throw new Exception($setting . ":" . $subsetting .
-            " in settings.json is not a boolean value.");
+    // check if setting is correct datatype
+    if (in_array($setting, ["login", "registration", "difficulty"], true)) {
+        if (!is_bool($json[$setting][$subsetting])) {
+            throw new Exception($setting . ":" . $subsetting .
+                " in settings.json is not a boolean value.");
+        }
+    } else if ($setting == "badge_links") {
+        if (!is_string($json[$setting][$subsetting])) {
+            throw new Exception($setting . ":" . $subsetting .
+                " in settings.json is not a string value.");
+        }
+    } else if (in_array($setting, ["domains", "usernames"], true)) {
+        if (!is_array($json[$setting][$subsetting])) {
+            throw new Exception($setting . ":" . $subsetting .
+                " in settings.json is not an array.");
+        }
     }
 
     return $json[$setting][$subsetting];
@@ -179,6 +224,21 @@ function set_setting($setting, $subsetting, $newValue)
 
     // load settings as assoc array
     $json = read_json_file($file);
+
+    // check if setting is correct datatype
+    if (in_array($setting, ["login", "registration", "difficulty"], true)) {
+        if (!is_bool($newValue)) {
+            throw new Exception($newValue . " is not a boolean value.");
+        }
+    } else if ($setting == "badge_links") {
+        if (!is_string($newValue)) {
+            throw new Exception($newValue . " is not a string value.");
+        }
+    } else if (in_array($setting, ["domains", "usernames"], true)) {
+        if (!is_array($newValue)) {
+            throw new Exception($newValue . " is not an array.");
+        }
+    }
 
     // set new value
     $json[$setting][$subsetting] = $newValue;
