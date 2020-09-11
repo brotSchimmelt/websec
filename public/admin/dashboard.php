@@ -47,6 +47,9 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
     <title>Admin | Dashboard</title>
 </head>
 

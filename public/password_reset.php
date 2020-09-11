@@ -40,6 +40,9 @@ if (isset($_POST['pwd-reset-submit'])) {
     <!-- Custom CSS to overwrite Bootstrap.css -->
     <link rel="stylesheet" href="assets/css/login.css">
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
     <title>WebSec | Password Reset</title>
 
 </head>

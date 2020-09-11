@@ -43,6 +43,9 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
     <title>Admin | Results</title>
 </head>
 

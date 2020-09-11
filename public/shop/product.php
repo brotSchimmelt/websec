@@ -99,6 +99,9 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     <link rel="stylesheet" href="/assets/css/card.css">
     <link rel="stylesheet" href="/assets/css/comment.css">
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
     <title>Websec | Products</title>
 </head>
 

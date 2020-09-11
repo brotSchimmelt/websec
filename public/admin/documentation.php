@@ -25,13 +25,16 @@ if (!is_user_admin()) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>WebSec | Documentation</title>
-
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../assets/css/doc.css" rel="stylesheet">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
+    <title>WebSec | Documentation</title>
 </head>
 
 <body>

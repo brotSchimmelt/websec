@@ -54,6 +54,9 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="assets/css/login.css">
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
     <title>WebSec | Create new Password</title>
 </head>
 

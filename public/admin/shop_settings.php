@@ -80,6 +80,9 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
     <title>Admin | Shop Settings</title>
 </head>
 

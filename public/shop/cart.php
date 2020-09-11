@@ -46,6 +46,9 @@ if (isset($_POST['doit-delete'])) {
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
     <title>Websec | Cart</title>
 </head>
 

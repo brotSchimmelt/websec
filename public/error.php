@@ -69,6 +69,9 @@ if (isset($_GET['error']) && !empty($_GET['error'])) {
 
     <!-- Custom styles for this template -->
     <link href="../assets/css/doc.css" rel="stylesheet">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 </head>
 
 <body>

@@ -61,6 +61,9 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
     <title>Websec | Database Reset</title>
 </head>
 

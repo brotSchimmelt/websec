@@ -63,8 +63,10 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
     <!-- Custom CSS to overwrite Bootstrap.css -->
     <link rel="stylesheet" href="assets/css/login.css">
 
-    <title>WebSec | Registration</title>
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
+    <title>WebSec | Registration</title>
 </head>
 
 <body class="text-center">

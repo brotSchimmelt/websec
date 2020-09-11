@@ -108,7 +108,8 @@ if (isset($_POST['add-preview'])) {
     <link rel="stylesheet" href="/assets/css/shop.css">
     <link rel="stylesheet" href="/assets/css/card.css">
 
-
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>Websec | Overview</title>
 </head>
