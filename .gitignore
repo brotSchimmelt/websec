@@ -1,4 +1,5 @@
 
 .DS_Store
-credentials.txt
-shop/public/test.php
+*.sqlite
+test*
+*.log
