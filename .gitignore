@@ -1,6 +1,5 @@
 
 .DS_Store
-credentials.txt
-shop/data/*.sqlite
+*.sqlite
 test*
 *.log
