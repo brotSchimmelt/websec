@@ -41,9 +41,6 @@ if ($sqliSolved) {
 
 <nav class="site-header sticky-top py-1" id="main-navbar">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <a class="py-2d-none d-md-inline-block" href="/shop/main.php" aria-label="Main Page">
-            <img class="mt-1 mb-2" src="/assets/img/wwu_cysec.png" width="90" height="40">
-        </a>
         <a class="py-2 d-none d-md-inline-block mt-2" href="/shop/main.php">Home</a>
         <a class="py-2 d-none d-md-inline-block mt-2" href="/shop/overview.php">Products</a>
         <a class="py-2 d-none d-md-inline-block mt-2" href="/shop/friends.php">Find Your Friends</a>
