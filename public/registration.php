@@ -69,45 +69,47 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
     <title>WebSec | Registration</title>
 </head>
 
-<body class="text-center">
+<body>
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card overflow-auto">
-        <form class="form-signin" action="registration.php" method="post">
-            <h1 class="h3 mb-3 font-weight-normal">User Registration</h1>
+        <form class="form-signin form-register" action="registration.php" method="post">
+            <h1 class="h3 mb-3 font-weight-normal text-center">User Registration</h1>
 
             <?= get_message(); ?>
 
-            <label for="input-name" class="sr-only">Enter your Username</label>
+            <label for="username" class="register-label text-muted"><strong>Username:</strong></label>
             <input type="text" name="username" id="register-name" class="form-control" aria-describedby="username-help" value="<?= $name_get ?>" placeholder="Username" data-content="Please use only letters and numbers and 2 to 64 characters." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>
-            <!-- <small id="username-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small> -->
-            <br>
 
-            <label for="input-mail" class="sr-only">Enter your Mail</label>
+            <label for="mail" class="register-label text-muted"><strong>Mail:</strong></label>
             <input type="email" name="mail" id="register-mail" class="form-control" aria-describedby="mail-help" value="<?= $mail_get ?>" placeholder="WWU Mail" data-content="Please use your @uni-muenster.de mail address." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>
-            <!-- <small id="mail-help" class="form-text text-muted">Please use your <em>@uni-muenster.de</em> mail address.</small> -->
-            <br>
 
-            <label for="input-password" class="sr-only">Password</label>
+            <label for="password" class="register-label text-muted"><strong>Password:</strong></label>
             <input type="password" name="password" id="register-password" class="form-control" placeholder="Password" data-content="Please use at least 8 characters." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>
-            <!-- <small id="password-help" class="form-text text-muted">Please use at least 8 characters.</small> -->
-            <br>
 
-            <label for="confirm-password" class="sr-only">Confirm Password</label>
+            <label for="confirmPassword" class="register-label text-muted"><strong>Confirm Password:</strong></label>
             <input type="password" name="confirmPassword" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
 
-            <button type="submit" name="register-submit" id="register-btn" class="btn btn-lg btn-register btn-block">Register</button>
-            <a href="index.php" class="btn btn-link login-link">Back to Login Page</a>
+            <button type="submit" name="register-submit" id="register-btn" class="btn btn-lg btn-register btn-block text-center">Register</button>
+            <div class="text-center">
+                <a href="index.php" class="btn btn-link login-link">Back to Login Page</a>
+            </div>
 
-            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
-            <hr class="accent-blue">
+
+            <div id="show-semester">
+                <p class="mt-5 mb-3 text-muted text-center">&copy; <?php get_semester() ?></p>
+                <hr class="accent-blue">
+            </div>
+
         </form>
-        <small>
-            Challenge Difficulty Level:
-            <span title="The difficulty is set by the lecturer." data-toggle="tooltip" data-trigger="hover" data-placement="bottom">
-                <strong><?= $difficulty ?></strong>
-            </span>
-        </small>
+        <div class="text-center show-difficulty">
+            <small>
+                Challenge Difficulty Level:
+                <span title="The difficulty is set by the lecturer." data-toggle="tooltip" data-trigger="hover" data-placement="bottom">
+                    <strong><?= $difficulty ?></strong>
+                </span>
+            </small>
+        </div>
     </div>
     <!-- HTML Content END -->
 </body>

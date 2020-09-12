@@ -40,25 +40,25 @@ body {
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
+.form-login input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.form-signin input[type="text"] {
+.form-login input[type="text"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.form-signin input[type="password"] {
+.form-login input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.form-signin input[type="email-register"] {
+/* .form-login input[type="email-register"] {
   margin-bottom: 0px;
   margin-top: 10px;
 }
@@ -70,6 +70,10 @@ body {
 .form-signin input[type="password-register"] {
   margin-bottom: 0px;
   margin-top: 10px;
+} */
+
+.form-register input {
+  margin-bottom: 10px;
 }
 
 #info-text {
@@ -140,4 +144,18 @@ hr.accent-blue {
   min-width: 30%;
   padding-top: 10px;
   max-height: 99vh;
+}
+
+.register-label {
+  text-align: left;
+  margin-bottom: -10px;
+}
+
+.show-difficulty {
+  margin-top: -20px;
+  margin-bottom: -35px;
+}
+
+#show-semester {
+  margin-top: -20px;
 }

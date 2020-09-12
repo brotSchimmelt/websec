@@ -64,7 +64,7 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card overflow-auto">
-        <form class="form-signin" action="index.php" method="post">
+        <form class="form-signin form-login" action="index.php" method="post">
             <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="210" height="110">
 
             <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
@@ -90,12 +90,14 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
             <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
             <hr class="accent-blue">
         </form>
-        <small>
-            Challenge Difficulty Level:
-            <span title="The difficulty is set by the lecturer." data-toggle="tooltip" data-trigger="hover" data-placement="bottom">
-                <strong><?= $difficulty ?></strong>
-            </span>
-        </small>
+        <div class="show-difficulty">
+            <small>
+                Challenge Difficulty Level:
+                <span title="The difficulty is set by the lecturer." data-toggle="tooltip" data-trigger="hover" data-placement="bottom">
+                    <strong><?= $difficulty ?></strong>
+                </span>
+            </small>
+        </div>
     </div>
     <!-- HTML Content END -->
 </body>
