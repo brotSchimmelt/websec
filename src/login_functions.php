@@ -280,7 +280,7 @@ function try_login($userInput, $pwd)
                 $result['is_admin'],
                 $result['is_unlocked']
             );
-            header("location: " . MAIN_PAGE . "?success=login");
+            header("location: " . MAIN_PAGE);
             exit();
         }
     }
