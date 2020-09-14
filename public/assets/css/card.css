@@ -33,3 +33,42 @@
     margin-right: 8px;
     padding-right: 8px;
 }
+
+/* Image Overlay */
+
+.image-wrap {
+    position: relative;
+    width: 100%;
+}
+
+/* .image {
+    display: block;
+    width: 100%;
+    height: auto;
+} */
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #000000;
+}
+
+.image-wrap:hover .image-overlay {
+    opacity: 0.6;
+}
+
+.overlay-btn {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

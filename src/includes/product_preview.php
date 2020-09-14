@@ -14,9 +14,15 @@ if (!($row['prod_title']) && (!$done)) {
 if (!$done) :
 ?>
     <div class="mr-md-3 pt-3 px-3 pt-md-5 px-md-5 overflow-hidden">
-        <!-- <div class="card mb-4 text-white bg-dark shadow-lg"> -->
         <div class="card mb-4 shadow">
-            <img class="card-img-top" src="https://placeimg.com/300/180/animals" alt="Card image cap">
+            <div class="image-wrap">
+                <div class="image-overlay">
+                    <div class="overlay-btn">
+                        <a href="product.php?id= <?= $row['prod_id'] ?>" class="btn btn-outline-light">Detail Page</a>
+                    </div>
+                </div>
+                <img class="card-img-top" src="<?= $row['img_path'] ?>" alt="Card image cap">
+            </div>
             <div class="card-body">
                 <h5 class="card-title"><?= $row['prod_title'] ?>
                     <?php if (!$solvedStoredXSS) : ?>
@@ -25,10 +31,10 @@ if (!$done) :
                         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm mr-3">Stored XSS</a>
                     <?php endif; ?></h5>
                 <hr>
-                <p class="card-text"><?= $row['prod_description'] ?></p>
+                <p class="card-text"><?= $row['prod_description'] ?>
+                    <a href="product.php?id= <?= $row['prod_id'] ?>" class="text-muted">More details</a></p>
                 <div class="prod-btn">
-                    <!-- <a href="#" class="btn btn-outline-light btn-sm">Detail Page</a> -->
-                    <a href="product.php?id= <?= $row['prod_id'] ?>" class="btn btn-wwu-primary btn-sm">Detail Page</a>
+                    <!-- <a href="product.php?id= <?= $row['prod_id'] ?>" class="btn btn-wwu-primary btn-sm">Detail Page</a> -->
 
                     <form action="overview.php" method="post">
                         <div class="form-row">

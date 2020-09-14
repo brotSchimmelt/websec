@@ -132,9 +132,8 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         <div class="row">
 
             <div class="col-md-6 mt-5">
-                <img class="img-fluid mb-3 shadow" src="https://placeimg.com/500/300/animals" alt="Product Image">
-                <?php // $productData['img_path'] 
-                ?>
+                <img class="img-fluid mb-3 shadow" src="<?= $productData['img_path'] ?>" alt="Product Image">
+
             </div>
 
             <div class="col-md-6 mt-5">
