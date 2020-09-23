@@ -25,7 +25,7 @@ if (!$done) :
             </div>
             <div class="card-body">
                 <h5 class="card-title"><?= $row['prod_title'] ?>
-                    <?php if (!$solvedStoredXSS) : ?>
+                    <?php if (!lookup_challenge_status("stored_xss", $_SESSION['userName'])) : ?>
                         <a href="product.php?id= <?= $row['prod_id'] ?>" class="badge badge-pill badge-warning shadow-sm mr-3">Stored XSS</a>
                     <?php else : ?>
                         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm mr-3">Stored XSS</a>
