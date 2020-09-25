@@ -267,13 +267,21 @@ function show_search_results($searchTerm, $productsPerRow)
 
     if ($stmt->rowCount() <= 0) {
 
-        $btn = '<button type="button" class="btn btn-light btn-sm" data-toggle="modal" '
-            . 'data-target="#xss-solution">Challenge Cookie</button>';
-        $msg = 'Do you want to enter the' . $btn . '?';
-
         echo '<div class="con-center con-search">Sorry, it seems '
-            . 'like we have no products that match your search request :(<br>'
-            . $msg . '</div>';
+            . 'like we have no products that match your search request :(<br>';
+
+
+        $pos1 = strpos($searchTerm, "document.cookie");
+        if ($pos1 !== false) {
+            $btn = '<button type="button" class="btn btn-link btn-sm" '
+                . 'data-toggle="modal" data-target="#xss-solution">Challenge '
+                . 'Cookie</button>';
+            $msg = 'Do you want to enter the' . $btn . '?';
+
+            echo $msg;
+        }
+
+        echo '</div>';
     }
 
 
