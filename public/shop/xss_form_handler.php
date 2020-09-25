@@ -9,13 +9,16 @@ if (isset($_POST['storedXSSMessage'])) {
 
     $haystack = (string)$_POST['storedXSSMessage'];
 
-    // check generously for 'evildomain/payload.php'
+    // check generously for 'evildomain/payload.php' + document.cookie
     $pos1 = stripos($haystack, "payload");
     $pos2 = stripos($haystack, "evil");
     $pos3 = stripos($haystack, "domain");
     $pos4 = stripos($haystack, "document.cookie");
 
-    if (($pos1 !== false && $pos2 !== false && $pos3 !== false) || $pos4 !== false) {
+    if (
+        $pos1 !== false && $pos2 !== false && $pos3 !== false
+        && $pos4 !== false
+    ) {
 
         // save that the XSS alert was used by user
         $_SESSION['storedXSSAlertShown'] = true;
@@ -28,7 +31,6 @@ if (isset($_POST['storedXSSMessage'])) {
         echo $msg;
     } else {
         // error code 1 means no valid attack detected
-        // show the users original alert with a hint
         echo 1;
     }
 }
