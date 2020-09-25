@@ -78,7 +78,7 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
             <?= get_message(); ?>
 
             <label for="input-name" class="sr-only">Username or WWU Mail</label>
-            <input type="text" name="loginUsername" id="input-name" class="form-control" placeholder="Username or WWU-Mail" required autofocus>
+            <input type="text" name="loginUsername" id="input-name" class="form-control" placeholder="Username or WWU Mail" required autofocus>
             <label for="input-password" class="sr-only">Password</label>
             <input type="password" name="loginPwd" id="input-password" class="form-control" placeholder="Password" required>
 
