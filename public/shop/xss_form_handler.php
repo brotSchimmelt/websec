@@ -17,7 +17,7 @@ if (isset($_POST['storedXSSMessage'])) {
 
     if (
         $pos1 !== false && $pos2 !== false && $pos3 !== false
-        && $pos4 !== false
+        || $pos4 !== false
     ) {
 
         // save that the XSS alert was used by user
