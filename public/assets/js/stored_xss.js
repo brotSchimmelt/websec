@@ -4,6 +4,7 @@ const PromptXSS = window.prompt;
 const ConfirmXSS = window.confirm;
 
 // override alert()
+// BAD PRACTICE: Never do this anywhere else!
 window.alert = function (message) {
     var request;
     request = $.post("xss_form_handler.php", {
@@ -19,8 +20,7 @@ window.alert = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("No attack detected. Your message was: '" + userMessage + "'. " +
-                "Read the instructions again.");
+            return AlertXSS("Sorry, no attack detected. Check the instructions again!");
         }
     });
     request.fail(function (response) {
@@ -48,8 +48,7 @@ window.prompt = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("No attack detected. Your message was: '" + userMessage + "'. " +
-                "Read the instructions again.");
+            return AlertXSS("Sorry, no attack detected. Check the instructions again!");
         }
     });
     request.fail(function (response) {
@@ -77,8 +76,7 @@ window.confirm = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("No attack detected. Your message was: '" + userMessage + "'. " +
-                "Read the instructions again.");
+            return AlertXSS("Sorry, no attack detected. Check the instructions again!");
         }
     });
     request.fail(function (response) {
