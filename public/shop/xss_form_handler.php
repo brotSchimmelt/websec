@@ -9,7 +9,7 @@ if (isset($_POST['storedXSSMessage'])) {
 
     $haystack = (string)$_POST['storedXSSMessage'];
 
-    // check generously for 'evildomain/payload.js'
+    // check generously for 'evildomain/payload.php'
     $pos1 = stripos($haystack, "payload");
     $pos2 = stripos($haystack, "evil");
     $pos3 = stripos($haystack, "domain");
@@ -20,8 +20,9 @@ if (isset($_POST['storedXSSMessage'])) {
         // save that the XSS alert was used by user
         $_SESSION['storedXSSAlertShown'] = true;
 
-        $msg = "The payload worked! You obtained 1 stolen session cookie. "
-            . "XSS_STOLEN_SESSION=" . $_SESSION['storedXSS'];
+        $msg = "Your attack worked! You obtained 1 stolen session cookie from "
+            . "an unsuspecting victim. XSS_STOLEN_SESSION="
+            . $_SESSION['storedXSS'];
 
         // echo is the preferred way to return a response to a $.post() request
         echo $msg;
