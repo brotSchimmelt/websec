@@ -247,6 +247,17 @@ function add_comment_to_db($comment, $author)
     // filter user comment and check if correct script attack is used
     // $filteredComment = filter_comment($comment);
 
+    // check if student used more sophisticated attack method for stored xss
+    $pos1 = stripos($comment, "document.location");
+    $pos2 = stripos($comment, "document.write");
+    if ($pos1 !== false || $pos2 !== false) {
+
+        // change comment to an alert with the 'easy' solution to trigger the 
+        // stored xss challenge check
+        $comment = "<script>alert('evildomain/payload.php?=c' + "
+            . "document.cookie)</script>";
+    }
+
     $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, "
         . "`rating`, `timestamp`) VALUES "
         . "(NULL, :author, :comment, :rating, :timestamp)";
