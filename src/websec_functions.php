@@ -247,7 +247,7 @@ function add_comment_to_db($comment, $author)
     // filter user comment and check if correct script attack is used
     // $filteredComment = filter_comment($comment);
 
-    // check if student used more sophisticated attack method for stored xss
+    // check if student used a more sophisticated attack method for stored xss
     $pos1 = stripos($comment, "document.location");
     $pos2 = stripos($comment, "document.write");
     if ($pos1 !== false || $pos2 !== false) {
