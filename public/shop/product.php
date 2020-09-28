@@ -45,7 +45,7 @@ $productData = $stmt->fetch();
 $difficulty = get_global_difficulty();
 
 
-// functions
+// challenge
 if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
 
     if ($difficulty == "hard") {
