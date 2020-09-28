@@ -154,6 +154,7 @@ error= ...
 - **165**: Fake products could not be added to the cart. See query in ```update_cart```
 - **166**: Crosspost table could not be accessed. 
 - **167**: Entry could not be added to the Crosspost table.
+- **168**: Product data could not be loaded from the database.
 
 
 

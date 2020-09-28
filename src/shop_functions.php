@@ -316,3 +316,21 @@ function empty_cart($username)
         exit();
     }
 }
+
+// get data to display on product page
+function get_product_data($prodID)
+{
+
+    $sql = "SELECT `prod_title`, `prod_description`, `price`, `img_path` FROM "
+        . "`products` WHERE `prod_id` = :prod_id";
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute(['prod_id' => $prodID]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "168");
+        exit();
+    }
+
+    return $stmt->fetch();
+}

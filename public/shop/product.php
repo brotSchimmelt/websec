@@ -36,10 +36,11 @@ if (!isset($_GET['id']) or empty($_GET['id'])) {
 }
 
 // get product data from database
-$sql = "SELECT `prod_title`, `prod_description`, `price`, `img_path` FROM `products` WHERE `prod_id` = :prod_id";
-$stmt = get_shop_db()->prepare($sql);
-$stmt->execute(['prod_id' => $productID]);
-$productData = $stmt->fetch();
+// $sql = "SELECT `prod_title`, `prod_description`, `price`, `img_path` FROM `products` WHERE `prod_id` = :prod_id";
+// $stmt = get_shop_db()->prepare($sql);
+// $stmt->execute(['prod_id' => $productID]);
+// $productData = $stmt->fetch();
+$productData = get_product_data($productID);
 
 // difficulty
 $difficulty = get_global_difficulty();
