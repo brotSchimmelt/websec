@@ -33,6 +33,7 @@ window.alert = function (message) {
 };
 
 // override prompt()
+// BAD PRACTICE: Never do this anywhere else!
 window.prompt = function (message) {
     var request;
     request = $.post("xss_form_handler.php", {
@@ -61,6 +62,7 @@ window.prompt = function (message) {
 };
 
 // override confirm()
+// BAD PRACTICE: Never do this anywhere else!
 window.confirm = function (message) {
     var request;
     request = $.post("xss_form_handler.php", {
