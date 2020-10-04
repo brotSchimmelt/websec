@@ -20,14 +20,14 @@ window.alert = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("Sorry, no attack detected. Check the instructions again!");
+            return AlertXSS("Sorry, no attack detected. Check the instructions again! Your input was: " + userMessage);
         }
     });
     request.fail(function (response) {
         console.log("The request could not be processed!");
         console.log("This was the message: " + message);
         console.log("This was the response: " + response);
-        return AlertXSS("This should not have happened :/ Please report this error to the Learnweb forum.")
+        return AlertXSS("This should not have happened :/ Please report this error to the Learnweb forum.");
     });
 
 };
@@ -49,14 +49,14 @@ window.prompt = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("Sorry, no attack detected. Check the instructions again!");
+            return AlertXSS("Sorry, no attack detected. Check the instructions again! Your input was: " + userMessage);
         }
     });
     request.fail(function (response) {
         console.log("The request could not be processed!");
         console.log("This was the message: " + message);
         console.log("This was the response: " + response);
-        return AlertXSS("This should not have happened :/ Please report this error to the Learnweb forum.")
+        return AlertXSS("This should not have happened :/ Please report this error to the Learnweb forum.");
     });
 
 };
@@ -78,14 +78,14 @@ window.confirm = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("Sorry, no attack detected. Check the instructions again!");
+            return AlertXSS("Sorry, no attack detected. Check the instructions again! Your input was: " + userMessage);
         }
     });
     request.fail(function (response) {
         console.log("The request could not be processed!");
         console.log("This was the message: " + message);
         console.log("This was the response: " + response);
-        return AlertXSS("This should not have happened :/ Please report this error to the Learnweb forum. Error code: 061")
+        return AlertXSS("This should not have happened :/ Please report this error to the Learnweb forum. Error code: 061");
     });
 
 };
