@@ -20,7 +20,7 @@ window.alert = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("Sorry, no attack detected. Check the instructions again! Your input was: " + userMessage);
+            return AlertXSS("Sorry, no attack detected. Check the instructions again!\nYour input was: " + userMessage);
         }
     });
     request.fail(function (response) {
@@ -49,7 +49,7 @@ window.prompt = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("Sorry, no attack detected. Check the instructions again! Your input was: " + userMessage);
+            return AlertXSS("Sorry, no attack detected. Check the instructions again!\nYour input was: " + userMessage);
         }
     });
     request.fail(function (response) {
@@ -78,7 +78,7 @@ window.confirm = function (message) {
             } else {
                 userMessage = message;
             }
-            return AlertXSS("Sorry, no attack detected. Check the instructions again! Your input was: " + userMessage);
+            return AlertXSS("Sorry, no attack detected. Check the instructions again!\nYour input was: " + userMessage);
         }
     });
     request.fail(function (response) {
