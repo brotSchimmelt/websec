@@ -119,7 +119,11 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
     ?>
-    <script src="/assets/js/stored_xss.js"></script>
+    <script type="text/javascript">
+        // encrypted cookie
+        var challengeCookie = "<?= base64_encode($_SESSION['storedXSS']) ?>";
+    </script>
+    <script type="text/javascript" src="/assets/js/stored_xss.js"></script>
 
 
     <!-- HTML Content BEGIN -->

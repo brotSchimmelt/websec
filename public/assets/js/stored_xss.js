@@ -12,6 +12,8 @@ window.alert = function (message) {
     });
     request.done(function (response) {
         if (response != 1) {
+            var decryptedCookie = atob(challengeCookie);
+            document.cookie = "XSS_STOLEN_SESSION=" + decryptedCookie + ";path=/";
             return AlertXSS(response);
         } else {
             var userMessage;
@@ -41,6 +43,8 @@ window.prompt = function (message) {
     });
     request.done(function (response) {
         if (response != 1) {
+            var decryptedCookie = atob(challengeCookie);
+            document.cookie = "XSS_STOLEN_SESSION=" + decryptedCookie + ";path=/";
             return AlertXSS(response);
         } else {
             var userMessage;
@@ -70,6 +74,8 @@ window.confirm = function (message) {
     });
     request.done(function (response) {
         if (response != 1) {
+            var decryptedCookie = atob(challengeCookie);
+            document.cookie = "XSS_STOLEN_SESSION=" + decryptedCookie + ";path=/";
             return AlertXSS(response);
         } else {
             var userMessage;
