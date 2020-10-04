@@ -112,8 +112,8 @@ $modalInfoStolenSession = '<!--Modal: Info - Stolen Session Elliot-->
                 </p>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-outline-secondary" href="/shop/overview.php" role="button">Go to products</a>
-                <button type="button" class="btn btn-success" data-dismiss="modal">Got it!</button>
+                <a class="btn btn-success" href="/shop/overview.php" role="button">Go to products</a>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Got it!</button>
             </div>
         </div>
     </div>
