@@ -20,9 +20,6 @@ if (isset($_POST['storedXSSMessage'])) {
         || $pos4 !== false
     ) {
 
-        // save that the XSS alert was used by user
-        $_SESSION['storedXSSAlertShown'] = true;
-
         $msg = "Your attack worked! You obtained 1 stolen session cookie from "
             . "an unsuspecting victim. XSS_STOLEN_SESSION="
             . $_SESSION['storedXSS'];
