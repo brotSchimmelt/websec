@@ -131,6 +131,12 @@ function get_error_msg($error, $errorCode)
             $msg .= '<a href="password_reset.php">here</a>.';
             return format_msg($msg, $msgType);
             break;
+        case "doubleEntry":
+            $msg = "It seems like the state of the database is corrupted. "
+                . "Please report this error to the Learnweb forum! "
+                . "\n<b>Code: 126</b>";
+            return format_msg($msg, $msgType);
+            break;
         case "invalidToken":
             $msg = "Sorry, it seems like your reset link is not working. ";
             $msg .= "Please request a ";

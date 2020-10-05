@@ -141,7 +141,7 @@ function hash_user_pwd($pwd)
     return $hash;
 }
 
-// check if the give username already exists in the database
+// check if the give username or mail already exists in the database
 function check_entry_exists($entry, $sql)
 {
     // Fake user array
@@ -289,8 +289,10 @@ function try_login($userInput, $pwd)
 // check if user or password already exist in the database
 function try_registration($username, $mail, $password)
 {
-    $usernameSQL = "SELECT 1 FROM users WHERE user_name = ?";
-    $mailSQL = "SELECT 1 FROM users WHERE user_wwu_email = ?";
+    $usernameSQL = "SELECT 1 FROM `users` WHERE `user_name` = ?";
+    $mailSQL = "SELECT 1 FROM `users` WHERE `user_wwu_email` = ?";
+    $oldChallengeSQL = "SELECT 1 FROM `challengeStatus` WHERE `user_name` = ?";
+    $oldCookieSQL = "SELECT 1 FROM `fakeCookie` WHERE `user_name` = ?";
 
     // check if username or mail already exits in the db
     if (check_entry_exists($username, $usernameSQL)) {
@@ -302,6 +304,13 @@ function try_registration($username, $mail, $password)
 
         $oldInput = "&username=" . $username;
         header("location: " . REGISTER_PAGE . "?error=mailTaken" . $oldInput);
+        exit();
+    } else  if (
+        check_entry_exists($username, $oldChallengeSQL) ||
+        check_entry_exists($username, $oldCookieSQL)
+    ) {
+
+        header("location: " . REGISTER_PAGE . "?error=doubleEntry");
         exit();
     } else {
         do_registration($username, $mail, $password);
@@ -374,7 +383,8 @@ function do_registration($username, $mail, $password)
     $insertChallenge = "INSERT INTO `challengeStatus` (`id`, `user_name`, "
         . "`reflective_xss`, `stored_xss`, `sqli`, `csrf`, `csrf_referrer`, "
         . "`reflective_xss_hard`, `stored_xss_hard`, `sqli_hard`, `csrf_hard`, "
-        . "`csrf_referrer_hard`) VALUE (NULL, :user, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
+        . "`csrf_referrer_hard`) VALUE (NULL, :user, 0, 0, 0, 0, 0, 0, 0, 0, "
+        . "0, 0)";
 
     try {
         get_login_db()->prepare($insertChallenge)->execute([
