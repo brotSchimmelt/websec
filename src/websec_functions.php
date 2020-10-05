@@ -1,5 +1,4 @@
 <?php
-// TODO: Add correct error handling
 
 // trim string to include only valid characters
 function slug($z)
