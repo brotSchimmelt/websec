@@ -126,14 +126,7 @@ function is_product_in_cart($productID)
         display_exception_msg($e, "154");
         exit();
     }
-
-    $num = $stmt->rowCount();
-    // TODO: Ternary return 
-    if ($num > 0) {
-        return true;
-    } else {
-        return false;
-    }
+    return $stmt->rowCount() > 0 ? true : false;
 }
 
 // get all products from the product database
