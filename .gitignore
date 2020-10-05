@@ -3,3 +3,7 @@
 *.sqlite
 test*
 *.log
+
+# filter phpunit
+test*
+vendor/
