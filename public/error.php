@@ -65,7 +65,7 @@ if (isset($_GET['error']) && !empty($_GET['error'])) {
     <title><?= $title ?></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/vendor/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../assets/css/doc.css" rel="stylesheet">
