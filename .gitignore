@@ -6,4 +6,4 @@ test*
 
 # filter phpunit
 test*
-vendor/
+./vendor/
