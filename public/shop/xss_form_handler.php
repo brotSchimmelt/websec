@@ -36,6 +36,7 @@ if (isset($_POST['storedXSSMessage'])) {
                 . $_SESSION['storedXSS'] . "\n\n You can now set the cookie by "
                 . "pressing 'OK' or come back later!";
 
+            // return success message
             echo $msg;
         } else {
             // error code 1 means no valid attack detected

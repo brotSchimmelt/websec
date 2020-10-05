@@ -1,29 +1,40 @@
+/*
+* JavaScript for the reflective XSS challenge.
+*
+* Displays a modal to enter the challenge solution (session cookie) if a JS 
+* dialog was used.
+*/
+
+
+// temporarily override alert()
 (function () {
-    var _old_alert = window.alert;
+    var _alertXSS = window.alert;
     window.alert = function () {
-        // run some code BEFORE alert
-        _old_alert.apply(window, arguments);
-        // run some code AFTER alert
+        // run code BEFORE alert
+        _alertXSS.apply(window, arguments);
+        // run code AFTER alert
         $('#xss-solution').modal('show');
     };
 })();
 
+// temporarily override prompt()
 (function () {
-    var _old_prompt = window.prompt;
+    var _promptXSS = window.prompt;
     window.prompt = function () {
-        // run some code BEFORE alert
-        _old_prompt.apply(window, arguments);
-        // run some code AFTER alert
+        // run code BEFORE prompt
+        _promptXSS.apply(window, arguments);
+        // run code AFTER prompt
         $('#xss-solution').modal('show');
     };
 })();
 
+// temporarily override confirm()
 (function () {
-    var _old_confirm = window.confirm;
+    var _confirmXSS = window.confirm;
     window.confirm = function () {
-        // run some code BEFORE alert
-        _old_confirm.apply(window, arguments);
-        // run some code AFTER alert
+        // run code BEFORE confirm
+        _confirmXSS.apply(window, arguments);
+        // run code AFTER confirm
         $('#xss-solution').modal('show');
     };
 })();
