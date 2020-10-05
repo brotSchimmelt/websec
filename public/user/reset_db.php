@@ -64,7 +64,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
     <!-- Link to favicon -->
     <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
-    <title>Websec | Database Reset</title>
+    <title>Websec | Challenge Settings</title>
 </head>
 
 <body>

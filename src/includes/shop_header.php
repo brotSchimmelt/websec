@@ -67,8 +67,8 @@ if ($sqliSolved) {
             <?= $premiumAccount ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="#navbarDropdown">
-            <a class="dropdown-item" href="/user/scoreboard.php">Scoreboard</a>
-            <a class="dropdown-item" href="/user/reset_db.php">Reset Database</a>
+            <a class="dropdown-item" href="/user/scorecard.php">Scorecard</a>
+            <a class="dropdown-item" href="/user/reset_db.php">Challenge Settings</a>
             <a class="dropdown-item" href="/user/change_password.php">Change Password</a>
             <a class="dropdown-item" href="/shop/help.php">Help</a>
             <?= (is_user_admin()) ? '<a class="dropdown-item" href="/user/admin.php">Admin</a>' : "" ?>

@@ -67,7 +67,7 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
     <!-- Link to favicon -->
     <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
-    <title>Websec | Scoreboard</title>
+    <title>Websec | Scorecard</title>
 </head>
 
 <body>
@@ -88,7 +88,7 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
             The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
         <br>
 
-        <?= $allChallengesSolved ? $alertScoreboardAllSolved : "" ?>
+        <?= $allChallengesSolved ? $alertscorecardAllSolved : "" ?>
 
         <table class="table table-striped shadow">
             <thead class="my-head">

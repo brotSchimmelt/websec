@@ -45,4 +45,4 @@ define("MESSAGES", INCL . "util_messages.php"); // Error messages, user notifica
 define("MAIN_PAGE", "/shop/main.php");
 define("LOGIN_PAGE", "/index.php");
 define("REGISTER_PAGE", "/registration.php");
-define("SCORE", "/user/scoreboard.php");
+define("SCORE", "/user/scorecard.php");
