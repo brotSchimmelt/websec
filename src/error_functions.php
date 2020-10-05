@@ -133,7 +133,7 @@ function get_error_msg($error, $errorCode)
             break;
         case "doubleEntry":
             $msg = "It seems like the state of the database is corrupted. "
-                . "Please report this error to the Learnweb forum! "
+                . "Please report this error in the Learnweb forum! "
                 . "\n<b>Code: 126</b>";
             return format_msg($msg, $msgType);
             break;

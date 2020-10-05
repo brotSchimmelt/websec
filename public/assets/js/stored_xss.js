@@ -70,7 +70,7 @@ function showError(message, response) {
     console.log("This was the message: " + message);
     console.log("This was the response: " + response);
     return AlertXSS("This should not have happened :/ Please report this " +
-        "error to the Learnweb forum.");
+        "error in the Learnweb forum.");
 }
 
 
