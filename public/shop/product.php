@@ -197,7 +197,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         ?>
     </div>
 
-    <?php require(INCL . "comments.php"); ?>
+    <?php show_xss_comments(); ?>
     <!-- HTML Content END -->
 
     <?php

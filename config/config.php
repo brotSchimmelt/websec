@@ -28,7 +28,7 @@ define("JS_SHOP", INCL . "shop_js.php"); // JavaScript for the shop section
 define("HEADER_ADMIN", INCL . "admin_header.php"); // Admin header location
 define("SIDEBAR_ADMIN", INCL . "admin_sidebar.php"); // Admin sidebar location
 define("JS_ADMIN", INCL . "admin_js.php"); // JavaScript for the admin section
-define("JS_BOOTSTRAP", INCL . "bootstrap_js.php"); // Default JavaScript for bootstrap
+define("JS_BOOTSTRAP", INCL . "util_bootstrap_js.php"); // Default JavaScript for bootstrap
 
 // Functions
 define("FUNC_BASE", SRC . "basic_functions.php"); // Basic functions for the site
@@ -39,7 +39,7 @@ define("FUNC_WEBSEC", SRC . "websec_functions.php"); // Functions for websec cha
 
 // Errors
 define("ERROR_HANDLING", SRC . "error_functions.php"); // Functions for error handling
-define("MESSAGES", INCL . "messages.php"); // Error messages, user notifications etc.
+define("MESSAGES", INCL . "util_messages.php"); // Error messages, user notifications etc.
 
 // Path for frequent redirects
 define("MAIN_PAGE", "/shop/main.php");

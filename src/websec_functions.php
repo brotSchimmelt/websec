@@ -232,7 +232,7 @@ function query_sqli_db($searchTerm)
 // display the product comments
 function show_xss_comments()
 {
-    include(INCL . "comments.php");
+    include(INCL . "util_comments.php");
 }
 
 // add product comment

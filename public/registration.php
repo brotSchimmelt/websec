@@ -16,7 +16,7 @@ if (!is_registration_enabled()) {
     session_destroy();
 
     $name = "Registration";
-    include(INCL . "login_disabled.php");
+    include(INCL . "util_login_disabled.php");
     exit();
 }
 

@@ -182,7 +182,7 @@ function format_msg($msgString, $msgType)
 function display_exception_msg($exception, $errorCode = null, $note = null)
 {
     // html for the error page
-    include(INCL . "error_page.php");
+    include(INCL . "util_error_page.php");
 
     // default message
     if (is_null($exception) || !($exception instanceof Exception)) {
@@ -225,7 +225,7 @@ function display_exception_msg($exception, $errorCode = null, $note = null)
 function display_warning_msg($msg)
 {
     // html for the error page
-    include(INCL . "error_page.php");
+    include(INCL . "util_error_page.php");
 
     // start container
     echo '<div class="container text-center">';
