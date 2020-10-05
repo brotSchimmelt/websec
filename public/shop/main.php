@@ -12,6 +12,7 @@ require(FUNC_SHOP);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
+require(MESSAGES);
 
 // Check admin status
 if (!is_user_logged_in()) {
@@ -59,10 +60,10 @@ if (isset($_POST['unlock-submit'])) {
 
     // check if user is unlocked
     if (!is_user_unlocked()) {
-        require_once(INCL . "modal_greeting.php");
-        $scriptFlag = true;
+        echo $modalGreeting;
+        $unlocked = true;
     } else {
-        $scriptFlag = false;
+        $unlocked = false;
     }
     ?>
     <header id="main-header">
@@ -294,7 +295,7 @@ if (isset($_POST['unlock-submit'])) {
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
-    if ($scriptFlag) {
+    if ($unlocked) {
         echo "<script>$('#greeting').modal('show')</script>";
     }
     ?>
