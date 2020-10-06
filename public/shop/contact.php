@@ -94,8 +94,8 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
                     <input name="username" type="text" class="form-control" id="contact-username" aria-describedby="contact-username-help" value="<?= $_SESSION['userName'] ?>" disabled>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1"><b>Your E-Mail:</b></label>
-                    <input type="contactEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Mail" disabled>
+                    <label for="contactMail"><b>Your E-Mail:</b></label>
+                    <input type="email" class="form-control" id="contactMail" aria-describedby="emailHelp" placeholder="Enter Your Mail" disabled>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1"><b>Your Message:</b></label>
