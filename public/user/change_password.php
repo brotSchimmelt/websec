@@ -72,26 +72,32 @@ if (isset($_POST['change-pwd-submit'])) {
 
     <!-- HTML Content BEGIN -->
     <div class="con-search">
-        <h1 class="display-4">Change your Password</h1>
-        <div>
+        <div class="jumbotron form-container-shop shadow">
+            <h1 class="display-5 text-center">Change Your Password</h1>
+            <br>
+            <?= get_message() ?>
+            <br>
             <form class="form-signin" action="change_password.php" method="post">
 
-                <?= get_message() ?>
+                <div class="form-group">
+                    <label for="input-old-pwd"><b>Current Password:</b></label>
+                    <input type="password" name="pwd" id="input-old-pwd" class="form-control" aria-describedby="input-old-pwd" placeholder="Current Password" required autofocus>
+                    <small id="pwd-help" class="form-text text-muted">Please enter your current password.</small>
+                </div>
 
-                <label for="input-old-pwd" class="sr-only">Current Password</label>
-                <input type="password" name="pwd" id="pwd" class="form-control" aria-describedby="pwd-help" placeholder="Current Password" required autofocus>
-                <small id="pwd-help" class="form-text text-muted">Please enter your current password.</small>
+                <div class="form-group">
+                    <label for="input-new-pwd"><b>New Password:</b></label>
+                    <input type="password" name="new-pwd" id="input-new-pwd" class="form-control" placeholder="New Password" required>
+                    <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
+                </div>
 
-                <label for="input-new-pwd" class="sr-only">New Password</label>
-                <input type="password" name="new-pwd" id="new-pwd" class="form-control" placeholder="New Password" required>
-                <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
-
-                <label for="confirm-pwd" class="sr-only">Confirm Password</label>
-                <input type="password" name="confirm-pwd" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
-
-                <button type="submit" name="change-pwd-submit" id="change-pwd-submit" class="btn btn-lg btn-primary btn-block">Change Password</button>
+                <div class="form-group">
+                    <label for="confirm-pwd"><b>Confirm Password:</b></label>
+                    <input type="password" name="confirm-pwd" id="confirm-pwd" class="form-control" placeholder="Confirm Password" required>
+                </div>
+                <br>
+                <button type="submit" name="change-pwd-submit" id="change-pwd-submit" class="btn btn-wwu-primary">Change Password</button>
             </form>
-
         </div>
     </div>
     <!-- HTML Content END -->
