@@ -1,6 +1,9 @@
 <?php
 
 // trim string to include only valid characters
+
+use function PHPUnit\Framework\fileExists;
+
 function slug($z)
 {
     $z = strtolower($z);
@@ -51,6 +54,7 @@ function create_sqli_db($username, $mail)
                     . $fakePwdHash . "','" . $mail . "', 'empty','standard');");
             } catch (Exception $e) {
                 display_exception_msg($e, "053");
+                exit();
             }
         } else {
             // add users to the SQLi database on hard difficulty
@@ -99,10 +103,17 @@ function create_sqli_db($username, $mail)
                     . "VALUES ('" . $username . "','standard');");;
             } catch (Exception $e) {
                 display_exception_msg($e, "053");
+                exit();
             }
         }
     } else {
         throw new Exception("SQLite database could not be created.");
+    }
+
+
+    if (!fileExists($dbName)) {
+        throw new Exception("SQLite database could not be written to the data "
+            . "directory! Please check the ownership for this directory.");
     }
 }
 
