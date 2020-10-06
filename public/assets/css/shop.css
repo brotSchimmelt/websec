@@ -280,3 +280,11 @@ h5.green {
     background-color: rgba(95, 140, 23, 0.7) !important;
     color: white;
 }
+
+.form-container-shop {
+    width: 80%;
+    background-color: #f1f1f1;
+    margin-top: -40px;
+    margin-left: auto;
+    margin-right: auto;
+}
