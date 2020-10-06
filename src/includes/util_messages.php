@@ -12,10 +12,18 @@ $alertProductComment = '<br>
     <b>Warning</b>: Due to recent hacker attacks, we were forced to delete some user comments!
 </div>';
 $alertContactField = '<br>
-<div class="alert alert-info shadow" role="alert">
+<div class="alert alert-success shadow" role="alert">
     <b>Thank You!</b> We have received your request and will come back to you
     very soon.<br>Very soon! Really! One day...<br>or never.
-</div>';
+</div><br>';
+$alertContactFieldClosed = '<br>
+<div class="alert alert-warning shadow" role="alert">
+    Dear customer,<br>
+    our contact form has been temporarily disabled.<br>We were experiencing heavy hacker attacks at our website and decided<br>to shut down our services for a few days/weeks/months.<br>
+    In urgent cases please contact our support team.<br>
+    Thank you for you patience!<br>
+</div><br>';
+
 $alertscorecardAllSolved = '<br>
 <div class="alert alert-success shadow" role="alert">
     <b>Congratulation!</b> You solved every challenge in this shop. Good job!

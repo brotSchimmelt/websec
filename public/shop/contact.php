@@ -81,26 +81,32 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
     <?php endif; ?>
 
     <div class="con-search">
-        <h2 class="display-4">Contact Our Support Team</h2>
-        We are here for you every day, twentyfour hours a day, 365 days a year!
-        <br><br>
-        <h4>Contact Form</h4>
-        Dear customer,<br>
-        our contact form has been temporarily disabled.<br>We were experiencing heavy hacker attacks at our website and decided<br>to shut down our services for a few days/weeks/months.<br>
-        In urgent cases please contact our support team.<br>
-        Thanks!<br>
-        <br>
-        <form action="contact.php" method="post" id="reviewform">
-            your name:
-            <input type="text" name="username" value="<?= $_SESSION['userName'] ?>" disabled><br>
-            <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
-            <!-- Hint: token only relevant when challenge is set to hard! Otherwise, ignore it.-->
-            <input type="hidden" name="utoken" value="<?= $_SESSION['fakeCSRFToken']; ?>">
-            your message for us:
-            <input type="text" name="userPost" size="30" disabled><br><br>
-            <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
-        </form>
-        <?= $solved ? $alertContactField : "" ?>
+        <div class="jumbotron form-container-shop shadow">
+
+            <h1 class="display-5 text-center">Contact Form</h1>
+            <p class="text-center text-muted">We'll never share your personal information. Ever!</p>
+
+            <?= $solved ? $alertContactField : $alertContactFieldClosed ?>
+
+            <form action="contact.php" method="post" id="reviewform">
+                <div class="form-group">
+                    <label for="contact-username"><b>Your Username:</b></label>
+                    <input name="username" type="text" class="form-control" id="contact-username" aria-describedby="contact-username-help" value="<?= $_SESSION['userName'] ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1"><b>Your E-Mail:</b></label>
+                    <input type="contactEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your Mail" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><b>Your Message:</b></label>
+                    <textarea name="userPost" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="How can we help you?" disabled></textarea>
+                </div>
+                <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                <input type="hidden" name="utoken" value="<?= $_SESSION['fakeCSRFToken']; ?>">
+                <br>
+                <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
+            </form>
+        </div>
     </div>
     <!-- HTML Content END -->
 
