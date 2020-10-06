@@ -111,7 +111,7 @@ function create_sqli_db($username, $mail)
     }
 
 
-    if (!fileExists($dbName)) {
+    if (!file_exists($dbName)) {
         throw new Exception("SQLite database could not be written to the data "
             . "directory! Please check the ownership for this directory.");
     }
