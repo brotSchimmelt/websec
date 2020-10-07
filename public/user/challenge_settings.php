@@ -102,7 +102,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
                         <h3 class="display-5">RESET REFLECTIVE XSS CHALLENGE</h3>
                         <br>
                         <p><strong class="text-danger">Warning: </strong>This will delete your progress for this challenge and set new cookies.</p>
-                        <form action="reset_db.php" method="post">
+                        <form action="challenge_settings.php" method="post">
                             <div class="form-group">
                                 <label for="username-reflective-xss"><b>Your Username:</b></label>
                                 <input type="text" name="username-reflective-xss" id="username-reflective-xss" class="form-control" aria-describedby="username-reflective-xss" value="<?= $_SESSION['userName'] ?>" disabled>
@@ -117,7 +117,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
                         <h3 class="display-5">RESET STORED XSS CHALLENGE</h3>
                         <br>
                         <p>This will <strong class="text-danger">delete all your achievements</strong>!</p>
-                        <form action="reset_db.php" method="post">
+                        <form action="challenge_settings.php" method="post">
                             <div class="form-group">
                                 <label for="username-stored-xss"><b>Your Username:</b></label>
                                 <input type="text" name="username-stored-xss" id="username-stored-xss" class="form-control" aria-describedby="username-stored-xss" value="<?= $_SESSION['userName'] ?>" disabled>
@@ -132,7 +132,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
                         <h3 class="display-5">RESET SQLi CHALLENGE</h3>
                         <br>
                         <p>This will <strong class="text-danger">delete all your achievements</strong>!</p>
-                        <form action="reset_db.php" method="post">
+                        <form action="challenge_settings.php" method="post">
                             <div class="form-group">
                                 <label for="username-sqli"><b>Your Username:</b></label>
                                 <input type="text" name="username-sqli" id="username-sqli" class="form-control" aria-describedby="username-sqli" value="<?= $_SESSION['userName'] ?>" disabled>
@@ -147,7 +147,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
                         <h3 class="display-5">RESET CSRF CHALLENGE</h3>
                         <br>
                         <p>This will <strong class="text-danger">delete all your achievements</strong>!</p>
-                        <form action="reset_db.php" method="post">
+                        <form action="challenge_settings.php" method="post">
                             <div class="form-group">
                                 <label for="username-csrf"><b>Your Username:</b></label>
                                 <input type="text" name="username-csrf" id="username-csrf" class="form-control" aria-describedby="username-csrf" value="<?= $_SESSION['userName'] ?>" disabled>
@@ -162,7 +162,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
                         <h3 class="display-5">RESET ALL CHALLENGES</h3>
                         <br>
                         <p>This will <strong class="text-danger">delete all your achievements</strong>!</p>
-                        <form action="reset_db.php" method="post">
+                        <form action="challenge_settings.php" method="post">
                             <div class="form-group">
                                 <label for="username-all"><b>Your Username:</b></label>
                                 <input type="text" name="username-all" id="username-all" class="form-control" aria-describedby="username-all" value="<?= $_SESSION['userName'] ?>" disabled>
