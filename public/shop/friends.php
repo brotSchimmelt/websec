@@ -73,9 +73,9 @@ $difficulty = get_global_difficulty();
 
 
     <div class="con-center con-search">
-        <h4 class=display-4>Find your Friends</h4>
-        You want to know what your friends bought in our shop?<br>
-        We got you! Just use our absolutely privacy conform search form:
+        <h4 class=display-4>Find Your Friends</h4>
+        You are looking for the perfect present and want to know what your friends have on their wishlist?<br>
+        No Problemo! Just use our absolutely privacy conform search form:
         <br><br>
         <form action="friends.php" method="post">
             <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" <?= $difficulty == "hard" ? 'maxlength="10"' : "" ?> autofocus>
