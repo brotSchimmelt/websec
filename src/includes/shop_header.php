@@ -70,7 +70,7 @@ if ($sqliSolved) {
             <a class="dropdown-item" href="/user/scorecard.php">Scorecard</a>
             <a class="dropdown-item" href="/user/reset_db.php">Challenge Settings</a>
             <a class="dropdown-item" href="/user/change_password.php">Change Password</a>
-            <a class="dropdown-item" href="/shop/help.php">Help</a>
+            <a class="dropdown-item" href="/user/help.php">Help</a>
             <?= (is_user_admin()) ? '<a class="dropdown-item" href="/user/admin.php">Admin</a>' : "" ?>
             <a class="dropdown-item" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
         </div>
