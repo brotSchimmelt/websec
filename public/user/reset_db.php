@@ -79,72 +79,112 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
 
     <!-- HTML Content BEGIN -->
     <div class="con-search">
-        <h4>RESET REFLECTIVE XSS</h4>
-        <strong>Warning: </strong>This will delete your progress for this challenge and set new cookies.<br><br>
-        <form action="reset_db.php" method="post">
-            <input type="hidden" name="doit-simplexss" value="1">
-            <input type="hidden" name="simplexss" value="1">
-            <input type="submit" value="RESET REFLECTIVE XSS CHALLENGE">
-        </form>
-        <br>
-        <hr><br>
 
-        <h4>RESET STORED XSS</h4>
-        This will <strong>delete all your achievements</strong>!<br>
-        <form action="reset_db.php" method="post">
-            your name:
-            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
-            <input type="hidden" name="doit-storedxss" value="1">
-            <input type="hidden" name="storedxss" value="1">
-            <input type="submit" value="RESET STORED XSS CHALLENGE">
-        </form>
+        <h1 class="display-4">Challenge Settings</h1>
         <br>
-        <hr><br>
-
-        <h4>RESET SQL DATABASE</h4>
-        This will <strong>delete all your achievements</strong>!<br>
-        <form action="reset_db.php" method="post">
-            your name:
-            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
-            <input type="hidden" name="doit-sqli" value="1">
-            <input type="hidden" name="sqli" value="1">
-            <input type="submit" value="RESET SQL DATABASE">
-        </form>
-        <br>
-        <hr><br>
-
-        <h4>RESET CONTACT FORM</h4>
-        This will <strong>delete all your achievements</strong>!<br>
-        <form action="reset_db.php" method="post">
-            your name:
-            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
-            <input type="hidden" name="doit-csrf" value="1">
-            <input type="hidden" name="csrf" value="1">
-            <input type="submit" value="RESET SUPPORT CONTACT">
-        </form>
-        <br>
-        <hr><br>
-        <h4>RESET ALL CHALLENGES</h4>
-        This will <strong>delete all your achievements</strong>!<br>
-        <form action="reset_db.php" method="post">
-            your name:
-            <input type="text" name="username" value="<?= $username; ?>" disabled><br>
-            <input type="hidden" name="doit-all" value="1">
-            <input type="hidden" name="all" value="1">
-            <input type="submit" value="RESET ALL CHALLENGES">
-        </form>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores sapiente sit animi obcaecati aspernatur rerum distinctio voluptas a voluptate ipsa atque, deleniti quibusdam est nesciunt.</p>
         <br><br>
-        <hr><br>
-    </div>
-    <!-- HTML Content END -->
 
-    <?php
-    // Load shop footer
-    require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
-    ?>
+        <div class="row">
+            <div class="col-3">
+                <div class="list-group" id="list-tab-settings" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-reflective-xss-list" data-toggle="list" href="#list-reflective-xss" role="tab" aria-controls="reflective-xss">Reflective XSS</a>
+                    <a class="list-group-item list-group-item-action" id="list-stored-xss-list" data-toggle="list" href="#list-stored-xss" role="tab" aria-controls="stored-xss">Stored XSS</a>
+                    <a class="list-group-item list-group-item-action" id="list-sqli-list" data-toggle="list" href="#list-sqli" role="tab" aria-controls="sqli">SQLi</a>
+                    <a class="list-group-item list-group-item-action" id="list-csrf-list" data-toggle="list" href="#list-csrf" role="tab" aria-controls="csrf">CSRF</a>
+                    <a class="list-group-item list-group-item-action" id="list-all-list" data-toggle="list" href="#list-all" role="tab" aria-controls="all">All Challenges</a>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- Reflective XSS -->
+                    <div class="tab-pane fade show active" id="list-reflective-xss" role="tabpanel" aria-labelledby="list-home-list">
+                        <h3 class="display-5">RESET REFLECTIVE XSS CHALLENGE</h3>
+                        <br>
+                        <p><strong class="text-danger">Warning: </strong>This will delete your progress for this challenge and set new cookies.</p>
+                        <form action="reset_db.php" method="post">
+                            <div class="form-group">
+                                <label for="username-reflective-xss"><b>Your Username:</b></label>
+                                <input type="text" name="username-reflective-xss" id="username-reflective-xss" class="form-control" aria-describedby="username-reflective-xss" value="<?= $_SESSION['userName'] ?>" disabled>
+                            </div>
+                            <input type="hidden" name="doit-simplexss" value="1">
+                            <input type="hidden" name="simplexss" value="1">
+                            <input class="btn btn-danger" type="submit" value="RESET REFLECTIVE XSS CHALLENGE">
+                        </form>
+                    </div>
+                    <!-- Stored XSS -->
+                    <div class="tab-pane fade" id="list-stored-xss" role="tabpanel" aria-labelledby="list-profile-list">
+                        <h3 class="display-5">RESET STORED XSS CHALLENGE</h3>
+                        <br>
+                        <p>This will <strong class="text-danger">delete all your achievements</strong>!</p>
+                        <form action="reset_db.php" method="post">
+                            <div class="form-group">
+                                <label for="username-stored-xss"><b>Your Username:</b></label>
+                                <input type="text" name="username-stored-xss" id="username-stored-xss" class="form-control" aria-describedby="username-stored-xss" value="<?= $_SESSION['userName'] ?>" disabled>
+                            </div>
+                            <input type="hidden" name="doit-storedxss" value="1">
+                            <input type="hidden" name="storedxss" value="1">
+                            <input class="btn btn-danger" type="submit" value="RESET STORED XSS CHALLENGE">
+                        </form>
+                    </div>
+                    <!-- SQLi -->
+                    <div class="tab-pane fade" id="list-sqli" role="tabpanel" aria-labelledby="list-messages-list">
+                        <h3 class="display-5">RESET SQLi CHALLENGE</h3>
+                        <br>
+                        <p>This will <strong class="text-danger">delete all your achievements</strong>!</p>
+                        <form action="reset_db.php" method="post">
+                            <div class="form-group">
+                                <label for="username-sqli"><b>Your Username:</b></label>
+                                <input type="text" name="username-sqli" id="username-sqli" class="form-control" aria-describedby="username-sqli" value="<?= $_SESSION['userName'] ?>" disabled>
+                            </div>
+                            <input type="hidden" name="doit-sqli" value="1">
+                            <input type="hidden" name="sqli" value="1">
+                            <input class="btn btn-danger" type="submit" value="RESET SQL DATABASE">
+                        </form>
+                    </div>
+                    <!-- CSRF -->
+                    <div class="tab-pane fade" id="list-csrf" role="tabpanel" aria-labelledby="list-settings-list">
+                        <h3 class="display-5">RESET CSRF CHALLENGE</h3>
+                        <br>
+                        <p>This will <strong class="text-danger">delete all your achievements</strong>!</p>
+                        <form action="reset_db.php" method="post">
+                            <div class="form-group">
+                                <label for="username-csrf"><b>Your Username:</b></label>
+                                <input type="text" name="username-csrf" id="username-csrf" class="form-control" aria-describedby="username-csrf" value="<?= $_SESSION['userName'] ?>" disabled>
+                            </div>
+                            <input type="hidden" name="doit-csrf" value="1">
+                            <input type="hidden" name="csrf" value="1">
+                            <input class="btn btn-danger" type="submit" value="RESET SUPPORT CONTACT">
+                        </form>
+                    </div>
+                    <!-- All Challenge Settings -->
+                    <div class="tab-pane fade" id="list-all" role="tabpanel" aria-labelledby="list-settings-list">
+                        <h3 class="display-5">RESET ALL CHALLENGES</h3>
+                        <br>
+                        <p>This will <strong class="text-danger">delete all your achievements</strong>!</p>
+                        <form action="reset_db.php" method="post">
+                            <div class="form-group">
+                                <label for="username-all"><b>Your Username:</b></label>
+                                <input type="text" name="username-all" id="username-all" class="form-control" aria-describedby="username-all" value="<?= $_SESSION['userName'] ?>" disabled>
+                            </div>
+                            <input type="hidden" name="doit-all" value="1">
+                            <input type="hidden" name="all" value="1">
+                            <input class="btn btn-danger" type="submit" value="RESET ALL CHALLENGES">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <!-- HTML Content END -->
+
+        <?php
+        // Load shop footer
+        require(FOOTER_SHOP);
+        // Load JavaScript
+        require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
+        require_once(JS_SHOP); // Custom JavaScript
+        ?>
 </body>
 
 </html>
