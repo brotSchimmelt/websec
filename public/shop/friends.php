@@ -72,7 +72,7 @@ $difficulty = get_global_difficulty();
 
 
 
-    <div class="con-center con-search">
+    <div class="page-center page-container">
         <h4 class=display-4>Find Your Friends</h4>
         You are looking for the perfect present and want to know what your friends have on their wishlist?<br>
         No Problemo! Just use our absolutely privacy conform search form:

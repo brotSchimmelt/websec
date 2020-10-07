@@ -175,7 +175,7 @@ function query_sqli_db($searchTerm)
                 }
                 try {
                     while ($row = $result->fetchArray()) {
-                        echo '<div class="con-center con-search">';
+                        echo '<div class="page-center page-container">';
                         echo '<h4 class="display-5">Looks like we found your '
                             . 'friend!</h4><br>';
                         echo "Here are his/her contact infos and wishlist items!<br>";
@@ -195,7 +195,7 @@ function query_sqli_db($searchTerm)
                     }
                     // catch any fatal sql error
                 } catch (Throwable $t) {
-                    echo '<div class="con-center con-search">';
+                    echo '<div class="page-center page-container">';
                     echo "It seems like there was a problem with your search term: <br>"
                         . htmlentities($searchTerm);
                     echo "</div>";

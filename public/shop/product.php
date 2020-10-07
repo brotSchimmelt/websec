@@ -133,7 +133,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">Stored XSS</a>
     <?php endif; ?>
 
-    <div class="con-center con-search jumbotron shadow container">
+    <div class="page-center page-container jumbotron shadow container">
         <div class="row">
 
             <div class="col-md-6 mt-5">
@@ -175,7 +175,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         </div>
     </div>
 
-    <div class="con-center con-search">
+    <div class="page-center page-container">
         <h4 class="display-5">Write Your Own Review!</h4>
         <form class="text-center" action="product.php" method="post">
             <div class="justify-content-center">

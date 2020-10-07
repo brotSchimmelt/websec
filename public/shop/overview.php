@@ -137,7 +137,7 @@ if (isset($_POST['add-preview'])) {
     <?php endif; ?>
 
     <!-- Search form -->
-    <div class="con-center con-search">
+    <div class="page-center page-container">
         <h2 class="display-4">Product Search</h2>
         <form action="<?= $thisPage ?>" method="get">
             <input class="form-control" type="text" name="xss" placeholder="Search for Products" aria-label="Search" autofocus <?= $solved ? "disabled" : "" ?>>

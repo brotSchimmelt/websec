@@ -57,7 +57,7 @@ if (!is_user_unlocked()) {
     ?>
 
     <!-- HTML Content BEGIN -->
-    <div class="con-search">
+    <div class="page-container">
         <h1 class="display-4">User Instructions</h1>
         <hr>
         <h4>General Rules</h4>

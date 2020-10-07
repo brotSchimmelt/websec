@@ -71,7 +71,7 @@ if (isset($_POST['change-pwd-submit'])) {
 
 
     <!-- HTML Content BEGIN -->
-    <div class="con-search">
+    <div class="page-container">
         <div class="jumbotron form-container-shop shadow">
             <h1 class="display-5 text-center">Change Your Password</h1>
             <br>

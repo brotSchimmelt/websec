@@ -81,7 +81,7 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
 
 
     <!-- HTML Content BEGIN -->
-    <div class="con-search">
+    <div class="page-container">
         <h1 class="display-4">Your Scorecard</h1>
         <br>
         <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>

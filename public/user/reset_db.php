@@ -78,7 +78,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
 
 
     <!-- HTML Content BEGIN -->
-    <div class="con-search">
+    <div class="page-container">
 
         <h1 class="display-4">Challenge Settings</h1>
         <br>

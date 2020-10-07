@@ -214,11 +214,11 @@ h5.green {
     background-color: rgba(140, 149, 152, 0.2);
 }
 
-.con-center {
+.page-center {
     text-align: center;
 }
 
-.con-search {
+.page-container {
     margin: auto;
     width: 60%;
     padding: 10px;

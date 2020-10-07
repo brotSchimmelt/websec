@@ -68,7 +68,7 @@ if (isset($_POST['doit-delete'])) {
     ?>
         <header id="desert-section">
             <div class="dark-overlay2">
-                <div id="home-inner2" class="con-search con-center">
+                <div id="home-inner2" class="page-container page-center">
                     <h1 class="display-4">Your cart is currently empty</h1>
                 </div>
             </div>
@@ -92,7 +92,7 @@ if (isset($_POST['doit-delete'])) {
                 </tbody>
             </table>
         </div>
-        <div class="cart-center con-center">
+        <div class="cart-center page-center">
             <button class="btn btn-danger btn" data-toggle="modal" data-target="#delete-cart">Delete all items</button>
             <span data-content="Due to recent hacker attacks our shop is currently closed! Don't worry, we will remember your cart items the next visit." data-toggle="popover" data-trigger="hover">
                 <button class="btn btn-wwu-primary" style="pointer-events: none;" disabled>Checkout</button>
