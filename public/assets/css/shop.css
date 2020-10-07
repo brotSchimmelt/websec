@@ -288,3 +288,12 @@ h5.green {
     margin-left: auto;
     margin-right: auto;
 }
+
+.list-group-item.active {
+    background-color: rgba(95, 140, 23, 0.7);
+    border-color: rgba(95, 140, 23, 0.7);
+}
+
+#help-row {
+    width: 80%;
+}
