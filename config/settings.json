@@ -25,7 +25,8 @@
         "deny_list": [
             "admin",
             "elliot",
-            "l337_h4ck3r"
+            "l337_h4ck3r",
+            "administrator"
         ]
     }
 }
