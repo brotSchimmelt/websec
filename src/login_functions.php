@@ -244,6 +244,19 @@ function do_login($username, $mail, $adminFlag, $unlockedFlag)
     update_last_login($username);
 
     set_user_cookies($username);
+
+    check_sqli_db($username, $mail);
+}
+
+// ensure a sqlite db exits for a given user
+function check_sqli_db($username, $mail)
+{
+
+    $dbName = DAT . slug($username) . ".sqlite";
+
+    if (!file_exists($dbName)) {
+        create_sqli_db($username, $mail);
+    }
 }
 
 // validate all user input for login

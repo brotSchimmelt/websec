@@ -1,9 +1,6 @@
 <?php
 
 // trim string to include only valid characters
-
-use function PHPUnit\Framework\fileExists;
-
 function slug($z)
 {
     $z = strtolower($z);

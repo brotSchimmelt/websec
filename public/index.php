@@ -6,6 +6,7 @@ require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN); // DB credentials
 require(FUNC_BASE); // Basic functions
 require(FUNC_LOGIN); // Login & registration functions
+require(FUNC_WEBSEC); // Challenge and SQLi functions
 require(ERROR_HANDLING); // Error handling
 
 // check if login is disabled
