@@ -725,6 +725,9 @@ function get_user_mail($selector)
 // update the field last login in the users table with current timestamp
 function update_last_login($username)
 {
+
+    $_SESSION['pwdChangeReminder'] = set_change_pwd_reminder($username);
+
     $sql = "UPDATE `users` SET `last_login`=:timestamp WHERE `user_name`=:user";
     $timestamp = date("Y-m-d H:i:s");
 
@@ -738,6 +741,16 @@ function update_last_login($username)
         trigger_error("Code Error: last_login field could not be updated.");
         header("location: " . LOGIN_PAGE);
         exit();
+    }
+}
+
+function set_change_pwd_reminder($username)
+{
+    // set flag for default password reminder
+    if (("administrator" == $username) && is_null(get_last_login($username))) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -760,4 +773,22 @@ function set_user_cookies($username)
     setcookie("XSS_YOUR_SESSION", $result['reflective_xss'], 0, "/");
     $_SESSION['reflectiveXSS'] = $result['reflective_xss'];
     $_SESSION['storedXSS'] = $result['stored_xss'];
+}
+
+// get the last login timestamp of a give user
+function get_last_login($username)
+{
+
+    $sql = "SELECT `last_login` FROM `users` WHERE `user_name`=?";
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+    } catch (Exception $e) {
+        display_exception_msg($e, "127");
+        exit();
+    }
+
+    return $result['last_login'];
 }

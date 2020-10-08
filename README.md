@@ -136,6 +136,7 @@ error= ...
 - **124**: The challenge status could not be updated. See query in ```function set_challenge_status```
 - **125**: The challenge status could not be fetched. See query in ```function lookup_challenge_status```
 - **126**: A username is used in either the challengeStatus table or the fakeCookie table without corresponding entry in the users table. This could happen if a user is manually deleted from the users table without deleting it from the two tables mentioned above.
+- **127**: The ```last_login``` could not be fetched from the database for the default administrator user.
 
 *[Shop Database]*
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```

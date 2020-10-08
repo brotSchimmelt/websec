@@ -14,7 +14,7 @@ require(FUNC_SHOP);
 require(ERROR_HANDLING);
 require(MESSAGES);
 
-// Check admin status
+// Check login status
 if (!is_user_logged_in()) {
     // Redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
@@ -55,8 +55,8 @@ if (isset($_POST['unlock-submit'])) {
     <?php
     // Load navbar
     require_once(HEADER_SHOP);
-    // Load error messages, user notifications etc.
-    require(MESSAGES);
+    // // Load error messages, user notifications etc.
+    // require(MESSAGES);
 
     // check if user is unlocked
     if (!is_user_unlocked()) {
@@ -64,6 +64,11 @@ if (isset($_POST['unlock-submit'])) {
         $unlocked = true;
     } else {
         $unlocked = false;
+    }
+
+    // check if administrator has to change default password
+    if ($_SESSION['pwdChangeReminder']) {
+        echo $modalInputXSSCookie;
     }
     ?>
     <header id="main-header">
@@ -297,6 +302,10 @@ if (isset($_POST['unlock-submit'])) {
     require_once(JS_SHOP); // Custom JavaScript
     if ($unlocked) {
         echo "<script>$('#greeting').modal('show')</script>";
+    }
+
+    if ($_SESSION['pwdChangeReminder']) {
+        echo "<script>$('#xss-solution').modal('show')</script>";
     }
     ?>
 </body>
