@@ -163,7 +163,7 @@ function check_entry_exists($entry, $sql)
 
         // Check fake users
         foreach ($fakeUsers as $fakeName) {
-            if (stripos($entry, $fakeName) !== false) {
+            if ($fakeName == $entry) {
                 return true;
             }
         }
