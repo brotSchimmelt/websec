@@ -744,6 +744,7 @@ function update_last_login($username)
     }
 }
 
+// check if a user needs to change the password
 function set_change_pwd_reminder($username)
 {
     // set flag for default password reminder
