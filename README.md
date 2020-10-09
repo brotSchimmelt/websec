@@ -41,6 +41,10 @@ shop/
 
 **Other Asset Files**: ```file_name.ending```
 
+## Default User
+- user: administrator
+- password: dpbCpfcAqVHY3gYf
+- please change after first login!
 
 ## Errors & Exceptions
 
@@ -72,6 +76,7 @@ error= ...
   - mailTaken [register] --> check
   - invalidToken [login] (Kontext: Password reset) --> check
   - invalidMailFormat [register] --> check
+  - TODO: Add password change message during first 'administrator login'
 
 
 ### Error Code Meaning [Optional Error Output]
