@@ -1,5 +1,16 @@
 #!/bin/bash
 
+################################################################################
+#   Purpose: Convert the markdown documentations to valid html.                #
+#   Test: Tested on Ubuntu 18 LTS                                              #
+#   Note: Not yet tested on Ubuntu 20 LTS                                      #
+#   Author: tknebler@gmail.com                                                 #
+#                                                                              #
+#   Check if 'grip' is installed                                               #
+#   Convert markdown files in docs/ folder to html                             #
+#   Fix formating in html files                                                #
+################################################################################
+
 Path=../docs
 test_flag=0
 cd $Path
@@ -9,10 +20,11 @@ python -c "import grip" &> /dev/null
 
 if [ $? -gt 0 ]; then
 test_flag=1
-echo "## It seems like 'grip' is currently not installed on your system."
-echo "## 'grip' is a dependency neccessary in order to convert markdown files to html."
+printf "## It seems like 'grip' is currently not installed on your system.\n"
+printf "## 'grip' is a dependency neccessary in order to convert markdown "\
+"files to html.\n"
 read -p "## Do you want to install it now via pip? [Y/n] " answer
-echo ""
+printf "\n\n"
 
     if [ -z $answer]; then
     answer='Y'
@@ -24,8 +36,10 @@ echo ""
     fi
 
     if [ $? -gt 0 ]; then
-        echo "\n## Error: It seems like you do not have pip installed on your system."
-        echo "## Please visit pypa.io and download the latest version of pip. Then run this script again."
+        printf "Error: It seems like you do not have pip installed on "\
+        "your system.\n"
+        printf "Please visit pypa.io and download the latest version of pip. "\
+        "Then run this script again.\n"
         exit 1
     fi
 fi

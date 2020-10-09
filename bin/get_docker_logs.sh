@@ -1,14 +1,25 @@
 #!/bin/bash
 
+################################################################################
+#   Purpose: Extract selected log files from docker containers                 #
+#   Test: Tested on Ubuntu 18 LTS                                              #
+#   Note: Not yet tested on Ubuntu 20 LTS                                      #
+#   Author: tknebler@gmail.com                                                 #
+#                                                                              #
+#   Select which log files to copy                                             #
+#   Copy log files from docker containers                                      #
+################################################################################
+
 printf "## This script outputs all relevant log files\n"
 printf "## from the docker container into this directory.\n\n"
-printf "## The relevant commands can also be found under: https://docs.docker.com/engine/reference/commandline/logs/ \n"
+printf "## The relevant commands can also be found under: "\
+"https://docs.docker.com/engine/reference/commandline/logs/ \n"
 
 # Select log files
 user_input=-1
-while (( $user_input < 1 || $user_input > 5 ))
-do
-printf "\n1) Apache error logs 2) Apache access logs \n3) MSMPT (mail) logs 4) MySQL logs \n5) All of the above\n\n"
+while (( $user_input < 1 || $user_input > 5 )); do
+printf "\n1) Apache error logs 2) Apache access logs \n3) MSMPT (mail) logs "\
+"4) MySQL logs \n5) All of the above\n\n"
 printf "Select an option: "
 read user_input
 done
