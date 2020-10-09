@@ -68,7 +68,7 @@ if (isset($_POST['unlock-submit'])) {
 
     // check if administrator has to change default password
     if ($_SESSION['pwdChangeReminder']) {
-        echo $modalInputXSSCookie;
+        echo $changeDefaultPwdReminder;
     }
     ?>
     <header id="main-header">
@@ -305,7 +305,7 @@ if (isset($_POST['unlock-submit'])) {
     }
 
     if ($_SESSION['pwdChangeReminder']) {
-        echo "<script>$('#xss-solution').modal('show')</script>";
+        echo "<script>$('#pwd-change-reminder').modal('show')</script>";
     }
     ?>
 </body>
