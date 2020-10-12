@@ -52,10 +52,12 @@ if (isset($_POST['update-domains'])) {
     set_allowed_domains($domainList);
 }
 if (isset($_POST['update-badge'])) {
+    $learnweb = (filter_var($_POST['input-learnweb'], FILTER_VALIDATE_URL)) ? $_POST['input-learnweb'] : "https://www.uni-muenster.de/LearnWeb/learnweb2/";
     $reflectiveXSS = (filter_var($_POST['input-reflective-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-reflective-xss'] : "https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)";
     $storedXSS = (filter_var($_POST['input-stored-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-stored-xss'] : "https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)";
     $sqli = (filter_var($_POST['input-sqli'], FILTER_VALIDATE_URL)) ? $_POST['input-sqli'] : "https://en.wikipedia.org/wiki/SQL_injection";
     $csrf = (filter_var($_POST['input-csrf'], FILTER_VALIDATE_URL)) ? $_POST['input-csrf'] : "https://en.wikipedia.org/wiki/Cross-site_request_forgery";
+    set_setting("learnweb", "link", $learnweb);
     set_badge_link("reflective_xss", $reflectiveXSS);
     set_badge_link("stored_xss", $storedXSS);
     set_badge_link("sqli", $sqli);
@@ -243,10 +245,13 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        Here you can set the links for the challenge badges. By default the links are set to the corresponding wikipedia articles.
+                                        Here you can set the links for the challenge badges and the current learnweb course. By default the links are set to the corresponding wikipedia articles or the learnweb landing page.
+                                        Please remember to put <b>http</b> or <b>https</b> in front of the link. Otherwise it is not registered as a valid URL. I was too lazy to program another string filter, sorry :/
                                     </p>
                                     <br>
                                     <form action="shop_settings.php" method="post">
+                                        <label for="input-learnweb"><strong>Link Current Learnweb Course:</strong></label>
+                                        <input type="text" class="form-control" name="input-learnweb" value="<?= get_setting("learnweb", "link") ?>"><br>
                                         <label for="input-reflective-xss"><strong>Link Reflective XSS:</strong></label>
                                         <input type="text" class="form-control" name="input-reflective-xss" value="<?= get_challenge_badge_link("reflective_xss") ?>"><br>
                                         <label for="input-stored-xss"><strong>Link Stored XSS:</strong></label>
