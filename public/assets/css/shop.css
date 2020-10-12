@@ -294,7 +294,7 @@ h5.green {
     border-color: rgba(95, 140, 23, 0.7);
 }
 
-#help-row {
+#settings-row {
     width: 80%;
 }
 
@@ -304,4 +304,25 @@ h5.green {
 
 .wwu-blue-background {
     background-color: rgba(46, 109, 134, 1);
+}
+
+.setting-form {
+    max-width: 50%;
+}
+
+#help-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.help-list-group {
+    flex: none;
+    padding-bottom: 20px;
+}
+
+.help-text-list-group {
+    flex: none;
+    width: 70%;
+    margin-bottom: 30px;
 }

@@ -78,17 +78,14 @@ if (!is_user_unlocked()) {
         <p>Browser Security: Most modern browsers have built-in security mechanisms to prevent attacks you need to perform here. Use an insecure browser, e.g., Microsoft Edge or Internet Explorer, for completing the challenges.</p>
         <br>
 
-        <!-- Horizontal -->
-        <div class="flex-row" id="help-row">
-            <div class="list-group list-group-horizontal" id="list-tab" role="tablist">
+        <!-- Vertical -->
+        <div id="help-container">
+            <div class="list-group help-list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action active" id="list-xss-list" data-toggle="list" href="#list-xss" role="tab" aria-controls="xss">Cross-Site Scripting</a>
                 <a class="list-group-item list-group-item-action" id="list-sqli-list" data-toggle="list" href="#list-sqli" role="tab" aria-controls="sqli">SQL Injections</a>
                 <a class="list-group-item list-group-item-action" id="list-csrf-list" data-toggle="list" href="#list-csrf" role="tab" aria-controls="csrf">Contact Form Challenge</a>
             </div>
-        </div>
-        <br><br>
-        <div class="flex-row">
-            <div class="tab-content" id="nav-tabContent">
+            <div class="tab-content help-text-list-group" id="nav-tabContent">
                 <!-- XSS -->
                 <div class="tab-pane fade show active" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
                     <h4>Cross-Site Scripting</h4>
@@ -142,6 +139,7 @@ if (!is_user_unlocked()) {
                         If you successfully posted your attack, you will see a "Thank you!" message.
                     </p>
                 </div>
+
             </div>
         </div>
     </div>
