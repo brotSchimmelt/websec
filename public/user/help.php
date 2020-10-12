@@ -60,34 +60,39 @@ if (!is_user_unlocked()) {
     <div class="page-container">
         <h1 class="display-4">User Instructions</h1>
         <hr>
-        <h4>General Rules</h4>
-        <p>
-            Please read the following instructions <em>carefully</em>!
-            <br>
-            This website is a learning tool for the corresponding course Web Security at the University of Münster.
-            This website yields security vulnerabilities that can be abused.
-            These vulnerabilities are intended for learning purpose and you are not allowed to exploit these in any other way!
-            <br>
-            Any violation of only one of these rules will ban you from this course.
-            Furthermore, in case of violation legal measures will be taken!
-            <br>
-            You are bound the lecturer's and tutor's instructions!
-        </p>
-        <p>Resetting: You can always reset every challenge. This will delete all your actions of the corresponding challenge and withdraw your achievements!</p>
-        <p>External tools: All challenges can (and must) be solved without the use of external tools! We keep track of how you solve the challenges and using any software, e.g., for automation, will make you immediately fail! You are here to learn about Web hacking and not about how to run a specific toolchain.</p>
-        <p>Browser Security: Most modern browsers have built-in security mechanisms to prevent attacks you need to perform here. Use an insecure browser, e.g., Microsoft Edge or Internet Explorer, for completing the challenges.</p>
         <br>
 
-        <!-- Vertical -->
+        <!-- Vertical List Group-->
         <div id="help-container">
             <div class="list-group help-list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="list-xss-list" data-toggle="list" href="#list-xss" role="tab" aria-controls="xss">Cross-Site Scripting</a>
+                <a class="list-group-item list-group-item-action active" id="list-general-list" data-toggle="list" href="#list-general" role="tab" aria-controls="general">Genral Instructions</a>
+                <a class="list-group-item list-group-item-action" id="list-xss-list" data-toggle="list" href="#list-xss" role="tab" aria-controls="xss">Cross-Site Scripting</a>
                 <a class="list-group-item list-group-item-action" id="list-sqli-list" data-toggle="list" href="#list-sqli" role="tab" aria-controls="sqli">SQL Injections</a>
                 <a class="list-group-item list-group-item-action" id="list-csrf-list" data-toggle="list" href="#list-csrf" role="tab" aria-controls="csrf">Contact Form Challenge</a>
             </div>
             <div class="tab-content help-text-list-group" id="nav-tabContent">
+                <!-- General Instructions -->
+                <div class="tab-pane fade show active" id="list-general" role="tabpanel" aria-labelledby="list-general-list">
+                    <h4>General Rules</h4>
+                    <p>
+                        Please read the following instructions <em>carefully</em>!
+                        <br>
+                        This website is a learning tool for the corresponding course Web Security at the University of Münster.
+                        This website yields security vulnerabilities that can be abused.
+                        These vulnerabilities are intended for learning purpose and you are not allowed to exploit these in any other way!
+                        <br>
+                        Any violation of only one of these rules will ban you from this course.
+                        Furthermore, in case of violation legal measures will be taken!
+                        <br>
+                        You are bound the lecturer's and tutor's instructions!
+                    </p>
+                    <p>Resetting: You can always reset every challenge. This will delete all your actions of the corresponding challenge and withdraw your achievements!</p>
+                    <p>External tools: All challenges can (and must) be solved without the use of external tools! We keep track of how you solve the challenges and using any software, e.g., for automation, will make you immediately fail! You are here to learn about Web hacking and not about how to run a specific toolchain.</p>
+                    <p>Browser Security: Most modern browsers have built-in security mechanisms to prevent attacks you need to perform here. Use an insecure browser, e.g., Microsoft Edge or Internet Explorer, for completing the challenges.</p>
+                    <br>
+                </div>
                 <!-- XSS -->
-                <div class="tab-pane fade show active" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
+                <div class="tab-pane fade" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
                     <h4>Cross-Site Scripting</h4>
                     <p>
                         This website yields security vulnerabilities that can be abused for XSS.
