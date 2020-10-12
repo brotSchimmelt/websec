@@ -94,7 +94,7 @@ if (isset($resetCSRFModal)) {
 if (isset($resetAllModal)) {
     if ($resetAllModal) {
         echo $modalSuccessResetAll;
-        echo "<script>$('#reset-csrf-success').modal('show')</script>";
+        echo "<script>$('#reset-all-success').modal('show')</script>";
     }
 }
 
