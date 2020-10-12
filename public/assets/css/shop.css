@@ -297,3 +297,11 @@ h5.green {
 #help-row {
     width: 80%;
 }
+
+.wwu-green-background {
+    background-color: rgba(145, 174, 100, 1);
+}
+
+.wwu-blue-background {
+    background-color: rgba(46, 109, 134, 1);
+}

@@ -1,5 +1,13 @@
 <?php
 /*
+* This file contains all alerts and modals for the shop. In order to keep the 
+* source code of every site as short as possible and not to reveal any hints to 
+* the students, every message can be loaded individually by its php variable 
+* name if necessary.
+*/
+
+
+/*
 * Alerts
 */
 $alertProductSearch = '<br>
@@ -23,11 +31,11 @@ $alertContactFieldClosed = '<br>
     In urgent cases please contact our support team.<br>
     Thank you for you patience!<br>
 </div><br>';
-
 $alertscorecardAllSolved = '<br>
 <div class="alert alert-success shadow" role="alert">
     <b>Congratulation!</b> You solved every challenge in this shop. Good job!
 </div>';
+
 
 /*
 * Modals
@@ -39,9 +47,9 @@ $modalInputXSSCookie = '<!--Modal: Input - Reflective XSS Cookie-->
         <div class="modal-content">
 
             <!--Header-->
-            <div class="modal-header">
-                <h5 class="mt-2">Enter Cookie</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Enter Cookie</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -53,7 +61,7 @@ $modalInputXSSCookie = '<!--Modal: Input - Reflective XSS Cookie-->
                         <p>Have you found the XSS session cookie?</p>
                         <input class="form-control" type="text" name="xss-cookie" id="xss-cookie" placeholder="XSS_YOUR_SESSION" autofocus required>
                         <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-primary" name="xss-cookie-submit" id="xss-cookie-submit">Send</button>
+                            <button type="submit" class="btn btn-wwu-cart" name="xss-cookie-submit" id="xss-cookie-submit">Send</button>
                         </div>
                     </form>
                 </div>
@@ -66,9 +74,9 @@ $modalErrorXSSCookieWrong = '<!--Modal: Error - Reflective XSS Cookie Wrong-->
 <div class="modal fade" tabindex="-1" role="dialog" id="xss-wrong" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Wrong Cookie</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header bg-danger text-white shadow">
+                <h4 class="modal-title">Wrong Cookie</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -77,7 +85,7 @@ $modalErrorXSSCookieWrong = '<!--Modal: Error - Reflective XSS Cookie Wrong-->
                 <p><strong>Hint</strong>: The cookie you are looking for is called <i>XSS_YOUR_SESSION</i>.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-danger text-white" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -87,9 +95,9 @@ $modalSuccessReflectiveXSS = '<!--Modal: Success - Reflective XSS Cookie Challen
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Congratulation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Congratulation</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -97,7 +105,7 @@ $modalSuccessReflectiveXSS = '<!--Modal: Success - Reflective XSS Cookie Challen
                 <p>You have solved this challenge!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -107,9 +115,9 @@ $modalInfoStolenSession = '<!--Modal: Info - Stolen Session Elliot-->
 <div class="modal fade" tabindex="-1" role="dialog" id="xss-elliot" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Welcome back, Elliot!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Welcome back, Elliot!</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -120,7 +128,7 @@ $modalInfoStolenSession = '<!--Modal: Info - Stolen Session Elliot-->
                 </p>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-success" href="/shop/overview.php" role="button">Go to products</a>
+                <a class="btn btn-wwu-cart" href="/shop/overview.php" role="button">Go to products</a>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Got it!</button>
             </div>
         </div>
@@ -131,9 +139,9 @@ $modalSuccessStoredXSS = '<!--Modal: Success - Stored XSS Cookie Challenge SOLVE
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-stored-xss" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Congratulation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Congratulation</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -141,7 +149,7 @@ $modalSuccessStoredXSS = '<!--Modal: Success - Stored XSS Cookie Challenge SOLVE
                 <p>You have solved the stored XSS challenge!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -151,9 +159,9 @@ $modalSuccessResetAll = '<!--Modal: Success - Reset Reflective XSS Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-reflective-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">All challenges successfully reset</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">All challenges successfully reset</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -161,7 +169,7 @@ $modalSuccessResetAll = '<!--Modal: Success - Reset Reflective XSS Challenge-->
                 <p>All challenges have successfully been reset.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -171,9 +179,9 @@ $modalSuccessResetReflectiveXSS = '<!--Modal: Success - Reset Reflective XSS Cha
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-reflective-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Challenge successfully reset</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Challenge successfully reset</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -181,7 +189,7 @@ $modalSuccessResetReflectiveXSS = '<!--Modal: Success - Reset Reflective XSS Cha
                 <p>The database for the reflective XSS challenge was successfully reset and all relevant cookies were updated.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -191,9 +199,9 @@ $modalSuccessResetStoredXSS = '<!--Modal: Success- Reset Stored XSS Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-stored-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Challenge successfully reset</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Challenge successfully reset</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -201,7 +209,7 @@ $modalSuccessResetStoredXSS = '<!--Modal: Success- Reset Stored XSS Challenge-->
                 <p>The database for the stored XSS challenge was successfully reset and all relevant cookies were updated.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -211,9 +219,9 @@ $modalSuccessResetSQLi = '<!--Modal: Success - Reset SQLi Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-sqli-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Challenge successfully reset</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Challenge successfully reset</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -221,7 +229,7 @@ $modalSuccessResetSQLi = '<!--Modal: Success - Reset SQLi Challenge-->
                 <p>The database for the SQLi challenge was successfully reset.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -231,9 +239,9 @@ $modalSuccessResetCSRF = '<!--Modal: Success - Reset CSRF Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-csrf-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Challenge successfully reset</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Challenge successfully reset</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -241,7 +249,7 @@ $modalSuccessResetCSRF = '<!--Modal: Success - Reset CSRF Challenge-->
                 <p>The database for the CSRF challenge was successfully reset.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -251,9 +259,9 @@ $modalSuccessSQLi = '<!--Modal: Success - SQLi Challenge SOLVED-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-sqli" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Congratulation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Congratulation</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -261,7 +269,7 @@ $modalSuccessSQLi = '<!--Modal: Success - SQLi Challenge SOLVED-->
                 <p>You have solved the SQLi challenge!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="return RefreshPage();">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal" onclick="return RefreshPage();">Okay</button>
             </div>
         </div>
     </div>
@@ -271,9 +279,9 @@ $modalInfoSQLiWrongUser = '<!--Modal: Info - SQLi Wrong Premium User-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-sqli-wrong-premium" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Info</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-blue-background text-white shadow">
+                <h4 class="modal-title">Info</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -281,7 +289,7 @@ $modalInfoSQLiWrongUser = '<!--Modal: Info - SQLi Wrong Premium User-->
                 <p>It is nice of you that you upgraded another user to premium, but the challenge is to upgrade yourself.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-primary" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -291,17 +299,17 @@ $modalInfoNoPremium = '<!--Modal: Info - SQLi User Added But No Premium-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-sqli-wrong-user" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Info</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-blue-background text-white shadow">
+                <h4 class="modal-title">Info</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>You have added a new user to the database. Now try to upgrade yourself to premium.</p>
+                <p>You have added a new user to the database. Now try to upgrade yourself to a premium account.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-primary" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -311,9 +319,9 @@ $modalSuccessCSRF = '<!--Modal: Success - CSRF Challenge SOLVED-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Congratulation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Congratulation</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -321,7 +329,7 @@ $modalSuccessCSRF = '<!--Modal: Success - CSRF Challenge SOLVED-->
                 <p>You have solved the CSRF challenge.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -331,9 +339,9 @@ $modalSuccessCSRFWrongReferrer = '<!--Modal: Success - CSRF Challenge SOLVED (bu
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf-referrer" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Congratulation, I guess</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header bg-warning text-white shadow">
+                <h4 class="modal-title">Congratulation, I guess</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -345,7 +353,7 @@ $modalSuccessCSRFWrongReferrer = '<!--Modal: Success - CSRF Challenge SOLVED (bu
                     <i>Hint: </i>Try to utilize a text form on one of the other Websec Shop pages.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-warning text-white" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -355,9 +363,9 @@ $modalSuccessCSRFWrongMessage = '<!--Modal: Success - CSRF Challenge SOLVED (but
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-success-csrf-pwned" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Congratulation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Congratulation</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -365,7 +373,7 @@ $modalSuccessCSRFWrongMessage = '<!--Modal: Success - CSRF Challenge SOLVED (but
                 <p>You should have sent <i>pwned</i> but ok. Challenge passed!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
@@ -375,9 +383,9 @@ $modalInfoCSRFAlreadyPosted = '<!--Modal: Info - CSRF Challenge already post in 
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-csrf-already-posted" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header wwu-blue-background text-white shadow">
+                <h4 class="modal-title">Information</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -385,7 +393,7 @@ $modalInfoCSRFAlreadyPosted = '<!--Modal: Info - CSRF Challenge already post in 
                 <p>You have already posted a request. If you want to try again, you can reset the challenge in the account menu.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-primary" data-dismiss="modal">Got It!</button>
             </div>
         </div>
     </div>
@@ -395,9 +403,9 @@ $changeDefaultPwdReminder = '<!--Modal: Info - Default admin user has to change 
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="pwd-change-reminder" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Reminder!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header bg-warning text-white shadow">
+                <h4 class="modal-title">Reminder!</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -407,7 +415,7 @@ $changeDefaultPwdReminder = '<!--Modal: Info - Default admin user has to change 
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Got It</button>
+                <button type="button" class="btn btn-warning text-white" data-dismiss="modal">Got It!</button>
             </div>
         </div>
     </div>
@@ -417,9 +425,9 @@ $modalErrorCSRFUserMismatch = '<!--Modal: Error - CSRF Challenge user mismatch--
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="challenge-info-csrf-user-mismatch" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header bg-danger text-white shadow">
+                <h4 class="modal-title">Information</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -433,7 +441,7 @@ $modalErrorCSRFUserMismatch = '<!--Modal: Error - CSRF Challenge user mismatch--
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Got It!</button>
             </div>
         </div>
     </div>
@@ -443,9 +451,9 @@ $modalConfirmDeleteCart = '<!--Modal: Info - Confirm to delete your cart-->
 <div class="modal fade" tabindex="-1" role="dialog" id="delete-cart" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header bg-danger text-white shadow">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -467,8 +475,8 @@ $modalGreeting = '<!-- Greeting Modal -->
 <div class="modal fade" id="greeting" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="greetingLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="greetingLabel">Instructions</h5>
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h3 class="modal-title" id="greetingLabel">Instructions</h3>
             </div>
             <div class="modal-body">
                 <h4>General Rules</h4>
@@ -537,17 +545,22 @@ $modalGreeting = '<!-- Greeting Modal -->
                     Find a way to submit a support request. Your request message needs to be "pwned". That will show them!<br>
                     If you successfully posted your attack, you will see a "Thank you!" message.
                 </p>
-            </div>
-            <div class="modal-footer text-center">
-                <form class="form-signin" action="main.php" method="post">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="check" name="check" required>
-                        <label class="form-check-label" for="check">I\'ve read the instructions</label>
-                    </div>
-                    <button type="submit" name="unlock-submit" id="unlock-btn" class="btn btn-success mt-2">Let\'s Go!</button>
-                </form>
+                <div class="text-center justify-content-center">
+                    <br>
+                    <form class="form-signin" action="main.php" method="post">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="check" name="check" required>
+                            <label class="form-check-label" for="check">I\'ve read the instructions!</label>
+                        </div>
+                        <button type="submit" name="unlock-submit" id="unlock-btn" class="btn btn-wwu-cart mt-2">Let\'s Go!</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <!--Modal END-->';
+
+// old footer #greeting
+// </div>
+// <div class="modal-footer text-center justify-content-center">
