@@ -73,7 +73,7 @@ if (!is_user_unlocked()) {
             <div class="tab-content help-text-list-group" id="nav-tabContent">
                 <!-- General Instructions -->
                 <div class="tab-pane fade show active" id="list-general" role="tabpanel" aria-labelledby="list-general-list">
-                    <h4>General Rules</h4>
+                    <h4 class="text-wwu-green">General Rules</h4>
                     <p>
                         Please read the following instructions <em>carefully</em>!
                         <br>
@@ -93,7 +93,7 @@ if (!is_user_unlocked()) {
                 </div>
                 <!-- XSS -->
                 <div class="tab-pane fade" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
-                    <h4>Cross-Site Scripting</h4>
+                    <h4 class="text-wwu-green">Cross-Site Scripting</h4>
                     <p>
                         This website yields security vulnerabilities that can be abused for XSS.
                         You are not allowed to exploit these vulnerabilities in any other way than intended for your excercises.
@@ -115,7 +115,7 @@ if (!is_user_unlocked()) {
                 </div>
                 <!-- SQLi -->
                 <div class="tab-pane fade" id="list-sqli" role="tabpanel" aria-labelledby="list-sqli-list">
-                    <h4>SQL Injections</h4>
+                    <h4 class="text-wwu-green">SQL Injections</h4>
                     <p>
                         For SQLi challenges you will have a personal database.
                         You are not allowed to use automatic scripts on this database.
@@ -133,7 +133,7 @@ if (!is_user_unlocked()) {
                 </div>
                 <!-- CSRF -->
                 <div class="tab-pane fade" id="list-csrf" role="tabpanel" aria-labelledby="list-csrf-list">
-                    <h4>Contact Form Challenge</h4>
+                    <h4 class="text-wwu-green">Contact Form Challenge</h4>
                     <p>
                         This website has a (fake) contact form that lets you contact the support team.<br>
                         Too bad that due to recent hacker activity this form has been disabled and you cannot make any request.

@@ -326,3 +326,7 @@ h5.green {
     width: 70%;
     margin-bottom: 30px;
 }
+
+.text-wwu-green {
+    color: rgba(145, 174, 100, 1);
+}
