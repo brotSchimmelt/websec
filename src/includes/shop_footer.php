@@ -32,6 +32,7 @@
             <ul class="list-unstyled text-small">
                 <li><a class="text-muted" href="https://unsplash.com/license">Unsplash</a></li>
                 <li><a class="text-muted" href="https://www.pexels.com/license/">Pexels</a></li>
+                <li><a class="text-muted" href="https://smartmockups.com/">Smart Mockups</a></li>
                 <li><a class="text-muted" href="<?= get_setting("learnweb", "link") ?>">Learnweb</a></li>
             </ul>
         </div>
