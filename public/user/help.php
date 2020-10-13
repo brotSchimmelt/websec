@@ -24,8 +24,27 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// initialize links to separate help sections
+$general = "";
+$xss = "";
+$sqli = "";
+$csrf = "";
 
+// Load POST or GET variables and sanitize input BELOW this comment
+if (isset($_GET['help'])) {
+
+    $section = filter_input(INPUT_GET, 'help', FILTER_SANITIZE_STRING);
+
+    // check for sections
+    $xss = ($section == "xss") ? "active" : "";
+    $sqli = ($section == "sqli") ? "active" : "";
+    $csrf = ($section == "csrf") ? "active" : "";
+}
+
+// set default to list-group
+if (empty($xss) && empty($sqli) && empty($csrf)) {
+    $general = "active";
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -65,14 +84,14 @@ if (!is_user_unlocked()) {
         <!-- Vertical List Group-->
         <div id="help-container">
             <div class="list-group help-list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="list-general-list" data-toggle="list" href="#list-general" role="tab" aria-controls="general">Genral Instructions</a>
-                <a class="list-group-item list-group-item-action" id="list-xss-list" data-toggle="list" href="#list-xss" role="tab" aria-controls="xss">Cross-Site Scripting</a>
-                <a class="list-group-item list-group-item-action" id="list-sqli-list" data-toggle="list" href="#list-sqli" role="tab" aria-controls="sqli">SQL Injections</a>
-                <a class="list-group-item list-group-item-action" id="list-csrf-list" data-toggle="list" href="#list-csrf" role="tab" aria-controls="csrf">Contact Form Challenge</a>
+                <a class="list-group-item list-group-item-action <?= $general ?>" id="list-general-list" data-toggle="list" href="#list-general" role="tab" aria-controls="general">Genral Instructions</a>
+                <a class="list-group-item list-group-item-action <?= $xss ?>" id="list-xss-list" data-toggle="list" href="#list-xss" role="tab" aria-controls="xss">Cross-Site Scripting</a>
+                <a class="list-group-item list-group-item-action <?= $sqli ?>" id="list-sqli-list" data-toggle="list" href="#list-sqli" role="tab" aria-controls="sqli">SQL Injections</a>
+                <a class="list-group-item list-group-item-action <?= $csrf ?>" id="list-csrf-list" data-toggle="list" href="#list-csrf" role="tab" aria-controls="csrf">Contact Form Challenge</a>
             </div>
             <div class="tab-content help-text-list-group" id="nav-tabContent">
                 <!-- General Instructions -->
-                <div class="tab-pane fade show active" id="list-general" role="tabpanel" aria-labelledby="list-general-list">
+                <div class="tab-pane fade show <?= $general ?>" id="list-general" role="tabpanel" aria-labelledby="list-general-list">
                     <h4 class="text-wwu-green">General Rules</h4>
                     <p>
                         Please read the following instructions <em>carefully</em>!
@@ -92,7 +111,7 @@ if (!is_user_unlocked()) {
                     <br>
                 </div>
                 <!-- XSS -->
-                <div class="tab-pane fade" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
+                <div class="tab-pane fade show <?= $xss ?>" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
                     <h4 class="text-wwu-green">Cross-Site Scripting</h4>
                     <p>
                         This website yields security vulnerabilities that can be abused for XSS.
@@ -114,7 +133,7 @@ if (!is_user_unlocked()) {
                     </p>
                 </div>
                 <!-- SQLi -->
-                <div class="tab-pane fade" id="list-sqli" role="tabpanel" aria-labelledby="list-sqli-list">
+                <div class="tab-pane fade show <?= $sqli ?>" id="list-sqli" role="tabpanel" aria-labelledby="list-sqli-list">
                     <h4 class="text-wwu-green">SQL Injections</h4>
                     <p>
                         For SQLi challenges you will have a personal database.
@@ -132,7 +151,7 @@ if (!is_user_unlocked()) {
                     </p>
                 </div>
                 <!-- CSRF -->
-                <div class="tab-pane fade" id="list-csrf" role="tabpanel" aria-labelledby="list-csrf-list">
+                <div class="tab-pane fade show <?= $csrf ?>" id="list-csrf" role="tabpanel" aria-labelledby="list-csrf-list">
                     <h4 class="text-wwu-green">Contact Form Challenge</h4>
                     <p>
                         This website has a (fake) contact form that lets you contact the support team.<br>
