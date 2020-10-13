@@ -83,7 +83,7 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
 
         <!-- Vertical List Group-->
         <div id="help-container">
-            <div class="list-group help-list-group" id="list-tab" role="tablist">
+            <div class="list-group help-list-group mr-3" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action <?= $general ?>" id="list-general-list" data-toggle="list" href="#list-general" role="tab" aria-controls="general">Genral Instructions</a>
                 <a class="list-group-item list-group-item-action <?= $xss ?>" id="list-xss-list" data-toggle="list" href="#list-xss" role="tab" aria-controls="xss">Cross-Site Scripting</a>
                 <a class="list-group-item list-group-item-action <?= $sqli ?>" id="list-sqli-list" data-toggle="list" href="#list-sqli" role="tab" aria-controls="sqli">SQL Injections</a>
