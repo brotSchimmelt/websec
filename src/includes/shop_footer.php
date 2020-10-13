@@ -10,27 +10,29 @@
         <div class="col-6 col-md">
             <h5 class="green">Instructions</h5>
             <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">General</a></li>
-                <li><a class="text-muted" href="#">XSS</a></li>
-                <li><a class="text-muted" href="#">SQLi</a></li>
-                <li><a class="text-muted" href="#">CSRF</a></li>
+                <li><a class="text-muted" href="/user/help.php?help=general">General</a></li>
+                <li><a class="text-muted" href="/user/help.php?help=xss">Cross-Site Scripting</a></li>
+                <li><a class="text-muted" href="/user/help.php?help=sqli">SQLI Injection</a></li>
+                <li><a class="text-muted" href="/user/help.php?help=csrf">Contact Form</a></li>
             </ul>
         </div>
         <div class="col-6 col-md">
-            <h5 class="green">Help</h5>
+            <h5 class="green">Account</h5>
             <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">some</a></li>
-                <li><a class="text-muted" href="#">list</a></li>
-                <li><a class="text-muted" href="#">elements</a></li>
+                <li><a class="text-muted" href="/user/scorecard.php">Scorecard</a></li>
+                <li><a class="text-muted" href="/user/challenge_settings.php">Settings</a></li>
+                <li><a class="text-muted" href="/user/change_password.php">Change Password</a></li>
+                <li>
+                    <p class="text-muted" href="#">Difficulty: <strong><?= get_global_difficulty() ?></strong></p>
+                </li>
             </ul>
         </div>
         <div class="col-6 col-md">
-            <h5 class="green">Contact Instructor</h5>
+            <h5 class="green">Sources</h5>
             <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">mail</a></li>
-                <li><a class="text-muted" href="#">phone</a></li>
-                <li><a class="text-muted" href="#">address</a></li>
-                <li><a class="text-muted" href="#">time</a></li>
+                <li><a class="text-muted" href="https://unsplash.com/license">Unsplash</a></li>
+                <li><a class="text-muted" href="https://www.pexels.com/license/">Pexels</a></li>
+                <li><a class="text-muted" href="<?= get_setting("learnweb", "link") ?>">Learnweb</a></li>
             </ul>
         </div>
         <div class="col-6 col-md">
