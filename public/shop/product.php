@@ -170,10 +170,11 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                 <p class="text-left"><?= $productData['prod_description'] ?></p>
 
 
-                <form action="#">
+                <form action="product.php" method="post">
                     <div class="form-row">
                         <div class="col">
                             <span class="float-right">
+                                <input type="hidden" name="product_id" value="<?= $productID ?>">
                                 <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="3" placeholder="-" required>
                             </span>
                         </div>
@@ -201,6 +202,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     </div>
     <div class="comment-flex-container">
         <div class="form-comment-box">
+            <!-- CHALLENGE: Here is the form for the contact form challenge -->
             <form class="text-center" action="product.php" method="post">
                 <h2 class="display-5">Write Your Own Review</h2>
                 <br>
