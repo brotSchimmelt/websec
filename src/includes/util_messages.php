@@ -160,7 +160,7 @@ $modalSuccessResetAll = '<!--Modal: Success - Reset All Challenges-->
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header wwu-green-background text-white shadow">
-                <h4 class="modal-title">All challenges successfully reset</h4>
+                <h4 class="modal-title">All Challenges Successfully Reset</h4>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -180,7 +180,7 @@ $modalSuccessResetReflectiveXSS = '<!--Modal: Success - Reset Reflective XSS Cha
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header wwu-green-background text-white shadow">
-                <h4 class="modal-title">Challenge successfully reset</h4>
+                <h4 class="modal-title">Challenge Successfully Reset</h4>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -200,7 +200,7 @@ $modalSuccessResetStoredXSS = '<!--Modal: Success- Reset Stored XSS Challenge-->
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header wwu-green-background text-white shadow">
-                <h4 class="modal-title">Challenge successfully reset</h4>
+                <h4 class="modal-title">Challenge Successfully Reset</h4>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -220,7 +220,7 @@ $modalSuccessResetSQLi = '<!--Modal: Success - Reset SQLi Challenge-->
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header wwu-green-background text-white shadow">
-                <h4 class="modal-title">Challenge successfully reset</h4>
+                <h4 class="modal-title">Challenge Successfully Reset</h4>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -240,7 +240,7 @@ $modalSuccessResetCSRF = '<!--Modal: Success - Reset CSRF Challenge-->
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header wwu-green-background text-white shadow">
-                <h4 class="modal-title">Challenge successfully reset</h4>
+                <h4 class="modal-title">Challenge Successfully Reset</h4>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
