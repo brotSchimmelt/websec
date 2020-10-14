@@ -88,6 +88,7 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 
             <?= $solved ? $alertContactField : $alertContactFieldClosed ?>
 
+            <!-- CHALLENGE: Here is the form for the contact form challenge -->
             <form action="contact.php" method="post" id="reviewform">
                 <div class="form-group">
                     <label for="contact-username"><b>Your Username:</b></label>
