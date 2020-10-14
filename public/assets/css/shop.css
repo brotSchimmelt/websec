@@ -330,3 +330,21 @@ h5.green {
 .text-wwu-green {
     color: rgba(145, 174, 100, 1);
 }
+
+.comment-flex-container {
+    width: 80% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center !important;
+    margin: auto;
+}
+
+.form-comment-box {
+    margin-right: 50px;
+    /* flex-grow: 1; */
+}
+
+.comment-box {
+    margin-top: 50px;
+    /* flex-grow: ; */
+}
