@@ -1,85 +1,97 @@
-# websec
+# WebSec - Hacking Plattform
+
+This is a short summary of the most important points of the documentation for this project. 
+
+## TODOs (remove in production)
+
+- update instructions for the challenges
+- replace dummy texts and product descriptions
+- add a popup for the SQLi challenge *(on 'hard' difficulty)* to indicate that a SQLite DB is used
+- remove TODOs from this README
+
+## Installation and Setup
+
+1. Setup the docker environment with the ```setup_docker.sh``` script *(detailed explanation in the docker README)* **XOR** follow the steps described in the docker README manually.
+2. Login with the default admin user:
+- **user** ```administrator```
+- **password** ```dpbCpfcAqVHY3gYf```
+3. Change the default password!
+4. Choose the settings either in the admin area of the WebSec shop or edit them directly in the ```config/settings.json``` file. *(The difficulty of the challenges must be set before the first student login. Otherwise every student has to reset their challenges in the menu manually in order to load the new challenge settings.)*
 
 ## Project Structure
 ```
-shop/
+www/
 ├── bin/
-│   └── Command Line Tools
+│   └── command line tools
 ├── config/
-│   └── config.php
-│   └── DB_connections.php
+│   └── php configuration files
+│   └── shop settings JSON file
+├── data/
+│   └── sqlite databases for every user
 ├── docs/
-│   └── Documentation of the Project
+│   └── short documentation for the project
 ├── public/
-│   └── index.php
-│   └── Webserver Files in general
+│   └── admin/
+│   │   └── pages for the admin area
+│   └── assets/
+│   │   └── CSS, JavaScript and images
+│   └── shop/
+│   │   └── pages for the challenges
+│   └── user/
+│       └── pages for the user area
 ├── src/
-│   └── PHP Source Code
+│   └── includes/
+│   │   └── include files
+│   └── php functions
 ├── tests/
-│   └── PHP Unit Tests
+│   └── php unit tests
 └── vendor
-    └── Used Components (mainly PHPUnit)
+    └── dependencies (for PHPUnit)
 ```
 
-## Naming Conventions
+#### bin/
 
-**Variables**: ```variableName```
-
-**Constants**: ```CONSTANT_NAME```
-
-**Methods**: ```method_name```
-
-**CSS Classes**: ```class-name```
-
-**CSS IDs**: ```idName```
-
-**HTML Fields etc.**: ```field-name```
-
-**DB Fields**: ```[table]_field_name```
-
-**PHP Files**: ```file_name.php```
-
-**Other Asset Files**: ```file_name.ending```
-
-## Default User
-- user: administrator
-- password: dpbCpfcAqVHY3gYf
-- please change after first login!
-
-## Errors & Exceptions
-
-// TODO: Exceptions vs. error Codes --> Erläuterung
-
-### Message Types
-
-// TODO: Clean up ...
-
-success= ...
-  - login [main.php] ??newType
-  - prodAdded [SHOP] ??newType
-  - logout [login] --> check
-  - resetPwd (password zurückgesetzt) [login] --> check
-  - requestProcessed (email versandt, falls adresse im system) [pwd forgotten] --> check
-  - pwdChanged (Passwort normal geändert) [pwd change site]
-
-error= ...
-  - missingToken (pwd reset) --> check
-  - sqlError (versch. Variatnen) !Code --> check
-  - wrongCredentials (login failed) --> check
-  - internalError (falls password_verify versagt) !Code --> check
-  - invalidNameAndMail [register] --> check
-  - invalidUsername [register] --> check
-  - invalidMail [register] --> check
-  - invalidPassword [register] [change Pwd] --> check
-  - passwordMismatch [register] [change Pwd] --> check
-  - nameError [register] --> check
-  - mailTaken [register] --> check
-  - invalidToken [login] (Kontext: Password reset) --> check
-  - invalidMailFormat [register] --> check
-  - TODO: Add password change message during first 'administrator login'
+Contains the command line tools for this project.
+- ```convert_md_to_html.sh``` Converts markdown files *(like this one)* to valid html for the **docs/** folder.
+- ```get_docker_logs.sh``` Copys log files from the separat docker containers into the **bin/** folder.
 
 
-### Error Code Meaning [Optional Error Output]
+#### config/
+
+Contains the configurations and settings for the shop.
+- ```config.php``` Stores important constants for the project *(server name, paths etc.)*. Is effected by the ```setup_docker.sh``` script.
+- ```db_login.php``` Contains the login credentials for the **login** database. Is also setup by the ```setup_docker.sh``` script.
+- ```db_shop.php``` Contains the login credentials for the **shop** database. Is also setup by the ```setup_docker.sh``` script.
+- ```settings.json``` Stores all settings for the shop. For a more detailed description see paragraph **Settings**.
+
+
+#### data/
+
+Contains all user SQLite databases for the SQLi challenge.
+
+On **normal** difficulty the databases are initialized with one table *('users')* that stores username, password, email, whish list and user_status for every entry. The database is filled with a set of fake users and an entry for the corresponding student. The password that is displayed for the student is a random string.
+
+On **hard** difficulty the above mentioned table is extended by a second one *('premium_users')* in which the premium user status is stored for every fake user *(and the student)*.
+
+The databases are created during the registration process with the ```create_sqli_db($username, $mail)``` function in **src/websec_functions.php**.
+
+#### docs/
+#### public/
+#### src/
+#### tests/
+#### vendor/
+
+
+## Challenges
+
+TODO: describe challenges briefly and how to solve them
+
+## Settings
+
+TODO: describe every setting and its effect
+
+
+## Error Codes
 
 **010**: A PDO exception occurred during the connection attempt to the **login** database.
 - Database credentials are wrong *(either in ```config/config.php``` or in the ```.env``` file for the docker containers)*
@@ -112,9 +124,9 @@ error= ...
 
 **061**: The $.post request in ```stored_xss.js``` failed. Either the form handler was moved or the user found a way to break the JavaScript.
 
-
 **1xx**: A SQL query could not be processed by the login or shop database.
-*[Login Database]*
+
+#### Login Database
 - **101**: User e-mail could not be fetched from the resetPwd table. See query in ```function get_user_mail```
 - **102**: See queries in ```function try_registration```
 - **103**: See query in ```function try_login```
@@ -143,7 +155,7 @@ error= ...
 - **126**: A username is used in either the challengeStatus table or the fakeCookie table without corresponding entry in the users table. This could happen if a user is manually deleted from the users table without deleting it from the two tables mentioned above.
 - **127**: The ```last_login``` could not be fetched from the database for the default administrator user.
 
-*[Shop Database]*
+#### Shop Database
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```
 - **152**: Existing product could not be added to the cart. See query in ```function add_product_to_cart```
 - **153**: New product could not be added to the cart. See query in ```function add_product_to_cart```
@@ -164,32 +176,22 @@ error= ...
 - **168**: Product data could not be loaded from the database.
 
 
+## Naming Conventions
 
+**Variables**: ```variableName```
 
+**Constants**: ```CONSTANT_NAME```
 
+**Methods**: ```method_name```
 
+**CSS Classes**: ```class-name```
 
-// example with hash
-```php
-<?php
-//create function with an exception
-function checkNum($number) {
-  if($number>1) {
-    throw new Exception("Value must be 1 or below");
-  }
-  return true;
-}
+**CSS IDs**: ```idName```
 
-//trigger exception in a "try" block
-try {
-  checkNum(2);
-  //If the exception is thrown, this text will not be shown
-  echo 'If you see this, the number is 1 or below';
-}
+**HTML Fields etc.**: ```field-name```
 
-//catch exception
-catch(Exception $e) {
-  echo 'Message: ' .$e->getMessage();
-}
-?>
-```
+**DB Fields**: ```[table]_field_name```
+
+**PHP Files**: ```file_name.php```
+
+**Other Asset Files**: ```file_name.ending```
