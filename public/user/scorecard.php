@@ -46,7 +46,7 @@ $allChallengesSolved = ($solvedXSS && $solvedStoredXSS && $solvedSQLi
 
 // challenge status for the user
 $echoGreen = '<span style="color:green;">Solved</span>';
-$echoRed = '<span style="color:red;">Stil Open</span>';
+$echoRed = '<span style="color:red;">Still Open</span>';
 $echoOrange = '<span style="color:orange;">Probably Solved</span>';
 
 ?>
