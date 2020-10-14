@@ -1,4 +1,4 @@
-# WebSec - Hacking Plattform
+# WebSec - Hacking Platform
 
 This is a short summary of the most important points of the documentation for this project. 
 
