@@ -33,8 +33,9 @@ if (isset($_POST['storedXSSMessage'])) {
 
             $msg = "Your attack worked! You obtained 1 stolen session cookie "
                 . "from an unsuspecting victim.\n\nXSS_STOLEN_SESSION="
-                . $_SESSION['storedXSS'] . "\n\n You can now set the cookie by "
-                . "pressing 'OK' or come back later!";
+                . $_SESSION['storedXSS'] . "\n\nYou can now set the cookie and "
+                . "effectively steal the session of the victim by pressing 'OK' "
+                . "or come back later!";
 
             // return success message
             echo $msg;
