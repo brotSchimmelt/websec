@@ -261,7 +261,7 @@ function add_comment_to_db($comment, $author)
 
         // change comment to an alert with the 'easy' solution to trigger the 
         // stored xss challenge check
-        $comment = "<script>alert('evildomain/payload.php?=c' + "
+        $comment = "<script>alert('evildomain/cookie.php?=c' + "
             . "document.cookie)</script>";
     }
 

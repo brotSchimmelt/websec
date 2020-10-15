@@ -103,33 +103,40 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
                         Any violation of only one of these rules will ban you from this course.
                         Furthermore, in case of violation legal measures will be taken!
                         <br>
-                        You are bound the lecturer's and tutor's instructions!
+                        You are bound by the lecturer's and tutor's instructions!
                     </p>
-                    <p>Resetting: You can always reset every challenge. This will delete all your actions of the corresponding challenge and withdraw your achievements!</p>
-                    <p>External tools: All challenges can (and must) be solved without the use of external tools! We keep track of how you solve the challenges and using any software, e.g., for automation, will make you immediately fail! You are here to learn about Web hacking and not about how to run a specific toolchain.</p>
-                    <p>Browser Security: Most modern browsers have built-in security mechanisms to prevent attacks you need to perform here. Use an insecure browser, e.g., Microsoft Edge or Internet Explorer, for completing the challenges.</p>
+                    <p>
+                        Resetting: You can always reset every challenge. This will delete all your actions of the corresponding challenge and withdraw your achievements!
+                        This can be done by accessing the challenge settings in the account menu.
+                    </p>
+                    <p>External tools: All challenges can (and must) be solved without the use of external tools! We keep track of how you solve the challenges and using any software, e.g., for automation, will make you immediately fail! You are here to learn about web hacking and not about how to run a specific toolchain.</p>
+                    <p><b>(TODO: add versions and/or OS information)</b>Browser Support: This website was tested with Google Chrome, Firefox and Safari. If you think one or more challenges are not solvable with your browser, try an insecure one like Microsoft Edge oder Microsoft Internet Explorer.</p>
                     <br>
                 </div>
                 <!-- XSS -->
                 <div class="tab-pane fade show <?= $xss ?>" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
-                    <h4 class="text-wwu-green">Cross-Site Scripting</h4>
+                    <h4 class="text-wwu-green">Cross-Site Scripting (XSS)</h4>
                     <p>
                         This website yields security vulnerabilities that can be abused for XSS.
-                        You are not allowed to exploit these vulnerabilities in any other way than intended for your excercises.
+                        You are not allowed to exploit these vulnerabilities in any other way than intended for your exercises.
                         <br>
                         There are two XSS challenges. The first one is a reflective XSS and simulates a search field.
-                        The second challenge simulates a product review page.<br>
-                        None of these pages yield real functionalities and are just simulations.
+                        The second challenge simulates a product page with a comment field.<br>
                     </p>
                     <p>
-                        Task: Reflective XSS<br>
+                        <b>Task: Reflective XSS</b><br>
                         You can abuse the search field to read out a user's session ID that is stored in a cookie.<br>
                         To do this you will have to create a JavaScript code snippet that displays the document's cookie.<br>
-                        Note the desired session ID. You will need it.
+                        Note or copy the obtained session ID. The site will detect if you found the session ID and will either show you a popup where you can enter the session ID or display a button beneath the search results to trigger said popup manually.
+                        This depends on the way you obtained the session ID.
                     </p>
                     <p>
-                        Task: Stored XSS<br>
-                        The product reviews are stored in a database. Your task is to create a javascript code that will pop up a window displaying the session ID you obtained in the reflective XSS challenge.<br>
+                        <b>Task: Stored XSS</b><br>
+                        The product reviews are stored in a database. Your task is to create a JavaScript code snippet that simulates a cookie stealing attack.<br>
+                        Luckily, you are a very well prepared attacker and you have already created a PHP page <em>cookie.php</em> in the root directory of your webserver <em>evil.domain</em>.
+                        You have planed to obtain the session ID cookies for every visitor of the product review page by passing them as a GET variable to your PHP page. As a reminder, a GET variable is simply appended to the end of an URL with a ? followed by its name and its value (e.g. example.com?name=value).
+                        To make things easier, you only have to show a JavaScript popup to the visitors with the link to your PHP page followed by their session ID as a GET variable. As soon as someone visits the site you will receive a popup with their session ID and an option to steal their session. This will probably happen rather quickly since this is a VERY popular site.
+                        If you have successfully stolen the session of your victim, you should manually manipulate his/her shopping cart by adding a Banana Slicer. Everyone should have one these days!
                     </p>
                 </div>
                 <!-- SQLi -->
@@ -144,9 +151,9 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
                         The SQLi challenges are a simulation of a user database.
                     </p>
                     <p>
-                        Task: Inject Account<br>
+                        <b>Task: Inject Account</b><br>
                         The database yields a table named <em>users</em> containing all data of registered website users. Sadly, you do not know anything about the table's structure or data.<br>
-                        However, your goal is to create a user account to this website. This account should have admin permissions.<br>
+                        However, your goal is to update your user status to <em>premium</em>.<br>
                         Good luck!
                     </p>
                 </div>
@@ -158,8 +165,8 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
                         Too bad that due to recent hacker activity this form has been disabled and you cannot make any request.
                     </p>
                     <p>
-                        Task: Post a Support Request<br>
-                        Find a way to submit a support request. Your request message needs to be "pwned". That will show them!<br>
+                        <b>Task: Post a Support Request</b><br>
+                        Find a way to submit a support request for the user <em>elliot</em>. Your request message needs to be "pwned". That will show them!<br>
                         If you successfully posted your attack, you will see a "Thank you!" message.
                     </p>
                 </div>

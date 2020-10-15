@@ -20,8 +20,8 @@ if (isset($_POST['storedXSSMessage'])) {
 
         $haystack = (string)$_POST['storedXSSMessage'];
 
-        // check generously for 'evildomain/payload.php' + document.cookie
-        $pos1 = stripos($haystack, "payload");
+        // check generously for 'evildomain/cookie.php' + document.cookie
+        $pos1 = stripos($haystack, "cookie");
         $pos2 = stripos($haystack, "evil");
         $pos3 = stripos($haystack, "domain");
         $pos4 = stripos($haystack, "document.cookie");
