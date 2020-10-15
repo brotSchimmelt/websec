@@ -265,6 +265,9 @@ function add_comment_to_db($comment, $author)
             . "document.cookie)</script>";
     }
 
+    // ensure mysql varchar(255) length constrain is met 
+    $comment = substr($comment, 0, 255);
+
     $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, "
         . "`rating`, `timestamp`) VALUES "
         . "(NULL, :author, :comment, :rating, :timestamp)";
