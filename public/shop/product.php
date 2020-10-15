@@ -175,7 +175,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                         <div class="col">
                             <span class="float-right">
                                 <input type="hidden" name="product_id" value="<?= $productID ?>">
-                                <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="3" placeholder="-" required>
+                                <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="10" placeholder="-" required>
                             </span>
                         </div>
                         <div class="col">
