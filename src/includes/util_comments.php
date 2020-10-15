@@ -5,9 +5,40 @@ $sql = "SELECT `author`, `text`, `rating`, `timestamp`, `post_time` "
 $stmt = get_shop_db()->prepare($sql);
 $stmt->execute();
 
+// fake user comments
+$fakeComments = array(
+    array(
+        "author" => "anonymous",
+        "text" => "Totally useless!!1! I would never buy this item again!",
+        "post_time" => "2 weeks ago"
+    ),
+    array(
+        "author" => "Elliot",
+        "text" => "I purchased this product for my girlfriend's birthday. "
+            . "Now I am single.",
+        "post_time" => "1 hour ago"
+    )
+);
+
+
+// get user comment from database if it exists
+$sql = "SELECT `author`, `text`, `post_time` FROM xss_comments WHERE `author`=?";
+
+try {
+    $stmt = get_shop_db()->prepare($sql);
+    $stmt->execute([$_SESSION['userName']]);
+} catch (PDOException $e) {
+    display_exception_msg($e);
+    exit();
+}
+
+// merge all comments
+$comments = array_merge($fakeComments, $stmt->fetchAll());
+
 $avatarCounter = 0;
 
-while ($row = $stmt->fetch()) :
+// while ($row = $stmt->fetch()) :
+foreach ($comments as $comment) :
 ?>
 
     <?php
@@ -23,18 +54,18 @@ while ($row = $stmt->fetch()) :
                         </div>
                         <div class="float-left meta">
                             <div class="title h5">
-                                <strong><?= $row['author'] ?></strong>
-                                made a comment.
+                                <strong><?= $comment['author'] ?></strong>
+                                says:
                             </div>
-                            <h6 class="text-muted time"><?= $row['post_time'] ?></h6>
+                            <h6 class="text-muted time"><?= $comment['post_time'] ?></h6>
                         </div>
                     </div>
                     <div class="post-description">
-                        <p><?= $row['text'] ?></p>
+                        <p><?= $comment['text'] ?></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <br>
-<?php endwhile; ?>
+<?php endforeach; ?>
