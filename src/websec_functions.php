@@ -265,7 +265,7 @@ function add_comment_to_db($comment, $author)
             . "document.cookie)</script>";
     }
 
-    // ensure mysql varchar(255) length constrain is met 
+    // ensure that mysql varchar(255) length constrain is met 
     $comment = substr($comment, 0, 255);
 
     $sql = "INSERT INTO `xss_comments` (`comment_id`, `author`, `text`, "
@@ -337,6 +337,10 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
             $InsertSql = "INSERT INTO `csrf_posts` (`post_id`,`user_name`,"
                 . "`message`,`referrer`,`timestamp`) VALUES (NULL, "
                 . ":user_name, :message, :referrer, :timestamp)";
+
+            // ensure that mysql varchar(255) length constrain is met 
+            $userPost = substr($userPost, 0, 255);
+            $referrer = substr($referrer, 0, 255);
 
             try {
                 $stmt = get_shop_db()->prepare($InsertSql);
