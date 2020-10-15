@@ -56,10 +56,16 @@ if (isset($_POST['pwd-reset-submit'])) {
             <?= get_message(); ?>
 
             <label for="input-mail" class="sr-only">Enter your Mail</label>
-            <input type="email" name="inputMail" id="input-mail" class="form-control" aria-describedby="mail-help" placeholder="WWU Mail" required autofocus>
+            <input type="email" name="inputMail" id="input-mail" class="form-control" aria-describedby="mail-help" placeholder="WWU Mail" required autofocus disabled>
+            <br>
+            <div class="alert alert-danger shadow" role="alert">
+                The mail system is currently offline.
+            </div>
             <div class="pb-3" id="info-text">
                 <small>Enter your <strong>@uni-muenster.de</strong> mail address. If you are already registered, you will receive a mail with further instructions to reset your password.</small>
             </div>
+
+
 
             <button type="submit" name="pwd-reset-submit" id="pwd-reset-submit" class="btn btn-lg btn-register btn-block">Send Mail</button>
             <a href="index.php" class="btn btn-link login-link">Back to Login Page</a>
