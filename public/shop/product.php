@@ -97,8 +97,8 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
-    <link rel="stylesheet" href="/assets/css/card.css">
-    <link rel="stylesheet" href="/assets/css/comment.css">
+    <!-- <link rel="stylesheet" href="/assets/css/card.css"> -->
+    <!-- <link rel="stylesheet" href="/assets/css/comment.css"> -->
 
     <!-- Link to favicon -->
     <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
@@ -133,7 +133,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">Stored XSS</a>
     <?php endif; ?>
 
-    <div class="page-center page-container jumbotron shadow container">
+    <div class="page-center page-container jumbotron shadow container bg-light-grey">
         <div class="row">
 
             <div class="col-md-auto col-lg-6 col-xl-7 mt-5">
@@ -165,7 +165,6 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                 </div>
                 <h3 class="display-5 text-left mb-3"><b>&euro; <?= $productData['price'] ?></b></h3>
                 <p class="text-left"><b>Availability:</b> In Stock</p>
-                <!-- <p class="text-left"><b>Condition:</b> New</p> -->
                 <p class="text-left"><b>Brand:</b> VeryFakeCompany Ltd.</p>
                 <p class="text-left"><?= $productData['prod_description'] ?></p>
 
@@ -190,9 +189,6 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                         </div>
                     </div>
                 </form>
-
-
-
             </div>
         </div>
     </div>
@@ -205,75 +201,67 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         echo "</div>";
     }
     ?>
-    <!-- <div class="comment-flex-container"> -->
-
+    <!-- CHALLENGE: Here begins the form -->
     <div class="row justify-content-center mt-5" id="comment-section">
-        <!-- <div class="form-comment-box"> -->
-        <div class="col-xl-4 col-lg-6 col-md-auto mb-5">
-            <!-- CHALLENGE: Here is the form for the contact form challenge -->
-            <form class="text-left be-comment-block" action="product.php" method="post">
-                <h4 class="display-5">Write Your Own Review</h4>
-                <br>
-                <div class="justify-content-center">
-                    <label for="username"><b>Your Username:</b></label>
-                    <input class="form-control review-name" type="text" name="username" value="<?= $_SESSION['userName']; ?>" disabled><br>
-                    <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
-                    <?php
-                    if ($difficulty == "hard") {
-                        echo "<!-- Token for CSRF challenge -->";
-                        echo '<input type="hidden" name="utoken" value="' . $_SESSION['fakeCSRFToken'] . '">';
-                    }
-                    ?>
-                    <label for="userComment"><b>Your Review:</b></label>
-                    <input class="form-control review-text" type="text" name="userComment" size="50"><br>
-                    <input class="btn btn-wwu-primary" type="submit" value="Submit Comment">
-                </div>
-            </form>
+        <div class="col-xl-4 col-lg-6 col-md-auto">
+            <div class="be-comment-block">
+                <form class="form-block" action="product.php" method="post">
+                    <h4 class="display-5 mb-4">Write Your Own Comment</h4>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12">
+                            <div class="form-group fl_icon">
+                                <div class="icon">
+                                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                </div>
+                                <input class="form-input form-disabled-input" name="username" type="text" value="<?= $_SESSION['userName'] ?>" disabled>
+                                <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                                <?php
+                                if ($difficulty == "hard") {
+                                    echo "<!-- Token for CSRF challenge -->";
+                                    echo '<input type="hidden" name="utoken" value="' . $_SESSION['fakeCSRFToken'] . '">';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12">
+                            <div class="form-group fl_icon">
+                                <div class="icon">
+                                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
+                                    </svg>
+                                </div>
+                                <input class="form-input form-disabled-input" type="text" value="<?= $_SESSION['userMail'] ?>" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <textarea class="form-input" name="userComment" placeholder="Your Comment" required></textarea>
+                                <!-- <input class="form-input" name="userComment" type="text" placeholder="Your Comment"> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-wwu-primary float-right">Post</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Challenge End -->
         </div>
 
-        <!-- <div class="comment-box"> -->
-        <!-- <div class="col-xs-4">
-            <?php //show_xss_comments();
-            ?>
-        </div> -->
-
-
         <div class="col-xl-4 col-lg-6 col-md-auto">
-            <!-- <div class="container"> -->
             <div class="be-comment-block">
-
                 <?php
                 show_xss_comments();
                 ?>
             </div>
-            <!-- </div> -->
         </div>
-        <!-- <div class="col-lg-2"></div> -->
     </div>
-    <!-- <form class="form-block">
-        <div class="row justify-content-center">
-            <div class="col-sm-1 col-md-1 col-lg-2"></div>
-            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-                <div class="form-group">
-                    <div class="icon"><i class="fa fa-user"></i></div>
-                    <input class="form-input" type="text" placeholder="Your name">
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-                <div class="form-group">
-                    <div class="icon"><i class="fa fa-envelope-o"></i></div>
-                    <input class="form-input" type="text" placeholder="Your email" value="mail" disabled>
-                </div>
-            </div>
-            <div class="col-sm-1 col-md-1 col-lg-2"></div>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <textarea class="form-input" required="" placeholder="Your text"></textarea>
-                </div>
-            </div>
-            <a class="btn btn-primary">submit</a>
-        </div>
-    </form> -->
     <!-- HTML Content END -->
 
     <?php

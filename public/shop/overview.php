@@ -106,7 +106,7 @@ if (isset($_POST['add-preview'])) {
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
-    <link rel="stylesheet" href="/assets/css/card.css">
+    <!-- <link rel="stylesheet" href="/assets/css/card.css"> -->
 
     <!-- Link to favicon -->
     <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
