@@ -561,6 +561,7 @@ $modalGreeting = '<!-- Greeting Modal -->
                         </div>
                         <button type="submit" name="unlock-submit" id="unlock-btn" class="btn btn-wwu-cart mt-2">Let\'s Go!</button>
                     </form>
+                    <br>
                 </div>
             </div>
         </div>
