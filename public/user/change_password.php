@@ -71,33 +71,36 @@ if (isset($_POST['change-pwd-submit'])) {
 
 
     <!-- HTML Content BEGIN -->
-    <div class="page-container">
-        <div class="jumbotron form-container-shop shadow">
-            <h1 class="display-5 text-center">Change Your Password</h1>
-            <br>
-            <?= get_message() ?>
-            <br>
-            <form class="form-signin" action="change_password.php" method="post">
-
-                <div class="form-group">
-                    <label for="input-old-pwd"><b>Current Password:</b></label>
-                    <input type="password" name="pwd" id="input-old-pwd" class="form-control" aria-describedby="input-old-pwd" placeholder="Current Password" required autofocus>
-                    <small id="pwd-help" class="form-text text-muted">Please enter your current password.</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="input-new-pwd"><b>New Password:</b></label>
-                    <input type="password" name="new-pwd" id="input-new-pwd" class="form-control" placeholder="New Password" required>
-                    <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirm-pwd"><b>Confirm Password:</b></label>
-                    <input type="password" name="confirm-pwd" id="confirm-pwd" class="form-control" placeholder="Confirm Password" required>
-                </div>
+    <!-- <div class="page-container"> -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-xl-4 col-lg-8 col-md-9 col-sm-10 col-xs-11">
+            <div class="jumbotron bg-light-grey shadow">
+                <h1 class="display-5 text-center">Change Your Password</h1>
                 <br>
-                <button type="submit" name="change-pwd-submit" id="change-pwd-submit" class="btn btn-wwu-primary">Change Password</button>
-            </form>
+                <?= get_message() ?>
+                <br>
+                <form class="form-signin" action="change_password.php" method="post">
+
+                    <div class="form-group">
+                        <label for="input-old-pwd"><b>Current Password:</b></label>
+                        <input type="password" name="pwd" id="input-old-pwd" class="form-control" aria-describedby="input-old-pwd" placeholder="Current Password" required autofocus>
+                        <small id="pwd-help" class="form-text text-muted">Please enter your current password.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-new-pwd"><b>New Password:</b></label>
+                        <input type="password" name="new-pwd" id="input-new-pwd" class="form-control" placeholder="New Password" required>
+                        <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-pwd"><b>Confirm Password:</b></label>
+                        <input type="password" name="confirm-pwd" id="confirm-pwd" class="form-control" placeholder="Confirm Password" required>
+                    </div>
+                    <br>
+                    <button type="submit" name="change-pwd-submit" id="change-pwd-submit" class="btn btn-wwu-primary">Change Password</button>
+                </form>
+            </div>
         </div>
     </div>
     <!-- HTML Content END -->

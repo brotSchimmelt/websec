@@ -80,33 +80,35 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">CSRF</a>
     <?php endif; ?>
 
-    <div class="page-container">
-        <div class="jumbotron form-container-shop shadow">
+    <div class="row justify-content-center mt-3">
+        <div class="col-xl-5 col-lg-8 col-md-9 col-sm-10 col-xs-11">
+            <div class="jumbotron bg-light-grey shadow">
 
-            <h1 class="display-5 text-center">Contact Form</h1>
-            <p class="text-center text-muted">We'll never share your personal information. Ever!</p>
+                <h1 class="display-5 text-center">Contact Form</h1>
+                <p class="text-center text-muted">We'll never share your personal information. Ever!</p>
 
-            <?= $solved ? $alertContactField : $alertContactFieldClosed ?>
+                <?= $solved ? $alertContactField : $alertContactFieldClosed ?>
 
-            <!-- CHALLENGE: Here is the form for the contact form challenge -->
-            <form action="contact.php" method="post" id="reviewform">
-                <div class="form-group">
-                    <label for="contact-username"><b>Your Username:</b></label>
-                    <input name="username" type="text" class="form-control" id="contact-username" aria-describedby="contact-username-help" value="<?= $_SESSION['userName'] ?>" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="contactMail"><b>Your E-Mail:</b></label>
-                    <input type="email" class="form-control" id="contactMail" aria-describedby="emailHelp" placeholder="Enter Your Mail" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1"><b>Your Message:</b></label>
-                    <textarea name="userPost" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="How can we help you?" disabled></textarea>
-                </div>
-                <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
-                <input type="hidden" name="utoken" value="<?= $_SESSION['fakeCSRFToken']; ?>">
-                <br>
-                <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
-            </form>
+                <!-- CHALLENGE: Here is the form for the contact form challenge -->
+                <form action="contact.php" method="post" id="reviewform">
+                    <div class="form-group">
+                        <label for="contact-username"><b>Your Username:</b></label>
+                        <input name="username" type="text" class="form-control" id="contact-username" aria-describedby="contact-username-help" value="<?= $_SESSION['userName'] ?>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMail"><b>Your E-Mail:</b></label>
+                        <input type="email" class="form-control" id="contactMail" aria-describedby="emailHelp" placeholder="Enter Your Mail" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1"><b>Your Message:</b></label>
+                        <textarea name="userPost" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="How can we help you?" disabled></textarea>
+                    </div>
+                    <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                    <input type="hidden" name="utoken" value="<?= $_SESSION['fakeCSRFToken']; ?>">
+                    <br>
+                    <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
+                </form>
+            </div>
         </div>
     </div>
     <!-- HTML Content END -->
