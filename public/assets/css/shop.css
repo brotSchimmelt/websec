@@ -333,10 +333,10 @@ h5.green {
 
 .comment-flex-container {
     width: 80% !important;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center !important;
-    margin: auto;
+    /* display: flex;
+    flex-wrap: nowrap !important;
+    justify-content: space-around !important;
+    margin: auto; */
 }
 
 .form-comment-box {

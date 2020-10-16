@@ -136,11 +136,11 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     <div class="page-center page-container jumbotron shadow container">
         <div class="row">
 
-            <div class="col-md-7 mt-5">
+            <div class="col-md-auto col-lg-6 col-xl-7 mt-5">
                 <img class="img-fluid mb-3 shadow" src="<?= $productData['img_path'] ?>" alt="Product Image">
             </div>
 
-            <div class="col-md-5 mt-5">
+            <div class="col-md-auto col-lg-6 col-xl-5 mt-5">
                 <div class="text-left">
                     <span class="badge badge-success mb-4">NEW!</span>
                 </div>
@@ -170,15 +170,20 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                 <p class="text-left"><?= $productData['prod_description'] ?></p>
 
 
-                <form action="product.php" method="post">
+                <form class="mb-5 mt-5" action="product.php" method="post">
                     <div class="form-row">
-                        <div class="col">
+                        <div class="col-5">
+                            <span class="float-right">
+                                <strong>Quantity:</strong>
+                            </span>
+                        </div>
+                        <div class="col-2">
                             <span class="float-right">
                                 <input type="hidden" name="product_id" value="<?= $productID ?>">
                                 <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="10" placeholder="-" required>
                             </span>
                         </div>
-                        <div class="col">
+                        <div class="col-5">
                             <span class="float-left">
                                 <button type="submit" class="btn btn-wwu-cart btn-sm" name="add-product">Add to Cart</button>
                             </span>
@@ -192,19 +197,22 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         </div>
     </div>
 
-    <div class="page-center page-container">
-        <?php
-        // display warning after challenge is completed that user comment was deleted
-        if ($solved) {
-            echo $alertProductComment;
-        }
-        ?>
-    </div>
-    <div class="comment-flex-container">
-        <div class="form-comment-box">
+    <?php
+    // display warning after challenge is completed that user comment was deleted
+    if ($solved) {
+        echo '<div class="page-center page-container">';
+        echo $alertProductComment;
+        echo "</div>";
+    }
+    ?>
+    <!-- <div class="comment-flex-container"> -->
+
+    <div class="row justify-content-center mt-5" id="comment-section">
+        <!-- <div class="form-comment-box"> -->
+        <div class="col-xl-4 col-lg-6 col-md-auto mb-5">
             <!-- CHALLENGE: Here is the form for the contact form challenge -->
-            <form class="text-center" action="product.php" method="post">
-                <h2 class="display-5">Write Your Own Review</h2>
+            <form class="text-left be-comment-block" action="product.php" method="post">
+                <h4 class="display-5">Write Your Own Review</h4>
                 <br>
                 <div class="justify-content-center">
                     <label for="username"><b>Your Username:</b></label>
@@ -223,11 +231,49 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
             </form>
         </div>
 
-        <div class="comment-box">
-            <?php show_xss_comments(); ?>
-        </div>
-    </div>
+        <!-- <div class="comment-box"> -->
+        <!-- <div class="col-xs-4">
+            <?php //show_xss_comments();
+            ?>
+        </div> -->
 
+
+        <div class="col-xl-4 col-lg-6 col-md-auto">
+            <!-- <div class="container"> -->
+            <div class="be-comment-block">
+
+                <?php
+                show_xss_comments();
+                ?>
+            </div>
+            <!-- </div> -->
+        </div>
+        <!-- <div class="col-lg-2"></div> -->
+    </div>
+    <!-- <form class="form-block">
+        <div class="row justify-content-center">
+            <div class="col-sm-1 col-md-1 col-lg-2"></div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+                <div class="form-group">
+                    <div class="icon"><i class="fa fa-user"></i></div>
+                    <input class="form-input" type="text" placeholder="Your name">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+                <div class="form-group">
+                    <div class="icon"><i class="fa fa-envelope-o"></i></div>
+                    <input class="form-input" type="text" placeholder="Your email" value="mail" disabled>
+                </div>
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-2"></div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <textarea class="form-input" required="" placeholder="Your text"></textarea>
+                </div>
+            </div>
+            <a class="btn btn-primary">submit</a>
+        </div>
+    </form> -->
     <!-- HTML Content END -->
 
     <?php

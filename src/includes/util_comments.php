@@ -35,6 +35,9 @@ try {
 // merge all comments
 $comments = array_merge($fakeComments, $stmt->fetchAll());
 
+// get number of comments
+echo '<h4 class="display-5 mb-4">Comments (' . count($comments) . ')</h4>';
+
 $avatarCounter = 0;
 
 // while ($row = $stmt->fetch()) :
@@ -44,8 +47,116 @@ foreach ($comments as $comment) :
     <?php
     $avatarCounter += 1;
     ?>
+
+
+    <div class="be-comment">
+        <div class="be-img-comment">
+            <img src="/assets/img/avatar_<?= $avatarCounter ?>.jpg" alt="Avatar" class="be-ava-comment">
+        </div>
+        <div class="be-comment-content">
+
+            <span class="be-comment-name">
+                <?= $comment['author'] ?>
+            </span>
+            <span class="be-comment-time">
+                <?= $comment['post_time'] ?>
+            </span>
+
+            <p class="be-comment-text">
+                <?= $comment['text'] ?>
+            </p>
+        </div>
+    </div>
+    <br>
+
+
+
+
+
+
+
+    <?php
+    // upper limit for avatars is 3
+    $avatarCounter = ($avatarCounter >= 3) ? 0 : $avatarCounter;
+    ?>
+
+<?php endforeach; ?>
+
+
+
+
+<!-- <div class="be-comment">
+    <div class="be-img-comment">
+        <a href="blog-detail-2.html">
+            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+        </a>
+    </div>
+    <div class="be-comment-content">
+
+        <span class="be-comment-name">
+            <a href="blog-detail-2.html">Ravi Sah</a>
+        </span>
+        <span class="be-comment-time">
+            <i class="fa fa-clock-o"></i>
+            May 27, 2015 at 3:14am
+        </span>
+
+        <p class="be-comment-text">
+            Pellentesque gravida tristique ultrices.
+            Sed blandit varius mauris, vel volutpat urna hendrerit id.
+            Curabitur rutrum dolor gravida turpis tristique efficitur.
+        </p>
+    </div>
+</div>
+<div class="be-comment">
+    <div class="be-img-comment">
+        <a href="blog-detail-2.html">
+            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="be-ava-comment">
+        </a>
+    </div>
+    <div class="be-comment-content">
+        <span class="be-comment-name">
+            <a href="blog-detail-2.html">Phoenix, the Creative Studio</a>
+        </span>
+        <span class="be-comment-time">
+            <i class="fa fa-clock-o"></i>
+            May 27, 2015 at 3:14am
+        </span>
+        <p class="be-comment-text">
+            Nunc ornare sed dolor sed mattis. In scelerisque dui a arcu mattis, at maximus eros commodo. Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant. Proin ut ornare lectus, vel eleifend est. Fusce hendrerit dui in turpis tristique blandit.
+        </p>
+    </div>
+</div>
+<div class="be-comment">
+    <div class="be-img-comment">
+        <a href="blog-detail-2.html">
+            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" class="be-ava-comment">
+        </a>
+    </div>
+    <div class="be-comment-content">
+        <span class="be-comment-name">
+            <a href="blog-detail-2.html">Cüneyt ŞEN</a>
+        </span>
+        <span class="be-comment-time">
+            <i class="fa fa-clock-o"></i>
+            May 27, 2015 at 3:14am
+        </span>
+        <p class="be-comment-text">
+            Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant
+        </p>
+    </div>
+
+
+
+
+
+
+
+
+
+
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-8">
                 <div class="card card-white post">
                     <div class="post-heading">
@@ -67,5 +178,4 @@ foreach ($comments as $comment) :
             </div>
         </div>
     </div>
-    <br>
-<?php endforeach; ?>
+    <br> -->
