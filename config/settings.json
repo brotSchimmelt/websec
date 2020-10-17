@@ -9,10 +9,10 @@
         "hard": false
     },
     "badge_links": {
-        "reflective_xss": "https:\/\/en.wikipedia.org\/wiki\/Cross-site_scripting#Non-persistent_(reflected)",
-        "stored_xss": "https:\/\/en.wikipedia.org\/wiki\/Cross-site_scripting#Persistent_(or_stored)",
-        "sqli": "https:\/\/en.wikipedia.org\/wiki\/SQL_injection",
-        "csrf": "https:\/\/en.wikipedia.org\/wiki\/Cross-site_request_forgery"
+        "reflective_xss": "https:\/\/sso.uni-muenster.de\/LearnWeb\/learnweb2\/course\/view.php?id=47537",
+        "stored_xss": "https:\/\/sso.uni-muenster.de\/LearnWeb\/learnweb2\/course\/view.php?id=47537",
+        "sqli": "https:\/\/sso.uni-muenster.de\/LearnWeb\/learnweb2\/course\/view.php?id=47537",
+        "csrf": "https:\/\/sso.uni-muenster.de\/LearnWeb\/learnweb2\/course\/view.php?id=47537"
     },
     "domains": {
         "allow_list": [
@@ -30,6 +30,6 @@
         ]
     },
     "learnweb": {
-        "link": "https:\/\/www.uni-muenster.de\/LearnWeb\/learnweb2\/"
+        "link": "https:\/\/sso.uni-muenster.de\/LearnWeb\/learnweb2\/course\/view.php?id=47537"
     }
 }
