@@ -43,10 +43,14 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
 
-    <style>
-        @page {
-            size: auto;
-            margin: 0mm;
+    <style type="text/css">
+        @media print {
+            body {
+                margin-left: 2cm;
+                margin-right: 2cm;
+                margin-top: 3cm;
+                margin-bottom: 1.8cm;
+            }
         }
     </style>
 
@@ -67,7 +71,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
 
     <div class="d-none d-print-block">
         <!-- only visible in print mode -->
-        <div class="row" id="print-page">
+        <div class="row">
             <div class="col justify-content-center">
                 <h1 class="display-4">Student Results</h1>
                 <hr>
