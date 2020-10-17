@@ -47,12 +47,12 @@ if ($sqliSolved) {
             </svg>
         </span>
     </button>
-    <a class="navbar-brand d-none d-lg-block" href="#">WebSec Shop</a>
-    <a class="navbar-brand d-md-none">WebSec Shop</a>
+    <a class="navbar-brand d-none d-lg-block" href="/shop/main.php">WebSec Shop</a>
+    <a class="navbar-brand d-md-none" href="/shop/main.php">WebSec Shop</a>
 
     <div class="collapse navbar-collapse mb-2" id="navbar-shop">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0 container d-flex flex-column flex-md-row justify-content-between">
-            <li class=" nav-item active">
+            <li class="nav-item d-none d-md-block">
                 <a class="py-2 d-inline-block mt-2" href="/shop/main.php">Home</a>
             </li>
             <li class="nav-item">
