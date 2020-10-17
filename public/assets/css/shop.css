@@ -97,6 +97,13 @@
     background-attachment: fixed;
 }
 
+#main-header-sqli {
+    background: url('../img/friends2.jpg') no-repeat;
+    min-height: 600px;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 #header-container {
     color: #ffffff;
 }
@@ -107,6 +114,13 @@
 
 .dark-overlay {
     background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    width: 100%;
+    min-height: 600px;
+}
+
+.dark-overlay-sqli {
+    background-color: rgba(0, 0, 0, 0.4);
     position: absolute;
     width: 100%;
     min-height: 600px;
