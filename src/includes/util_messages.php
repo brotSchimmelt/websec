@@ -568,7 +568,3 @@ $modalGreeting = '<!-- Greeting Modal -->
     </div>
 </div>
 <!--Modal END-->';
-
-// old footer #greeting
-// </div>
-// <div class="modal-footer text-center justify-content-center">
