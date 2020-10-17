@@ -119,22 +119,24 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 <div class="card-body">
                                     <input type="checkbox" class="tablefilter" name="is-admin" id="is-admin" unchecked />
                                     <label for="is-admin" id="checkbox-admin-label">Hide Admin User</label>
-                                    <table class="table table-bordered table-striped filteredtable">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Pos.</strong></td>
-                                                <td><strong>Username</strong></td>
-                                                <td><strong>Mail</strong> <i>(with mailto link)</i></td>
-                                                <td><strong>Open Challenges</strong></td>
-                                                <td><strong>Admin</strong></td>
-                                                <td><strong>Unlocked</strong></td>
-                                                <td><strong>Last Activity</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php show_students_with_open_challenges() ?>
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped filteredtable">
+                                            <thead>
+                                                <tr>
+                                                    <td><strong>Pos.</strong></td>
+                                                    <td><strong>Username</strong></td>
+                                                    <td><strong>Mail</strong> <i>(with mailto link)</i></td>
+                                                    <td><strong>Open Challenges</strong></td>
+                                                    <td><strong>Admin</strong></td>
+                                                    <td><strong>Unlocked</strong></td>
+                                                    <td><strong>Last Activity</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php show_students_with_open_challenges() ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <small>The <strong>*</strong> indicates that a post request was made in the CSRF challenge, but the referrer does not match.</small>
                                 </div>
                             </div>

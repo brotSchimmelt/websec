@@ -80,22 +80,24 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                 <div class="card-body">
                                     <input class="form-control" id="user-search" type="text" placeholder="Search User Database ...">
                                     <br>
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <td><strong>Pos.</strong></td>
-                                                <td><strong>User Name</strong></td>
-                                                <td><strong>Mail</strong></td>
-                                                <td><strong>Solved Challenges</strong></td>
-                                                <td><strong>CSRF: </strong>Referrer</td>
-                                                <td><strong>CSRF: </strong>Message</td>
-                                                <td><strong>Difficulty</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="user-table">
-                                            <?php show_solved_challenges() ?>
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <td><strong>Pos.</strong></td>
+                                                    <td><strong>User Name</strong></td>
+                                                    <td><strong>Mail</strong></td>
+                                                    <td><strong>Solved Challenges</strong></td>
+                                                    <td><strong>CSRF: </strong>Referrer</td>
+                                                    <td><strong>CSRF: </strong>Message</td>
+                                                    <td><strong>Difficulty</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="user-table">
+                                                <?php show_solved_challenges() ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <small>The <strong>*</strong> indicates that a post request was made in the CSRF challenge, but the referrer does not match.</small>
                                 </div>
                             </div>
