@@ -76,7 +76,7 @@ $difficulty = get_global_difficulty();
                 <!-- SEARCH BAR -->
                 <div class="search-bar-flat-container row justify-content-center" id="friend-search">
                     <h2 class="display-4 mt-4">Find Your Friends</h2>
-                    <p class="text-center">
+                    <p class="text-center lead">
                         You are looking for the perfect present and want to know what your friends have on their wishlist?<br>
                         No Problemo! Just use our absolutely privacy conform search form.
                     </p>
