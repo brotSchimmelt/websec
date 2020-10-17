@@ -246,7 +246,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                 <div class="card-body">
                                     <p>
                                         Here you can set the links for the challenge badges and the current learnweb course. By default the links are set to the corresponding wikipedia articles or the learnweb landing page.
-                                        Please remember to put <b>http</b> or <b>https</b> in front of the link. Otherwise it is not registered as a valid URL. I was too lazy to program another string filter, sorry :/
+                                        Please remember to put <b>http</b> or <b>https</b> in front of the link.
                                     </p>
                                     <br>
                                     <form action="shop_settings.php" method="post">
