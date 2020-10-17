@@ -81,6 +81,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
     <div class="page-container">
 
         <h1 class="display-4">Challenge Settings</h1>
+        <hr>
         <br>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores sapiente sit animi obcaecati aspernatur rerum distinctio voluptas a voluptate ipsa atque, deleniti quibusdam est nesciunt.</p>
         <br><br>

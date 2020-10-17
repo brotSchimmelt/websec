@@ -83,6 +83,7 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
     <!-- HTML Content BEGIN -->
     <div class="page-container">
         <h1 class="display-4">Your Scorecard</h1>
+        <hr>
         <br>
         <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>
             The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
