@@ -45,6 +45,7 @@ $difficulty = get_global_difficulty();
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
+    <link rel="stylesheet" href="/assets/css/searchbar.css">
 
     <!-- Link to favicon -->
     <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
@@ -77,10 +78,24 @@ $difficulty = get_global_difficulty();
         You are looking for the perfect present and want to know what your friends have on their wishlist?<br>
         No Problemo! Just use our absolutely privacy conform search form:
         <br><br>
-        <form action="friends.php" method="post">
-            <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" <?= $difficulty == "hard" ? 'maxlength="10"' : "" ?> autofocus>
-            <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
-        </form>
+        <div class="search-bar-flat-container row justify-content-center">
+            <form action=" friends.php" method="post">
+                <div class="search-bar-flat-inner">
+                    <div class="flat-search">
+                        <div class="custom-input-field">
+                            <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" <?= $difficulty == "hard" ? 'maxlength="10"' : "" ?> autofocus>
+                            <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                            <div class="icon-wrap">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         <br>
         <small><strong>Info:</strong> We value our users' privacy.
             If you entered a username in the search field and there is no corresponding user then nothing is displayed.
