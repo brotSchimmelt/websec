@@ -121,7 +121,7 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <textarea class="form-input" name="userPost" placeholder="Your Comment" rows="3" placeholder="How can we help you?" disabled></textarea>
+                                <textarea class="form-input form-disabled-input" name="userPost" placeholder="Your Comment" rows="3" placeholder="How can we help you?" disabled></textarea>
                             </div>
                         </div>
                     </div>
