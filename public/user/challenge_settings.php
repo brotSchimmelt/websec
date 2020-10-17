@@ -100,77 +100,124 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
                 <div class="tab-content" id="nav-tabContent">
                     <!-- Reflective XSS -->
                     <div class="tab-pane fade show active" id="list-reflective-xss" role="tabpanel" aria-labelledby="list-home-list">
-                        <h3 class="display-5">RESET REFLECTIVE XSS CHALLENGE</h3>
+                        <h3 class="display-5">Reset Reflective XSS Challenge</h3>
                         <br>
                         <p class="lead"><strong class="text-danger">Warning: </strong>This will delete your progress for this challenge and set new cookies.</p>
                         <form action="challenge_settings.php" method="post">
-                            <div class="form-group">
-                                <label for="username-reflective-xss"><b>Your Username:</b></label>
-                                <input type="text" name="username-reflective-xss" id="username-reflective-xss" class="form-control setting-form" aria-describedby="username-reflective-xss" value="<?= $_SESSION['userName'] ?>" disabled>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="form-group fl_icon">
+                                        <div class="icon">
+                                            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        </div>
+                                        <input name="username-reflective-xss" id="username-reflective-xss" aria-describedby="username-reflective-xss" type="text" class="form-input form-disabled-input" value="<?= $_SESSION['userName'] ?>" disabled>
+                                    </div>
+                                    <input type="hidden" name="doit-simplexss" value="1">
+                                    <input type="hidden" name="simplexss" value="1">
+                                    <input class="btn btn-danger shadow" type="submit" value="RESET REFLECTIVE XSS CHALLENGE">
+                                </div>
                             </div>
-                            <input type="hidden" name="doit-simplexss" value="1">
-                            <input type="hidden" name="simplexss" value="1">
-                            <input class="btn btn-danger shadow" type="submit" value="RESET REFLECTIVE XSS CHALLENGE">
                         </form>
                     </div>
+
                     <!-- Stored XSS -->
                     <div class="tab-pane fade" id="list-stored-xss" role="tabpanel" aria-labelledby="list-profile-list">
-                        <h3 class="display-5">RESET STORED XSS CHALLENGE</h3>
+                        <h3 class="display-5">Reset Stored XSS Challenge</h3>
                         <br>
-                        <p class="lead">This will <strong class="text-danger">delete all your achievements</strong>!</p>
+                        <p class="lead"><strong class="text-danger">Warning: </strong>This will delete your progress for this challenge and set new cookies.</p>
                         <form action="challenge_settings.php" method="post">
-                            <div class="form-group">
-                                <label for="username-stored-xss"><b>Your Username:</b></label>
-                                <input type="text" name="username-stored-xss" id="username-stored-xss" class="form-control setting-form" aria-describedby="username-stored-xss" value="<?= $_SESSION['userName'] ?>" disabled>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="form-group fl_icon">
+                                        <div class="icon">
+                                            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        </div>
+                                        <input name="username-stored-xss" id="username-stored-xss" aria-describedby="username-stored-xss" type="text" class="form-input form-disabled-input" value="<?= $_SESSION['userName'] ?>" disabled>
+                                    </div>
+                                    <input type="hidden" name="doit-storedxss" value="1">
+                                    <input type="hidden" name="storedxss" value="1">
+                                    <input class="btn btn-danger shadow" type="submit" value="RESET STORED XSS CHALLENGE">
+                                </div>
                             </div>
-                            <input type="hidden" name="doit-storedxss" value="1">
-                            <input type="hidden" name="storedxss" value="1">
-                            <input class="btn btn-danger shadow" type="submit" value="RESET STORED XSS CHALLENGE">
                         </form>
                     </div>
+
                     <!-- SQLi -->
                     <div class="tab-pane fade" id="list-sqli" role="tabpanel" aria-labelledby="list-messages-list">
-                        <h3 class="display-5">RESET SQLi CHALLENGE</h3>
+                        <h3 class="display-5">Reset SQLi Challenge</h3>
                         <br>
-                        <p class="lead">This will <strong class="text-danger">delete all your achievements</strong>!</p>
+                        <p class="lead"><strong class="text-danger">Warning:</strong> This will completely reset your fake challenge user databse. The changes you might made will not persist!</p>
+
                         <form action="challenge_settings.php" method="post">
-                            <div class="form-group">
-                                <label for="username-sqli"><b>Your Username:</b></label>
-                                <input type="text" name="username-sqli" id="username-sqli" class="form-control setting-form" aria-describedby="username-sqli" value="<?= $_SESSION['userName'] ?>" disabled>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="form-group fl_icon">
+                                        <div class="icon">
+                                            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        </div>
+                                        <input name="username-sqli" id="username-sqli" aria-describedby="username-sqli" type="text" class="form-input form-disabled-input" value="<?= $_SESSION['userName'] ?>" disabled>
+                                    </div>
+                                    <input type="hidden" name="doit-sqli" value="1">
+                                    <input type="hidden" name="sqli" value="1">
+                                    <input class="btn btn-danger shadow" type="submit" value="RESET SQLi DATABASE">
+                                </div>
                             </div>
-                            <input type="hidden" name="doit-sqli" value="1">
-                            <input type="hidden" name="sqli" value="1">
-                            <input class="btn btn-danger shadow" type="submit" value="RESET SQL DATABASE">
                         </form>
                     </div>
+
                     <!-- CSRF -->
                     <div class="tab-pane fade" id="list-csrf" role="tabpanel" aria-labelledby="list-settings-list">
-                        <h3 class="display-5">RESET CSRF CHALLENGE</h3>
+                        <h3 class="display-5">Reset Contact Form Challenge</h3>
                         <br>
-                        <p class="lead">This will <strong class="text-danger">delete all your achievements</strong>!</p>
+                        <p class="lead"><strong class="text-danger">Warning:</strong> This will delete every post you have made to the contact form!</p>
                         <form action="challenge_settings.php" method="post">
-                            <div class="form-group">
-                                <label for="username-csrf"><b>Your Username:</b></label>
-                                <input type="text" name="username-csrf" id="username-csrf" class="form-control setting-form" aria-describedby="username-csrf" value="<?= $_SESSION['userName'] ?>" disabled>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="form-group fl_icon">
+                                        <div class="icon">
+                                            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        </div>
+                                        <input name="username-csrf" id="username-csrf" aria-describedby="username-csrf" type="text" class="form-input form-disabled-input" value="<?= $_SESSION['userName'] ?>" disabled>
+                                    </div>
+                                    <input type="hidden" name="doit-csrf" value="1">
+                                    <input type="hidden" name="csrf" value="1">
+                                    <input class="btn btn-danger shadow" type="submit" value="RESET SUPPORT CONTACT">
+                                </div>
                             </div>
-                            <input type="hidden" name="doit-csrf" value="1">
-                            <input type="hidden" name="csrf" value="1">
-                            <input class="btn btn-danger shadow" type="submit" value="RESET SUPPORT CONTACT">
                         </form>
                     </div>
                     <!-- All Challenge Settings -->
                     <div class="tab-pane fade" id="list-all" role="tabpanel" aria-labelledby="list-settings-list">
-                        <h3 class="display-5">RESET ALL CHALLENGES</h3>
+                        <h3 class="display-5">Reset all Challenges</h3>
                         <br>
-                        <p class="lead">This will <strong class="text-danger">delete all your achievements</strong>!</p>
+                        <p class="lead"><strong class="text-danger">Warning:</strong> This will delete <b>all</b> your achievements!</p>
+
+
+
                         <form action="challenge_settings.php" method="post">
-                            <div class="form-group">
-                                <label for="username-all"><b>Your Username:</b></label>
-                                <input type="text" name="username-all" id="username-all" class="form-control setting-form" aria-describedby="username-all" value="<?= $_SESSION['userName'] ?>" disabled>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="form-group fl_icon">
+                                        <div class="icon">
+                                            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        </div>
+                                        <input name="username-all" id="username-all" aria-describedby="username-all" type="text" class="form-input form-disabled-input" value="<?= $_SESSION['userName'] ?>" disabled>
+                                    </div>
+                                    <input type="hidden" name="doit-all" value="1">
+                                    <input type="hidden" name="all" value="1">
+                                    <input class="btn btn-danger shadow" type="submit" value="RESET ALL CHALLENGES">
+                                </div>
                             </div>
-                            <input type="hidden" name="doit-all" value="1">
-                            <input type="hidden" name="all" value="1">
-                            <input class="btn btn-danger shadow" type="submit" value="RESET ALL CHALLENGES">
                         </form>
                     </div>
                 </div>
