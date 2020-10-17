@@ -76,6 +76,7 @@ if (isset($_POST['doit-delete'])) {
     <?php else : ?>
         <div class="cart-center mt-5">
             <h1 class="display-4">Your Cart</h1>
+            <hr>
             <br>
             <table class="table table-striped shadow">
                 <thead class="my-head">
