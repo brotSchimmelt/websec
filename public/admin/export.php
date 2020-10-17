@@ -46,9 +46,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
     <style>
         @page {
             size: auto;
-            /* auto is the initial value */
             margin: 0mm;
-            /* this affects the margin in the printer settings */
         }
     </style>
 
