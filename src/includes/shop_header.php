@@ -112,13 +112,13 @@ if ($sqliSolved) {
                         <?= $premiumAccount ?>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="#navbarDropdown">
-                        <h6 class="dropdown-header text-white font-weight-bold text-center">Account Settings</h6>
+                        <h6 class="dropdown-header text-white font-weight-bold text-center">Account</h6>
                         <a class="dropdown-item" href="/user/scorecard.php">Scorecard</a>
                         <a class="dropdown-item" href="/user/challenge_settings.php">Challenge Settings</a>
                         <a class="dropdown-item" href="/user/change_password.php">Change Password</a>
                         <a class="dropdown-item" href="/user/help.php">Help</a>
                         <div class="dropdown-divider"></div>
-                        <?= (is_user_admin()) ? '<a class="dropdown-item" href="/user/admin.php">Admin</a>' : "" ?>
+                        <?= (is_user_admin()) ? '<a class="dropdown-item" href="/user/admin.php">Admin</a><div class="dropdown-divider"></div>' : "" ?>
                         <a class="dropdown-item" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
                     </div>
                 </div>
