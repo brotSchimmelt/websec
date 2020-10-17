@@ -329,6 +329,12 @@ h5.green {
     justify-content: space-evenly;
 }
 
+#settings-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
 .help-list-group {
     flex: none;
     padding-bottom: 20px;
