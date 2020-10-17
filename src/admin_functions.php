@@ -164,6 +164,7 @@ function show_solved_challenges()
         $CSRFResults = get_csrf_challenge_data($row['user_name']);
 
         // make table row entry
+        echo "<tr>";
         echo "<td><strong>" . $pos . ".</strong></td>";
         echo "<td>" . $row['user_name'] . "</td>";
         echo "<td>" .  $row['user_wwu_email'] . "</td>";
