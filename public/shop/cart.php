@@ -69,7 +69,7 @@ if (isset($_POST['doit-delete'])) {
         <header id="desert-section">
             <div class="dark-overlay2">
                 <div id="home-inner2" class="page-container page-center">
-                    <h1 class="display-4">Your cart is currently empty</h1>
+                    <h1 class="display-4">Your cart is empty</h1>
                 </div>
             </div>
         </header>
