@@ -603,6 +603,7 @@ h5.green {
 
 .form-disabled-input {
     color: #ffffff !important;
+    background-color: #bbbbbb !important;
 }
 
 .form-group.fl_icon .form-input {
