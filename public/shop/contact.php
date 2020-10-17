@@ -81,7 +81,7 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
     <?php endif; ?>
 
     <div class="row justify-content-center mt-3">
-        <div class="col-xl-5 col-lg-8 col-md-9 col-sm-10 col-xs-11">
+        <div class="col-xl-4 col-lg-8 col-md-9 col-sm-10 col-xs-11">
             <div class="jumbotron bg-light-grey shadow">
 
                 <h1 class="display-5 text-center">Contact Form</h1>
