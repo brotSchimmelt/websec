@@ -87,7 +87,7 @@ if (isset($_POST['all']) && isset($_POST['doit-all'])) {
         <br><br>
 
         <div class="row">
-            <div class="col-auto">
+            <div class="col-auto mb-5">
                 <div class="list-group" id="list-tab-settings" role="tablist">
                     <a class="list-group-item list-group-item-action active" id="list-reflective-xss-list" data-toggle="list" href="#list-reflective-xss" role="tab" aria-controls="reflective-xss">Reflective XSS</a>
                     <a class="list-group-item list-group-item-action" id="list-stored-xss-list" data-toggle="list" href="#list-stored-xss" role="tab" aria-controls="stored-xss">Stored XSS</a>
