@@ -45,7 +45,6 @@ $difficulty = get_global_difficulty();
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
-    <link rel="stylesheet" href="/assets/css/searchbar.css">
 
     <!-- Link to favicon -->
     <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">

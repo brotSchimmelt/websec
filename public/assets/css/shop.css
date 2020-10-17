@@ -672,3 +672,92 @@ h5.green {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+/*
+*
+* Forms & Search Bar
+*
+*/
+
+.search-bar-flat-container form {
+    width: 100%;
+    max-width: 790px;
+    margin: 0;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner {
+    width: 100%;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .custom-input-field {
+    position: relative;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .custom-input-field input {
+    height: 100%;
+    border: 0;
+    background: #fff;
+    display: block;
+    width: 100%;
+    padding: 10px 32px 10px 70px;
+    font-size: 18px;
+    color: #666;
+    border-radius: 3px;
+    height: 70px;
+    color: #555;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .custom-input-field input.placeholder {
+    color: #999;
+    font-size: 18px;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .custom-input-field input:-moz-placeholder {
+    color: #999;
+    font-size: 18px;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .custom-input-field input::-webkit-input-placeholder {
+    color: #999;
+    font-size: 18px;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .custom-input-field input:hover, .search-bar-flat-container form .search-bar-flat-inner .custom-input-field input:focus {
+    box-shadow: none;
+    outline: 0;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .custom-input-field .btn-delete:hover {
+    color: #fff;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .flat-search {
+    margin-bottom: 5px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .flat-search .custom-input-field {
+    width: 100%;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .flat-search .custom-input-field input {
+    padding: 10px 80px 10px 40px;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .flat-search .custom-input-field .icon-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 60px;
+    height: 100%;
+}
+
+.search-bar-flat-container form .search-bar-flat-inner .flat-search .custom-input-field .icon-wrap svg {
+    width: 34px;
+    height: 34px;
+    fill: #ccc;
+}
