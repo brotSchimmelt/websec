@@ -151,10 +151,10 @@ body {
 }
 
 #print-page {
-  margin-left: 3%;
-  margin-right: 3%;
-  margin-top: 10%;
-  margin-bottom: 3%;
+  margin-left: 1.8cm;
+  margin-right: 1.8cm;
+  margin-top: 3cm;
+  margin-bottom: 1.8cm;
 }
 
 #export-table-bottom {
