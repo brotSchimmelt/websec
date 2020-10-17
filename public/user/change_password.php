@@ -81,24 +81,56 @@ if (isset($_POST['change-pwd-submit'])) {
                 <br>
                 <form class="form-signin" action="change_password.php" method="post">
 
-                    <div class="form-group">
-                        <label for="input-old-pwd"><b>Current Password:</b></label>
-                        <input type="password" name="pwd" id="input-old-pwd" class="form-control" aria-describedby="input-old-pwd" placeholder="Current Password" required autofocus>
-                        <small id="pwd-help" class="form-text text-muted">Please enter your current password.</small>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group fl_icon">
+                                <div class="icon">
+                                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-lock-fill mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z" />
+                                        <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z" />
+                                    </svg>
+                                </div>
+                                <input type="password" name="pwd" id="input-old-pwd" class="form-input" placeholder="Current Password" required autofocus>
+                                <small id="pwd-help" class="form-text text-muted">Please enter your current password.</small>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="input-new-pwd"><b>New Password:</b></label>
-                        <input type="password" name="new-pwd" id="input-new-pwd" class="form-control" placeholder="New Password" required>
-                        <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group fl_icon">
+                                <div class="icon">
+                                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-lock-fill mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z" />
+                                        <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z" />
+                                    </svg>
+                                </div>
+                                <input type="password" name="new-pwd" id="input-new-pwd" class="form-input" placeholder="New Password" required>
+                                <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="confirm-pwd"><b>Confirm Password:</b></label>
-                        <input type="password" name="confirm-pwd" id="confirm-pwd" class="form-control" placeholder="Confirm Password" required>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group fl_icon">
+                                <div class="icon">
+                                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-arrow-counterclockwise mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" />
+                                        <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
+                                    </svg>
+                                </div>
+                                <input type="password" name="confirm-pwd" id="confirm-pwd" class="form-input" placeholder="Confirm New Password" required>
+                            </div>
+                        </div>
                     </div>
+
                     <br>
-                    <button type="submit" name="change-pwd-submit" id="change-pwd-submit" class="btn btn-wwu-primary">Change Password</button>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" name="change-pwd-submit" id="change-pwd-submit" class="btn btn-wwu-primary float-right">Change Password</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
