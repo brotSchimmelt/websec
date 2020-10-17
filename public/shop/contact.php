@@ -91,22 +91,47 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 
                 <!-- CHALLENGE: Here is the form for the contact form challenge -->
                 <form action="contact.php" method="post" id="reviewform">
-                    <div class="form-group">
-                        <label for="contact-username"><b>Your Username:</b></label>
-                        <input name="username" type="text" class="form-control" id="contact-username" aria-describedby="contact-username-help" value="<?= $_SESSION['userName'] ?>" disabled>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group fl_icon">
+                                <div class="icon">
+                                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                </div>
+                                <input name="username" type="text" class="form-input form-disabled-input" id="contact-username" aria-describedby="contact-username-help" value="<?= $_SESSION['userName'] ?>" disabled>
+                                <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                                <input type="hidden" name="utoken" value="<?= $_SESSION['fakeCSRFToken']; ?>">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="contactMail"><b>Your E-Mail:</b></label>
-                        <input type="email" class="form-control" id="contactMail" aria-describedby="emailHelp" placeholder="Enter Your Mail" disabled>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group fl_icon">
+                                <div class="icon">
+                                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
+                                    </svg>
+                                </div>
+                                <input type="email" class="form-input form-disabled-input" id="contactMail" aria-describedby="emailHelp" value="<?= $_SESSION['userMail'] ?>" disabled>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1"><b>Your Message:</b></label>
-                        <textarea name="userPost" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="How can we help you?" disabled></textarea>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <textarea class="form-input" name="userPost" placeholder="Your Comment" rows="3" placeholder="How can we help you?" disabled></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
-                    <input type="hidden" name="utoken" value="<?= $_SESSION['fakeCSRFToken']; ?>">
-                    <br>
-                    <input class="btn btn-wwu-primary" type="submit" value="Submit" disabled>
+                    <div class="row">
+                        <div class="col">
+                            <button type=" submit" class="btn btn-wwu-primary float-right">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
