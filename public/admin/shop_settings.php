@@ -53,10 +53,10 @@ if (isset($_POST['update-domains'])) {
 }
 if (isset($_POST['update-badge'])) {
     $learnweb = (filter_var($_POST['input-learnweb'], FILTER_VALIDATE_URL)) ? $_POST['input-learnweb'] : "https://www.uni-muenster.de/LearnWeb/learnweb2/";
-    $reflectiveXSS = (filter_var($_POST['input-reflective-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-reflective-xss'] : "https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)";
-    $storedXSS = (filter_var($_POST['input-stored-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-stored-xss'] : "https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)";
-    $sqli = (filter_var($_POST['input-sqli'], FILTER_VALIDATE_URL)) ? $_POST['input-sqli'] : "https://en.wikipedia.org/wiki/SQL_injection";
-    $csrf = (filter_var($_POST['input-csrf'], FILTER_VALIDATE_URL)) ? $_POST['input-csrf'] : "https://en.wikipedia.org/wiki/Cross-site_request_forgery";
+    $reflectiveXSS = (filter_var($_POST['input-reflective-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-reflective-xss'] : get_setting("learnweb", "link");
+    $storedXSS = (filter_var($_POST['input-stored-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-stored-xss'] : get_setting("learnweb", "link");
+    $sqli = (filter_var($_POST['input-sqli'], FILTER_VALIDATE_URL)) ? $_POST['input-sqli'] : get_setting("learnweb", "link");
+    $csrf = (filter_var($_POST['input-csrf'], FILTER_VALIDATE_URL)) ? $_POST['input-csrf'] : get_setting("learnweb", "link");
     set_setting("learnweb", "link", $learnweb);
     set_badge_link("reflective_xss", $reflectiveXSS);
     set_badge_link("stored_xss", $storedXSS);
@@ -245,7 +245,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                 </div>
                                 <div class="card-body">
                                     <p>
-                                        Here you can set the links for the challenge badges and the current learnweb course. By default the links are set to the corresponding wikipedia articles or the learnweb landing page.
+                                        Here you can set the links for the challenge badges and the current learnweb course. By default the links are set to the corresponding learnweb course page.
                                         Please remember to put <b>http</b> or <b>https</b> in front of the link.
                                     </p>
                                     <br>
