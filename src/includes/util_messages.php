@@ -27,7 +27,7 @@ $alertContactField = '<br>
 $alertContactFieldClosed = '<br>
 <div class="alert alert-warning shadow" role="alert">
     Dear customer,<br>
-    our contact form has been temporarily disabled.<br>We were experiencing heavy hacker attacks at our website and decided<br>to shut down our services for a few days/weeks/months.<br>
+    our contact form has been temporarily <b>disabled</b>. We were experiencing heavy hacker attacks at our website and decided to shut down our services for a few days/weeks/months.<br>
     In urgent cases please contact our support team.<br>
     Thank you for you patience!<br>
 </div><br>';
