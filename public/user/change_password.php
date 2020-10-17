@@ -77,7 +77,9 @@ if (isset($_POST['change-pwd-submit'])) {
             <div class="jumbotron bg-light-grey shadow">
                 <h1 class="display-5 text-center">Change Your Password</h1>
                 <br>
-                <?= get_message() ?>
+                <div class="text-center">
+                    <?= get_message() ?>
+                </div>
                 <br>
                 <form class="form-signin" action="change_password.php" method="post">
 
