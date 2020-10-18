@@ -193,9 +193,9 @@ function query_sqli_db($searchTerm)
                     // catch any fatal sql error
                 } catch (Throwable $t) {
                     echo '<div class="page-center page-container">';
-                    echo "It seems like there was a problem with your search term: <br>"
-                        . htmlentities($searchTerm);
-                    echo "</div>";
+                    echo "<p>It seems like there was a problem with your "
+                        . "search term:</p><code>" . htmlentities($searchTerm)
+                        . "</code></div>";
                 }
             }
         }
