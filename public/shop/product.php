@@ -35,15 +35,11 @@ if (!isset($_GET['id']) or empty($_GET['id'])) {
     $productID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 }
 
-// get product data from database
-// $sql = "SELECT `prod_title`, `prod_description`, `price`, `img_path` FROM `products` WHERE `prod_id` = :prod_id";
-// $stmt = get_shop_db()->prepare($sql);
-// $stmt->execute(['prod_id' => $productID]);
-// $productData = $stmt->fetch();
 $productData = get_product_data($productID);
-
-// difficulty
+$price = isset($productData['price']) ? $productData['price'] / 100 : 42;
+$premiumPrice = round((0.5 * (float)$price), 2);
 $difficulty = get_global_difficulty();
+$solvedSQLi = lookup_challenge_status("sqli", $_SESSION['userName']);
 
 
 // challenge
@@ -163,7 +159,12 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                         <path fill-rule="evenodd" d="M5.354 5.119L7.538.792A.516.516 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.537.537 0 0 1 16 6.32a.55.55 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.519.519 0 0 1-.146.05c-.341.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.171-.403.59.59 0 0 1 .084-.302.513.513 0 0 1 .37-.245l4.898-.696zM8 12.027c.08 0 .16.018.232.056l3.686 1.894-.694-3.957a.564.564 0 0 1 .163-.505l2.906-2.77-4.052-.576a.525.525 0 0 1-.393-.288L8.002 2.223 8 2.226v9.8z" />
                     </svg>
                 </div>
-                <h3 class="display-5 text-left mb-3"><b>&euro; <?= $productData['price'] ?></b></h3>
+                <?php if ($solvedSQLi) : ?>
+                    <h3 class="display-5 text-left mb-3"><s>&euro; <?= $price ?></s>&nbsp;&nbsp;<b class="text-success">&euro;<?= $premiumPrice ?></b></h3>
+                <?php else : ?>
+                    <h3 class="display-5 text-left mb-3">&euro; <?= $price ?></h3>
+                <?php endif; ?>
+
                 <p class="text-left"><b>Availability:</b> In Stock</p>
                 <p class="text-left"><b>Brand:</b> VeryFakeCompany Ltd.</p>
                 <p class="text-left"><?= $productData['prod_description'] ?></p>

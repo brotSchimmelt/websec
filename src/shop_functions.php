@@ -168,6 +168,10 @@ function show_cart_content()
         exit();
     }
 
+    // check if user has premium discount
+    $premium = (lookup_challenge_status("sqli", $_SESSION['userName']))
+        ? true : false;
+
     $i = 0;
     $totalPrice = 0;
     foreach ($cart as $row) {
@@ -184,14 +188,18 @@ function show_cart_content()
             exit();
         }
 
-        $rowPrice = $row['quantity'] * $product['price'];
+        // calculate product price
+        $price = ($premium) ? ($product['price'] / 100 * 0.5)
+            : ($product['price'] / 100);
+
+        $rowPrice = $row['quantity'] * $price;
         $i++;
         $totalPrice += $rowPrice;
 
         echo "<tr>";
         echo '<th scope="row">' . $i . '.</th>';
         echo '<td>' . $product['prod_title'] . '</td>';
-        echo '<td>' . $product['price'] . ' &euro;</td>';
+        echo '<td>' . $price . ' &euro;</td>';
         echo '<td>' . $row['quantity'] . '</td>';
         echo '<td>' . $rowPrice . ' &euro;</td>';
         echo "</tr>";

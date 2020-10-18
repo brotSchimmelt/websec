@@ -109,7 +109,7 @@ if (isset($_POST['unlock-submit'])) {
                                     </svg>
                                 </div>
                                 <div class="p-4 align-self-end">
-                                    Upgrade your account to our premium subscription service to receive a 5% discount on all our prices and a daily newsletter why linux good windows bad.
+                                    Upgrade your account to our premium subscription service to receive a 50% discount on all our prices and a daily newsletter why linux good windows bad.
                                 </div>
                             </div>
                             <div class="text-center">
