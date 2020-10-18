@@ -7,13 +7,22 @@
             </a>
             <small class="d-block mb-3 text-muted">&copy; <?php get_semester() ?></small>
         </div>
-        <div class="col-6 col-md">
+        <div class="col-6 col-md d-none d-lg-block">
             <h5 class="green">Instructions</h5>
             <ul class="list-unstyled text-small">
                 <li><a class="text-muted" href="/user/help.php?help=general">General</a></li>
                 <li><a class="text-muted" href="/user/help.php?help=xss">Cross-Site Scripting</a></li>
                 <li><a class="text-muted" href="/user/help.php?help=sqli">SQL Injection</a></li>
                 <li><a class="text-muted" href="/user/help.php?help=csrf">Contact Form</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md d-lg-none">
+            <h5 class="green">Instructions</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="/user/help.php#general_sm">General</a></li>
+                <li><a class="text-muted" href="/user/help.php#xss_sm">Cross-Site Scripting</a></li>
+                <li><a class="text-muted" href="/user/help.php#sqli_sm">SQL Injection</a></li>
+                <li><a class="text-muted" href="/user/help.php#csrf_sm">Contact Form</a></li>
             </ul>
         </div>
         <div class="col-6 col-md">
