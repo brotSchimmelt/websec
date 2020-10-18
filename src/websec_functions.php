@@ -240,7 +240,7 @@ function query_sqli_db($searchTerm)
 // display the product comments
 function show_xss_comments()
 {
-    include(INCL . "util_comments.php");
+    include(INCL . "shop_comments.php");
 }
 
 // add product comment

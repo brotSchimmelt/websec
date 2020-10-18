@@ -144,7 +144,7 @@ function show_products($productsPerRow)
     $solvedStoredXSS = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 
 
-    $done = false; // is used in util_product_preview.php
+    $done = false; // is used in shop_product_preview.php
     while ($row = $result->fetch()) {
         echo '<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">';
 
@@ -154,7 +154,7 @@ function show_products($productsPerRow)
             if ($i != $productsPerRow) {
                 $row = $result->fetch();
             }
-            include(INCL . "util_product_preview.php");
+            include(INCL . "shop_product_preview.php");
             $i--;
         }
         echo "</div>";
@@ -278,7 +278,7 @@ function show_search_results($searchTerm, $productsPerRow)
     }
 
 
-    $done = false; // is used in util_product_preview.php
+    $done = false; // is used in shop_product_preview.php
     while ($row = $stmt->fetch()) {
         echo '<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">';
 
@@ -288,7 +288,7 @@ function show_search_results($searchTerm, $productsPerRow)
             if ($i != $productsPerRow) {
                 $row = $stmt->fetch();
             }
-            include(INCL . "util_product_preview.php");
+            include(INCL . "shop_product_preview.php");
             $i--;
         }
         echo "</div>";

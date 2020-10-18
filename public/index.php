@@ -16,7 +16,7 @@ if (!is_login_enabled()) {
     session_destroy();
 
     $name = "Login";
-    include(INCL . "util_login_disabled.php");
+    include(INCL . "login_disabled.php");
     exit();
 }
 
