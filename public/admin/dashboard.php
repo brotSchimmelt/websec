@@ -114,7 +114,7 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">List of All Students That Need to Solve at Least One Remaining Challenge</h5>
+                                    <h5 class="display-5">List of All Users That Need to Solve at Least One Remaining Challenge</h5>
                                 </div>
                                 <div class="card-body">
                                     <input type="checkbox" class="tablefilter" name="is-admin" id="is-admin" unchecked />

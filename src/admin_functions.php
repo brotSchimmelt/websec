@@ -120,11 +120,11 @@ function show_students_with_open_challenges()
         // format row entries
         $adminClass = $row['is_admin'] == 1 ? "is-admin" : "";
         $adminFlag = $row['is_admin'] == 1 ?
-            '<span style="color:red">Yes</span>' :
+            '<span style="color:orange">Yes</span>' :
             '<span style="color:green">No</span>';
         $unlockedFlag = $row['is_unlocked'] == 1 ?
             '<span style="color:green">Yes</span>' :
-            '<span style="color:orange">No</span>';
+            '<span style="color:red">No</span>';
         $lastActivity = (!empty($row['last_login'])) ? $row['last_login'] :
             $row['timestamp'];
 
