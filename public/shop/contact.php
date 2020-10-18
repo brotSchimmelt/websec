@@ -80,7 +80,7 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">CSRF</a>
     <?php endif; ?>
 
-    <div class="row justify-content-center mt-3">
+    <div class="row justify-content-center mt-3 card-page-width">
         <div class="col-xl-4 col-lg-8 col-md-9 col-sm-10 col-xs-11">
             <div class="jumbotron bg-light-grey shadow">
 

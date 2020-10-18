@@ -787,3 +787,7 @@ h5.green {
     height: 34px;
     fill: #ccc;
 }
+
+.card-page-width {
+    max-width: 100%;
+}

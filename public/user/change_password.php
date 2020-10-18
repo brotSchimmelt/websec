@@ -72,7 +72,7 @@ if (isset($_POST['change-pwd-submit'])) {
 
     <!-- HTML Content BEGIN -->
     <!-- <div class="page-container"> -->
-    <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center mt-5 card-page-width">
         <div class="col-xl-4 col-lg-8 col-md-9 col-sm-10 col-xs-11">
             <div class="jumbotron bg-light-grey shadow">
                 <h1 class="display-5 text-center">Change Your Password</h1>
