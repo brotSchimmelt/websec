@@ -117,9 +117,9 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                     <h5 class="display-5">List of All Users That Need to Solve at Least One Remaining Challenge</h5>
                                 </div>
                                 <div class="card-body">
-                                    <input type="checkbox" class="tablefilter" name="is-admin" id="is-admin" unchecked />
-                                    <label for="is-admin" id="checkbox-admin-label">Hide Admin User</label>
                                     <div class="table-responsive">
+                                        <input type="checkbox" class="tablefilter" name="is-admin" id="is-admin" unchecked />
+                                        <label for="is-admin" id="checkbox-admin-label">Hide Admin User</label>
                                         <table class="table table-bordered table-striped filteredtable">
                                             <thead>
                                                 <tr>
