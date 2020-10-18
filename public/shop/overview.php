@@ -32,7 +32,6 @@ if (!is_user_unlocked()) {
 // local variables
 $userName = $_SESSION['userName'];
 $thisPage = basename(__FILE__);
-$productsPerRow = 3;
 $searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
 $challengeFailed = false;
 $solved = false;
@@ -166,14 +165,14 @@ if (isset($_POST['add-preview'])) {
 
         <!-- Search Results -->
         <section id="search-results">
-            <?php show_search_results($searchTerm, $productsPerRow) ?>
+            <?php show_search_results($searchTerm) ?>
         </section>
 
     <?php else : ?>
 
         <!-- Product previews -->
         <section id="products">
-            <?php show_products($productsPerRow) ?>
+            <?php show_products() ?>
         </section>
     <?php endif; ?>
     <!-- Page Content END -->

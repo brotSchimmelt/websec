@@ -130,7 +130,7 @@ function is_product_in_cart($productID)
 }
 
 // get all products from the product database
-function show_products($productsPerRow)
+function show_products()
 {
     $sql = "SELECT prod_id, prod_title, prod_description, "
         . "price, img_path FROM products";
@@ -141,24 +141,16 @@ function show_products($productsPerRow)
         exit();
     }
 
-    $solvedStoredXSS = lookup_challenge_status("stored_xss", $_SESSION['userName']);
-
-
-    $done = false; // is used in shop_product_preview.php
+    echo '<div class="row justify-content-start mx-auto">';
     while ($row = $result->fetch()) {
-        echo '<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">';
 
-        $i = $productsPerRow;
-        while ($i > 0) {
-            // don't load a new prod if the first hasn't been displayed yet
-            if ($i != $productsPerRow) {
-                $row = $result->fetch();
-            }
-            include(INCL . "shop_product_preview.php");
-            $i--;
-        }
+        echo '<div class="col-xl-4 col-lg-6 col-md-6 col-sm-auto">';
+
+        include(INCL . "shop_product_preview.php");
+
         echo "</div>";
     }
+    echo "</div>";
 }
 
 // show current content of the users shopping cart
@@ -244,7 +236,7 @@ function get_num_of_cart_items()
 }
 
 // display the product search results
-function show_search_results($searchTerm, $productsPerRow)
+function show_search_results($searchTerm)
 {
     $sql = "SELECT `prod_id`, `prod_title`, `prod_description`, `price`, "
         . "`img_path` FROM `products` WHERE `prod_title` LIKE :needle";
@@ -260,36 +252,30 @@ function show_search_results($searchTerm, $productsPerRow)
 
     if ($stmt->rowCount() <= 0) {
 
-        echo '<div class="page-center page-container">Sorry, it seems '
-            . 'like we have no products that match your search request :(<br>';
+        echo '<div class="page-center page-container lead">Sorry, it seems '
+            . 'like we have no products that match your search request &#128533;<br>';
 
-
+        // check if XSS was tried
         $pos1 = strpos($searchTerm, "document.cookie");
         if ($pos1 !== false) {
-            $btn = '<button type="button" class="btn btn-link btn-sm" '
+            $btn = '<button type="button" class="btn btn-link btn" '
                 . 'data-toggle="modal" data-target="#xss-solution">Challenge '
                 . 'Cookie</button>';
             $msg = 'Do you want to enter the' . $btn . '?';
 
             echo $msg;
         }
+        echo "</div>";
+    } else {
 
-        echo '</div>';
-    }
+        echo '<div class="row justify-content-center mx-auto">';
+        while ($row = $stmt->fetch()) {
 
+            echo '<div class="col-xl-4 col-lg-6 col-md-6 col-sm-auto">';
 
-    $done = false; // is used in shop_product_preview.php
-    while ($row = $stmt->fetch()) {
-        echo '<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">';
-
-        $i = $productsPerRow;
-        while ($i > 0) {
-            // don't load a new prod if the first hasn't been displayed yet
-            if ($i != $productsPerRow) {
-                $row = $stmt->fetch();
-            }
             include(INCL . "shop_product_preview.php");
-            $i--;
+
+            echo "</div>";
         }
         echo "</div>";
     }
