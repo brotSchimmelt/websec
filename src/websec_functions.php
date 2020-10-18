@@ -173,9 +173,9 @@ function query_sqli_db($searchTerm)
                 try {
                     while ($row = $result->fetchArray()) {
                         echo '<div class="page-center page-container">';
-                        echo '<h4 class="display-5">Looks like we found your '
-                            . 'friend!</h4><br>';
-                        echo "Here are his/her contact infos and wishlist items!<br>";
+                        echo '<h3 class="display-5">Looks like we found your '
+                            . 'friend!</h3>';
+                        echo '<p class="lead">Here are his/her contact infos and wishlist items!</p>';
 
                         // iterate SELECT results
                         foreach ($row as $key => $value) {
@@ -185,10 +185,10 @@ function query_sqli_db($searchTerm)
                                 continue;
                             }
                             // output results
-                            echo htmlentities($key) . " = " . htmlentities($value) . "<br>";
+                            echo "<strong>" . htmlentities($key) . "</strong>" . " = " . htmlentities($value) . "<br>";
                         }
-                        echo "</div>";
                         echo "<br><hr><br>";
+                        echo "</div>";
                     }
                     // catch any fatal sql error
                 } catch (Throwable $t) {
