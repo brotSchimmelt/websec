@@ -1,13 +1,6 @@
-# WebSec - Hacking Platform
+# WebSec - Shop
 
-This is a short summary of the most important points of the documentation for this project. 
-
-## TODOs (remove in production)
-
-- update instructions for the challenges
-- replace dummy texts and product descriptions
-- add a popup for the SQLi challenge *(on 'hard' difficulty)* to indicate that a SQLite DB is used
-- remove TODOs from this README
+This is a short summary of the most important points of the documentation for the WebSec Shop. The docker environment and the test setup *(vagrant)* are described in their own README files. 
 
 ## Installation and Setup
 
@@ -15,36 +8,39 @@ This is a short summary of the most important points of the documentation for th
 2. Login with the default admin user:
 - **user** ```administrator```
 - **password** ```dpbCpfcAqVHY3gYf```
-3. Change the default password!
-4. Choose the settings either in the admin area of the WebSec shop or edit them directly in the ```config/settings.json``` file. *(The difficulty of the challenges must be set before the first student login. Otherwise every student has to reset their challenges in the menu manually in order to load the new challenge settings.)*
+3. Change the default password after the first login!
+4. Choose the settings either in the admin area of the WebSec shop or edit them directly in the ```config/settings.json``` file. *(The difficulty of the challenges must be set before the first student logs in. Otherwise, every student has to reset their challenges in the menu manually in order to load the new challenge settings.)*
 
 ## Project Structure
+This is an overview over the files and directories directly related to the WebSec Shop. The structure is based on the [Standard PHP Package Skeleton](https://github.com/php-pds/skeleton).
+
+The figure below shows the structure of the main directory **www/** and the purpose and contents of each subdirectory.
 ```
 www/
 ├── bin/
 │   └── command line tools
 ├── config/
 │   └── php configuration files
-│   └── shop settings JSON file
+│   └── global shop settings JSON file
 ├── data/
 │   └── sqlite databases for every user
 ├── docs/
 │   └── short documentation for the project
 ├── public/
 │   └── admin/
-│   │   └── pages for the admin area
+│   │   └── pages for the admin area and global settings
 │   └── assets/
 │   │   └── CSS, JavaScript and images
 │   └── shop/
 │   │   └── pages for the challenges
 │   └── user/
-│       └── pages for the user area
+│       └── pages for user settings
 ├── src/
 │   └── includes/
 │   │   └── include files
-│   └── php functions
+│   └── php libraries
 ├── tests/
-│   └── php unit tests
+│   └── php unit tests (PHPUnit)
 └── vendor
     └── dependencies (for PHPUnit)
 ```
@@ -52,7 +48,7 @@ www/
 #### bin/
 
 Contains the command line tools for this project.
-- ```convert_md_to_html.sh``` Converts markdown files *(like this one)* to valid html for the **docs/** folder.
+- ```convert_md_to_html.sh``` Converts markdown files *(like this one)* to valid HTML for the **docs/** folder.
 - ```get_docker_logs.sh``` Copys log files from the separat docker containers into the **bin/** folder.
 
 
@@ -69,22 +65,59 @@ Contains the configurations and settings for the shop.
 
 Contains all user SQLite databases for the SQLi challenge.
 
-On **normal** difficulty the databases are initialized with one table *('users')* that stores username, password, email, whish list and user_status for every entry. The database is filled with a set of fake users and an entry for the corresponding student. The password that is displayed for the student is a random string.
+On **normal** difficulty the databases are initialized with one table *('users')* that stores username, password, email, whish list and user status for every entry. The database is filled with a set of fake users and an entry for the corresponding student. The password that is displayed for the student is a random string.
 
-On **hard** difficulty the above mentioned table is extended by a second one *('premium_users')* in which the premium user status is stored for every fake user *(and the student)*.
+On **hard** difficulty the above mentioned table is extended by a second one *('premium_users')* in which the premium user status is stored for every fake user and the student.
 
-The databases are created during the registration process with the ```create_sqli_db($username, $mail)``` function in **src/websec_functions.php**.
+The databases are created during the registration process with the ```create_sqli_db``` function in **src/websec_functions.php**.
 
 #### docs/
+
+Contains the README files for all project components as HTML documents. The HTML files can be created automatically with the ```convert_md_to_html.sh``` script in **bin/** from the original markdown files. 
+
 #### public/
+
+This is the root directory for the apache webserver. All files within this directory are accessible from the outside. The remaining files in **www/** must be explicitly loaded by a php file to be visible to the user.
+
+
+The files for the registration and login system of the shop are directly located in the root directory.
+
+The ```.htaccess``` file redirects the most common server errors *(400, 401, 402, 403, 404, 500)* to custom error pages.
+
+The **admin/** directory contains the restricted admin area. Here you can see and download the student results for the challenges, change global shop settings and access the PHPMyAdmin sites for the MySQL databases *(if enabled in the ```docker-compose.yml```)*.
+
+All pages related to the shop system and the hacking challenges are located in the **shop/** directory.
+
+The pages for the user settings and the local challenge settings are in the **user/** directory.
+
+All assets files like JavaScript, CSS or images are stored in the **assets/** directory. JavaScript or CSS files from third parties are stored separately in directories named 'vendor'.
+
 #### src/
+
+The **src/** directory contains all php functions relevant to the shop and the challenges. The functions are stored in different files depending on their domain *(```*_functions.php```)*.
+
+The **includes/** directory includes various files; mainly repetitive content that is later loaded in by other php scripts. The files are separated in different groups by their prefixes.
+
 #### tests/
+
+The [PHPUnit](https://phpunit.de/)  tests are stored in this directory. This directory can be omitted in production.
+
+
 #### vendor/
 
+Here are all the dependencies for the project stored. Currently, only the PHPUnit module has any dependencies.
 
 ## Challenges
 
 TODO: describe challenges briefly and how to solve them
+
+#### Cross Site Scripting (Reflective)
+
+#### Cross Site Scripting (Stored)
+
+#### SQL Injection
+
+#### Cross Site Request Forgery
 
 ## Settings
 
@@ -92,6 +125,8 @@ TODO: describe every setting and its effect
 
 
 ## Error Codes
+
+All exceptions and errors have a corresponding error code. In the following section, all those codes are listed and explained. Hints and/or known solutions can also be added in this part. 
 
 **010**: A PDO exception occurred during the connection attempt to the **login** database.
 - Database credentials are wrong *(either in ```config/config.php``` or in the ```.env``` file for the docker containers)*
@@ -126,7 +161,10 @@ TODO: describe every setting and its effect
 
 **1xx**: A SQL query could not be processed by the login or shop database.
 
-#### Login Database
+```php
+$whichDB = (100 <= $errorCode < 150) ? 'Login_DB' : 'Shop_DB';
+```
+
 - **101**: User e-mail could not be fetched from the resetPwd table. See query in ```function get_user_mail```
 - **102**: See queries in ```function try_registration```
 - **103**: See query in ```function try_login```
@@ -154,8 +192,7 @@ TODO: describe every setting and its effect
 - **125**: The challenge status could not be fetched. See query in ```function lookup_challenge_status```
 - **126**: A username is used in either the challengeStatus table or the fakeCookie table without corresponding entry in the users table. This could happen if a user is manually deleted from the users table without deleting it from the two tables mentioned above.
 - **127**: The ```last_login``` could not be fetched from the database for the default administrator user.
-
-#### Shop Database
+---
 - **151**: Quantity of product in the database could not be fetched. See query in ```function add_product_to_cart```
 - **152**: Existing product could not be added to the cart. See query in ```function add_product_to_cart```
 - **153**: New product could not be added to the cart. See query in ```function add_product_to_cart```
@@ -178,11 +215,13 @@ TODO: describe every setting and its effect
 
 ## Naming Conventions
 
+The following naming conventions should be used throughout the project.
+
 **Variables**: ```variableName```
 
 **Constants**: ```CONSTANT_NAME```
 
-**Methods**: ```method_name```
+**Methods / Functions**: ```method_name```
 
 **CSS Classes**: ```class-name```
 
@@ -194,4 +233,4 @@ TODO: describe every setting and its effect
 
 **PHP Files**: ```file_name.php```
 
-**Other Asset Files**: ```file_name.ending```
+**Other (Asset) Files**: ```file_name.ending```

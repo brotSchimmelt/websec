@@ -1,13 +1,16 @@
 # SQLite Databases
 
-This folder contains all user SQLite databases for the SQLi challenge.
+This directory contains all user SQLite databases for the SQL injection challenge.
+
+## Setup
 
 The databases are created during the registration process with the ```create_sqli_db($username, $mail)``` function in **src/websec_functions.php**.
 
-On **normal** difficulty the databases are initialized with one table *('users')* that stores username, password, email, whish list and user_status for every entry. The database is filled with a set of fake users and an entry for the corresponding student. The password that is displayed for the student is a random string.
+On **normal** difficulty the databases are initialized with one table *('users')* that stores username, password, email, whish list and user_status for every entry. The database is filled with a set of fake users and an entry for the student himself. The password that is displayed for the student is a random string, not related to the actual password hash stored in the 'real' MySQL login database.
 
 ```php
 <?php
+// Initial setup of the SQLite database on 'normal' difficulty
 $database->exec('CREATE TABLE users (username text NOT NULL, '
                     . 'password text, email text, wishlist text, user_status '
                     . 'text NOT NULL);');
@@ -30,9 +33,10 @@ $database->exec("INSERT INTO users (username,password,email,"
 ?>
 ```
 
-On **hard** difficulty the above mentioned table is extended by a second one *('premium_users')* in which the premium user status is stored for every fake user *(and the student)*.
+On **hard** difficulty the above mentioned table is extended by a second one *('premium_users')* in which the premium user status is stored for every fake user *(and the student respectively)*.
 
 ```php
+// Initial setup of the SQLite database on 'hard' difficulty
 <?php
 $database->exec('CREATE TABLE users (username text NOT NULL, '
                     . 'password text, email text, wishlist text, token '
@@ -71,8 +75,16 @@ $database->exec("INSERT INTO users (username,password,email,"
                     . str_shuffle($genericToken) . "');");
 
 $database->exec("INSERT INTO premium_users (username,status) "
-                    . "VALUES ('" . $username . "','standard');");;
+                    . "VALUES ('" . $username . "','standard');");
 ?>
 ```
 
 Furthermore, the databases contain a fake token on **hard** difficulty that is needed for the CSRF challenge.
+
+## Reset
+The student can choose to reset the database in the challenge settings. In this case the database is removed from the **data/** directory and re-created as displayed above.
+
+
+## Change Challenge Difficulty
+
+In order to change the difficulty for the SQLi challenge, the SQLite database needs to be deleted and initialized with the corresponding structure and entries for the new difficulty (see the code above).
