@@ -240,6 +240,10 @@ h5.green {
     margin-bottom: 60px;
 }
 
+.help-container-flex {
+    max-width: 90%;
+}
+
 .btn-wwu-primary {
     background-color: rgba(46, 109, 134, 1);
     border-color: rgba(46, 109, 134, 1);
