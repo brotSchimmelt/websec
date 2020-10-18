@@ -115,7 +115,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <h5 class="display-5">Login / Registration</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p class="lead">
                                         Here you can disable or enable the user login and registration system.
                                         The users will be redirected to an error page with an appropriated message.
                                     </p>
@@ -168,7 +168,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <h5 class="display-5">Level of Difficulty</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p class="lead">
                                         Here you can set the global difficulty for the challenges.<br>
                                     </p>
                                     <div class="row">
@@ -208,7 +208,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <h5 class="display-5">Blocked Usernames and Allowed Mail Addresses</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p class="lead">
                                         Here are all usernames that are blocked during registration. You can add new ones by appending them in the field below. The names will be processed case insensitive.
                                     </p>
                                     <div class="text-center">
@@ -220,7 +220,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                         </form>
                                     </div>
                                     <br><br>
-                                    <p>
+                                    <p class="lead">
                                         This list contains all domains that are allowed for the mail addresses during registration. You can add new ones by appending them in the field below.
                                     </p>
                                     <div class="text-center">
@@ -244,9 +244,9 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <h5 class="display-5">Badge Links</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p class="lead">
                                         Here you can set the links for the challenge badges and the current learnweb course. By default the links are set to the corresponding learnweb course page.
-                                        Please remember to put <b>http</b> or <b>https</b> in front of the link.
+                                        Please remember to put <b class="text-info">http</b> or <b class="text-info">https</b> in front of the link.
                                     </p>
                                     <br>
                                     <form action="shop_settings.php" method="post">
