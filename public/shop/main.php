@@ -60,7 +60,6 @@ if (isset($_POST['unlock-submit'])) {
 
     // check if user is unlocked
     if (!is_user_unlocked()) {
-        echo $modalGreeting;
         $unlocked = true;
     } else {
         $unlocked = false;
@@ -123,25 +122,6 @@ if (isset($_POST['unlock-submit'])) {
             </div>
         </div>
     </header>
-
-
-    <!-- Container 1 -->
-    <!-- <section id="container-1">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="p-5">
-                        <h1 class="display-4">
-                            Products
-                        </h1>
-                        <hr class="accent-green">
-                        <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta maxime dignissimos voluptatem iste totam assumenda cumque eius architecto temporibus molestias.</p>
-                        <a class="btn btn-login" href="product.php">See our Products</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <!-- Container 2 Product Text-->
     <section id="container-2" class="text-muted py-5">
@@ -295,6 +275,40 @@ if (isset($_POST['unlock-submit'])) {
             </div>
         </div>
     </section>
+
+    <!-- Greeting Popup -->
+    <div class="modal fade" id="greeting" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="greetingLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header wwu-green-background text-white shadow">
+                    <h3 class="modal-title" id="greetingLabel">Instructions</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="mx-3">
+                        <br>
+                        <?php
+                        // load instructions
+                        require(INST_GENERAL);
+                        require(INST_XSS);
+                        require(INST_SQLI);
+                        require(INST_CSRF);
+                        ?>
+                    </div>
+                    <div class="text-center justify-content-center">
+                        <br>
+                        <form class="form-signin" action="main.php" method="post">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="check" name="check" required>
+                                <label class="form-check-label" for="check">I've read the instructions!</label>
+                            </div>
+                            <button type="submit" name="unlock-submit" id="unlock-btn" class="btn btn-wwu-cart mt-2">Let's Go!</button>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php
     // Load shop footer

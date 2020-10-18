@@ -30,6 +30,12 @@ define('SIDEBAR_ADMIN', INCL . 'admin_sidebar.php'); // Admin sidebar location
 define('JS_ADMIN', INCL . 'admin_js.php'); // JavaScript for the admin section
 define('JS_BOOTSTRAP', INCL . 'util_bootstrap_js.php'); // Default JavaScript for bootstrap
 
+// Instructions for the challenges
+define('INST_GENERAL', INCL . 'instruction_general.php'); // general remarks for the challenges
+define('INST_XSS', INCL . 'instruction_xss.php'); // instructions for the stored and the reflective XSS challenges
+define('INST_SQLI', INCL . 'instruction_sqli.php'); // instruction for the SQL injection challenge
+define('INST_CSRF', INCL . 'instruction_csrf.php'); // instruction for the contact form challenge
+
 // Functions
 define('FUNC_BASE', SRC . 'basic_functions.php'); // Basic functions for the site
 define('FUNC_LOGIN', SRC . 'login_functions.php'); // Functions for login, registration etc.
