@@ -97,7 +97,7 @@ function create_sqli_db($username, $mail)
                     . str_shuffle($genericToken) . "');");
 
                 $database->exec("INSERT INTO premium_users (username,status) "
-                    . "VALUES ('" . $username . "','standard');");;
+                    . "VALUES ('" . $username . "','standard');");
             } catch (Exception $e) {
                 display_exception_msg($e, "053");
                 exit();
