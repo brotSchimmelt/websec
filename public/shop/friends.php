@@ -84,7 +84,7 @@ $difficulty = get_global_difficulty();
                         <div class="search-bar-flat-inner">
                             <div class="flat-search">
                                 <div class="custom-input-field">
-                                    <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" <?= $difficulty == "hard" ? 'maxlength="10"' : "" ?> autofocus>
+                                    <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" <?= $difficulty == "hard" ? 'maxlength="10"' : "" ?> <?= $difficulty == "hard" ? 'data-content="Hint: The users are stored in a SQLite database." data-toggle="popover" data-trigger="focus" data-placement="bottom"' : "" ?>>
                                     <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
                                     <div class="icon-wrap">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
