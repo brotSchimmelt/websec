@@ -119,12 +119,12 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">Download Results</h5>
+                                    <h4 class="display-5">Download Results</h4>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p class="lead">
                                         You can either download the results of the students as a JSON file or print them directly as a PDF.
-                                        The JSON file has the format <strong>WWU_Mail: {username, [challenges], difficulty}</strong>.
+                                        The JSON file has the format <strong class="text-info">WWU_Mail: {username, [challenges], difficulty}</strong>.
                                     </p>
                                     <br>
                                     <div class="row">

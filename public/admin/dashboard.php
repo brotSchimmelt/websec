@@ -79,10 +79,10 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 <div class="card-header">
                                     <h5 class="display-5">Number of Registered Students</h5>
                                 </div>
-                                <div class="card-body">
-                                    <p><strong><?= $numOfStudents ?></strong> registered students</p>
-                                    <p><strong><?= get_num_of_unlocked_students() ?></strong> unlocked students</p>
-                                    <p><strong><?= get_num_of_admins() ?></strong> admin users</p>
+                                <div class="card-body lead">
+                                    <p><strong class="mr-3 text-info"><?= $numOfStudents ?></strong> registered students</p>
+                                    <p><strong class="mr-3 text-info"><?= get_num_of_unlocked_students() ?></strong> unlocked students</p>
+                                    <p><strong class="mr-3 text-info"><?= get_num_of_admins() ?></strong> admin users</p>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,7 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 <div class="card-header">
                                     <h5 class="display-5">Total Progress of All Registered Students</h5>
                                 </div>
-                                <div class="card-body"><strong><?= get_total_progress($numOfStudents, 4) . "%" ?></strong>
+                                <div class="card-body lead"><strong class="mr-3 text-info"><?= get_total_progress($numOfStudents, 4) . "%" ?></strong>
                                     of all challenges solved
                                 </div>
                             </div>
@@ -101,10 +101,10 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 <div class="card-header">
                                     <h5 class="display-5">Global Settings</h5>
                                 </div>
-                                <div class="card-body">
-                                    Level of difficulty: <strong><?= get_global_difficulty() ?></strong><br>
-                                    Registration is currently: <strong><?= $registrationStatus ?></strong><br>
-                                    Login is currently: <strong><?= $loginStatus ?></strong>
+                                <div class="card-body lead">
+                                    Level of difficulty: <strong class="ml-3 text-info"><?= get_global_difficulty() ?></strong><br>
+                                    Registration is currently: <strong class="ml-3 text-info"><?= $registrationStatus ?></strong><br>
+                                    Login is currently: <strong class="ml-3 text-info"><?= $loginStatus ?></strong>
                                 </div>
                             </div>
                         </div>
