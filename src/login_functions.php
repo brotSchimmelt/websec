@@ -9,7 +9,7 @@
  */
 function get_login_db()
 {
-    // ensure only one connection is alive
+    // ensure only one connection at a time is alive
     static $dbLogin;
     if ($dbLogin instanceof PDO) {
         return $dbLogin;
