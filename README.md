@@ -82,7 +82,7 @@ Contains all user SQLite databases for the SQLi challenge.
 
 On **normal** difficulty the databases are initialized with one table (users) that stores username, password, email, whish list and user status for every entry. The database is filled with a set of fake users and an entry for the corresponding student. The password that is displayed for the student is a random string.
 
-On **hard** difficulty the above mentioned table is extended by a second one (premium_users) in which the premium user status is stored for every fake user and the student.
+On **hard** difficulty the database is extended by a second table (premium_users) in which the premium user status is stored for every fake user and the student.
 
 The databases are created during the registration process with the ```create_sqli_db``` function in **src/websec_functions.php**.
 
@@ -267,11 +267,29 @@ The SQLi challenge is located in the `friends.php` file.
 
 The search field queries the 'users' table of the SQLite database which stores username, password, email, whish list and user status for every entry. The database is filled with a set of fake users and an entry for the corresponding user.
 
-// SQL query
+```sql
+SELECT username, email, wishlist FROM users WHERE username = '<search>';
+```
 
-**Solution**:
+**Solution**: To solve this challenge the user needs to inject a SQL query that updates the users premium status in the database. An example could look like this:
 
-**Difficulty**:
+```sql
+'; UPDATE users SET user_status = 'premium' WHERE username = '<user>';--
+```
+
+The `';` closes off the original SELECT query. The `--` at the end prevent comments out all remaining suffixes of the first query.
+
+**Difficulty**: On hard difficulty the premium status is no longer stored directly in the users table but in a separat table. To find this table, the user needs to query the sqlite_master table.
+
+```sql
+'; SELECT * FROM sqlite_master;--
+```
+
+Furthermore, the input length for the search field is limited by the HTML attribute `maxlength`. The user has to manually increase this limit with the browser to enter SQL statements longer than 10 characters.
+
+```html
+<input maxlength="10">
+```
 
 #### Cross Site Request Forgery
 
@@ -401,4 +419,8 @@ The following naming conventions should be used throughout the project.
 
 ## Adding New Challenges
 
-TODO: Add notes for adding new challenges
+If you add new challenges to the shop, please consider the following points in order to keep the project consistent:
+
+- New challenges should be added on separat pages
+- A challenge page should be stored in **public/shop/**
+- All challenge related functions should be stored in `websec_functions.php`
