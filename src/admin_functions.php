@@ -12,25 +12,31 @@
 // get the number of students from the login database
 function get_num_of_students()
 {
-    $sql = "SELECT `user_name` FROM `users`";
+    $sql = "SELECT COUNT(`user_name`) AS numberOfStudents FROM `users` "
+        . "WHERE `is_admin` = 0";
     $stmt = get_login_db()->query($sql);
-    return $stmt->rowCount();
+
+    return $stmt->fetch()['numberOfStudents'];
 }
 
 // get number of unlocked students from the login database
 function get_num_of_unlocked_students()
 {
-    $sql = "SELECT `is_unlocked` FROM `users` WHERE `is_unlocked` = '1'";
+    $sql = "SELECT COUNT(`user_name`) AS numberOfUnlocked FROM `users` "
+        . "WHERE `is_unlocked` = 1";
     $stmt = get_login_db()->query($sql);
-    return $stmt->rowCount();
+
+    return $stmt->fetch()['numberOfUnlocked'];
 }
 
 // get the number of admin users from the login database
 function get_num_of_admins()
 {
-    $sql = "SELECT `is_admin` FROM `users` WHERE `is_admin` = '1'";
+    $sql = "SELECT COUNT(`user_name`) AS numberOfAdmins FROM `users` "
+        . "WHERE `is_admin` = 1";
     $stmt = get_login_db()->query($sql);
-    return $stmt->rowCount();
+
+    return $stmt->fetch()['numberOfAdmins'];
 }
 
 // check if a user is unlocked in the database
@@ -56,23 +62,22 @@ function is_user_admin_in_db($username)
 }
 
 // get the challenge progress of all students in the database
-function get_total_progress($numOfStudents, $numOfChallenges)
+function get_total_progress()
 {
-    $sql = "SELECT `user_name` FROM `users`";
+
+    $numOfStudents = get_num_of_students();
+    $numOfChallenges = NUM_CHALLENGES; // hardcoded in config.php
+    // calculate overall percentage
+    $maxPoints = $numOfChallenges * $numOfStudents;
+
+    $sql = "SELECT `user_name` FROM `users` WHERE `is_admin` = 0";
     $stmt = get_login_db()->query($sql);
 
     $absoluteProgress = 0;
     while ($row = $stmt->fetch()) {
 
-        if (is_user_admin_in_db($row['user_name'])) {
-            $numOfStudents -= 1;
-            continue;
-        }
         $absoluteProgress += get_individual_progress($row['user_name']);
     }
-
-    // calculate overall percentage
-    $maxPoints = $numOfChallenges * $numOfStudents;
 
     // check if there is at least 1 normal (non-admin) user
     $totalProgress = ($numOfStudents == 0) ? 0 :
@@ -90,7 +95,7 @@ function get_individual_progress($username)
     $csrfStatus = lookup_challenge_status("csrf", $username);
 
     // integer from 0 to 4 indicating the overall success
-    $totalStatus = 0; // 0 means nothing was accomplished
+    $totalStatus = 0; // 0 means nothing was accomplished yet
     $totalStatus = $xssReflectiveStatus ? ++$totalStatus : $totalStatus;
     $totalStatus = $xssStoredStatus ? ++$totalStatus : $totalStatus;
     $totalStatus = $sqliStatus ? ++$totalStatus : $totalStatus;

@@ -424,3 +424,4 @@ If you add new challenges to the shop, please consider the following points in o
 - New challenges should be added on separat pages
 - A challenge page should be stored in **public/shop/**
 - All challenge related functions should be stored in `websec_functions.php`
+- Increase the number of challenges in `config.php`

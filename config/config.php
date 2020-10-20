@@ -52,3 +52,6 @@ define('MAIN_PAGE', '/shop/main.php');
 define('LOGIN_PAGE', '/index.php');
 define('REGISTER_PAGE', '/registration.php');
 define('SCORE', '/user/scorecard.php');
+
+// Number of challenges in the shop
+define('NUM_CHALLENGES', 4); // currently XSS (2x), SQLi, CSRF
