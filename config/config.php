@@ -2,6 +2,7 @@
 
 define('DS', DIRECTORY_SEPARATOR); // OS independent dir separator
 define('ROOT', $_SERVER['DOCUMENT_ROOT'] . DS); // Web server root dir
+define('PMA', ROOT . 'e6rs82wdj94qsfgb'); // The hidden directory for PHPMyAdmin
 define('SITE_URL', 'localhost'); // Current URL to the website
 
 // Locations on app level
