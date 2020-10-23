@@ -250,19 +250,17 @@ function add_comment_to_db($comment, $author)
     // check if already one comment from the current user exists
     check_user_comment_exists($author);
 
-    // old: updated with JS implementation
-    // filter user comment and check if correct script attack is used
-    // $filteredComment = filter_comment($comment);
+    // filter document.location
+    $pos1 = stripos($comment, "document.location.href");
+    $pos2 = stripos($comment, "document.location");
+    if ($pos1 != false) {
+        $comment =
+            str_replace("document.location.href", "document.write", $comment);
+    }
 
-    // check if student used a more sophisticated attack method for stored xss
-    $pos1 = stripos($comment, "document.location");
-    $pos2 = stripos($comment, "document.write");
-    if ($pos1 !== false || $pos2 !== false) {
-
-        // change comment to an alert with the 'easy' solution to trigger the 
-        // stored xss challenge check
-        $comment = "<script>alert('evildomain/cookie.php?=c' + "
-            . "document.cookie)</script>";
+    if ($pos2 != false) {
+        $comment =
+            str_replace("document.location", "document.write", $comment);
     }
 
     // ensure that mysql varchar(255) length constrain is met 
