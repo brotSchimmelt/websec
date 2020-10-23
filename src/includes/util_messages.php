@@ -129,7 +129,7 @@ $modalInfoStolenSession = '<!--Modal: Info - Stolen Session Elliot-->
             </div>
             <div class="modal-footer">
                 <a class="btn btn-wwu-cart" href="/shop/overview.php" role="button">Go to products</a>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Got it!</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="RefreshPage();" data-dismiss="modal">Got it!</button>
             </div>
         </div>
     </div>
