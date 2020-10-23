@@ -169,7 +169,7 @@ $modalSuccessResetAll = '<!--Modal: Success - Reset All Challenges-->
                 <p>All challenges have successfully been reset.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal" onclick="RefreshPage();">Okay</button>
             </div>
         </div>
     </div>
@@ -189,7 +189,7 @@ $modalSuccessResetReflectiveXSS = '<!--Modal: Success - Reset Reflective XSS Cha
                 <p>The database for the reflective XSS challenge was successfully reset and all relevant cookies were updated.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal" onclick="RefreshPage();">Okay</button>
             </div>
         </div>
     </div>
@@ -209,7 +209,7 @@ $modalSuccessResetStoredXSS = '<!--Modal: Success- Reset Stored XSS Challenge-->
                 <p>The database for the stored XSS challenge was successfully reset and all relevant cookies were updated.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal" onclick="RefreshPage();">Okay</button>
             </div>
         </div>
     </div>
@@ -229,7 +229,7 @@ $modalSuccessResetSQLi = '<!--Modal: Success - Reset SQLi Challenge-->
                 <p>The database for the SQLi challenge was successfully reset.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal" onclick="RefreshPage();">Okay</button>
             </div>
         </div>
     </div>
@@ -249,7 +249,7 @@ $modalSuccessResetCSRF = '<!--Modal: Success - Reset CSRF Challenge-->
                 <p>The database for the CSRF challenge was successfully reset.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal" onclick="RefreshPage();">Okay</button>
             </div>
         </div>
     </div>
@@ -269,7 +269,7 @@ $modalSuccessSQLi = '<!--Modal: Success - SQLi Challenge SOLVED-->
                 <p>You have solved the SQLi challenge!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal" onclick="return RefreshPage();">Okay</button>
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal" onclick="RefreshPage();">Okay</button>
             </div>
         </div>
     </div>
