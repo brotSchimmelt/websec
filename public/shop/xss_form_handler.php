@@ -25,10 +25,11 @@ if (isset($_POST['storedXSSMessage'])) {
         $pos2 = stripos($haystack, "evil");
         $pos3 = stripos($haystack, "domain");
         $pos4 = stripos($haystack, "document.cookie");
+        $pos5 = stripos($haystack, "XSS_YOUR_SESSION");
 
         if (
             $pos1 !== false && $pos2 !== false && $pos3 !== false
-            || $pos4 !== false
+            && ($pos4 !== false || $pos5 !== false)
         ) {
 
             $msg = "Your attack worked! You obtained 1 stolen session cookie "
