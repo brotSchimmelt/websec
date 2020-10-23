@@ -240,8 +240,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <textarea class="form-input" name="userComment" placeholder="Your Comment" required></textarea>
-                                <!-- <input class="form-input" name="userComment" type="text" placeholder="Your Comment"> -->
+                                <textarea class="form-input pt-3" name="userComment" placeholder="Your Comment" style="line-height:18px" required></textarea>
                             </div>
                         </div>
                     </div>
