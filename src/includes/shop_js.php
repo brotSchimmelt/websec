@@ -3,7 +3,7 @@
     function RefreshPage() {
         window.location.reload(true);
     }
-    // initialize tooltips
+    // initialize tooltips and popovers
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover();
     });
