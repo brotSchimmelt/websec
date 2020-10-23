@@ -857,23 +857,6 @@ function check_stored_xss_challenge($username)
     }
 }
 
-// now replaced with JS implementation
-// // check if user comment contains XSS attack
-// function filter_comment($comment)
-// {
-//     if (!empty($comment) && preg_match("/document.cookie/", $comment)) {
-
-
-//         $cookie = $_SESSION['storedXSS'];
-
-//         return "<script>alert('XSS_STOLEN_SESSION=" . $cookie . "');</script>";
-//     } else {
-
-//         return $comment;
-//     }
-// }
-
-
 function compare_cookies($username)
 {
     // iterate through all cookies
