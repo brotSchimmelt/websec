@@ -31,20 +31,37 @@ if (!is_user_unlocked()) {
 // Load POST or GET variables and sanitize input BELOW this comment
 $username = $_SESSION['userName'];
 
+// check if a reset was requested
 if (isset($_POST['simplexss']) && isset($_POST['doit-simplexss'])) {
-    $resetReflectiveXSSModal = reset_reflective_xss_db($username);
+    reset_reflective_xss_db($username);
+    header("location: " . basename(__FILE__) . "?reset=xss1");
+} else if (isset($_POST['storedxss']) && isset($_POST['doit-storedxss'])) {
+    reset_stored_xss_db($username);
+    header("location: " . basename(__FILE__) . "?reset=xss2");
+} else if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
+    reset_sqli_db($username);
+    header("location: " . basename(__FILE__) . "?reset=sqli");
+} else if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
+    reset_csrf_db($username);
+    header("location: " . basename(__FILE__) . "?reset=csrf");
+} else if (isset($_POST['all']) && isset($_POST['doit-all'])) {
+    reset_all_challenges($username);
+    header("location: " . basename(__FILE__) . "?reset=all");
 }
-if (isset($_POST['storedxss']) && isset($_POST['doit-storedxss'])) {
-    $resetStoredXSSModal = reset_stored_xss_db($username);
-}
-if (isset($_POST['sqli']) && isset($_POST['doit-sqli'])) {
-    $resetSQLiModal = reset_sqli_db($username);
-}
-if (isset($_POST['csrf']) && isset($_POST['doit-csrf'])) {
-    $resetCSRFModal = reset_csrf_db($username);
-}
-if (isset($_POST['all']) && isset($_POST['doit-all'])) {
-    $resetAllModal = reset_all_challenges($username);
+
+// show corresponding success modal for resetting
+if (isset($_GET['reset'])) {
+    if ($_GET['reset'] == "xss1") {
+        $resetReflectiveXSSModal = true;
+    } else if ($_GET['reset'] == "xss2") {
+        $resetStoredXSSModal = true;
+    } else if ($_GET['reset'] == "sqli") {
+        $resetSQLiModal = true;
+    } else if ($_GET['reset'] == "csrf") {
+        $resetCSRFModal = true;
+    } else if ($_GET['reset'] == "all") {
+        $resetAllModal = true;
+    }
 }
 ?>
 <!doctype html>

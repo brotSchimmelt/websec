@@ -418,9 +418,6 @@ function reset_reflective_xss_db($username)
 
     // unset challenge progress in database
     set_challenge_status("reflective_xss", $username, $status = 0);
-
-    // show success modal
-    return true;
 }
 
 // Reset stored XSS challenge
@@ -473,9 +470,6 @@ function reset_stored_xss_db($username)
 
     // unset challenge progress in database
     set_challenge_status("stored_xss", $username, $status = 0);
-
-    // show success modal
-    return true;
 }
 
 // Reset SQLi challenge
@@ -491,9 +485,6 @@ function reset_sqli_db($username)
     }
 
     set_challenge_status("sqli", $username, $status = 0);
-
-    // show success modal
-    return true;
 }
 
 // reset CSRF challenge
@@ -511,24 +502,16 @@ function reset_csrf_db($username)
     // unset challenge status in database
     set_challenge_status("csrf", $username, $status = 0);
     set_challenge_status("csrf_referrer", $username, $status = 0);
-
-    // show success modal
-    return true;
 }
 
 // reset all challenges
 function reset_all_challenges($username)
 {
-    // catch all unnecessary modals
-    $emptyVar = false;
-
     // reset all challenges
-    $emptyVar = reset_reflective_xss_db($username);
-    $emptyVar = reset_stored_xss_db($username);
-    $emptyVar = reset_sqli_db($username);
-    $emptyVar = reset_csrf_db($username);
-
-    return true;
+    reset_reflective_xss_db($username);
+    reset_stored_xss_db($username);
+    reset_sqli_db($username);
+    reset_csrf_db($username);
 }
 
 // check if the XSS challenge was solved
@@ -796,6 +779,17 @@ function check_stored_xss_challenge($username)
             display_exception_msg($e, "114");
             exit();
         }
+
+        // remove stolen session cookie
+        $cookiePath = array("/", "/shop", "/user", "/admin");
+
+        // delete all 'XSS_YOUR_SESSION' and 'XSS_STOLEN_SESSION' cookies
+        foreach ($cookiePath as $path) {
+            setcookie("XSS_STOLEN_SESSION", "", time() - 10800, $path);
+        }
+
+        // remove cart items
+        empty_cart($_SESSION['userName']);
     }
 }
 
