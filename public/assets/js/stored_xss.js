@@ -50,7 +50,11 @@ function showSuccess(message, response) {
         // JS dialog found but without a valid payload
         var userMessage;
         if (message.includes("XSS_YOUR_SESSION")) {
-            userMessage = "document.cookie";
+
+            // cookie
+            var cookie = document.cookie;
+            userMessage = message.replace(cookie, "document.cookie");
+
         } else {
             userMessage = message;
         }
@@ -58,6 +62,15 @@ function showSuccess(message, response) {
             "again!\nYour input was: " + userMessage);
     }
 }
+
+// var res = str.substring(0, 4);
+// var n = str.search("W3Schools");
+
+// load challengeCookie --> atob(challengeCookie)
+// combine with XSS_STOLEN_SESSION= --> zu targetString
+// var new_string = string.replace(targetString, 'document.cookie');
+
+
 
 /**
  * Logs error to console and notifies user that an unexpected error occurred.
