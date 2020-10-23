@@ -11,7 +11,7 @@ if (isset($_POST['storedXSSMessage'])) {
     if (isset($_COOKIE['XSS_STOLEN_SESSION'])) {
 
         // suppress alert() if user has already seen 'welcome back' modal
-        if ($_SESSION['showStoredXSSModal'] == 1) {
+        if (isset($_SESSION['showStoredXSSModal']) && $_SESSION['showStoredXSSModal'] == 1) {
             // echo is the preferred way to return a response to a $.post()
             // request
             echo 0;
