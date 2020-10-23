@@ -89,12 +89,12 @@ function verify_pwd($pwd, $resultArray, $redirect = LOGIN_PAGE)
     }
 }
 
-// check if username is in scope and 2 <= len <= 64
+// check if username is in scope and 2 <= len <= 24
 function validate_username($username)
 {
     if (!preg_match("/^[A-Za-z0-9]*$/", $username)) {
         return false;
-    } else if ((mb_strlen($username) > 64) || (mb_strlen($username) < 2)) {
+    } else if ((mb_strlen($username) > 24) || (mb_strlen($username) < 2)) {
         return false;
     }
     return true;

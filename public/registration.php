@@ -79,7 +79,7 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
             <?= get_message(); ?>
 
             <label for="username" class="register-label text-muted"><strong>Username:</strong></label>
-            <input type="text" name="username" id="register-name" class="form-control" aria-describedby="username-help" value="<?= $name_get ?>" placeholder="Username" data-content="Please use only letters and numbers and 2 to 64 characters." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>
+            <input type="text" name="username" id="register-name" class="form-control" aria-describedby="username-help" value="<?= $name_get ?>" placeholder="Username" data-content="Please use only letters and numbers and 2 to 24 characters." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>
 
             <label for="mail" class="register-label text-muted"><strong>Mail:</strong></label>
             <input type="email" name="mail" id="register-mail" class="form-control" aria-describedby="mail-help" value="<?= $mail_get ?>" placeholder="WWU Mail" data-content="Please use your @uni-muenster.de mail address." data-toggle="popover" data-trigger="focus" data-placement="bottom" required>

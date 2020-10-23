@@ -98,7 +98,7 @@ function get_error_msg($error, $errorCode)
         case "invalidUsername":
             $msg = "It seems like your user name does not fulfill ";
             $msg .= "the requirements. Please use only letters and numbers ";
-            $msg .= "and 2 to 64 characters.";
+            $msg .= "and 2 to 24 characters.";
             return format_msg($msg, $msgType);
             break;
         case "invalidMailFormat":
