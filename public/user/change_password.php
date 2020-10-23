@@ -108,7 +108,7 @@ if (isset($_POST['change-pwd-submit'])) {
                                     </svg>
                                 </div>
                                 <input type="password" name="new-pwd" id="input-new-pwd" class="form-input" placeholder="New Password" required>
-                                <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
+                                <small id="password-help" class="form-text text-muted">Please use at least 8 characters.</small>
                             </div>
                         </div>
                     </div>
