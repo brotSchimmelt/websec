@@ -8,27 +8,36 @@ require_once(FUNC_LOGIN);
 require_once(FUNC_BASE);
 
 $num = get_number_of_cart_items();
+$username = $_SESSION['userName'];
 
 // check SQLi and stored XSS challenge status
 $sqliSolved = lookup_challenge_status("sqli", $_SESSION['userName']);
-if (!lookup_challenge_status("stored_xss", $_SESSION['userName'])) {
-    compare_cookies($_SESSION['userName']);
+$storedXSSSolved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
+
+// check if the stored XSS cookie was set
+if (!$storedXSSSolved) {
+
+    if (compare_xss_cookies()) {
+        set_stolen_session($_SESSION['userName']);
+        $username = "Elliot";
+    }
 }
 
-
+// check if stored xss challenges was solved and the banana slicer was added
 if (isset($_SESSION['fakeCart']) && $_SESSION['fakeCart'] == true) {
     check_stored_xss_challenge($_SESSION['userName']);
 }
 
-if ($sqliSolved) {
-    $color = "rgba(145, 174, 100, 1)";
-    $premiumAccount = "PREMIUM ACCOUNT";
+// check if username is too long for the menu bar
+if (mb_strlen($username) >= 16) {
+    $accountName = mb_substr($username, 0, 12) . " ...";
 } else {
-    $color = "rgba(46, 109, 134, 1)";
-    $premiumAccount = "Account";
+    $accountName = $username;
 }
-?>
 
+// set new color theme if user is premium user
+$color = ($sqliSolved) ? "rgba(145, 174, 100, 1)" : "rgba(46, 109, 134, 1)";
+?>
 <style>
     .dropdown-menu {
         background-color: <?= $color ?> !important;
@@ -109,7 +118,7 @@ if ($sqliSolved) {
                                 <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                             </svg>
                         <?php endif; ?>
-                        <?= $premiumAccount ?>
+                        <?= $accountName ?>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="#navbarDropdown">
                         <h6 class="dropdown-header text-white font-weight-bold text-center">Account</h6>
