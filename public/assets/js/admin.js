@@ -1,4 +1,6 @@
-// search for user on keyup
+/**
+ * Search for usernames on keyup.
+ */
 $(document).ready(function () {
     $("#user-search").on("keyup", function () {
         var value = $(this).val().toLowerCase();

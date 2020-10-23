@@ -1,11 +1,17 @@
-// refresh the page
+/**
+ * Refresh the current page.
+ */
 function RefreshPage() {
     window.location.reload();
 }
-// initialize tooltips and popovers
+
+/**
+ * Initialize popovers and tooltips.
+ */
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
+
