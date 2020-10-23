@@ -10,11 +10,11 @@
 */
 
 
-// wrap the original dialog functions in constants
+// wrap the original functions in constants
 const AlertXSS = window.alert;
 const PromptXSS = window.prompt;
 const ConfirmXSS = window.confirm;
-
+const WriteXSS = document.write;
 
 /**
  * Sets challenge cookie and displays success msg to user.
@@ -63,15 +63,6 @@ function showSuccess(message, response) {
     }
 }
 
-// var res = str.substring(0, 4);
-// var n = str.search("W3Schools");
-
-// load challengeCookie --> atob(challengeCookie)
-// combine with XSS_STOLEN_SESSION= --> zu targetString
-// var new_string = string.replace(targetString, 'document.cookie');
-
-
-
 /**
  * Logs error to console and notifies user that an unexpected error occurred.
  * 
@@ -88,10 +79,16 @@ function showError(message, response) {
 
 
 /*
-* Override all JS dialog functions
+* overwrite all JS dialog and write functions
 */
 
-// override alert()
+// overwrite document.write()
+// BAD PRACTICE: Never do this anywhere else!
+document.write = function (str) {
+    alert(str);
+};
+
+// overwrite alert()
 // BAD PRACTICE: Never do this anywhere else!
 window.alert = function (message) {
     var request;
@@ -106,7 +103,7 @@ window.alert = function (message) {
     });
 };
 
-// override prompt()
+// overwrite prompt()
 // BAD PRACTICE: Never do this anywhere else!
 window.prompt = function (message) {
     var request;
@@ -121,7 +118,7 @@ window.prompt = function (message) {
     });
 };
 
-// override confirm()
+// overwrite confirm()
 // BAD PRACTICE: Never do this anywhere else!
 window.confirm = function (message) {
     var request;
