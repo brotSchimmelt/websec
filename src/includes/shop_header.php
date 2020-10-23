@@ -1,5 +1,4 @@
 <?php
-
 require_once(CONF_DB_SHOP);
 require_once(CONF_DB_LOGIN);
 require_once(FUNC_WEBSEC);
@@ -29,8 +28,8 @@ if (isset($_SESSION['fakeCart']) && $_SESSION['fakeCart'] == true) {
 }
 
 // check if username is too long for the menu bar
-if (mb_strlen($username) >= 16) {
-    $accountName = mb_substr($username, 0, 12) . " ...";
+if (mb_strlen($username) >= 20) {
+    $accountName = mb_substr($username, 0, 16) . " ...";
 } else {
     $accountName = $username;
 }
