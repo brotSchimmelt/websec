@@ -1,9 +1,8 @@
 <?php
 
-$sql = "SELECT `author`, `text`, `rating`, `timestamp`, `post_time` "
-    . "FROM xss_comments";
-$stmt = get_shop_db()->prepare($sql);
-$stmt->execute();
+
+// check if challenge was already solved
+$solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 
 // fake user comments
 $fakeComments = array(
@@ -67,7 +66,7 @@ foreach ($comments as $comment) :
             </span>
 
             <p class="be-comment-text">
-                <?= $comment['text'] ?>
+                <?= $solved ? htmlspecialchars($comment['text']) : $comment['text'] ?>
             </p>
         </div>
     </div>
