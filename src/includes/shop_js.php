@@ -1,28 +1,8 @@
-<script>
-    // refresh the page
-    function RefreshPage() {
-        window.location.reload(true);
-    }
-    // initialize tooltips and popovers
-    $(document).ready(function() {
-        $('[data-toggle="popover"]').popover();
-    });
-    $(document).ready(function() {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+<script src="../assets/js/shop.js"></script>
 <?php
 /*
 * Java Script for modals
 */
-// input modal for reflective XSS challenge
-// if (isset($searchFieldWasUsed)) {
-//     if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
-//         echo $modalInputXSSCookie;
-//         echo "<script>$('#xss-solution').modal('show')</script>";
-//     }
-// }
-
 // error modal for reflective XSS challenge
 if (isset($challengeFailed)) {
     if ($challengeFailed) {
