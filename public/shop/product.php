@@ -68,6 +68,9 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
         // normal difficulty
         add_comment_to_db($_POST['userComment'], $_SESSION['userName']);
     }
+
+    header("location: " . basename(__FILE__) . "?comment=sent");
+    exit();
 }
 if (isset($_POST['add-product'])) {
 
