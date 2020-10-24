@@ -84,19 +84,13 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css">
 
-    <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
-    <!-- <link rel="stylesheet" href="/assets/css/card.css"> -->
-    <!-- <link rel="stylesheet" href="/assets/css/comment.css"> -->
 
-    <!-- Link to favicon -->
     <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>Websec | Products</title>
@@ -108,9 +102,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     require(HEADER_SHOP);
     // Load error messages, user notifications etc.
     require(MESSAGES);
-    ?>
-    <!-- JavaScript -->
-    <?php
+
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
@@ -122,7 +114,6 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     <script type="text/javascript" src="/assets/js/stored_xss.js"></script>
 
 
-    <!-- HTML Content BEGIN -->
     <?php if (!$solved) : ?>
         <a href="<?= get_challenge_badge_link('stored_xss') ?>" class="badge badge-pill badge-warning shadow-sm" target="_blank">Stored XSS</a>
     <?php else : ?>
@@ -204,9 +195,12 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     ?>
     <!-- CHALLENGE: Here begins the form -->
     <div class="row justify-content-center mt-5" id="comment-section">
+        <!-- deeper ... -->
         <div class="col-xl-4 col-lg-6 col-md-auto">
+            <!-- deeper ... -->
             <div class="be-comment-block">
-                <form class="form-block" action="product.php" method="post">
+                <!-- here you go! -->
+                <form class="form-block" action="product.php" method="post" id="CSRForm">
                     <h4 class="display-5 mb-4">Write Your Own Comment</h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12">
@@ -217,13 +211,6 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                                     </svg>
                                 </div>
                                 <input class="form-input form-disabled-input" name="username" type="text" value="<?= $_SESSION['userName'] ?>" disabled>
-                                <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
-                                <?php
-                                if ($difficulty == "hard") {
-                                    echo "<!-- Token for CSRF challenge -->";
-                                    echo '<input type="hidden" name="utoken" value="' . $_SESSION['fakeCSRFToken'] . '">';
-                                }
-                                ?>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12">
@@ -237,10 +224,20 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                             </div>
                         </div>
                     </div>
+                    <!-- CHALLENGE: Comment -->
                     <div class="row">
+                        <!-- deeper ... -->
                         <div class="col">
+                            <!-- here you go! -->
                             <div class="form-group">
-                                <textarea class="form-input pt-3" name="userComment" placeholder="Your Comment" style="line-height:18px" required></textarea>
+                                <input id="challengeUsername" type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                                <?php
+                                if ($difficulty == "hard") {
+                                    echo "<!-- Token for CSRF challenge -->";
+                                    echo '<input id="challengeToken" type="hidden" name="utoken" value="' . $_SESSION['fakeCSRFToken'] . '">';
+                                }
+                                ?>
+                                <input id="challengePost" class="form-input pb-5" value="" name="userComment" placeholder="Your Comment" style="height:100px" required>
                             </div>
                         </div>
                     </div>
@@ -251,7 +248,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                     </div>
                 </form>
             </div>
-            <!-- Challenge End -->
+            <!-- CHALLENGE: END -->
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-auto">
@@ -262,7 +259,6 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
             </div>
         </div>
     </div>
-    <!-- HTML Content END -->
 
     <?php
     // Load shop footer
