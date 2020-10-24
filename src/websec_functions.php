@@ -302,15 +302,7 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
     if ($pos1 !== false) {
 
         // delete user comments in database
-        $sqlComment = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
-        try {
-            get_shop_db()->prepare($sqlComment)->execute([
-                'user_name' => $username
-            ]);
-        } catch (PDOException $e) {
-            display_exception_msg($e, "114");
-            exit();
-        }
+        remove_comment($username);
     }
 
     // check used token
@@ -468,13 +460,7 @@ function reset_stored_xss_db($username)
     $_SESSION['storedXSS'] = $newChallengeCookie;
 
     // delete user comments in database
-    $sqlComment = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
-    try {
-        get_shop_db()->prepare($sqlComment)->execute(['user_name' => $username]);
-    } catch (PDOException $e) {
-        display_exception_msg($e, "114");
-        exit();
-    }
+    remove_comment($username);
 
     // empty the current cart of the user
     empty_cart($username);
@@ -784,15 +770,7 @@ function check_stored_xss_challenge($username)
         $_SESSION['showSuccessModalXSS'] = 0;
 
         // delete user comments in database
-        $sqlComment = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
-        try {
-            get_shop_db()->prepare($sqlComment)->execute(
-                ['user_name' => $username]
-            );
-        } catch (PDOException $e) {
-            display_exception_msg($e, "114");
-            exit();
-        }
+        remove_comment($username);
 
         // remove stolen session cookie
         $cookiePath = array("/", "/shop", "/user", "/admin");
@@ -851,4 +829,19 @@ function get_fake_CSRF_token($username)
     }
 
     return $result['fake_token'];
+}
+
+
+// remove last product comment from the database
+function remove_comment($username)
+{
+    $sqlComment = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
+    try {
+        get_shop_db()->prepare($sqlComment)->execute([
+            'user_name' => $username
+        ]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "114");
+        exit();
+    }
 }
