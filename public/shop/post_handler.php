@@ -46,3 +46,14 @@ if (isset($_POST['storedXSSMessage'])) {
         }
     }
 }
+
+
+if (isset($_POST['checkCSRF'])) {
+
+    if (isset($_SESSION['csrfResult'])) {
+        echo $_SESSION['csrfResult'];
+        unset($_SESSION['csrfResult']);
+    } else {
+        echo -1;
+    }
+}

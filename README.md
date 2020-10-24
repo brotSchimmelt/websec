@@ -196,7 +196,7 @@ The stored XSS challenge is located in the ```product.php``` file.
 
 **Challenge**: In this challenge the user has to exploit a comment field on the product page. *(The product page and the comment section are identical for all products. Only the product information changes based on the `GET` variable in the URL.)* The comments are stored in an MySQL database. The task is to simulate a cookie stealing attack by showing a JavaScript dialog with the content ```'evil.domain/cookie.php?c=' + document.cookie```. The challenge is completed, when the user *steals* a session of a fake user and adds a certain product to the shopping cart.
 
-If the user enters the payload, the JavaScript dialog functions are overwritten and the content is send via AJAX Request to `xss_form_handler.php`.
+If the user enters the payload, the JavaScript dialog functions are overwritten and the content is send via AJAX Request to `post_handler.php`.
 
 ```js
 // override alert()
@@ -205,7 +205,7 @@ window.alert = function (message) {
 
     var request;
 
-    request = $.post("xss_form_handler.php", {
+    request = $.post("post_handler.php", {
         storedXSSMessage: message
     });
     request.done(function (response) {
