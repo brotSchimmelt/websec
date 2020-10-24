@@ -299,6 +299,20 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
     $pos2 = strpos($referrer, "overview.php");
     $pos3 = strpos($referrer, "friends.php");
 
+    if ($pos1 !== false) {
+
+        // delete user comments in database
+        $sqlComment = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
+        try {
+            get_shop_db()->prepare($sqlComment)->execute([
+                'user_name' => $username
+            ]);
+        } catch (PDOException $e) {
+            display_exception_msg($e, "114");
+            exit();
+        }
+    }
+
     // check used token
     if ($difficulty == "hard") {
         // token from SQLi challenge
