@@ -185,6 +185,17 @@ if (isset($_POST['add-preview'])) {
     require_once(JS_SHOP); // Custom JavaScript
     ?>
     <!-- JavaScript END -->
+
+    <script type="text/javascript" src="../assets/js/csrf.js"></script>
+    <div>
+        <?php
+        echo $modalSuccessCSRFWrongReferrer;
+        echo $modalInfoCSRFAlreadyPosted;
+        echo $modalErrorCSRFUserMismatch;
+        echo $modalSuccessCSRFWrongMessage;
+        echo $modalSuccessCSRF;
+        ?>
+    </div>
 </body>
 
 </html>

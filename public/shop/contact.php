@@ -42,9 +42,8 @@ if (isset($_POST['uname']) && isset($_POST['userPost']) && !lookup_challenge_sta
         $userTokenCSRF = 1;
     }
 
-    $csrfResult = process_csrf($uname, $userPost, $_SESSION['userName'], $userTokenCSRF);
+    $_SESSION['csrfResult'] = process_csrf($uname, $userPost, $_SESSION['userName'], $userTokenCSRF);
 }
-
 // check if challenge was solved
 $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 
@@ -151,6 +150,17 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
     ?>
+
+    <script type="text/javascript" src="../assets/js/csrf.js"></script>
+    <div>
+        <?php
+        echo $modalSuccessCSRFWrongReferrer;
+        echo $modalInfoCSRFAlreadyPosted;
+        echo $modalErrorCSRFUserMismatch;
+        echo $modalSuccessCSRFWrongMessage;
+        echo $modalSuccessCSRF;
+        ?>
+    </div>
 </body>
 
 </html>

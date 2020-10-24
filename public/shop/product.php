@@ -264,6 +264,17 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     // Load shop footer
     require(FOOTER_SHOP);
     ?>
+
+    <script type="text/javascript" src="../assets/js/csrf.js"></script>
+    <div>
+        <?php
+        echo $modalSuccessCSRFWrongReferrer;
+        echo $modalInfoCSRFAlreadyPosted;
+        echo $modalErrorCSRFUserMismatch;
+        echo $modalSuccessCSRFWrongMessage;
+        echo $modalSuccessCSRF;
+        ?>
+    </div>
 </body>
 
 </html>

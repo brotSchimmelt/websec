@@ -165,6 +165,17 @@ $difficulty = get_global_difficulty();
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
     ?>
+
+    <script type="text/javascript" src="../assets/js/csrf.js"></script>
+    <div>
+        <?php
+        echo $modalSuccessCSRFWrongReferrer;
+        echo $modalInfoCSRFAlreadyPosted;
+        echo $modalErrorCSRFUserMismatch;
+        echo $modalSuccessCSRFWrongMessage;
+        echo $modalSuccessCSRF;
+        ?>
+    </div>
 </body>
 
 </html>
