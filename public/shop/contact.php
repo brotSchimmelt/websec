@@ -27,6 +27,7 @@ if (!is_user_unlocked()) {
     header("location: " . MAIN_PAGE);
     exit();
 }
+$difficulty = get_global_difficulty();
 
 // check if post was made and contact field still open
 if (isset($_POST['uname']) && isset($_POST['userPost']) && !lookup_challenge_status("csrf", $_SESSION['userName'])) {
@@ -34,7 +35,12 @@ if (isset($_POST['uname']) && isset($_POST['userPost']) && !lookup_challenge_sta
     // filter post input
     $uname = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
     $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
-    $userTokenCSRF = filter_input(INPUT_POST, 'utoken', FILTER_SANITIZE_SPECIAL_CHARS);
+
+    if ($difficulty == "hard") {
+        $userTokenCSRF = filter_input(INPUT_POST, 'utoken', FILTER_SANITIZE_SPECIAL_CHARS);
+    } else {
+        $userTokenCSRF = 1;
+    }
 
     $csrfResult = process_csrf($uname, $userPost, $_SESSION['userName'], $userTokenCSRF);
 }
@@ -91,7 +97,6 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 
                 <!-- CHALLENGE: Here is the form for the contact form challenge -->
                 <form action="contact.php" method="post" id="reviewform">
-
                     <div class="row">
                         <div class="col">
                             <div class="form-group fl_icon">
@@ -121,7 +126,7 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <textarea class="form-input form-disabled-input" name="userPost" placeholder="Your Comment" rows="3" placeholder="How can we help you?" disabled></textarea>
+                                <input class="form-input form-disabled-input pb-5" name="userPost" rows="3" placeholder="How can we help you?" value="" style="height:100px" disabled>
                             </div>
                         </div>
                     </div>
