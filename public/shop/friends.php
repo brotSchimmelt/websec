@@ -80,12 +80,12 @@ $difficulty = get_global_difficulty();
                         You are looking for the perfect present and want to know what your friends have on their wishlist?<br>
                         No Problemo! Just use our absolutely privacy conform search form.
                     </p>
-                    <form action="friends.php" method="post" class="mt-5">
+                    <form action="friends.php" method="get" class="mt-5">
                         <div class="search-bar-flat-inner">
                             <div class="flat-search">
                                 <div class="custom-input-field">
                                     <input class="form-control" size="50" type="text" name="sqli" placeholder="Search for Your Friends" aria-label="Search" <?= $difficulty == "hard" ? 'maxlength="10"' : "" ?> <?= $difficulty == "hard" ? 'data-content="Hint: The users are stored in a SQLite database." data-toggle="popover" data-trigger="focus" data-placement="bottom"' : "" ?>>
-                                    <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>">
+                                    <!-- <input type="hidden" name="uname" value="<?= $_SESSION['userName']; ?>"> -->
                                     <div class="icon-wrap">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
@@ -110,10 +110,10 @@ $difficulty = get_global_difficulty();
     </header>
     <?php
     // positioned down here since the results are directly echoed out
-    if (isset($_POST['sqli']) && (!empty($_POST['sqli']))) {
+    if (isset($_GET['sqli']) && (!empty($_GET['sqli']))) {
 
         // filter script tags etc.
-        $searchTerm = $_POST['sqli'];
+        $searchTerm = $_GET['sqli'];
 
         try {
             $queryResultModal = query_sqli_db($searchTerm);
