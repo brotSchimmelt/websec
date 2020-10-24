@@ -47,6 +47,9 @@ if (isset($_POST['simplexss']) && isset($_POST['doit-simplexss'])) {
 } else if (isset($_POST['all']) && isset($_POST['doit-all'])) {
     reset_all_challenges($username);
     header("location: " . basename(__FILE__) . "?reset=all");
+} else if (isset($_POST['comment']) && isset($_POST['doit-comment'])) {
+    remove_comment($username);
+    header("location: " . basename(__FILE__) . "?reset=comment");
 }
 
 // show corresponding success modal for resetting
@@ -61,6 +64,8 @@ if (isset($_GET['reset'])) {
         $resetCSRFModal = true;
     } else if ($_GET['reset'] == "all") {
         $resetAllModal = true;
+    } else if ($_GET['reset'] == "comment") {
+        $removeCommentModal = true;
     }
 }
 ?>
@@ -108,6 +113,7 @@ if (isset($_GET['reset'])) {
                 <div class=" list-group" id="list-tab-settings" role="tablist">
                     <a class="list-group-item list-group-item-action active" id="list-reflective-xss-list" data-toggle="list" href="#list-reflective-xss" role="tab" aria-controls="reflective-xss">Reflective XSS</a>
                     <a class="list-group-item list-group-item-action" id="list-stored-xss-list" data-toggle="list" href="#list-stored-xss" role="tab" aria-controls="stored-xss">Stored XSS</a>
+                    <a class="list-group-item list-group-item-action" id="list-comment-list" data-toggle="list" href="#list-comment" role="tab" aria-controls="comment">Product Comment</a>
                     <a class="list-group-item list-group-item-action" id="list-sqli-list" data-toggle="list" href="#list-sqli" role="tab" aria-controls="sqli">SQLi</a>
                     <a class="list-group-item list-group-item-action" id="list-csrf-list" data-toggle="list" href="#list-csrf" role="tab" aria-controls="csrf">CSRF</a>
                     <a class="list-group-item list-group-item-action" id="list-all-list" data-toggle="list" href="#list-all" role="tab" aria-controls="all">All Challenges</a>
@@ -158,6 +164,30 @@ if (isset($_GET['reset'])) {
                                     <input type="hidden" name="doit-storedxss" value="1">
                                     <input type="hidden" name="storedxss" value="1">
                                     <input class="btn btn-danger shadow" type="submit" value="RESET STORED XSS CHALLENGE">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Product Comment -->
+                    <div class="tab-pane fade" id="list-comment" role="tabpanel" aria-labelledby="list-profile-list">
+                        <h3 class="display-5">Remove Comment from Product Page</h3>
+                        <br>
+                        <p class="lead"><strong class="text-wwu-green">Note: </strong>This will remove your current comment from the product page. This action has no effect on your progress.</p>
+                        <form action="challenge_settings.php" method="post">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="form-group fl_icon">
+                                        <div class="icon">
+                                            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        </div>
+                                        <input name="username-comment" id="username-comment" aria-describedby="username-comment" type="text" class="form-input form-disabled-input" value="<?= $_SESSION['userName'] ?>" disabled>
+                                    </div>
+                                    <input type="hidden" name="doit-comment" value="1">
+                                    <input type="hidden" name="comment" value="1">
+                                    <input class="btn btn-wwu-cart shadow" type="submit" value="DELETE PRODUCT COMMENT">
                                 </div>
                             </div>
                         </form>
@@ -281,6 +311,29 @@ if (isset($_GET['reset'])) {
                             <input type="hidden" name="doit-storedxss" value="1">
                             <input type="hidden" name="storedxss" value="1">
                             <input class="btn btn-danger shadow" type="submit" value="RESET STORED XSS CHALLENGE">
+                        </div>
+                    </div>
+                </form>
+                <br><br><br>
+
+                <!-- Product Comment-->
+                <h3 class="display-5">Remove Comment from Product Page</h3>
+                <br>
+                <p class="lead"><strong class="text-wwu-green">Note: </strong>This will remove your current comment from the product page. This action has no effect on your progress.</p>
+                <form action="challenge_settings.php" method="post">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="form-group fl_icon">
+                                <div class="icon">
+                                    <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                </div>
+                                <input name="username-comment" id="username-comment" aria-describedby="username-comment" type="text" class="form-input form-disabled-input" value="<?= $_SESSION['userName'] ?>" disabled>
+                            </div>
+                            <input type="hidden" name="doit-comment" value="1">
+                            <input type="hidden" name="comment" value="1">
+                            <input class="btn btn-wwu-cart shadow" type="submit" value="DELETE PRODUCT COMMENT">
                         </div>
                     </div>
                 </form>

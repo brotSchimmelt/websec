@@ -175,6 +175,26 @@ $modalSuccessResetAll = '<!--Modal: Success - Reset All Challenges-->
     </div>
 </div>
 <!--Modal END-->';
+$modalSuccessRemoveComment = '<!--Modal: Success - Remove Product Comment -->
+<div class="modal fade bottom" tabindex="-1" role="dialog" id="remove-comment" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header wwu-green-background text-white shadow">
+                <h4 class="modal-title">Comment Deleted</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Your last comment on the product page was successfully deleted.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-wwu-cart" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal END-->';
 $modalSuccessResetReflectiveXSS = '<!--Modal: Success - Reset Reflective XSS Challenge-->
 <div class="modal fade bottom" tabindex="-1" role="dialog" id="reset-reflective-success" aria-hidden="true">
     <div class="modal-dialog" role="document">
