@@ -1,9 +1,5 @@
 <?php
 
-
-// check if challenge was already solved
-$solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
-
 // fake user comments
 $fakeComments = array(
     array(
@@ -66,7 +62,7 @@ foreach ($comments as $comment) :
             </span>
 
             <p class="be-comment-text">
-                <?= $solved ? htmlspecialchars($comment['text']) : $comment['text'] ?>
+                <?= $comment['text'] ?>
             </p>
         </div>
     </div>
