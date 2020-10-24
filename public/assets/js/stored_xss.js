@@ -2,7 +2,7 @@
 * JavaScript for the stored XSS challenge.
 * 
 * Checks any user dialog for a valid payload with a post request to 
-* 'xss_form_handler.php' and sets the challenge cookie.
+* 'post_handler.php' and sets the challenge cookie.
 * 
 * Displays a success msg if a payload was found, an error msg if the user used 
 * a JS dialog function without payload or nothing if the challenge cookie
@@ -20,7 +20,7 @@ const WriteXSS = document.write;
  * Sets challenge cookie and displays success msg to user.
  * 
  * @param {string} message The original message from the used dialog function.
- * @param {number or string} response from 'xss_form_handler.php'.
+ * @param {number or string} response from 'post_handler.php'.
  */
 function showSuccess(message, response) {
 
@@ -92,7 +92,7 @@ document.write = function (str) {
 // BAD PRACTICE: Never do this anywhere else!
 window.alert = function (message) {
     var request;
-    request = $.post("xss_form_handler.php", {
+    request = $.post("post_handler.php", {
         storedXSSMessage: message
     });
     request.done(function (response) {
@@ -107,7 +107,7 @@ window.alert = function (message) {
 // BAD PRACTICE: Never do this anywhere else!
 window.prompt = function (message) {
     var request;
-    request = $.post("xss_form_handler.php", {
+    request = $.post("post_handler.php", {
         storedXSSMessage: message
     });
     request.done(function (response) {
@@ -122,7 +122,7 @@ window.prompt = function (message) {
 // BAD PRACTICE: Never do this anywhere else!
 window.confirm = function (message) {
     var request;
-    request = $.post("xss_form_handler.php", {
+    request = $.post("post_handler.php", {
         storedXSSMessage: message
     });
     request.done(function (response) {
