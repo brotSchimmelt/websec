@@ -53,17 +53,13 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css">
 
-    <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
 
-    <!-- Link to favicon -->
     <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>Websec | Contact</title>
@@ -79,15 +75,18 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
     ?>
 
 
-    <!-- HTML Content BEGIN -->
+
     <?php if (!$solved) : ?>
         <a href="<?= get_challenge_badge_link('csrf') ?>" class="badge badge-pill badge-warning shadow-sm" target="_blank">CSRF</a>
     <?php else : ?>
         <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">CSRF</a>
     <?php endif; ?>
 
+    <!-- CHALLENGE: Here is the form for the contact form challenge -->
     <div class="row justify-content-center mt-3 card-page-width">
+        <!-- deeper ... -->
         <div class="col-xl-4 col-lg-8 col-md-9 col-sm-10 col-xs-11">
+            <!-- deeper ... -->
             <div class="jumbotron bg-light-grey shadow">
 
                 <h1 class="display-5 text-center">Contact Form</h1>
@@ -97,8 +96,11 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 
                 <!-- CHALLENGE: Here is the form for the contact form challenge -->
                 <form action="contact.php" method="post" id="reviewform">
+                    <!-- Comment field -->
                     <div class="row">
+                        <!-- Comment field -->
                         <div class="col">
+                            <!-- Comment field -->
                             <div class="form-group fl_icon">
                                 <div class="icon">
                                     <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -132,7 +134,7 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button type=" submit" class="btn btn-wwu-primary float-right">
+                            <button type="submit" class="btn btn-wwu-primary float-right">
                                 Submit
                             </button>
                         </div>
@@ -141,8 +143,6 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
             </div>
         </div>
     </div>
-    <!-- HTML Content END -->
-
 
     <?php
     // Load shop footer
