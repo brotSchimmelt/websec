@@ -42,8 +42,17 @@ $difficulty = get_global_difficulty();
 $solvedSQLi = lookup_challenge_status("sqli", $_SESSION['userName']);
 
 
-// challenge
+// stored XSS challenge
 if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
+
+
+    // write comment to challenge input JSON file
+    write_to_challenge_json(
+        $_SESSION['userName'],
+        $_SESSION['userMail'],
+        "stored_xss",
+        $_POST['userComment']
+    );
 
     if ($difficulty == "hard") {
 

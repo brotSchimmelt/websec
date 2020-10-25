@@ -112,8 +112,15 @@ $difficulty = get_global_difficulty();
     // positioned down here since the results are directly echoed out
     if (isset($_GET['sqli']) && (!empty($_GET['sqli']))) {
 
-        // filter script tags etc.
         $searchTerm = $_GET['sqli'];
+
+        // write SQLi Query to challenge input JSON file
+        write_to_challenge_json(
+            $_SESSION['userName'],
+            $_SESSION['userMail'],
+            "sqli",
+            $_GET['sqli']
+        );
 
         try {
             $queryResultModal = query_sqli_db($searchTerm);

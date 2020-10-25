@@ -44,6 +44,14 @@ if (isset($_GET['xss'])) {
     $searchTerm = filter_input(INPUT_GET, 'xss', FILTER_SANITIZE_SPECIAL_CHARS);
     $rawSearchTerm = $_GET['xss'];
 
+    // write search term to challenge input JSON file
+    write_to_challenge_json(
+        $userName,
+        $_SESSION['userMail'],
+        "reflective_xss",
+        $rawSearchTerm
+    );
+
     if ($difficulty == "hard") {
         // filter all '<script>' tags (case insensitive)
         // solution for all tested browsers: <img src="" onerror=javascript:alert(document.cookie)>

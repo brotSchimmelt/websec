@@ -294,6 +294,18 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
     // get referrer to ensure user used 'open' form
     $referrer = $_SERVER['HTTP_REFERER'];
 
+    // format referrer
+    $referrerURL = parse_url($referrer);
+    $shortReferrer = $referrerURL['path']; // shorten referrer
+
+    // write referrer to challenge input JSON file
+    write_to_challenge_json(
+        $_SESSION['userName'],
+        $_SESSION['userMail'],
+        "csrf_referrer",
+        $shortReferrer
+    );
+
     // pages with open text forms
     $pos1 = strpos($referrer, "product.php");
     $pos2 = strpos($referrer, "overview.php");

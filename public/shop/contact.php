@@ -32,6 +32,14 @@ $difficulty = get_global_difficulty();
 // check if post was made and contact field still open
 if (isset($_POST['uname']) && isset($_POST['userPost']) && !lookup_challenge_status("csrf", $_SESSION['userName'])) {
 
+    // write post to challenge input JSON file
+    write_to_challenge_json(
+        $_SESSION['userName'],
+        $_SESSION['userMail'],
+        "csrf_msg",
+        $_POST['userPost']
+    );
+
     // filter post input
     $uname = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
     $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
