@@ -852,8 +852,8 @@ function write_to_challenge_json($username, $mail, $challenge, $content)
 
     $path = DAT . slug($username) . ".json";
 
-    // ensure file exists
-    if (!file_exists($path)) {
+    // ensure file exists and is not empty
+    if (!file_exists($path) || empty(file_get_contents($path))) {
         $newJSON = array(
             $mail => array(
                 "reflective_xss" => array(),
@@ -864,6 +864,7 @@ function write_to_challenge_json($username, $mail, $challenge, $content)
                 "csrf_msg" => array()
             )
         );
+        sleep(1);
         file_put_contents($path, json_encode($newJSON));
     }
 
@@ -885,22 +886,47 @@ function write_to_challenge_json($username, $mail, $challenge, $content)
     // server in the same second
     $timestamp = date("d.m_H:i:s") . "_" . rand(1000, 9999);
 
-    // combine input with timestamp
-    $data = [$timestamp => $content];
-
-    // access the corresponding challenge section in the array
+    // write to the corresponding challenge section in the array
     try {
-        array_push($json[$mail][$challenge], $data);
+        $json[$mail][$challenge][$timestamp] = $content;
     } catch (Exception $e) {
         display_exception_msg($e, "073");
         exit();
     }
 
-    // write json file
+    // write result to json file
     try {
         file_put_contents($path, json_encode($json));
     } catch (Exception $e) {
         display_exception_msg($e, "074");
         exit();
+    }
+}
+
+// get the last element from input JSON file for a challenge
+function get_last_challenge_input($username, $challenge)
+{
+
+    $path = DAT . slug($username) . ".json";
+
+    // check if file exits
+    if (!file_exists($path)) {
+        // file is created when user makes first input to a challenge
+        return "-";
+    } else if (empty(file_get_contents($path))) {
+
+        // file creation failed
+        return "ERROR: Empty File.";
+    } else {
+        // load challenge data as assoc array
+        $json = json_decode(file_get_contents($path), true);
+
+        // get mail address
+        $mail = array_key_first($json);
+
+        // get newest element of the challenge
+        $lastElement = end($json[$mail][$challenge]);
+
+        return (empty($lastElement)) ? "-" : $lastElement;
     }
 }
