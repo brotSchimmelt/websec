@@ -845,3 +845,62 @@ function remove_comment($username)
         exit();
     }
 }
+
+// write to JSON input file
+function write_to_challenge_json($username, $mail, $challenge, $content)
+{
+
+    $path = DAT . slug($username) . ".json";
+
+    // ensure file exists
+    if (!file_exists($path)) {
+        $newJSON = array(
+            $mail => array(
+                "reflective_xss" => array(),
+                "stored_xss" => array(),
+                "sqli" => array(),
+                "csrf" => array(),
+                "csrf_referrer" => array(),
+                "csrf_msg" => array()
+            )
+        );
+        file_put_contents($path, json_encode($newJSON));
+    }
+
+    // read json file as assoc array
+    try {
+        $json = read_json_file($path);
+    } catch (Exception $e) {
+        display_exception_msg($e, "072");
+        exit();
+    }
+
+    // test if an input is related to the CSRF challenge
+    $pos1 = stripos($content, "contact.php");
+    if ($pos1 !== false) {
+        $challenge = "csrf";
+    }
+
+    // add a random int at the end to avoid key conflict with 2 requests to the 
+    // server in the same second
+    $timestamp = date("d.m_H:i:s") . "_" . rand(1000, 9999);
+
+    // combine input with timestamp
+    $data = [$timestamp => $content];
+
+    // access the corresponding challenge section in the array
+    try {
+        array_push($json[$mail][$challenge], $data);
+    } catch (Exception $e) {
+        display_exception_msg($e, "073");
+        exit();
+    }
+
+    // write json file
+    try {
+        file_put_contents($path, json_encode($json));
+    } catch (Exception $e) {
+        display_exception_msg($e, "074");
+        exit();
+    }
+}

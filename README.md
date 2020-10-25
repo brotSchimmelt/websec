@@ -344,6 +344,9 @@ All exceptions and errors have a corresponding error code. In the following sect
 
 **07x**: JSON Errors
 - **071**: The ```settings.json``` could not be opened.
+- **072**: The JSON file for the user challenge input could not be opened/found. See ```function write_to_challenge_json```
+- **073**: Could not write to a specific section of the challenge JSON file. See ```function write_to_challenge_json```
+- **074**: Could not write the challenge JSON file to disk. See ```function write_to_challenge_json```
 
 **1xx**: A SQL query could not be processed by the login or shop database.
 
