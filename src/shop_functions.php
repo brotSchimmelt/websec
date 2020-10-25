@@ -340,3 +340,22 @@ function save_challenge_solution($username, $solution, $challenge)
         exit();
     }
 }
+
+// get challenge solution from database
+function get_challenge_solution($username, $challenge)
+{
+    $sql = "SELECT " . $challenge . " FROM `challenge_solutions` WHERE `user_name`=:user";
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([
+            "user" => $username
+        ]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "170");
+        exit();
+    }
+
+    $result = $stmt->fetch();
+    return $result[$challenge];
+}

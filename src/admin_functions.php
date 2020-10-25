@@ -338,7 +338,9 @@ function get_results_as_array()
     // initialize result array with header
     $results = array(array(
         "wwu_mail", "user_name", "difficulty",
-        "reflective_xss", "stored_xss", "sqli", "csrf", "csrf_referrer_match"
+        "reflective_xss", "stored_xss", "sqli", "csrf", "csrf_referrer_match",
+        "reflective_xss_solution", "stored_xss_solution", "sqli_solution",
+        "csrf_solution", "csrf_referrer", "csrf_msg"
     ));
 
     // save each user as a line
@@ -353,6 +355,53 @@ function get_results_as_array()
 
         // add challenge status to user line
         $tmp = array_merge($line, get_challenge_status($row['user_name']));
+
+        // get challenge solutions
+        if (lookup_challenge_status("reflective_xss", $row['user_name'])) {
+            $reflectiveXSS = get_challenge_solution(
+                $row['user_name'],
+                "reflective_xss"
+            );
+        } else {
+            $reflectiveXSS = "-";
+        }
+        if (lookup_challenge_status("stored_xss", $row['user_name'])) {
+            $storedXSS = get_challenge_solution(
+                $row['user_name'],
+                "stored_xss"
+            );
+        } else {
+            $storedXSS = "-";
+        }
+        if (lookup_challenge_status("sqli", $row['user_name'])) {
+            $sqli = get_challenge_solution(
+                $row['user_name'],
+                "sqli"
+            );
+        } else {
+            $sqli = "-";
+        }
+        if (lookup_challenge_status("csrf", $row['user_name'])) {
+            $csrf = get_last_challenge_input($row['user_name'], "csrf");
+            $csrf_referrer =
+                get_last_challenge_input($row['user_name'], "csrf_referrer");
+            $csrf_msg = get_last_challenge_input($row['user_name'], "csrf_msg");
+        } else {
+            $csrf = "-";
+            $csrf_referrer = "-";
+            $csrf_msg = "-";
+        }
+
+        // add solutions to user line
+        array_push(
+            $tmp,
+            $reflectiveXSS,
+            $storedXSS,
+            $sqli,
+            $csrf,
+            $csrf_referrer,
+            $csrf_msg
+        );
 
         // add user line to results array
         array_push($results, $tmp);
