@@ -339,7 +339,11 @@ All exceptions and errors have a corresponding error code. In the following sect
 - **057**: Status of the SQLi challenge could not be check in the SQLite database. See ```function check_sqli_challenge```
 - **058**: SQLite database does not exist for this user.
 
+**06x**: AJAX Errors
 **061**: The $.post request in ```stored_xss.js``` failed. Either the form handler was moved or the user found a way to break the JavaScript.
+
+**07x**: JSON Errors
+- **071**: The ```settings.json``` could not be opened.
 
 **1xx**: A SQL query could not be processed by the login or shop database.
 

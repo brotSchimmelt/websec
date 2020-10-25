@@ -193,7 +193,13 @@ function get_setting($setting, $subsetting)
     $file = SETTINGS;
 
     // load settings as assoc array
-    $json = read_json_file($file);
+    try {
+        $json = read_json_file($file);
+    } catch (Exception $e) {
+        display_exception_msg($e, "071");
+        exit();
+    }
+
 
     // check if setting is correct datatype
     if (in_array($setting, ["login", "registration", "difficulty"], true)) {
@@ -223,7 +229,12 @@ function set_setting($setting, $subsetting, $newValue)
     $file = SETTINGS;
 
     // load settings as assoc array
-    $json = read_json_file($file);
+    try {
+        $json = read_json_file($file);
+    } catch (Exception $e) {
+        display_exception_msg($e, "071");
+        exit();
+    }
 
     // check if setting is correct datatype
     if (in_array($setting, ["login", "registration", "difficulty"], true)) {
@@ -252,7 +263,7 @@ function read_json_file($file)
 {
     // read file in
     if (file_exists($file)) {
-        // load settings as assoc array
+        // load content as assoc array
         return json_decode(file_get_contents($file), true);
     } else {
         throw new Exception($file . " could not be opened.");
@@ -349,4 +360,26 @@ function export_json($array, $name)
 
     // convert array to json
     return json_encode($result);;
+}
+
+
+// check file size
+function get_file_size($file, $unit = "kb")
+{
+    // check path to file
+    if (file_exists($file)) {
+
+        if ($unit == "kb") {
+            // return file size rounded to whole kilo bytes
+            return round((filesize($file) / 1024), 0);
+        } else if ($unit == "mb") {
+            // return file size rounded to whole mega bytes
+            return round((filesize($file) / 1024 / 1024), 0);
+        } else {
+            // return file size in bytes
+            return filesize($file);
+        }
+    } else {
+        throw new Exception($file . " not found.");
+    }
 }
