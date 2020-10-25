@@ -400,6 +400,7 @@ $whichDB = (100 <= $errorCode < 150) ? 'Login_DB' : 'Shop_DB';
 - **166**: Crosspost table could not be accessed. 
 - **167**: Entry could not be added to the Crosspost table.
 - **168**: Product data could not be loaded from the database.
+- **169**: User Solution could not be written to the shop db. See query in ```save_challenge_solution```
 
 
 ## Naming Conventions

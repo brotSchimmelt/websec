@@ -214,6 +214,19 @@ function query_sqli_db($searchTerm)
                 // set challenge to solved in database
                 set_challenge_status("sqli", $_SESSION['userName']);
 
+                // get last user input for the challenge
+                $solutionInput = get_last_challenge_input(
+                    $_SESSION['userName'],
+                    "sqli"
+                );
+
+                // write input to solution database
+                save_challenge_solution(
+                    $_SESSION['userName'],
+                    $solutionInput,
+                    "sqli"
+                );
+
 
                 // code for showing challenge success modal
                 return 0;
@@ -496,6 +509,7 @@ function reset_sqli_db($username)
         exit();
     }
 
+    // unset challenge in database
     set_challenge_status("sqli", $username, $status = 0);
 }
 
@@ -791,6 +805,12 @@ function check_stored_xss_challenge($username)
         foreach ($cookiePath as $path) {
             setcookie("XSS_STOLEN_SESSION", "", time() - 10800, $path);
         }
+
+        // get last user input for the challenge
+        $solutionInput = get_last_challenge_input($username, "stored_xss");
+
+        // write input to solution database
+        save_challenge_solution($username, $solutionInput, "stored_xss");
 
         // remove cart items
         empty_cart($_SESSION['userName']);

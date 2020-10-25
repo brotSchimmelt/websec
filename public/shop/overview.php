@@ -76,7 +76,11 @@ if (isset($_POST['xss-cookie'])) {
         // set challenge to solved
         set_challenge_status("reflective_xss", $userName);
 
+        // get last user input for the challenge
+        $solutionInput = get_last_challenge_input($userName, "reflective_xss");
 
+        // write input to solution database
+        save_challenge_solution($userName, $solutionInput, "reflective_xss");
 
         // show success modal!
         $showSuccessModal = true;
