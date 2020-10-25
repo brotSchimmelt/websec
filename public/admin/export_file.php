@@ -15,20 +15,22 @@ require(FUNC_WEBSEC);
 
 // check if export to JSON was requested
 if (isset($_POST['exportJSON'])) {
-    // download JSON file
-    header("Content-disposition: attachment; filename=results_"
-        . date("H-i-s_d-m-Y") . ".json");
-    header("Content-type: application/json");
 
-    // make JSON file
-    $json =  get_results_as_json();
+    // get data and name
+    $jsonName = "websec_results_" . date("H-i-s_d-m-Y") . ".json";
+    $data = get_results_as_array();
 
-    if (!$json || empty($json)) {
-        header("location: " . "results.php");
-        exit();
-    }
+    // output json file
+    echo export_json($data, $jsonName);
 
-    echo $json;
+    // check if export to CSV was requested
+} else if (isset($_POST['exportCSV'])) {
+
+    // get data and name
+    $csvName = "websec_results_" . date("H-i-s_d-m-Y") . ".csv";
+    $data = get_results_as_array();
+
+    export_csv($data, $csvName);
 } else {
     header("location: " . "results.php");
     exit();

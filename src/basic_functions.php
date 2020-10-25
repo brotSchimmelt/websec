@@ -292,3 +292,61 @@ function make_clean_array($str)
     // filter empty or false elements from the array
     return array_filter($arr);
 }
+
+// export array to csv
+function export_csv($array, $name, $delimiter = ",")
+{
+    // open file in memory
+    $csv = fopen('php://memory', 'w');
+
+    // iterate through every row of the array
+    foreach ($array as $row) {
+        fputcsv($csv, $row, $delimiter);
+    }
+    // set pointer to start of file
+    fseek($csv, 0);
+    // set download header
+    header('Content-Type: application/csv');
+    header('Content-Disposition: attachment; filename="' . $name . '";');
+    // pass data to csv
+    fpassthru($csv);
+}
+
+
+// export array to json
+function export_json($array, $name)
+{
+
+    // expects the first row to be header
+    $header = $array[0];
+    // list of all user emails
+    $user = array();
+    // array for ALL user data and challenge status
+    $data = array();
+
+    // iterate given array
+    for ($i = 1; $i < count($array); $i++) {
+
+        // add user to user array
+        array_push($user, $array[$i][0]);
+
+        // get every row without first element (email)
+        $row = array_slice($array[$i], 1, count($array[$i]));
+
+        // combine rows with header
+        $assoc_row = array_combine(array_slice($header, 1, count($header)), $row);
+
+        // add combined row to user data
+        array_push($data, $assoc_row);
+    }
+
+    // combine user data with user email
+    $result = array_combine($user, $data);
+
+    // set download header
+    header("Content-type: application/json");
+    header("Content-disposition: attachment; filename=" . $name);
+
+    // convert array to json
+    return json_encode($result);;
+}

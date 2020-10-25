@@ -122,29 +122,46 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                     <h4 class="display-5">Download Results</h4>
                                 </div>
                                 <div class="card-body">
-                                    <p class="lead">
-                                        You can either download the results of the students as a JSON file or print them directly as a PDF.
-                                        The JSON file has the format <strong class="text-info">WWU_Mail: {username, [challenges], difficulty}</strong>.
+                                    <p>
+                                        You can either download the results of the students as a CSV file, JSON file or print them directly as a PDF.
+                                        The CSV file has a header in the form of <code> wwu_mail, user_name, difficulty, reflective_xss, ... </code>. The default delimiter is "<b>,</b>" and every row represents a student.
+                                        The JSON file has the format <code>wwu_mail: {username, difficulty, reflective_xss ... }</code>.
                                     </p>
                                     <br>
-                                    <div class="row">
-                                        <div class="col-xl-3 col-md-12">
+                                    <div class="row justify-content-center">
+
+                                        <div class="col-xl-3 col-lg-4 col-md-12">
                                             <form action="export_file.php" method="post">
-                                                <input type="hidden" name="exportJSON" value="1">
-                                                <!-- <input class="btn btn btn-info" type="submit" value="Download JSON File"> -->
+                                                <input type="hidden" name="exportCSV" value="1">
                                                 <button class="btn btn btn-info" type="submit">
-                                                    Download JSON File
-                                                    <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-download mr-1 ml-1 btn-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                    Download CSV
+                                                    <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-file-earmark-arrow-down mr-1 ml-1 btn-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" />
+                                                        <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z" />
+                                                        <path fill-rule="evenodd" d="M8 6a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 10.293V6.5A.5.5 0 0 1 8 6z" />
                                                     </svg>
                                                 </button>
                                             </form>
                                         </div>
                                         <br><br><br>
-                                        <div class="col-xl-3 col-md-12">
+
+                                        <div class="col-xl-3 col-lg-4 col-md-12">
+                                            <form action="export_file.php" method="post">
+                                                <input type="hidden" name="exportJSON" value="1">
+                                                <button class="btn btn btn-info" type="submit">
+                                                    Download JSON
+                                                    <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-file-earmark-arrow-down mr-1 ml-1 btn-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" />
+                                                        <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z" />
+                                                        <path fill-rule="evenodd" d="M8 6a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 10.293V6.5A.5.5 0 0 1 8 6z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <br><br><br>
+                                        <div class="col-xl-4 col-lg-3 col-md-12">
                                             <button class="btn btn btn-info" onclick="window.print()">
-                                                Download PDF File
+                                                Print to PDF
                                                 <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-file-earmark-arrow-down mr-1 ml-1 btn-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M4 0h5.5v1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h1V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" />
                                                     <path d="M9.5 3V0L14 4.5h-3A1.5 1.5 0 0 1 9.5 3z" />

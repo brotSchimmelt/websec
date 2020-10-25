@@ -328,35 +328,67 @@ function set_registration_status($status)
     }
 }
 
-// get the results of all users as JSON
-function get_results_as_json()
+// get student results as array
+function get_results_as_array()
 {
-    $sql = "SELECT `user_name`, `user_wwu_email`, `is_admin` FROM `users`";
+    $sql = "SELECT `user_name`, `user_wwu_email` FROM `users` WHERE "
+        . "`is_admin` = 0";
     $stmt = get_login_db()->query($sql);
 
-    // initialize JSON
-    $json = array();
+    // initialize result array with header
+    $results = array(array(
+        "wwu_mail", "user_name", "difficulty",
+        "reflective_xss", "stored_xss", "sqli", "csrf", "csrf_referrer_match"
+    ));
 
+    // save each user as a line
     while ($row = $stmt->fetch()) {
 
-        // exclude admin users
-        if (is_user_admin_in_db($row['user_name'])) {
-            continue;
-        }
+        // get mail, name and difficulty
+        $line = array(
+            $row['user_wwu_email'],
+            $row['user_name'],
+            get_global_difficulty()
+        );
 
-        // get results
-        $solvedChallenges = get_solved_challenges($row['user_name']);
-        $CSRFResults = get_csrf_challenge_data($row['user_name']);
+        // add challenge status to user line
+        $tmp = array_merge($line, get_challenge_status($row['user_name']));
 
-        // make JSON file
-        $json[$row['user_wwu_email']]['username'] = $row['user_name'];
-        $json[$row['user_wwu_email']]['solved_challenges'] = $solvedChallenges;
-        $json[$row['user_wwu_email']]['csrf_referrer'] = $CSRFResults['referrer'];
-        $json[$row['user_wwu_email']]['csrf_message'] = $CSRFResults['message'];
-        $json[$row['user_wwu_email']]['difficulty'] = get_global_difficulty();
+        // add user line to results array
+        array_push($results, $tmp);
     }
 
-    return json_encode($json);
+    return $results;
+}
+
+// get status of all challenges for a user
+function get_challenge_status($username)
+{
+    // get challenge data for user
+    $sql = "SELECT * FROM `challengeStatus` WHERE `user_name` = ?";
+    $stmt = get_login_db()->prepare($sql);
+    $stmt->execute([$username]);
+    $result = $stmt->fetch();
+
+    $challengeStatus = array();
+
+    if (get_global_difficulty() != "hard") {
+        // add status to array
+        array_push($challengeStatus, $result['reflective_xss']);
+        array_push($challengeStatus, $result['stored_xss']);
+        array_push($challengeStatus, $result['sqli']);
+        array_push($challengeStatus, $result['csrf']);
+        array_push($challengeStatus, $result['csrf_referrer']);
+    } else {
+        // add status to array
+        array_push($challengeStatus, $result['reflective_xss_hard']);
+        array_push($challengeStatus, $result['stored_xss_hard']);
+        array_push($challengeStatus, $result['sqli_hard']);
+        array_push($challengeStatus, $result['csrf_hard']);
+        array_push($challengeStatus, $result['csrf_referrer_hard']);
+    }
+
+    return $challengeStatus;
 }
 
 // set new blocked usernames list in settings.json
