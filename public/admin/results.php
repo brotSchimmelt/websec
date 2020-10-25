@@ -72,9 +72,9 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
 
                     <div class="row">
                         <div class="col">
-                            <div class="card shadow-sm">
+                            <div class="card shadow-sm mb-5">
                                 <div class="card-header">
-                                    <h5 class="display-5">Results</h5>
+                                    <h5 class="display-5">Overview</h5>
                                     <i>(admins are hidden)</i>
                                 </div>
                                 <div class="card-body">
@@ -99,6 +99,60 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                         </table>
                                     </div>
                                     <small>The <strong>*</strong> indicates that a post request was made in the CSRF challenge, but the referrer does not match.</small>
+                                </div>
+                            </div>
+
+
+                            <!-- Second Card -->
+                            <div class="card shadow-sm mb-5">
+                                <div class="card-header">
+                                    <h5 class="display-5">Challenge Solutions</h5>
+                                    <i>(admins are hidden)</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <td><strong>User Name</strong></td>
+                                                    <td><strong>Reflective XSS</strong></td>
+                                                    <td><strong>Stored XSS</strong></td>
+                                                    <td><strong>SQLi</strong></td>
+                                                    <td><strong>CSRF Script</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php show_challenge_solutions() ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <small>If the CSRF challenge was solved by manipulating the form elements with the inspector, the <b>CSRF Script</b> field will be empty.</small>
+                                </div>
+                            </div>
+
+                            <!-- Third Card -->
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="display-5">User Input File Size</h5>
+                                    <i>(admins included)</i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <td><strong>Pos.</strong></td>
+                                                    <td><strong>User Name</strong></td>
+                                                    <td><strong>File</strong></td>
+                                                    <td><strong>Size</strong> (in KB)</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php show_file_sizes() ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <small>A file size bigger than 20 KB is unusual.</small>
                                 </div>
                             </div>
                         </div>

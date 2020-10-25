@@ -475,3 +475,64 @@ function set_badge_link($challenge, $link)
         exit();
     }
 }
+
+// display the solutions of the challenge for all non-admin users
+function show_challenge_solutions()
+{
+
+    // get all non-admin results
+    $results = get_results_as_array();
+
+    // store header separately
+    $header = $results[0];
+
+    // remove header from results
+    array_shift($results);
+
+    // iterate over all users (rows)
+    foreach ($results as $row) {
+
+        $userResults = array_combine($header, $row);
+
+        echo "<tr>";
+        echo "<td>" . $userResults['user_name'] . "</td>";
+        echo "<td>" . htmlspecialchars($userResults['reflective_xss_solution'])  . "</td>";
+        echo "<td>" . htmlspecialchars($userResults['stored_xss_solution']) . "</td>";
+        echo "<td>" . htmlspecialchars($userResults['sqli_solution']) . "</td>";
+        echo "<td>" . htmlspecialchars($userResults['csrf_solution']) . "</td>";
+        echo "</tr>";
+    }
+}
+
+
+// display all challenge input file sizes
+function show_file_sizes()
+{
+
+    // get list of all users
+    $sql = "SELECT `user_name` FROM `users`";
+    $stmt = get_login_db()->query($sql);
+
+    $users = $stmt->fetchAll();
+
+    $pos = 1;
+    foreach ($users as $user) {
+
+        $file = DAT . slug($user['user_name']) . ".json";
+
+        // skip users that haven't started yet
+        if (!file_exists($file)) {
+            continue;
+        }
+
+        $size = get_file_size($file, $unit = "kb");
+
+        echo "<tr>";
+        echo "<td><strong>" . $pos . "</strong>.</td>";
+        echo "<td>" . $user['user_name'] . "</td>";
+        echo "<td>" . $file . "</td>";
+        echo "<td><strong>" . $size . "</strong> KB</td>";
+        echo "</tr>";
+        $pos++;
+    }
+}
