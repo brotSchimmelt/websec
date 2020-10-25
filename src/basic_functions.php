@@ -305,13 +305,17 @@ function make_clean_array($str)
 }
 
 // export array to csv
-function export_csv($array, $name, $delimiter = ",")
+function export_csv($array, $name, $delimiter = ",", $replaceCharacter = ";")
 {
     // open file in memory
     $csv = fopen('php://memory', 'w');
 
     // iterate through every row of the array
     foreach ($array as $row) {
+
+        // replace every appearance of the delimiter in the raw data
+        $row = str_replace($delimiter, $replaceCharacter, $row);
+        // make csv
         fputcsv($csv, $row, $delimiter);
     }
     // set pointer to start of file
