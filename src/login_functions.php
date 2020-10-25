@@ -408,6 +408,19 @@ function do_registration($username, $mail, $password)
         exit();
     }
 
+    // set initial challenge solution database
+    $insertSolutions = "INSERT INTO `challenge_solutions` (`id`, `user_name`) "
+        . "VALUE (NULL, :user)";
+
+    try {
+        get_shop_db()->prepare($insertSolutions)->execute([
+            'user' => $username
+        ]);
+    } catch (PDOException $e) {
+        header("location: " . REGISTER_PAGE . "?error=sqlError" . "&code=119");
+        exit();
+    }
+
     // redirect back to login page
     header("location: " . LOGIN_PAGE . "?success=signup");
     exit();

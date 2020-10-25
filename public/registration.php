@@ -4,7 +4,9 @@ session_start(); // Needs to be called first on every page
 // Load dependencies
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN); // DB credentials
+require_once(CONF_DB_SHOP); // DB credentials
 require(FUNC_BASE); // Basic functions
+require(FUNC_SHOP); // Shop functions
 require(FUNC_LOGIN); // Login & registration functions
 require(FUNC_WEBSEC); // Functions for the challenges
 require(ERROR_HANDLING); // Error handling
