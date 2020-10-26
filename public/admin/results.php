@@ -138,6 +138,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
+                                        <p>If this table is empty, there was no user input yet.</p>
                                         <table class="table table-bordered table-striped">
                                             <thead class="thead-dark">
                                                 <tr>
@@ -152,7 +153,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                             </tbody>
                                         </table>
                                     </div>
-                                    <small>A file size bigger than 20 KB is unusual.</small>
+                                    <small>A file size bigger than 10 KB is unusual.</small>
                                 </div>
                             </div>
                         </div>

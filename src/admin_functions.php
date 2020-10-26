@@ -527,11 +527,19 @@ function show_file_sizes()
 
         $size = get_file_size($file, $unit = "kb");
 
+        // shorten file path
+        $path = str_replace("public/../", "", $file);
+        $path = str_replace("/var/www/html", "", $path);
+
         echo "<tr>";
         echo "<td><strong>" . $pos . "</strong>.</td>";
         echo "<td>" . $user['user_name'] . "</td>";
-        echo "<td>" . $file . "</td>";
-        echo "<td><strong>" . $size . "</strong> KB</td>";
+        echo "<td>" . $path . "</td>";
+        if ($size >= 10) {
+            echo '<td><strong class="text-warning">' . $size . "</strong> KB</td>";
+        } else {
+            echo "<td><strong>" . $size . "</strong> KB</td>";
+        }
         echo "</tr>";
         $pos++;
     }
