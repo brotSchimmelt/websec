@@ -431,7 +431,7 @@ $changeDefaultPwdReminder = '<!--Modal: Info - Default admin user has to change 
             </div>
             <div class="modal-body">
                 <p>
-                Don\'t forget to change the default password for the <i>administrator</i> user under <b>Account</b>!
+                Don\'t forget to change the default password for the <i>administrator</i> user under <b>Account Settings</b>, if you haven\'t done so yet!
                 </p>
             </div>
             <div class="modal-footer">
