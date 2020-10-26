@@ -13,4 +13,4 @@ composer.lock
 phpunit.xml
 
 # other test files
-solutions.txt
+solutions.md
