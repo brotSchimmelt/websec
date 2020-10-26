@@ -11,3 +11,6 @@ test*
 composer.json
 composer.lock
 phpunit.xml
+
+# other test files
+solutions.txt
