@@ -540,20 +540,22 @@ function send_pwd_reset_mail($mail, $resetUrl)
 {
     $to = $mail;
     $subject = "Reset your Password | Web Security Challenges";
-    $msg = "<p>You recently requested to reset your password. ";
-    $msg .= "Use the link below to change it.</p>";
-    $msg .= '<p><a href="' . $resetUrl . '">Reset my password!</p>';
-    $msg .= "<p>This password reset request is only valid for the next ";
-    $msg .= "<strong>15</strong> minutes.</p>";
-    $msg .= "<p>If you didn't request this, please ignore this email. ";
-    $msg .= "Your password won't change until you access the link above ";
-    $msg .= "and create a new one.</p>";
-    $msg .= "<p>If you cannot open the link above, try copying this link ";
-    $msg .= "in your browser: ";
-    $msg .= $resetUrl . "</p>";
-    $header = "From: Websec Automailer <websec.automailer@gmail.com>\r\n";
-    $header .= "Reply-To: websec.automailer@gmail.com\r\n";
-    $header .= "Content-type: text/html\r\n";
+    $name = get_user_name($mail);
+    $msg = "Hi, " . $name . "!<br><br>"
+        . "<p>You recently requested to reset your password for the WebSec "
+        . "hacking platform. Use the link below to change it.</p>"
+        . '<p><a href="' . $resetUrl . '">Reset my password!</p>'
+        . "<p>This password reset request is only valid for the next "
+        . "<strong>15</strong> minutes.</p>"
+        . "<p>If you didn't request this, please ignore this email. "
+        . "Your password won't change until you access the link above "
+        . "and create a new one.</p>"
+        . "<p><small>If you cannot open the link above, try copying this link "
+        . "to your browser: "
+        . $resetUrl . "</small></p>";
+    $header = "From: Websec Automailer <websec@wi.uni-muenster.de>\r\n"
+        . "Reply-To: websec@wi.uni-muenster.de\r\n"
+        . "Content-type: text/html\r\n";
 
     mail($to, $subject, $msg, $header);
 }
