@@ -387,3 +387,23 @@ function get_file_size($file, $unit = "kb")
         throw new Exception($file . " not found.");
     }
 }
+
+// get user name for a given mail address
+function get_user_name($mail)
+{
+
+    $sql = "SELECT `user_name` FROM `users` WHERE `user_wwu_email` = :mail";
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([
+            "mail" => $mail
+        ]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        display_exception_msg($e, "128");
+        exit();
+    }
+
+    return $result['user_name'];
+}
