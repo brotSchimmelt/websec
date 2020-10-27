@@ -544,7 +544,7 @@ function send_pwd_reset_mail($mail, $resetUrl)
     $msg = "Hi, " . $name . "!<br><br>"
         . "<p>You recently requested to reset your password for the WebSec "
         . "hacking platform. Use the link below to change it.</p>"
-        . '<p><a href="' . $resetUrl . '">Reset my password!</p>'
+        . '<p><a href="' . $resetUrl . '">Reset my password!</a></p>'
         . "<p>This password reset request is only valid for the next "
         . "<strong>15</strong> minutes.</p>"
         . "<p>If you didn't request this, please ignore this email. "
