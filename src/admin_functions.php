@@ -9,7 +9,14 @@
 * connection to the hacking challenges and should be reported.
 */
 
-// get the number of students from the login database
+/**
+ * Get the number of students from the login database.
+ * 
+ * Uses the MySQL COUNT function to get the number of all non-admin users in 
+ * the 'users' table.
+ *
+ * @return integer Indicates the number of students.
+ */
 function get_num_of_students()
 {
     $sql = "SELECT COUNT(`user_name`) AS numberOfStudents FROM `users` "
@@ -19,17 +26,31 @@ function get_num_of_students()
     return $stmt->fetch()['numberOfStudents'];
 }
 
-// get number of unlocked students from the login database
+/**
+ * Get number of unlocked students from the login database.
+ * 
+ * Uses the MySQL COUNT function to get the number of all non-admin users 
+ * that are unlocked in the 'users' table.
+ * 
+ * @return integer Indicates the number of unlocked students.
+ */
 function get_num_of_unlocked_students()
 {
     $sql = "SELECT COUNT(`user_name`) AS numberOfUnlocked FROM `users` "
-        . "WHERE `is_unlocked` = 1";
+        . "WHERE `is_unlocked` = 1 AND `is_admin` = 0";
     $stmt = get_login_db()->query($sql);
 
     return $stmt->fetch()['numberOfUnlocked'];
 }
 
-// get the number of admin users from the login database
+/**
+ * Get the number of admin users from the login database.
+ * 
+ * Uses the MySQL COUNT function to get the number of all admin users from the 
+ * 'users' table.
+ * 
+ * @return integer Indicates the number of admins.
+ */
 function get_num_of_admins()
 {
     $sql = "SELECT COUNT(`user_name`) AS numberOfAdmins FROM `users` "
@@ -40,6 +61,16 @@ function get_num_of_admins()
 }
 
 // check if a user is unlocked in the database
+
+/**
+ * Check if a user is unlocked in the login database.
+ * 
+ * Check the 'users' table if a given user is already unlocked.
+ *
+ * @param string $username Given username.
+ * @return bool Unlock status. 
+ * 
+ */
 function is_user_unlocked_in_db($username)
 {
     $sql = "SELECT `is_unlocked` FROM `users` WHERE `user_name` = :user_name";
@@ -50,7 +81,14 @@ function is_user_unlocked_in_db($username)
     return ($result['is_unlocked'] == 1) ? true : false;
 }
 
-// check if a user is an admin
+/**
+ * Check if a given user is an admin user in the login database.
+ * 
+ * Check in the 'users' table if a give user is an admin.
+ * 
+ * @param string $username Given username.
+ * @return bool Admin status.
+ */
 function is_user_admin_in_db($username)
 {
     $sql = "SELECT `is_admin` FROM `users` WHERE `user_name` = :user_name";
@@ -61,7 +99,14 @@ function is_user_admin_in_db($username)
     return ($result['is_admin'] == 1) ? true : false;
 }
 
-// get the challenge progress of all students in the database
+/**
+ * Get the challenge progress of all students as percentage.
+ * 
+ * Get the overall challenge progress of all non-admin users as percentage. The 
+ * value is calculated with the constant NUM_CHALLENGES (number of challenges).
+ * 
+ * @return integer|float Progress percentage.
+ */
 function get_total_progress()
 {
 
@@ -75,7 +120,6 @@ function get_total_progress()
 
     $absoluteProgress = 0;
     while ($row = $stmt->fetch()) {
-
         $absoluteProgress += get_individual_progress($row['user_name']);
     }
 
@@ -86,7 +130,14 @@ function get_total_progress()
     return round($totalProgress, 2);
 }
 
-// get challenge progress of one student
+/**
+ * Get the challenge progress of a given user.
+ * 
+ * Get the cumulative challenge progress of a given user as an integer value.
+ * 
+ * @param string $username Given user.
+ * @return integer Progress as integer from 0 - 4.
+ */
 function get_individual_progress($username)
 {
     $xssReflectiveStatus = lookup_challenge_status("reflective_xss", $username);
@@ -104,7 +155,12 @@ function get_individual_progress($username)
     return $totalStatus;
 }
 
-// get all students with at least one open challenge
+/**
+ * Show all students with at least 1 open challenge.
+ * 
+ * Print the open challenges, admin flag, unlocked flag and last activity for 
+ * every student as table row to the screen.
+ */
 function show_students_with_open_challenges()
 {
     $sql = "SELECT `user_name`, `user_wwu_email`, `is_unlocked`, `is_admin`, "
@@ -149,7 +205,12 @@ function show_students_with_open_challenges()
     }
 }
 
-// show all challenge statuses for the students
+/**
+ * Show all solved challenges for all students.
+ * 
+ * Print the solved challenges, the CSRF referrer + message and the current 
+ * global difficulty to the screen.
+ */
 function show_solved_challenges()
 {
     $sql = "SELECT `user_name`, `user_wwu_email`, `is_admin`, `last_login`, "
@@ -183,12 +244,21 @@ function show_solved_challenges()
     }
 }
 
-// get all solved challenges for a user
+/**
+ * Get the names of all solved challenges for a given user.
+ * 
+ * Iterates through all challenges for a given user and returns the name of the
+ * challenge, if it's been solved.
+ * 
+ * @param string $username Given user name. 
+ * @return string A list of all solved challenges. 
+ */
 function get_solved_challenges($username)
 {
     // initialize array of solved challenges
     $challenges = array();
 
+    // check all challenges
     if (lookup_challenge_status("reflective_xss", $username)) {
         array_push($challenges, "Reflective XSS");
     }
@@ -218,15 +288,25 @@ function get_solved_challenges($username)
         array_push($challenges, "-");
     }
 
+    // return list of solved challenges as string
     return implode(", ", $challenges);
 }
 
-// get all not yet solved challenges for a user
+/**
+ * Get the names of all open challenges for a given user.
+ * 
+ * Iterates through all challenges for a given user and returns the name of the
+ * challenge, if it's NOT been solved yet.
+ * 
+ * @param string $username Given user name. 
+ * @return string A list of all open challenges. 
+ */
 function get_open_challenges($username)
 {
     // get every open challenge
     $challenges = array();
 
+    // check all challenges
     if (!lookup_challenge_status("reflective_xss", $username)) {
         array_push($challenges, "Reflective XSS");
     }
@@ -257,7 +337,15 @@ function get_open_challenges($username)
     return implode(", ", $challenges);
 }
 
-// get CSRF referer and messages for a user
+/**
+ * Get CSRF referrer and messages for a given user.
+ * 
+ * Get the referrer and message for a given user, if the CSRF challenge has been
+ * solved. Otherwise return a '-' to indicate that the challenge is still open.
+ * 
+ * @param string $username Given user name. 
+ * @return array Assoc array with message and referrer as elements. 
+ */
 function get_csrf_challenge_data($username)
 {
     // get referrer and message
@@ -280,10 +368,15 @@ function get_csrf_challenge_data($username)
     return $result;
 }
 
-// set new global difficulty level in settings.php
+/**
+ * Set new global difficulty level.
+ * 
+ * Set a new global difficulty level in the settings.json file.
+ * 
+ * @param string $difficulty New difficulty level.
+ */
 function set_global_difficulty($difficulty)
 {
-
     // translate input to valid setting value
     $newValue = ($difficulty == "hard") ? true : false;
 
@@ -296,7 +389,14 @@ function set_global_difficulty($difficulty)
     }
 }
 
-// set login status
+/**
+ * Set the login form status.
+ * 
+ * Enable (true) or disable (false) the login function in the settings.json
+ * file.
+ * 
+ * @param bool $status Value to enable or disable the login function.
+ */
 function set_login_status($status)
 {
 
@@ -312,7 +412,14 @@ function set_login_status($status)
     }
 }
 
-// set registration status
+/**
+ * Set the registration form status.
+ * 
+ * Enable (true) or disable (false) the registration function in the 
+ * settings.json file.
+ * 
+ * @param bool $status Value to enable or disable the registration function.
+ */
 function set_registration_status($status)
 {
 
@@ -328,7 +435,14 @@ function set_registration_status($status)
     }
 }
 
-// get student results as array
+/**
+ * Get the results of all students as assoc array.
+ * 
+ * Get the personal data and challenge results of all non-admin users in an 
+ * assoc array with a header.
+ *
+ * @return array Assoc array with all student data. 
+ */
 function get_results_as_array()
 {
     $sql = "SELECT `user_name`, `user_wwu_email` FROM `users` WHERE "
@@ -410,7 +524,11 @@ function get_results_as_array()
     return $results;
 }
 
-// get status of all challenges for a user
+/**
+ * Get all challenge status for a given user.
+ * 
+ * Get all challenge status for a given user as either 0 or 1.
+ */
 function get_challenge_status($username)
 {
     // get challenge data for user
