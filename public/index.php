@@ -88,7 +88,7 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
             <button type="submit" name="login-submit" id="login-btn" class="btn btn-lg btn-login btn-block">Login</button>
             <a href="registration.php" id="register-btn-link" class="btn btn-lg btn-outline-register btn-block">Register</a>
 
-            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
+            <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
             <hr class="accent-blue">
         </form>
         <div class="show-difficulty">

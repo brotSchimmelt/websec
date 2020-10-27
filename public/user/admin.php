@@ -59,7 +59,7 @@ if (!is_user_unlocked()) {
         <!-- <a href="password_forgotten.php" id="forget_btn" class="btn btn-link">Forgot your password?</a> -->
         <a class="btn btn-lg btn-primary btn-block shadow" href="admin_redirect.php">Login</a>
         <!-- <a href="registration.php" id="register_btn_link" class="btn btn-lg btn-outline-secondary btn-block">Register</a> -->
-        <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
+        <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
     </form>
     <!-- HTML Content END -->
 

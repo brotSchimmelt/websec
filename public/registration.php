@@ -99,7 +99,7 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
 
 
             <div id="show-semester">
-                <p class="mt-5 mb-3 text-muted text-center">&copy; <?php get_semester() ?></p>
+                <p class="mt-5 mb-3 text-muted text-center">&copy; <?= get_semester() ?></p>
                 <hr class="accent-blue">
             </div>
 

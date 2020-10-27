@@ -81,7 +81,7 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
 
             <button type="submit" name="reset-submit" id="register-btn" class="btn btn-lg btn-register btn-block">Set New Password</button>
 
-            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
+            <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
             <hr class="accent-blue">
         </form>
     </div>

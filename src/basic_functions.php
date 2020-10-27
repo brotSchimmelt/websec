@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * This file contains functions that are 
+ */
+
+
 // Check if the user is already logged in
 function is_user_logged_in()
 {
@@ -65,7 +70,7 @@ function get_semester()
         $semester = "Winter Term ";
     }
 
-    echo $moduleName . $semester . $year;
+    return $moduleName . $semester . $year;
 }
 
 function unlock_user($username)

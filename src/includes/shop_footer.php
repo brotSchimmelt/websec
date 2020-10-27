@@ -5,7 +5,7 @@
             <a class="py-2d-none d-md-inline-block pb-3" href="/shop/main.php" aria-label="Main Page">
                 <img class="mt-1 mb-2" src="/assets/img/fake_logo.png" width="128" height="72">
             </a>
-            <small class="d-block mb-3 text-muted">&copy; <?php get_semester() ?></small>
+            <small class="d-block mb-3 text-muted">&copy; <?= get_semester() ?></small>
         </div>
         <div class="col-6 col-md d-none d-lg-block">
             <h5 class="green">Instructions</h5>

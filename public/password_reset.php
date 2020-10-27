@@ -66,7 +66,7 @@ if (isset($_POST['pwd-reset-submit'])) {
             <button type="submit" name="pwd-reset-submit" id="pwd-reset-submit" class="btn btn-lg btn-register btn-block">Send Mail</button>
             <a href="index.php" class="btn btn-link login-link">Back to Login Page</a>
 
-            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
+            <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
             <hr class="accent-blue">
         </form>
     </div>

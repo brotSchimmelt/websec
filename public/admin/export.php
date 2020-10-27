@@ -99,7 +99,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                 </p>
                 <hr>
                 <p>
-                    <strong>Semester:</strong> <?php get_semester() ?>
+                    <strong>Semester:</strong> <?= get_semester() ?>
                     <br>
                     <strong>Export Date:</strong> <?= date(DATE_RFC850) ?>
                 </p>
