@@ -80,7 +80,7 @@ $difficulty = get_global_difficulty();
                         You are looking for the perfect present and want to know what your friends have on their wishlist?<br>
                         No Problemo! Just use our absolutely privacy conform search form.
                     </p>
-                    <form action="friends.php" method="get" class="mt-5">
+                    <form action="friends.php" method="post" class="mt-5">
                         <div class="search-bar-flat-inner">
                             <div class="flat-search">
                                 <div class="custom-input-field">
@@ -110,16 +110,16 @@ $difficulty = get_global_difficulty();
     </header>
     <?php
     // positioned down here since the results are directly echoed out
-    if (isset($_GET['sqli']) && (!empty($_GET['sqli']))) {
+    if (isset($_POST['sqli']) && (!empty($_POST['sqli']))) {
 
-        $searchTerm = $_GET['sqli'];
+        $searchTerm = $_POST['sqli'];
 
         // write SQLi Query to challenge input JSON file
         write_to_challenge_json(
             $_SESSION['userName'],
             $_SESSION['userMail'],
             "sqli",
-            $_GET['sqli']
+            $_POST['sqli']
         );
 
         try {
