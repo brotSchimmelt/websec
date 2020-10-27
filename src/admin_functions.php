@@ -1,13 +1,17 @@
 <?php
-/* 
-* PDO Exceptions are not caught in this sections since only admin users should
-* have access.
-* Furthermore, the default PDO Exceptions are exceptional (pun intended) helpful
-* in regards to debugging.
-* They are only caught in the sections accessible by normal users to provide
-* extra information to the students that this is indeed an error, that has no 
-* connection to the hacking challenges and should be reported.
-*/
+
+/**
+ * This file contains all functions that are exclusively used in the admin area
+ * of the shop.
+ *  
+ * Note: PDO Exceptions are mostly not caught in this sections since only admin 
+ * users should have access to the output of these functions.
+ * Furthermore, the default PDO Exceptions are exceptional (pun intended) helpful
+ * in regards to debugging.
+ * They are only caught in the sections accessible by normal users to provide
+ * extra information to the students that this is indeed an error, that has no 
+ * connection to the hacking challenges and should be reported.
+ */
 
 /**
  * Get the number of students from the login database.
@@ -59,8 +63,6 @@ function get_num_of_admins()
 
     return $stmt->fetch()['numberOfAdmins'];
 }
-
-// check if a user is unlocked in the database
 
 /**
  * Check if a user is unlocked in the login database.
@@ -528,6 +530,9 @@ function get_results_as_array()
  * Get all challenge status for a given user.
  * 
  * Get all challenge status for a given user as either 0 or 1.
+ * 
+ * @param string $username Given user name. 
+ * @return array List of all challenge status. 
  */
 function get_challenge_status($username)
 {
@@ -558,7 +563,13 @@ function get_challenge_status($username)
     return $challengeStatus;
 }
 
-// set new blocked usernames list in settings.json
+/**
+ * Set blocked usernames list.
+ * 
+ * Set a list of blocked usernames in the settings.json file.
+ * 
+ * @param string $list Comma separated list of user names.
+ */
 function set_blocked_usernames($list)
 {
     try {
@@ -570,7 +581,13 @@ function set_blocked_usernames($list)
     }
 }
 
-// set new allowed domains list in settings.json
+/**
+ * Set allowed mail domains list.
+ * 
+ * Set a new list of allowed mail domains in the settings.json file.
+ * 
+ * @param string $list Comma separated list of domains.
+ */
 function set_allowed_domains($list)
 {
     try {
@@ -582,7 +599,14 @@ function set_allowed_domains($list)
     }
 }
 
-// set new badge link for a challenge
+/**
+ * Set badge link for a given challenge.
+ * 
+ * Set a new badge link for a given challenge with external resources.
+ * 
+ * @param string $challenge Challenge for which the link should be changed.
+ * @param string $link New link.
+ */
 function set_badge_link($challenge, $link)
 {
     try {
@@ -594,7 +618,12 @@ function set_badge_link($challenge, $link)
     }
 }
 
-// display the solutions of the challenge for all non-admin users
+/**
+ * Show all entered solutions for all challenges.
+ * 
+ * Show all solutions entered by non-admin users for the challenges.
+ * 
+ */
 function show_challenge_solutions()
 {
 
@@ -622,8 +651,11 @@ function show_challenge_solutions()
     }
 }
 
-
-// display all challenge input file sizes
+/**
+ * Show the size of all input files.
+ * 
+ * Show the size of all user input files in KB.
+ */
 function show_file_sizes()
 {
 
