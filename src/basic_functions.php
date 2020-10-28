@@ -1,11 +1,15 @@
 <?php
 
 /**
- * This file contains functions that are 
+ * This file contains functions that are used on almost every page or that are 
+ * so general in their design that they could not be grouped to a specific topic.
  */
 
-
-// Check if the user is already logged in
+/**
+ * Check if the current user is already logged in.
+ * 
+ * Check if the user is logged in the current session.
+ */
 function is_user_logged_in()
 {
     if (
@@ -17,7 +21,11 @@ function is_user_logged_in()
     return false;
 }
 
-// Check if the user is logged in and admin
+/**
+ * Check if the current user is logged in and admin.
+ * 
+ * Check if the current user is logged in and admin in the current session.
+ */
 function is_user_admin()
 {
     if (
@@ -29,7 +37,11 @@ function is_user_admin()
     return false;
 }
 
-// Check if user is unlocked
+/**
+ * Check if the current user is already unlocked.
+ * 
+ * Check if the current user is unlocked in the login database.
+ */
 function is_user_unlocked()
 {
     if (
@@ -41,7 +53,11 @@ function is_user_unlocked()
     return false;
 }
 
-// Log the user out
+/**
+ * Log the current user out.
+ * 
+ * Destroy the current session and redirect user to the logout page.
+ */
 function log_user_out()
 {
     // delete Session
@@ -56,7 +72,13 @@ function log_user_out()
     exit();
 }
 
-// Return the current year and semester
+/**
+ * Get the current semester.
+ * 
+ * Get the seminar name, the current date and the semester as string.
+ * 
+ * @return string Current semester.
+ */
 function get_semester()
 {
     $moduleName = " VM Web Security ";
@@ -73,6 +95,13 @@ function get_semester()
     return $moduleName . $semester . $year;
 }
 
+/**
+ * Unlock the given user.
+ * 
+ * Set the unlock flag for the current user in the login database.
+ * 
+ * @param string $username Name of the given user.
+ */
 function unlock_user($username)
 {
     // update database
@@ -90,7 +119,11 @@ function unlock_user($username)
     $_SESSION['userIsUnlocked'] = 1;
 }
 
-// delete all cookies for the XSS challenges
+/**
+ * Delete all challenge cookies.
+ * 
+ * Delete all cookies for the XSS challenges with all possible paths.
+ */
 function delete_all_challenge_cookies()
 {
     $cookiePath = array("/", "/shop", "/user", "/admin");
@@ -102,7 +135,11 @@ function delete_all_challenge_cookies()
     }
 }
 
-// delete all cookies set
+/**
+ * Delete all cookies.
+ * 
+ * Delete all cookies on the hacking platform.
+ */
 function delete_all_cookies()
 {
 
@@ -115,7 +152,13 @@ function delete_all_cookies()
     }
 }
 
-// get the current value for the global challenge difficulty
+/**
+ * The the global difficulty for the challenges.
+ * 
+ * Return the current global difficulty in the settings.json file.
+ * 
+ * @return string Global difficulty.
+ */
 function get_global_difficulty()
 {
     try {
@@ -134,7 +177,13 @@ function get_global_difficulty()
     }
 }
 
-// check if registration is enabled
+/**
+ * Check if the registration form is open.
+ * 
+ * Check if the registration function is enabled in the settings.json file.
+ * 
+ * @return bool Registration status.
+ */
 function is_registration_enabled()
 {
     try {
@@ -146,7 +195,13 @@ function is_registration_enabled()
     }
 }
 
-// check if login is enabled
+/**
+ * Check if the login form is open.
+ * 
+ * Check if the login function is enabled in the settings.json file.
+ * 
+ * @return bool Login status.
+ */
 function is_login_enabled()
 {
     try {
@@ -158,7 +213,15 @@ function is_login_enabled()
     }
 }
 
-// get link for the challenge from the settings.json
+/**
+ * Get the link to further information for the given challenge.
+ * 
+ * Get the external link for further information on the given challenge from
+ * the settings.json file.
+ * 
+ * @param string $challenge Challenge.
+ * @return string Badge link.
+ */
 function get_challenge_badge_link($challenge)
 {
     try {
@@ -169,7 +232,13 @@ function get_challenge_badge_link($challenge)
     }
 }
 
-// get list of allowed domains for registration from the settings.json
+/**
+ * Get allowed mail domains for the registration.
+ * 
+ * Get the allowed domains for the registration from the settings.json file.
+ * 
+ * @return string List of allowed domains.
+ */
 function get_allowed_domains()
 {
     try {
@@ -180,7 +249,13 @@ function get_allowed_domains()
     }
 }
 
-// get list of blocked usernames for registration from settings.json
+/**
+ * Get blocked user names for the registration.
+ * 
+ * Get the blocked user names for the registration from the settings.json file.
+ * 
+ * @return string List of blocked user names.
+ */
 function get_blocked_usernames()
 {
     try {
@@ -191,7 +266,16 @@ function get_blocked_usernames()
     }
 }
 
-// wrapper function to read in JSON settings
+/**
+ * Read settings from the settings.json file.
+ * 
+ * Wrapper function to read data from the settings.json file.
+ * 
+ * @param string $setting Setting class.
+ * @param string $subsetting Specific setting.
+ * @return string|bool Setting value.
+ * @throws Exception If setting type does not match.
+ */
 function get_setting($setting, $subsetting)
 {
     // load path to settings.json
@@ -204,7 +288,6 @@ function get_setting($setting, $subsetting)
         display_exception_msg($e, "071");
         exit();
     }
-
 
     // check if setting is correct datatype
     if (in_array($setting, ["login", "registration", "difficulty"], true)) {
@@ -227,7 +310,16 @@ function get_setting($setting, $subsetting)
     return $json[$setting][$subsetting];
 }
 
-// wrapper function to write to JSON settings
+/**
+ * Write settings to the settings.json file.
+ * 
+ * Wrapper function to wirte data to the settings.json file.
+ * 
+ * @param string $setting Setting class.
+ * @param string $subsetting Specific setting.
+ * @param string|bool $newValue New setting value.
+ * @throws Exception If setting type does not match.
+ */
 function set_setting($setting, $subsetting, $newValue)
 {
     // load path to settings.json
@@ -263,7 +355,15 @@ function set_setting($setting, $subsetting, $newValue)
     file_put_contents($file, json_encode($json));
 }
 
-// read json file as assoc array
+/**
+ * Read in a given json file.
+ * 
+ * The json file will be read in as an assoc array.
+ * 
+ * @param string $file Path to json file.
+ * @return array JSON data as array.
+ * @throws Exception If file does not exits.
+ */
 function read_json_file($file)
 {
     // read file in
@@ -275,7 +375,14 @@ function read_json_file($file)
     }
 }
 
-// remove all unnecessary characters from a given string
+/**
+ * Convert a string to a clean array.
+ * 
+ * Remove all whitespace, coma from a given string and save it as an array.
+ * 
+ * @param string $str Input string.
+ * @return array Clean array.
+ */
 function make_clean_array($str)
 {
     // delete whitespace
@@ -309,7 +416,17 @@ function make_clean_array($str)
     return array_filter($arr);
 }
 
-// export array to csv
+/**
+ * Export a given array as a CSV file.
+ * 
+ * Write a given array to a CSV file and set download headers.
+ * 
+ * @param array $array Input array.
+ * @param string $name Name of the CSV file.
+ * @param string $delimiter Character to separat data points.
+ * @param string $replaceCharacter Character to replace occurrences of the 
+ * delimiter in the input array.
+ */
 function export_csv($array, $name, $delimiter = ",", $replaceCharacter = ";")
 {
     // open file in memory
@@ -333,7 +450,15 @@ function export_csv($array, $name, $delimiter = ",", $replaceCharacter = ";")
 }
 
 
-// export array to json
+/**
+ * Export a given array as a JSON file.
+ * 
+ * Write a given array to a JSON file and set download headers.
+ * 
+ * @param array $array Input array.
+ * @param string $name Name of the JSON file.
+ * @return JSON Output JSON file.  
+ */
 function export_json($array, $name)
 {
 
@@ -371,20 +496,31 @@ function export_json($array, $name)
     return json_encode($result);;
 }
 
-
-// check file size
+/**
+ * Get the size of a given file.
+ * 
+ * Get the size of a give file in KB.
+ * 
+ * @param string $file Path to input file.
+ * @param string $unit Unit of for the file size.
+ * @return int File size. 
+ * @throws Exception If file does not exits.
+ */
 function get_file_size($file, $unit = "kb")
 {
     // check path to file
     if (file_exists($file)) {
 
-        if ($unit == "kb") {
+        if (strtolower($unit) == "kb") {
+
             // return file size rounded to whole kilo bytes
             return round((filesize($file) / 1024), 0);
-        } else if ($unit == "mb") {
+        } else if (strtolower($unit) == "mb") {
+
             // return file size rounded to whole mega bytes
             return round((filesize($file) / 1024 / 1024), 0);
         } else {
+
             // return file size in bytes
             return filesize($file);
         }
@@ -393,7 +529,14 @@ function get_file_size($file, $unit = "kb")
     }
 }
 
-// get user name for a given mail address
+/**
+ * Get the user name.
+ * 
+ * Get the corresponding user name for a given mail address.
+ * 
+ * @param string $mail User mail address.
+ * @return string User name.
+ */
 function get_user_name($mail)
 {
 
