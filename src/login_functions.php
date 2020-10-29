@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * This file contains all functions that are relevant for user login / 
+ * registration.
+ */
+
+/**
  * Get the PDO connection for the login DB.
  * 
  * Uses the credentials defined in the config.php file.
