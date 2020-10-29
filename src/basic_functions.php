@@ -237,7 +237,7 @@ function get_challenge_badge_link($challenge)
  * 
  * Get the allowed domains for the registration from the settings.json file.
  * 
- * @return string List of allowed domains.
+ * @return array List of allowed domains.
  */
 function get_allowed_domains()
 {
@@ -254,7 +254,7 @@ function get_allowed_domains()
  * 
  * Get the blocked user names for the registration from the settings.json file.
  * 
- * @return string List of blocked user names.
+ * @return array List of blocked user names.
  */
 function get_blocked_usernames()
 {
@@ -273,7 +273,7 @@ function get_blocked_usernames()
  * 
  * @param string $setting Setting class.
  * @param string $subsetting Specific setting.
- * @return string|bool Setting value.
+ * @return mixed Setting value.
  * @throws Exception If setting type does not match.
  */
 function get_setting($setting, $subsetting)
