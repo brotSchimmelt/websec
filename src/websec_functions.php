@@ -1,15 +1,36 @@
 <?php
 
-// trim string to include only valid characters
-function slug($z)
+/**
+ * This file contains all functions that are relevant for the user challenges on
+ * the hacking platform.
+ */
+
+/**
+ * Trim input string.
+ * 
+ * Trim the input string to only include valid characters (A-Za-z0-9).
+ * 
+ * @param string $str Input string.
+ * @return string Trimmed string.
+ */
+function slug($str)
 {
-    // $z = strtolower($z);
-    $z = preg_replace('/[^A-Za-z0-9 -]+/', '', $z);
-    $z = str_replace(' ', '-', $z);
-    return trim($z, '-');
+    // $str = strtolower($str);
+    $str = preg_replace('/[^A-Za-z0-9 -]+/', '', $str);
+    $str = str_replace(' ', '-', $str);
+    return trim($str, '-');
 }
 
-// create SQLite database for the SQLi challenge 
+/**
+ * Create the SQLite database.
+ * 
+ * Create and initialize the SQLite database for the given user.
+ * 
+ * @param string $username User name.
+ * @param string $mail User mail address.
+ * @throws Exception If the SQLite database creation failed.
+ * @throws Exception If the write permission is missing for the data dir.
+ */
 function create_sqli_db($username, $mail)
 {
 
@@ -114,7 +135,15 @@ function create_sqli_db($username, $mail)
     }
 }
 
-// query the SQLite database
+/**
+ * Query the SQLite database.
+ * 
+ * Format and sanitize user input before quering the SQLite database.
+ * 
+ * @param string $searchTerm Search Term.
+ * @return int Operation status.
+ * @throws Exception If the SQL query could not be processed.
+ */
 function query_sqli_db($searchTerm)
 {
     // get user database
@@ -227,7 +256,6 @@ function query_sqli_db($searchTerm)
                     "sqli"
                 );
 
-
                 // code for showing challenge success modal
                 return 0;
             }
@@ -250,13 +278,24 @@ function query_sqli_db($searchTerm)
     }
 }
 
-// display the product comments
+/**
+ * Display the product comments.
+ * 
+ * Load the product comments from the shop database and display them.
+ */
 function show_xss_comments()
 {
     include(INCL . "shop_comments.php");
 }
 
-// add product comment
+/**
+ * Add comment.
+ * 
+ * Add product comment to the database.
+ * 
+ * @param string $comment Comment body.
+ * @param string $author User who posted the comment.
+ */
 function add_comment_to_db($comment, $author)
 {
 
@@ -297,7 +336,17 @@ function add_comment_to_db($comment, $author)
     }
 }
 
-// process the user post for the CSRF challenge
+/**
+ * Process the CSRF post.
+ * 
+ * Process the user post send to the contact form.
+ * 
+ * @param string $uname User name in the form.
+ * @param string $userPost Post message.
+ * @param string $username Session user name.
+ * @param string $userTokenCSRF Token for the CSRF challenge.
+ * @return int Operation status.
+ */
 function process_csrf($uname, $userPost, $username, $userTokenCSRF)
 {
     $difficulty = get_global_difficulty();
@@ -412,7 +461,14 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
     }
 }
 
-// Reset XSS challenge
+/**
+ * Reset the reflective XSS challenge.
+ * 
+ * Delete all old challenge cookies from the session, generate new ones and set
+ * them. Unset challenge progress in the database.
+ * 
+ * @param string $username User name.
+ */
 function reset_reflective_xss_db($username)
 {
 
@@ -451,7 +507,15 @@ function reset_reflective_xss_db($username)
     set_challenge_status("reflective_xss", $username, $status = 0);
 }
 
-// Reset stored XSS challenge
+/**
+ * Reset the stored XSS challenge.
+ * 
+ * Delete all old challenge cookies from the session, generate new ones, set
+ * them and delete all product comments. Unset challenge progress in the 
+ * database.
+ * 
+ * @param string $username User name.
+ */
 function reset_stored_xss_db($username)
 {
 
@@ -497,7 +561,14 @@ function reset_stored_xss_db($username)
     set_challenge_status("stored_xss", $username, $status = 0);
 }
 
-// Reset SQLi challenge
+/**
+ * Reset the SQLi challenge.
+ * 
+ * Delete the old SQLite database and initialize a new one. Delete all challenge
+ * progress in the database.
+ * 
+ * @param string $username User name.
+ */
 function reset_sqli_db($username)
 {
     $mail = $_SESSION['userMail'];
@@ -513,7 +584,14 @@ function reset_sqli_db($username)
     set_challenge_status("sqli", $username, $status = 0);
 }
 
-// reset CSRF challenge
+/**
+ * Reset the CSRF challenge.
+ * 
+ * Delete all CSRF posts from the database and reset the challenge status in 
+ * the database.
+ * 
+ * @param string $username User name.
+ */
 function reset_csrf_db($username)
 {
     $sql = "DELETE FROM `csrf_posts` WHERE `user_name` = :user_name";
@@ -530,7 +608,13 @@ function reset_csrf_db($username)
     set_challenge_status("csrf_referrer", $username, $status = 0);
 }
 
-// reset all challenges
+/**
+ * Reset all challenge.
+ * 
+ * Call the reset functions for all challenges.
+ * 
+ * @param string $username User name.
+ */
 function reset_all_challenges($username)
 {
     // reset all challenges
@@ -540,7 +624,14 @@ function reset_all_challenges($username)
     reset_csrf_db($username);
 }
 
-// check if the XSS challenge was solved
+/**
+ * Check if the reflective XSS challenge was solved.
+ * 
+ * Check if the correct session cookie was entered.
+ * 
+ * @param string $cookie Session cookie.
+ * @return bool Challenge result.
+ */
 function check_reflective_xss_challenge($cookie)
 {
     // check if cookie is equal to reflective xss cookie
@@ -555,7 +646,15 @@ function check_reflective_xss_challenge($cookie)
     }
 }
 
-// check if the SQLi challenge is solved
+/**
+ * Check if the SQLi challenge was solved.
+ * 
+ * Check if the number of premium users was increased.
+ * 
+ * @param string $username User name.
+ * @return bool Challenge result.
+ * @throws Exception If the user SQLite database is missing.
+ */
 function check_sqli_challenge($username)
 {
     // get current difficulty
@@ -596,7 +695,14 @@ function check_sqli_challenge($username)
     return $challengeStatus;
 }
 
-// check if CSRF challenge was solved
+/**
+ * Check if the CSRF challenge was solved.
+ * 
+ * Check if a CSRF post from the current user is in the database.
+ * 
+ * @param string $username User name.
+ * @return bool Challenge result.
+ */
 function check_crosspost_challenge($username)
 {
 
@@ -618,7 +724,14 @@ function check_crosspost_challenge($username)
     return $challengeStatus;
 }
 
-// check if CSRF challenge was solved with the correct referer
+/**
+ * Check if CSRF challenge was solved the right way.
+ * 
+ * Check if the CSRF post came from within the hacking platform.
+ * 
+ * @param string $username User name.
+ * @return bool Challenge result.
+ */
 function check_crosspost_challenge_double($username)
 {
     $challengeStatus = false;
@@ -652,7 +765,15 @@ function check_crosspost_challenge_double($username)
     return $challengeStatus;
 }
 
-// set challenge status in the database to solved
+/**
+ * Update challenge status.
+ * 
+ * Set the status of a given challenge in the database.
+ * 
+ * @param string $challenge Name of the challenge.
+ * @param string $username User name.
+ * @param int $status Challenge status.
+ */
 function set_challenge_status($challenge, $username, $status = 1)
 {
     // filter challenge name since prepared statements do not work for
@@ -679,7 +800,15 @@ function set_challenge_status($challenge, $username, $status = 1)
     }
 }
 
-// lookup challenge status in the database
+/** 
+ * Look up challenge status.
+ * 
+ * Get the status of a given challenge from the database.
+ * 
+ * @param string $challenge Name of the challenge.
+ * @param string $username User name.
+ * @return bool Challenge status.
+ */
 function lookup_challenge_status($challenge, $username)
 {
     // filter challenge name since prepared statements do not work for
@@ -706,7 +835,14 @@ function lookup_challenge_status($challenge, $username)
     return $result[$challengeField] == 1 ? true : false;
 }
 
-// ensure that only one comment per user exists in the database
+/**
+ * Check if user already has a comment in the database.
+ * 
+ * This functions ensures that every user has only 1 valid comment at a time 
+ * in the shop database.
+ * 
+ * @param string $username User name.
+ */
 function check_user_comment_exists($username)
 {
     $sql = "SELECT `comment_id` FROM `xss_comments` WHERE `author`=?";
@@ -734,7 +870,14 @@ function check_user_comment_exists($username)
     }
 }
 
-// set the users current cart to the 'fake' cart
+/**
+ * Update the current cart.
+ * 
+ * Update the current cart to simulate a the 'stolen session' for the stored
+ * XSS challenge.
+ * 
+ * @param string $username User name.
+ */
 function update_cart($username)
 {
 
@@ -746,7 +889,7 @@ function update_cart($username)
         . "(NULL, :prod_id, :user_name, :quantity, :date)";
 
     // products that are added to the new 'fake' cart
-    $productsToAdd = array('1', '3', '4', '5');
+    $productsToAdd = array('1', '3', '4', '5'); // IDs
     $productQuantity = array('32', '1', '5', '3');
 
     try {
@@ -768,7 +911,15 @@ function update_cart($username)
     $_SESSION['fakeCart'] = true;
 }
 
-// check if the stored xss challenge was solved
+/**
+ * Check stored XSS challenge.
+ * 
+ * Check that the user added a specific product (ID=2) to the 'stolen session' 
+ * cart and then update the challenge status in the database and empty the cart
+ * again.
+ * 
+ * @param string $username User name.
+ */
 function check_stored_xss_challenge($username)
 {
 
@@ -817,9 +968,16 @@ function check_stored_xss_challenge($username)
     }
 }
 
-// check if stolen session cookie is set
+/**
+ * Compare all cookies to the stored XSS challenge cookie.
+ * 
+ * Check if any cookie has the value of the stored XSS challenge cookie.
+ * 
+ * @return bool Cookie status.
+ */
 function compare_xss_cookies()
 {
+
     // iterate through all cookies
     foreach ($_COOKIE as $cookie => $value) {
 
@@ -832,7 +990,14 @@ function compare_xss_cookies()
     return false;
 }
 
-// show modal and fake cart for stored xss challenge
+/**
+ * Show info modal and fake cart for stored XSS challenge.
+ * 
+ * Check if the info modal was already shown and then update the session cart
+ * and display the modal.
+ * 
+ * @param string $username User name.
+ */
 function set_stolen_session($username)
 {
     // check if 'welcome back, elliot' modal has already been shown
@@ -845,7 +1010,14 @@ function set_stolen_session($username)
     }
 }
 
-// get fake CSRF token from the database
+/**
+ * Get the fake CSRF token for a given user.
+ * 
+ * Get the fake CSRF token from the login database.
+ * 
+ * @param string $username User name.
+ * @return string Fake token.
+ */
 function get_fake_CSRF_token($username)
 {
 
@@ -864,7 +1036,13 @@ function get_fake_CSRF_token($username)
 }
 
 
-// remove last product comment from the database
+/**
+ * Remove product comment.
+ * 
+ * Remove the last product comment for a given user from the shop database.
+ * 
+ * @param string $username User name.
+ */
 function remove_comment($username)
 {
     $sqlComment = "DELETE FROM `xss_comments` WHERE `author`= :user_name";
@@ -878,7 +1056,17 @@ function remove_comment($username)
     }
 }
 
-// write to JSON input file
+/**
+ * Write user input to challenge JSON file.
+ * 
+ * Save the current user input to the challenge JSON file under the specific 
+ * challenge.
+ * 
+ * @param string $username User name.
+ * @param string $mail User mail address.
+ * @param string $challenge Challenge name.
+ * @param string $content Last user input.
+ */
 function write_to_challenge_json($username, $mail, $challenge, $content)
 {
 
@@ -935,7 +1123,16 @@ function write_to_challenge_json($username, $mail, $challenge, $content)
     }
 }
 
-// get the last element from input JSON file for a challenge
+/**
+ * Get last element from the challenge JSON file.
+ * 
+ * Return the last user input for a given challenge from the challenge JSON 
+ * file. If there was no input, the function returns a single '-'.
+ * 
+ * @param string $username User name.
+ * @param string $challenge Name of the challenge.
+ * @return string Last user input.
+ */
 function get_last_challenge_input($username, $challenge)
 {
 
