@@ -1,6 +1,17 @@
 <?php
 
-// return a pdo connection to the shop db
+/**
+ * This file contains all functions that are relevant for the shop functionality
+ * of the hacking platform.
+ */
+
+/**
+ * Get the PDO connection for the shop DB.
+ * 
+ * Uses the credentials defined in the config.php file.
+ *
+ * @return \PDO The shop database connection.
+ */
 function get_shop_db()
 {
     static $dbShop;
@@ -22,7 +33,13 @@ function get_shop_db()
     return $dbShop;
 }
 
-// get the number of cart items
+/**
+ * Get the number of cart items.
+ * 
+ * Return the numbers of cart items in the current session.
+ * 
+ * @return int Number of cart items.
+ */
 function get_number_of_cart_items()
 {
     $sql = "SELECT SUM(`quantity`) FROM `cart` WHERE user_name=?";
@@ -37,7 +54,15 @@ function get_number_of_cart_items()
     }
 }
 
-// add product to shopping cart
+/**
+ * Add product to shopping cart.
+ * 
+ * Add a product with a given quantity to the cart of the current session and 
+ * save it in the shop database.
+ * 
+ * @param int $prodID Product ID.
+ * @param int $quantity Quantity of the product.
+ */
 function add_product_to_cart($productID, $quantity)
 {
 
@@ -109,7 +134,14 @@ function add_product_to_cart($productID, $quantity)
     }
 }
 
-// check if product type is already in the cart
+/**
+ * Check if product is in cart.
+ * 
+ * Check if a given product is in the cart of the current session.
+ * 
+ * @param int $prodID Product ID.
+ * @return bool Product status.
+ */
 function is_product_in_cart($productID)
 {
     $sql = "SELECT * FROM `cart` WHERE user_name=:user_name AND prod_id=:prod_id";
@@ -129,11 +161,17 @@ function is_product_in_cart($productID)
     return $stmt->rowCount() > 0 ? true : false;
 }
 
-// get all products from the product database
+/**
+ * Display all products.
+ * 
+ * Load all products from the shop database to the screen.
+ */
 function show_products()
 {
+
     $sql = "SELECT prod_id, prod_title, prod_description, "
         . "price, img_path FROM products";
+
     try {
         $result = get_shop_db()->query($sql);
     } catch (PDOException $e) {
@@ -153,7 +191,11 @@ function show_products()
     echo "</div>";
 }
 
-// show current content of the users shopping cart
+/**
+ * Show cart content.
+ * 
+ * Load all cart items from the shop database and show them in a table.
+ */
 function show_cart_content()
 {
 
@@ -208,7 +250,13 @@ function show_cart_content()
         . "<td><strong>" . $totalPrice . " &euro;</strong></td></tr>";
 }
 
-// check if there are no products in the shopping cart
+/**
+ * Check if the cart is empty.
+ * 
+ * Check if the cart from the current session is empty.
+ * 
+ * @return bool Cart status.
+ */
 function is_cart_empty()
 {
     $sqlCart = "SELECT `prod_id`, `quantity`, `timestamp` "
@@ -228,7 +276,14 @@ function is_cart_empty()
     return false;
 }
 
-// return the number of cart items
+/**
+ * Get the number of items in the cart.
+ * 
+ * Get the number of items in the cart for the current session from the shop 
+ * database.
+ * 
+ * @return int Number of items in cart.
+ */
 function get_num_of_cart_items()
 {
     $sql = "SELECT SUM(quantity) FROM `cart` WHERE `user_name` = :user_name";
@@ -243,7 +298,13 @@ function get_num_of_cart_items()
     return $stmt->fetchColumn();
 }
 
-// display the product search results
+/**
+ * Show search results.
+ * 
+ * Display all products from the shop database that match the search term.
+ * 
+ * @param string $searchTerm Search term.
+ */
 function show_search_results($searchTerm)
 {
     $sql = "SELECT `prod_id`, `prod_title`, `prod_description`, `price`, "
@@ -251,6 +312,9 @@ function show_search_results($searchTerm)
     try {
         $stmt = get_shop_db()->prepare($sql);
         $needle = "%" . $searchTerm . "%";
+
+        // bind value since LIKE statements do not work out of the box
+        // with prepared statements
         $stmt->bindValue(':needle', $needle, PDO::PARAM_STR);
         $stmt->execute();
     } catch (PDOException $e) {
@@ -289,7 +353,14 @@ function show_search_results($searchTerm)
     }
 }
 
-// empty the current cart of the user
+/**
+ * Empty the cart.
+ * 
+ * Remove all products from the cart for the current session by deleting the 
+ * cart entries in the shop database.
+ * 
+ * @param string $username User name.
+ */
 function empty_cart($username)
 {
 
@@ -304,7 +375,13 @@ function empty_cart($username)
     }
 }
 
-// get data to display on product page
+/**
+ * Get all product data.
+ * 
+ * Get all data for a given product from the shop database.
+ * 
+ * @param int $prodID Product ID.
+ */
 function get_product_data($prodID)
 {
 
@@ -322,7 +399,15 @@ function get_product_data($prodID)
     return $stmt->fetch();
 }
 
-// save challenge solution in database
+/**
+ * Save the current challenge solution.
+ * 
+ * Write the user input that solved a given challenge to the shop database.
+ * 
+ * @param string $username User name.
+ * @param string $solution User input that solved the challenge.
+ * @param string $challenge Challenge name.
+ */
 function save_challenge_solution($username, $solution, $challenge)
 {
 
@@ -341,7 +426,15 @@ function save_challenge_solution($username, $solution, $challenge)
     }
 }
 
-// get challenge solution from database
+/**
+ * Get the challenge solution.
+ * 
+ * Get the user input for a given challenge from the database that solved it.
+ * 
+ * @param string $username User name.
+ * @param string $challenge Name of the challenge.
+ * @return string User input.
+ */
 function get_challenge_solution($username, $challenge)
 {
     $sql = "SELECT " . $challenge . " FROM `challenge_solutions` WHERE `user_name`=:user";
