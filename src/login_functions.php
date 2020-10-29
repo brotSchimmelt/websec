@@ -557,6 +557,7 @@ function do_registration($username, $mail, $password)
  * 
  * @param int $length Length of the token.
  * @return string Random token.
+ * @throws Exception If the token creation fails.
  */
 function get_random_token($length)
 {
