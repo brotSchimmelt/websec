@@ -35,10 +35,13 @@ if (isset($_POST['pwd-reset-submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite Bootstrap.css -->
     <link rel="stylesheet" href="assets/css/login.css">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>WebSec | Password Reset</title>
 
@@ -58,10 +61,12 @@ if (isset($_POST['pwd-reset-submit'])) {
                 <small>Enter your <strong>@uni-muenster.de</strong> mail address. If you are already registered, you will receive a mail with further instructions to reset your password.</small>
             </div>
 
+
+
             <button type="submit" name="pwd-reset-submit" id="pwd-reset-submit" class="btn btn-lg btn-register btn-block">Send Mail</button>
             <a href="index.php" class="btn btn-link login-link">Back to Login Page</a>
 
-            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
+            <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
             <hr class="accent-blue">
         </form>
     </div>

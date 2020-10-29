@@ -1,27 +1,8 @@
-<script>
-    // refresh the page
-    function RefreshPage() {
-        window.location.reload(true);
-    }
-    $(document).ready(function() {
-        $('[data-toggle="popover"]').popover();
-    });
-    $(document).ready(function() {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+<script src="../assets/js/shop.js"></script>
 <?php
 /*
 * Java Script for modals
 */
-// input modal for reflective XSS challenge
-// if (isset($searchFieldWasUsed)) {
-//     if ($searchFieldWasUsed && preg_match("/document.cookie/", $rawSearchTerm)) {
-//         echo $modalInputXSSCookie;
-//         echo "<script>$('#xss-solution').modal('show')</script>";
-//     }
-// }
-
 // error modal for reflective XSS challenge
 if (isset($challengeFailed)) {
     if ($challengeFailed) {
@@ -93,7 +74,15 @@ if (isset($resetCSRFModal)) {
 if (isset($resetAllModal)) {
     if ($resetAllModal) {
         echo $modalSuccessResetAll;
-        echo "<script>$('#reset-csrf-success').modal('show')</script>";
+        echo "<script>$('#reset-all-success').modal('show')</script>";
+    }
+}
+
+// reset all challenges success modal
+if (isset($removeCommentModal)) {
+    if ($removeCommentModal) {
+        echo $modalSuccessRemoveComment;
+        echo "<script>$('#remove-comment').modal('show')</script>";
     }
 }
 
@@ -117,30 +106,30 @@ if (isset($queryResultModal)) {
 }
 
 // challenge modals for CSRF challenge
-if (isset($csrfResult)) {
-    if ($csrfResult == 0) {
-        // success
-        echo $modalSuccessCSRF;
-        echo "<script>$('#challenge-success-csrf').modal('show')</script>";
-    } elseif ($csrfResult == 1) {
-        // wrong message; still passed
-        echo $modalSuccessCSRFWrongMessage;
-        echo "<script>$('#challenge-success-csrf-pwned').modal('show')</script>";
-    } elseif ($csrfResult == 2) {
-        // error: wrong user
-        echo $modalErrorCSRFUserMismatch;
-        echo "<script>$('#challenge-info-csrf-user-mismatch').modal('show')"
-            . "</script>";
-    } elseif ($csrfResult == 3) {
-        // error: already post in the database
-        echo $modalInfoCSRFAlreadyPosted;
-        echo "<script>$('#challenge-info-csrf-already-posted').modal('show')"
-            . "</script>";
-    } elseif ($csrfResult == 4) {
-        // wrong referrer; still passed
-        echo $modalSuccessCSRFWrongReferrer;
-        echo "<script>$('#challenge-success-csrf-referrer').modal('show')"
-            . "</script>";
-    }
-}
+// if (isset($_SESSION['csrfResult'])) {
+//     if ($_SESSION['csrfResult'] == 0) {
+//         // success
+//         echo $modalSuccessCSRF;
+//         echo "<script>$('#challenge-success-csrf').modal('show')</script>";
+//     } elseif ($_SESSION['csrfResult'] == 1) {
+//         // wrong message; still passed
+//         echo $modalSuccessCSRFWrongMessage;
+//         echo "<script>$('#challenge-success-csrf-pwned').modal('show')</script>";
+//     } elseif ($_SESSION['csrfResult'] == 2) {
+//         // error: wrong user
+//         echo $modalErrorCSRFUserMismatch;
+//         echo "<script>$('#challenge-info-csrf-user-mismatch').modal('show')"
+//             . "</script>";
+//     } elseif ($_SESSION['csrfResult'] == 3) {
+//         // error: already post in the database
+//         echo $modalInfoCSRFAlreadyPosted;
+//         echo "<script>$('#challenge-info-csrf-already-posted').modal('show')"
+//             . "</script>";
+//     } elseif ($_SESSION['csrfResult'] == 4) {
+//         // wrong referrer; still passed
+//         echo $modalSuccessCSRFWrongReferrer;
+//         echo "<script>$('#challenge-success-csrf-referrer').modal('show')"
+//             . "</script>";
+//     }
+// }
 ?>

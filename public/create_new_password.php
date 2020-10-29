@@ -49,10 +49,13 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="assets/css/login.css">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>WebSec | Create new Password</title>
 </head>
@@ -78,7 +81,7 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
 
             <button type="submit" name="reset-submit" id="register-btn" class="btn btn-lg btn-register btn-block">Set New Password</button>
 
-            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
+            <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
             <hr class="accent-blue">
         </form>
     </div>

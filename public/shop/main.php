@@ -12,8 +12,9 @@ require(FUNC_SHOP);
 
 // Load error handling and user messages
 require(ERROR_HANDLING);
+require(MESSAGES);
 
-// Check admin status
+// Check login status
 if (!is_user_logged_in()) {
     // Redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
@@ -39,10 +40,13 @@ if (isset($_POST['unlock-submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite Bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>WebSec Shop</title>
 </head>
@@ -51,15 +55,19 @@ if (isset($_POST['unlock-submit'])) {
     <?php
     // Load navbar
     require_once(HEADER_SHOP);
-    // Load error messages, user notifications etc.
-    require(MESSAGES);
+    // // Load error messages, user notifications etc.
+    // require(MESSAGES);
 
     // check if user is unlocked
     if (!is_user_unlocked()) {
-        require_once(INCL . "modal_greeting.php");
-        $scriptFlag = true;
+        $unlocked = true;
     } else {
-        $scriptFlag = false;
+        $unlocked = false;
+    }
+
+    // check if administrator has to change default password
+    if ($_SESSION['pwdChangeReminder']) {
+        echo $changeDefaultPwdReminder;
     }
     ?>
     <header id="main-header">
@@ -79,15 +87,17 @@ if (isset($_POST['unlock-submit'])) {
                                     Find all the Web Security merchandise products you didn't know exist but desperately need!
                                 </div>
                             </div>
-                            <div class="d-flex flex-row">
-                                <div class="p-4 align-self-start">
-                                    <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-shield-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M5.443 1.991a60.17 60.17 0 0 0-2.725.802.454.454 0 0 0-.315.366C1.87 7.056 3.1 9.9 4.567 11.773c.736.94 1.533 1.636 2.197 2.093.333.228.626.394.857.5.116.053.21.089.282.11A.73.73 0 0 0 8 14.5c.007-.001.038-.005.097-.023.072-.022.166-.058.282-.111.23-.106.525-.272.857-.5a10.197 10.197 0 0 0 2.197-2.093C12.9 9.9 14.13 7.056 13.597 3.159a.454.454 0 0 0-.315-.366c-.626-.2-1.682-.526-2.725-.802C9.491 1.71 8.51 1.5 8 1.5c-.51 0-1.49.21-2.557.491zm-.256-.966C6.23.749 7.337.5 8 .5c.662 0 1.77.249 2.813.525a61.09 61.09 0 0 1 2.772.815c.528.168.926.623 1.003 1.184.573 4.197-.756 7.307-2.367 9.365a11.191 11.191 0 0 1-2.418 2.3 6.942 6.942 0 0 1-1.007.586c-.27.124-.558.225-.796.225s-.526-.101-.796-.225a6.908 6.908 0 0 1-1.007-.586 11.192 11.192 0 0 1-2.417-2.3C2.167 10.331.839 7.221 1.412 3.024A1.454 1.454 0 0 1 2.415 1.84a61.11 61.11 0 0 1 2.772-.815z" />
-                                        <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                    </svg>
-                                </div>
-                                <div class="p-4 align-self-end">
-                                    Now with 25% less data breaches! You can totally trust us with your personal and financial data.
+                            <div class="d-none d-sm-block">
+                                <div class="d-flex flex-row">
+                                    <div class="p-4 align-self-start">
+                                        <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-shield-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M5.443 1.991a60.17 60.17 0 0 0-2.725.802.454.454 0 0 0-.315.366C1.87 7.056 3.1 9.9 4.567 11.773c.736.94 1.533 1.636 2.197 2.093.333.228.626.394.857.5.116.053.21.089.282.11A.73.73 0 0 0 8 14.5c.007-.001.038-.005.097-.023.072-.022.166-.058.282-.111.23-.106.525-.272.857-.5a10.197 10.197 0 0 0 2.197-2.093C12.9 9.9 14.13 7.056 13.597 3.159a.454.454 0 0 0-.315-.366c-.626-.2-1.682-.526-2.725-.802C9.491 1.71 8.51 1.5 8 1.5c-.51 0-1.49.21-2.557.491zm-.256-.966C6.23.749 7.337.5 8 .5c.662 0 1.77.249 2.813.525a61.09 61.09 0 0 1 2.772.815c.528.168.926.623 1.003 1.184.573 4.197-.756 7.307-2.367 9.365a11.191 11.191 0 0 1-2.418 2.3 6.942 6.942 0 0 1-1.007.586c-.27.124-.558.225-.796.225s-.526-.101-.796-.225a6.908 6.908 0 0 1-1.007-.586 11.192 11.192 0 0 1-2.417-2.3C2.167 10.331.839 7.221 1.412 3.024A1.454 1.454 0 0 1 2.415 1.84a61.11 61.11 0 0 1 2.772-.815z" />
+                                            <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="p-4 align-self-end">
+                                        Now with 25% less data breaches! You can totally trust us with your personal and financial data.
+                                    </div>
                                 </div>
                             </div>
                             <div class="d-flex flex-row">
@@ -99,7 +109,7 @@ if (isset($_POST['unlock-submit'])) {
                                     </svg>
                                 </div>
                                 <div class="p-4 align-self-end">
-                                    Upgrade your account to our premium subscription service to receive a 5% discount on all our prices and a daily newsletter why linux good windows bad.
+                                    Upgrade your account to our premium subscription service to receive a 50% discount on all our prices and a daily newsletter why linux good windows bad.
                                 </div>
                             </div>
                             <div class="text-center">
@@ -112,25 +122,6 @@ if (isset($_POST['unlock-submit'])) {
             </div>
         </div>
     </header>
-
-
-    <!-- Container 1 -->
-    <!-- <section id="container-1">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="p-5">
-                        <h1 class="display-4">
-                            Products
-                        </h1>
-                        <hr class="accent-green">
-                        <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta maxime dignissimos voluptatem iste totam assumenda cumque eius architecto temporibus molestias.</p>
-                        <a class="btn btn-login" href="product.php">See our Products</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <!-- Container 2 Product Text-->
     <section id="container-2" class="text-muted py-5">
@@ -180,7 +171,7 @@ if (isset($_POST['unlock-submit'])) {
                                 Find Your Friends
                             </h1>
                             <hr class="accent-white">
-                            <p class="lead">
+                            <p class="lead d-none d-sm-block">
                                 Do you ever wanted to know what products your friends buy? Well, now you can! With our great privacy compliant search feature.
                             </p>
                             <a class="btn btn-outline-light" href="friends.php">Search for your Friends</a>
@@ -285,14 +276,52 @@ if (isset($_POST['unlock-submit'])) {
         </div>
     </section>
 
+    <!-- Greeting Popup -->
+    <div class="modal fade" id="greeting" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="greetingLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header wwu-green-background text-white shadow">
+                    <h3 class="modal-title" id="greetingLabel">Instructions</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="mx-3">
+                        <br>
+                        <?php
+                        // load instructions
+                        require(INST_GENERAL);
+                        require(INST_XSS);
+                        require(INST_SQLI);
+                        require(INST_CSRF);
+                        ?>
+                    </div>
+                    <div class="text-center justify-content-center">
+                        <br>
+                        <form class="form-signin" action="main.php" method="post">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="check" name="check" required>
+                                <label class="form-check-label" for="check">I've read the instructions!</label>
+                            </div>
+                            <button type="submit" name="unlock-submit" id="unlock-btn" class="btn btn-wwu-cart mt-2">Let's Go!</button>
+                        </form>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php
     // Load shop footer
     require(FOOTER_SHOP);
     // Load JavaScript
     require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
     require_once(JS_SHOP); // Custom JavaScript
-    if ($scriptFlag) {
+    if ($unlocked) {
         echo "<script>$('#greeting').modal('show')</script>";
+    }
+
+    if ($_SESSION['pwdChangeReminder']) {
+        echo "<script>$('#pwd-change-reminder').modal('show')</script>";
     }
     ?>
 </body>

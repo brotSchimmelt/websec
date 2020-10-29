@@ -6,6 +6,7 @@ require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN); // DB credentials
 require(FUNC_BASE); // Basic functions
 require(FUNC_LOGIN); // Login & registration functions
+require(FUNC_WEBSEC); // Challenge and SQLi functions
 require(ERROR_HANDLING); // Error handling
 
 // check if login is disabled
@@ -48,10 +49,13 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite Bootstrap.css -->
     <link rel="stylesheet" href="assets/css/login.css">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>WebSec | Login</title>
 
@@ -61,7 +65,7 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card overflow-auto">
-        <form class="form-signin" action="index.php" method="post">
+        <form class="form-signin form-login" action="index.php" method="post">
             <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="210" height="110">
 
             <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
@@ -75,7 +79,7 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
             <?= get_message(); ?>
 
             <label for="input-name" class="sr-only">Username or WWU Mail</label>
-            <input type="text" name="loginUsername" id="input-name" class="form-control" placeholder="Username or WWU-Mail" required autofocus>
+            <input type="text" name="loginUsername" id="input-name" class="form-control" placeholder="Username or WWU Mail" required autofocus>
             <label for="input-password" class="sr-only">Password</label>
             <input type="password" name="loginPwd" id="input-password" class="form-control" placeholder="Password" required>
 
@@ -84,15 +88,17 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
             <button type="submit" name="login-submit" id="login-btn" class="btn btn-lg btn-login btn-block">Login</button>
             <a href="registration.php" id="register-btn-link" class="btn btn-lg btn-outline-register btn-block">Register</a>
 
-            <p class="mt-5 mb-3 text-muted">&copy; <?php get_semester() ?></p>
+            <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
             <hr class="accent-blue">
         </form>
-        <small>
-            Challenge Difficulty Level:
-            <span title="The difficulty is set by the lecturer." data-toggle="tooltip" data-trigger="hover" data-placement="bottom">
-                <strong><?= $difficulty ?></strong>
-            </span>
-        </small>
+        <div class="show-difficulty">
+            <small>
+                Challenge Difficulty Level:
+                <span title="The difficulty is set by the lecturer." data-toggle="tooltip" data-trigger="hover" data-placement="bottom">
+                    <strong><?= $difficulty ?></strong>
+                </span>
+            </small>
+        </div>
     </div>
     <!-- HTML Content END -->
 </body>

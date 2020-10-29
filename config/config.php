@@ -1,48 +1,94 @@
 <?php
 
-define("DS", DIRECTORY_SEPARATOR); // OS independent dir separator
-define("ROOT", $_SERVER['DOCUMENT_ROOT'] . DS); // Web server root dir
-define("SITE_URL", "localhost"); // Current URL to the website
+/* General configurations */
+// OS independent dir separator
+define('DS', DIRECTORY_SEPARATOR);
+// Web server root dir
+define('ROOT', $_SERVER['DOCUMENT_ROOT'] . DS);
+// Current URL to the website
+define('SITE_URL', 'localhost');
+// The hidden directory for PHPMyAdmin
+// this dir is only used if phpMyAdmin runs directly in the apache container
+define('PMA', 'e6rs82wdj94qsfgb' . DS);
+// Number of challenges in the shop
+// currently XSS (2x), SQLi, CSRF
+define('NUM_CHALLENGES', 4);
 
-// Locations on app level
-define("SRC", ROOT .  ".." . DS . "src" . DS); // Source dir
-define("RES", ROOT .  ".." . DS . "resources" . DS); // Resources dir
-define("DOC", ROOT .  ".." . DS . "docs" . DS); // Documentation dir
-define("LOG", ROOT .  ".." . DS . "docs" . DS); // Log dir
-define("BIN", ROOT .  ".." . DS . "docs" . DS); // Command Line Utility dir (currently empty)
-define("CON", ROOT .  ".." . DS . "config" . DS); // Configuration dir
-define("DAT", ROOT .  ".." . DS . "data" . DS); // Database dir for the sql injection challenge
 
-// Database configurations and settings
-define("CONF_DB_LOGIN", CON . "db_login.php"); // Login database credentials
-define("CONF_DB_SHOP", CON . "db_shop.php"); // Shop database credentials
-define("SETTINGS", CON . "settings.json"); // Settings file for difficulty and login/registration
+/* Locations on app level */
+// Source dir
+define('SRC', ROOT .  '..' . DS . 'src' . DS);
+// Resources dir
+define('RES', ROOT .  '..' . DS . 'resources' . DS);
+// Documentation dir
+define('DOC', ROOT .  '..' . DS . 'docs' . DS);
+// Log dir
+define('LOG', ROOT .  '..' . DS . 'docs' . DS);
+// Command Line Utility dir (currently empty)
+define('BIN', ROOT .  '..' . DS . 'docs' . DS);
+// Configuration dir
+define('CON', ROOT .  '..' . DS . 'config' . DS);
+// Database dir for the sql injection challenge
+define('DAT', ROOT .  '..' . DS . 'data' . DS);
 
-// Subfolders in src/
-define("INCL", SRC . "includes" . DS);  // Includes dir
+/* Database configurations and settings */
+// Login database credentials
+define('CONF_DB_LOGIN', CON . 'db_login.php');
+// Shop database credentials
+define('CONF_DB_SHOP', CON . 'db_shop.php');
+// Settings file for difficulty and login/registration
+define('SETTINGS', CON . 'settings.json');
 
-// Common includes
-define("HEADER_SHOP", INCL . "shop_header.php"); // Header location
-define("FOOTER_SHOP", INCL . "shop_footer.php");  // Footer location
-define("JS_SHOP", INCL . "shop_js.php"); // JavaScript for the shop section
-define("HEADER_ADMIN", INCL . "admin_header.php"); // Admin header location
-define("SIDEBAR_ADMIN", INCL . "admin_sidebar.php"); // Admin sidebar location
-define("JS_ADMIN", INCL . "admin_js.php"); // JavaScript for the admin section
-define("JS_BOOTSTRAP", INCL . "bootstrap_js.php"); // Default JavaScript for bootstrap
+/* Subfolders in src/ */
+// Includes dir
+define('INCL', SRC . 'includes' . DS);
 
-// Functions
-define("FUNC_BASE", SRC . "basic_functions.php"); // Basic functions for the site
-define("FUNC_LOGIN", SRC . "login_functions.php"); // Functions for login, registration etc.
-define("FUNC_ADMIN", SRC . "admin_functions.php"); // Functions for user management etc.
-define("FUNC_SHOP", SRC . "shop_functions.php"); // Functions for products, cart etc.
-define("FUNC_WEBSEC", SRC . "websec_functions.php"); // Functions for websec challenges
+/* Common includes */
+// Header location
+define('HEADER_SHOP', INCL . 'shop_header.php');
+// Footer location
+define('FOOTER_SHOP', INCL . 'shop_footer.php');
+// JavaScript for the shop section
+define('JS_SHOP', INCL . 'shop_js.php');
+// Admin header location
+define('HEADER_ADMIN', INCL . 'admin_header.php');
+// Admin sidebar location
+define('SIDEBAR_ADMIN', INCL . 'admin_sidebar.php');
+// JavaScript for the admin section
+define('JS_ADMIN', INCL . 'admin_js.php');
+// Default JavaScript for bootstrap
+define('JS_BOOTSTRAP', INCL . 'util_bootstrap_js.php');
 
-// Errors
-define("ERROR_HANDLING", SRC . "error_functions.php"); // Functions for error handling
-define("MESSAGES", INCL . "messages.php"); // Error messages, user notifications etc.
+/* Instructions for the challenges */
+// general remarks for the challenges
+define('INST_GENERAL', INCL . 'instruction_general.php');
+// instructions for the stored and the reflective XSS challenges
+define('INST_XSS', INCL . 'instruction_xss.php');
+// instruction for the SQL injection challenge
+define('INST_SQLI', INCL . 'instruction_sqli.php');
+// instruction for the contact form challenge
+define('INST_CSRF', INCL . 'instruction_csrf.php');
 
-// Path for frequent redirects
-define("MAIN_PAGE", "/shop/main.php");
-define("LOGIN_PAGE", "/index.php");
-define("REGISTER_PAGE", "/registration.php");
-define("SCORE", "/user/scoreboard.php");
+/* Functions */
+// Basic functions for the site
+define('FUNC_BASE', SRC . 'basic_functions.php');
+// Functions for login, registration etc.
+define('FUNC_LOGIN', SRC . 'login_functions.php');
+// Functions for user management etc. 
+define('FUNC_ADMIN', SRC . 'admin_functions.php');
+// Functions for products, cart etc.
+define('FUNC_SHOP', SRC . 'shop_functions.php');
+// Functions for websec challenges
+define('FUNC_WEBSEC', SRC . 'websec_functions.php');
+
+/* Errors */
+// Functions for error handling
+define('ERROR_HANDLING', SRC . 'error_functions.php');
+// Error messages, user notifications etc.
+define('MESSAGES', INCL . 'util_messages.php');
+
+/* Path for frequent redirects */
+define('MAIN_PAGE', '/shop/main.php');
+define('LOGIN_PAGE', '/index.php');
+define('REGISTER_PAGE', '/registration.php');
+define('SCORE', '/user/scorecard.php');

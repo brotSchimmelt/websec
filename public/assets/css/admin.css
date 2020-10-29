@@ -149,3 +149,11 @@ body {
 #checkbox-admin-label {
   margin-left: 10px;
 }
+
+#export-table-bottom {
+  margin-bottom: 2%;
+}
+
+.btn-icon {
+  margin-bottom: 3px;
+}

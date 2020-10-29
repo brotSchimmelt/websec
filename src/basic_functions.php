@@ -1,6 +1,15 @@
 <?php
 
-// Check if the user is already logged in
+/**
+ * This file contains functions that are used on almost every page or that are 
+ * so general in their design that they could not be grouped to a specific topic.
+ */
+
+/**
+ * Check if the current user is already logged in.
+ * 
+ * Check if the user is logged in the current session.
+ */
 function is_user_logged_in()
 {
     if (
@@ -12,7 +21,11 @@ function is_user_logged_in()
     return false;
 }
 
-// Check if the user is logged in and admin
+/**
+ * Check if the current user is logged in and admin.
+ * 
+ * Check if the current user is logged in and admin in the current session.
+ */
 function is_user_admin()
 {
     if (
@@ -24,7 +37,11 @@ function is_user_admin()
     return false;
 }
 
-// Check if user is unlocked
+/**
+ * Check if the current user is already unlocked.
+ * 
+ * Check if the current user is unlocked in the login database.
+ */
 function is_user_unlocked()
 {
     if (
@@ -36,7 +53,11 @@ function is_user_unlocked()
     return false;
 }
 
-// Log the user out
+/**
+ * Log the current user out.
+ * 
+ * Destroy the current session and redirect user to the logout page.
+ */
 function log_user_out()
 {
     // delete Session
@@ -51,7 +72,13 @@ function log_user_out()
     exit();
 }
 
-// Return the current year and semester
+/**
+ * Get the current semester.
+ * 
+ * Get the seminar name, the current date and the semester as string.
+ * 
+ * @return string Current semester.
+ */
 function get_semester()
 {
     $moduleName = " VM Web Security ";
@@ -65,9 +92,16 @@ function get_semester()
         $semester = "Winter Term ";
     }
 
-    echo $moduleName . $semester . $year;
+    return $moduleName . $semester . $year;
 }
 
+/**
+ * Unlock the given user.
+ * 
+ * Set the unlock flag for the current user in the login database.
+ * 
+ * @param string $username Name of the given user.
+ */
 function unlock_user($username)
 {
     // update database
@@ -85,7 +119,11 @@ function unlock_user($username)
     $_SESSION['userIsUnlocked'] = 1;
 }
 
-// delete all cookies for the XSS challenges
+/**
+ * Delete all challenge cookies.
+ * 
+ * Delete all cookies for the XSS challenges with all possible paths.
+ */
 function delete_all_challenge_cookies()
 {
     $cookiePath = array("/", "/shop", "/user", "/admin");
@@ -97,7 +135,11 @@ function delete_all_challenge_cookies()
     }
 }
 
-// delete all cookies set
+/**
+ * Delete all cookies.
+ * 
+ * Delete all cookies on the hacking platform.
+ */
 function delete_all_cookies()
 {
 
@@ -110,7 +152,13 @@ function delete_all_cookies()
     }
 }
 
-// get the current value for the global challenge difficulty
+/**
+ * The the global difficulty for the challenges.
+ * 
+ * Return the current global difficulty in the settings.json file.
+ * 
+ * @return string Global difficulty.
+ */
 function get_global_difficulty()
 {
     try {
@@ -129,7 +177,13 @@ function get_global_difficulty()
     }
 }
 
-// check if registration is enabled
+/**
+ * Check if the registration form is open.
+ * 
+ * Check if the registration function is enabled in the settings.json file.
+ * 
+ * @return bool Registration status.
+ */
 function is_registration_enabled()
 {
     try {
@@ -141,7 +195,13 @@ function is_registration_enabled()
     }
 }
 
-// check if login is enabled
+/**
+ * Check if the login form is open.
+ * 
+ * Check if the login function is enabled in the settings.json file.
+ * 
+ * @return bool Login status.
+ */
 function is_login_enabled()
 {
     try {
@@ -153,7 +213,15 @@ function is_login_enabled()
     }
 }
 
-// get link for the challenge from the settings.json
+/**
+ * Get the link to further information for the given challenge.
+ * 
+ * Get the external link for further information on the given challenge from
+ * the settings.json file.
+ * 
+ * @param string $challenge Challenge.
+ * @return string Badge link.
+ */
 function get_challenge_badge_link($challenge)
 {
     try {
@@ -164,7 +232,13 @@ function get_challenge_badge_link($challenge)
     }
 }
 
-// get list of allowed domains for registration from the settings.json
+/**
+ * Get allowed mail domains for the registration.
+ * 
+ * Get the allowed domains for the registration from the settings.json file.
+ * 
+ * @return array List of allowed domains.
+ */
 function get_allowed_domains()
 {
     try {
@@ -175,7 +249,13 @@ function get_allowed_domains()
     }
 }
 
-// get list of blocked usernames for registration from settings.json
+/**
+ * Get blocked user names for the registration.
+ * 
+ * Get the blocked user names for the registration from the settings.json file.
+ * 
+ * @return array List of blocked user names.
+ */
 function get_blocked_usernames()
 {
     try {
@@ -186,14 +266,28 @@ function get_blocked_usernames()
     }
 }
 
-// wrapper function to read in JSON settings
+/**
+ * Read settings from the settings.json file.
+ * 
+ * Wrapper function to read data from the settings.json file.
+ * 
+ * @param string $setting Setting class.
+ * @param string $subsetting Specific setting.
+ * @return mixed Setting value.
+ * @throws Exception If setting type does not match.
+ */
 function get_setting($setting, $subsetting)
 {
     // load path to settings.json
     $file = SETTINGS;
 
     // load settings as assoc array
-    $json = read_json_file($file);
+    try {
+        $json = read_json_file($file);
+    } catch (Exception $e) {
+        display_exception_msg($e, "071");
+        exit();
+    }
 
     // check if setting is correct datatype
     if (in_array($setting, ["login", "registration", "difficulty"], true)) {
@@ -216,14 +310,28 @@ function get_setting($setting, $subsetting)
     return $json[$setting][$subsetting];
 }
 
-// wrapper function to write to JSON settings
+/**
+ * Write settings to the settings.json file.
+ * 
+ * Wrapper function to wirte data to the settings.json file.
+ * 
+ * @param string $setting Setting class.
+ * @param string $subsetting Specific setting.
+ * @param string|bool $newValue New setting value.
+ * @throws Exception If setting type does not match.
+ */
 function set_setting($setting, $subsetting, $newValue)
 {
     // load path to settings.json
     $file = SETTINGS;
 
     // load settings as assoc array
-    $json = read_json_file($file);
+    try {
+        $json = read_json_file($file);
+    } catch (Exception $e) {
+        display_exception_msg($e, "071");
+        exit();
+    }
 
     // check if setting is correct datatype
     if (in_array($setting, ["login", "registration", "difficulty"], true)) {
@@ -247,19 +355,34 @@ function set_setting($setting, $subsetting, $newValue)
     file_put_contents($file, json_encode($json));
 }
 
-// read json file as assoc array
+/**
+ * Read in a given json file.
+ * 
+ * The json file will be read in as an assoc array.
+ * 
+ * @param string $file Path to json file.
+ * @return array JSON data as array.
+ * @throws Exception If file does not exits.
+ */
 function read_json_file($file)
 {
     // read file in
     if (file_exists($file)) {
-        // load settings as assoc array
+        // load content as assoc array
         return json_decode(file_get_contents($file), true);
     } else {
         throw new Exception($file . " could not be opened.");
     }
 }
 
-// remove all unnecessary characters from a given string
+/**
+ * Convert a string to a clean array.
+ * 
+ * Remove all whitespace, coma from a given string and save it as an array.
+ * 
+ * @param string $str Input string.
+ * @return array Clean array.
+ */
 function make_clean_array($str)
 {
     // delete whitespace
@@ -291,4 +414,144 @@ function make_clean_array($str)
 
     // filter empty or false elements from the array
     return array_filter($arr);
+}
+
+/**
+ * Export a given array as a CSV file.
+ * 
+ * Write a given array to a CSV file and set download headers.
+ * 
+ * @param array $array Input array.
+ * @param string $name Name of the CSV file.
+ * @param string $delimiter Character to separat data points.
+ * @param string $replaceCharacter Character to replace occurrences of the 
+ * delimiter in the input array.
+ */
+function export_csv($array, $name, $delimiter = ",", $replaceCharacter = ";")
+{
+    // open file in memory
+    $csv = fopen('php://memory', 'w');
+
+    // iterate through every row of the array
+    foreach ($array as $row) {
+
+        // replace every appearance of the delimiter in the raw data
+        $row = str_replace($delimiter, $replaceCharacter, $row);
+        // make csv
+        fputcsv($csv, $row, $delimiter);
+    }
+    // set pointer to start of file
+    fseek($csv, 0);
+    // set download header
+    header('Content-Type: application/csv');
+    header('Content-Disposition: attachment; filename="' . $name . '";');
+    // pass data to csv
+    fpassthru($csv);
+}
+
+
+/**
+ * Export a given array as a JSON file.
+ * 
+ * Write a given array to a JSON file and set download headers.
+ * 
+ * @param array $array Input array.
+ * @param string $name Name of the JSON file.
+ * @return JSON Output JSON file.  
+ */
+function export_json($array, $name)
+{
+
+    // expects the first row to be header
+    $header = $array[0];
+    // list of all user emails
+    $user = array();
+    // array for ALL user data and challenge status
+    $data = array();
+
+    // iterate given array
+    for ($i = 1; $i < count($array); $i++) {
+
+        // add user to user array
+        array_push($user, $array[$i][0]);
+
+        // get every row without first element (email)
+        $row = array_slice($array[$i], 1, count($array[$i]));
+
+        // combine rows with header
+        $assoc_row = array_combine(array_slice($header, 1, count($header)), $row);
+
+        // add combined row to user data
+        array_push($data, $assoc_row);
+    }
+
+    // combine user data with user email
+    $result = array_combine($user, $data);
+
+    // set download header
+    header("Content-type: application/json");
+    header("Content-disposition: attachment; filename=" . $name);
+
+    // convert array to json
+    return json_encode($result);;
+}
+
+/**
+ * Get the size of a given file.
+ * 
+ * Get the size of a give file in KB.
+ * 
+ * @param string $file Path to input file.
+ * @param string $unit Unit of for the file size.
+ * @return int File size. 
+ * @throws Exception If file does not exits.
+ */
+function get_file_size($file, $unit = "kb")
+{
+    // check path to file
+    if (file_exists($file)) {
+
+        if (strtolower($unit) == "kb") {
+
+            // return file size rounded to whole kilo bytes
+            return round((filesize($file) / 1024), 0);
+        } else if (strtolower($unit) == "mb") {
+
+            // return file size rounded to whole mega bytes
+            return round((filesize($file) / 1024 / 1024), 0);
+        } else {
+
+            // return file size in bytes
+            return filesize($file);
+        }
+    } else {
+        throw new Exception($file . " not found.");
+    }
+}
+
+/**
+ * Get the user name.
+ * 
+ * Get the corresponding user name for a given mail address.
+ * 
+ * @param string $mail User mail address.
+ * @return string User name.
+ */
+function get_user_name($mail)
+{
+
+    $sql = "SELECT `user_name` FROM `users` WHERE `user_wwu_email` = :mail";
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([
+            "mail" => $mail
+        ]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        display_exception_msg($e, "128");
+        exit();
+    }
+
+    return $result['user_name'];
 }

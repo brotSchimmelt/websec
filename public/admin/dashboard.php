@@ -42,10 +42,13 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>Admin | Dashboard</title>
 </head>
@@ -76,10 +79,10 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 <div class="card-header">
                                     <h5 class="display-5">Number of Registered Students</h5>
                                 </div>
-                                <div class="card-body">
-                                    <p><strong><?= $numOfStudents ?></strong> registered students</p>
-                                    <p><strong><?= get_num_of_unlocked_students() ?></strong> unlocked students</p>
-                                    <p><strong><?= get_num_of_admins() ?></strong> admin users</p>
+                                <div class="card-body lead">
+                                    <p><strong class="mr-3 text-info"><?= $numOfStudents ?></strong> registered students</p>
+                                    <p><strong class="mr-3 text-info"><?= get_num_of_unlocked_students() ?></strong> unlocked students</p>
+                                    <p><strong class="mr-3 text-info"><?= get_num_of_admins() ?></strong> admin users</p>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +91,7 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 <div class="card-header">
                                     <h5 class="display-5">Total Progress of All Registered Students</h5>
                                 </div>
-                                <div class="card-body"><strong><?= get_total_progress($numOfStudents, 4) . "%" ?></strong>
+                                <div class="card-body lead"><strong class="mr-3 text-info"><?= get_total_progress($numOfStudents, 4) . "%" ?></strong>
                                     of all challenges solved
                                 </div>
                             </div>
@@ -98,10 +101,10 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 <div class="card-header">
                                     <h5 class="display-5">Global Settings</h5>
                                 </div>
-                                <div class="card-body">
-                                    Level of difficulty: <strong><?= get_global_difficulty() ?></strong><br>
-                                    Registration is currently: <strong><?= $registrationStatus ?></strong><br>
-                                    Login is currently: <strong><?= $loginStatus ?></strong>
+                                <div class="card-body lead">
+                                    Level of difficulty: <strong class="ml-3 text-info"><?= get_global_difficulty() ?></strong><br>
+                                    Registration is currently: <strong class="ml-3 text-info"><?= $registrationStatus ?></strong><br>
+                                    Login is currently: <strong class="ml-3 text-info"><?= $loginStatus ?></strong>
                                 </div>
                             </div>
                         </div>
@@ -111,27 +114,29 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header">
-                                    <h5 class="display-5">List of All Students That Need to Solve at Least One Remaining Challenge</h5>
+                                    <h5 class="display-5">List of All Users That Need to Solve at Least One Remaining Challenge</h5>
                                 </div>
                                 <div class="card-body">
-                                    <input type="checkbox" class="tablefilter" name="is-admin" id="is-admin" unchecked />
-                                    <label for="is-admin" id="checkbox-admin-label">Hide Admin User</label>
-                                    <table class="table table-bordered table-striped filteredtable">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Pos.</strong></td>
-                                                <td><strong>Username</strong></td>
-                                                <td><strong>Mail</strong> <i>(with mailto link)</i></td>
-                                                <td><strong>Open Challenges</strong></td>
-                                                <td><strong>Admin</strong></td>
-                                                <td><strong>Unlocked</strong></td>
-                                                <td><strong>Last Activity</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php show_students_with_open_challenges() ?>
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <input type="checkbox" class="tablefilter" name="is-admin" id="is-admin" unchecked />
+                                        <label for="is-admin" id="checkbox-admin-label">Hide Admin User</label>
+                                        <table class="table table-bordered table-striped filteredtable">
+                                            <thead>
+                                                <tr>
+                                                    <td><strong>Pos.</strong></td>
+                                                    <td><strong>Username</strong></td>
+                                                    <td><strong>Mail</strong> <i>(with mailto link)</i></td>
+                                                    <td><strong>Open Challenges</strong></td>
+                                                    <td><strong>Admin</strong></td>
+                                                    <td><strong>Unlocked</strong></td>
+                                                    <td><strong>Last Activity</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php show_students_with_open_challenges() ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <small>The <strong>*</strong> indicates that a post request was made in the CSRF challenge, but the referrer does not match.</small>
                                 </div>
                             </div>

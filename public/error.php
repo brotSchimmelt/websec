@@ -1,5 +1,7 @@
 <?php
 
+$mainPage = "/index.php";
+
 if (isset($_GET['error']) && !empty($_GET['error'])) {
 
     $error = (string)$_GET['error'];
@@ -65,10 +67,13 @@ if (isset($_GET['error']) && !empty($_GET['error'])) {
     <title><?= $title ?></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/vendor/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../assets/css/doc.css" rel="stylesheet">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 </head>
 
 <body>
@@ -85,7 +90,15 @@ if (isset($_GET['error']) && !empty($_GET['error'])) {
     <div class="container text-center">
         <?= $msg ?>
         <br><br>
-        <a href="<?= $link ?>" target="_blank">More Information</a>
+        <div class="row">
+            <div class="col text-right">
+                <a href="<?= $mainPage ?>" target="_blank">Go Back</a>
+            </div>
+            <div class="col text-left">
+                <a href="<?= $link ?>" target="_blank">More Information</a>
+            </div>
+        </div>
+
     </div>
 </body>
 

@@ -1,6 +1,18 @@
 <?php
 
-// get error or success GET variables
+/**
+ * This file contains all functions that are relevant for the error handling and
+ * the display of error messages.
+ */
+
+/** 
+ * Get error or success message.
+ * 
+ * The function returns either a success message, an error message or an empty 
+ * string depending on the given GET variables.
+ * 
+ * @return string Message.
+ */
 function get_message()
 {
     // Check if success is set
@@ -32,7 +44,14 @@ function get_message()
     }
 }
 
-// return success message to given success type
+/**
+ * Get success message.
+ * 
+ * This functions returns a success message for a given message code.
+ * 
+ * @param string $success Message code.
+ * @return string Success message.
+ */
 function get_success_msg($success)
 {
     $msgType = "success";
@@ -67,7 +86,16 @@ function get_success_msg($success)
     }
 }
 
-// return error message to given error type
+/**
+ * Get error message.
+ * 
+ * This functions returns an error message and an custom error code for a given 
+ * message code.
+ * 
+ * @param string $error Message code.
+ * @param string $errorCode Custom error code.
+ * @return string Error message.
+ */
 function get_error_msg($error, $errorCode)
 {
     $msgType = "error";
@@ -98,7 +126,7 @@ function get_error_msg($error, $errorCode)
         case "invalidUsername":
             $msg = "It seems like your user name does not fulfill ";
             $msg .= "the requirements. Please use only letters and numbers ";
-            $msg .= "and 2 to 64 characters.";
+            $msg .= "and 2 to 24 characters.";
             return format_msg($msg, $msgType);
             break;
         case "invalidMailFormat":
@@ -131,6 +159,12 @@ function get_error_msg($error, $errorCode)
             $msg .= '<a href="password_reset.php">here</a>.';
             return format_msg($msg, $msgType);
             break;
+        case "doubleEntry":
+            $msg = "It seems like the state of the database is corrupted. "
+                . "Please report this error in the Learnweb forum! "
+                . "\n<b>Code: 126</b>";
+            return format_msg($msg, $msgType);
+            break;
         case "invalidToken":
             $msg = "Sorry, it seems like your reset link is not working. ";
             $msg .= "Please request a ";
@@ -154,7 +188,15 @@ function get_error_msg($error, $errorCode)
     }
 }
 
-// format user message
+/**
+ * Format a given message based on the given message type.
+ * 
+ * Format a message either as success or error message.
+ * 
+ * @param string $msgString Message body.
+ * @param string $msgType Message type.
+ * @return string Formatted message.
+ */
 function format_msg($msgString, $msgType)
 {
 
@@ -172,11 +214,19 @@ function format_msg($msgString, $msgType)
     }
 }
 
-// display and format exception messages
+/**
+ * Display exception message and error.
+ * 
+ * Display a caught exception, its message, the trace, the file and the line.
+ * 
+ * @param string $exception Exception message.
+ * @param string $errorCode Custom error code.
+ * @param string $note Optional note.
+ */
 function display_exception_msg($exception, $errorCode = null, $note = null)
 {
     // html for the error page
-    include(INCL . "error_page.php");
+    include(INCL . "util_error_page.php");
 
     // default message
     if (is_null($exception) || !($exception instanceof Exception)) {
@@ -215,11 +265,17 @@ function display_exception_msg($exception, $errorCode = null, $note = null)
     echo "</div></body></html>";
 }
 
-
+/**
+ * Display warning message.
+ * 
+ * Display a caught warning and its message.
+ * 
+ * @param string $msg Message body.
+ */
 function display_warning_msg($msg)
 {
     // html for the error page
-    include(INCL . "error_page.php");
+    include(INCL . "util_error_page.php");
 
     // start container
     echo '<div class="container text-center">';

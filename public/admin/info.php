@@ -40,13 +40,17 @@ $numOfStudents = get_num_of_students();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
 
     <title>Admin | Dashboard</title>
 
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
+    <!-- Additional Scripts for iframe -->
     <script>
         // source: https://www.sitepoint.com/community/t/auto-height-iframe-content-script/67843/4
         function resizeIframe(obj) {

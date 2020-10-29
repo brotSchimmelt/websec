@@ -46,7 +46,7 @@ $allChallengesSolved = ($solvedXSS && $solvedStoredXSS && $solvedSQLi
 
 // challenge status for the user
 $echoGreen = '<span style="color:green;">Solved</span>';
-$echoRed = '<span style="color:red;">Stil Open</span>';
+$echoRed = '<span style="color:red;">Still Open</span>';
 $echoOrange = '<span style="color:orange;">Probably Solved</span>';
 
 ?>
@@ -59,12 +59,15 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
 
-    <title>Websec | Scoreboard</title>
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+
+    <title>Websec | Scorecard</title>
 </head>
 
 <body>
@@ -78,14 +81,15 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
 
 
     <!-- HTML Content BEGIN -->
-    <div class="con-search">
+    <div class="page-container">
         <h1 class="display-4">Your Scorecard</h1>
+        <hr>
         <br>
-        <p>This scorecard is just an <em>indicator</em> of your challenges' status!<br>
+        <p class="lead">This scorecard is just an <em>indicator</em> of your challenges' status!<br>
             The final judgement whether or not a challenge was solved correctly is done by your lecturer.</p>
         <br>
 
-        <?= $allChallengesSolved ? $alertScoreboardAllSolved : "" ?>
+        <?= $allChallengesSolved ? $alertscorecardAllSolved : "" ?>
 
         <table class="table table-striped shadow">
             <thead class="my-head">

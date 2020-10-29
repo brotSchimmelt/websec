@@ -32,7 +32,6 @@ if (!is_user_unlocked()) {
 // local variables
 $userName = $_SESSION['userName'];
 $thisPage = basename(__FILE__);
-$productsPerRow = 3;
 $searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
 $challengeFailed = false;
 $solved = false;
@@ -45,16 +44,25 @@ if (isset($_GET['xss'])) {
     $searchTerm = filter_input(INPUT_GET, 'xss', FILTER_SANITIZE_SPECIAL_CHARS);
     $rawSearchTerm = $_GET['xss'];
 
+    // write search term to challenge input JSON file
+    write_to_challenge_json(
+        $userName,
+        $_SESSION['userMail'],
+        "reflective_xss",
+        $rawSearchTerm
+    );
+
     if ($difficulty == "hard") {
-        // filter all '<script>' tags (case insensitive)
-        // solution for all tested browsers: <img src="" onerror=javascript:alert(document.cookie)>
-        $rawSearchTerm = str_ireplace("<script>", "", $rawSearchTerm);
+        // filter all '<script>' tags (case sensitive)
+        // filter only '<script>' and '<SCRIPT>' tags
+        // Solution for all browsers: <ScRiPt>alert(document.cookie)</ScRiPt>
+        $rawSearchTerm = str_replace("<script>", "", $rawSearchTerm);
+        $rawSearchTerm = str_replace("<SCRIPT>", "", $rawSearchTerm);
 
         /*
-        * Alternative: filter only '<script>' and '<SCRIPT>' tags
-        * str_replace("<script>","", $rawSearchTerm)
-        * str_replace("<SCRIPT>","", $rawSearchTerm)
-        * Solution for all browsers: <ScRiPt>alert(document.cookie)</ScRiPt>
+        * Alternative: filter all '<script>' tags (case insensitive)
+        * stri_replace("<script>","", $rawSearchTerm)
+        * Solution for all tested browsers: <img src="" onerror=javascript:alert(document.cookie)>
         */
     }
 }
@@ -69,7 +77,11 @@ if (isset($_POST['xss-cookie'])) {
         // set challenge to solved
         set_challenge_status("reflective_xss", $userName);
 
+        // get last user input for the challenge
+        $solutionInput = get_last_challenge_input($userName, "reflective_xss");
 
+        // write input to solution database
+        save_challenge_solution($userName, $solutionInput, "reflective_xss");
 
         // show success modal!
         $showSuccessModal = true;
@@ -102,13 +114,13 @@ if (isset($_POST['add-preview'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/shop.css">
-    <link rel="stylesheet" href="/assets/css/card.css">
 
-
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>Websec | Overview</title>
 </head>
@@ -136,29 +148,44 @@ if (isset($_POST['add-preview'])) {
     <?php endif; ?>
 
     <!-- Search form -->
-    <div class="con-center con-search">
-        <h2 class="display-4">Product Search</h2>
-        <form action="<?= $thisPage ?>" method="get">
-            <input class="form-control" type="text" name="xss" placeholder="Search for Products" aria-label="Search" autofocus <?= $solved ? "disabled" : "" ?>>
-            <?= $solved ? $alertProductSearch : "" ?>
-        </form>
+    <div class="page-center page-container">
+        <!-- <h2 class="display-4">Product Search</h2> -->
+        <div class="search-bar-flat-container row justify-content-center">
+            <form action="<?= $thisPage ?>" method="get">
+                <div class="search-bar-flat-inner">
+                    <div class="flat-search">
+                        <div class="custom-input-field">
+                            <input class="form-control" type="text" name="xss" placeholder="Search for Products" aria-label="Search" autofocus>
+                            <div class="icon-wrap">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
         <?php if ($searchFieldWasUsed) : ?>
             <p>You searched for <strong><?= $rawSearchTerm ?></strong></p>
         <?php endif; ?>
     </div>
 
+
     <?php if ($searchFieldWasUsed) : ?>
 
         <!-- Search Results -->
         <section id="search-results">
-            <?php show_search_results($searchTerm, $productsPerRow) ?>
+            <?php show_search_results($searchTerm) ?>
         </section>
 
     <?php else : ?>
 
         <!-- Product previews -->
         <section id="products">
-            <?php show_products($productsPerRow) ?>
+            <?php show_products() ?>
         </section>
     <?php endif; ?>
     <!-- Page Content END -->
@@ -171,6 +198,17 @@ if (isset($_POST['add-preview'])) {
     require_once(JS_SHOP); // Custom JavaScript
     ?>
     <!-- JavaScript END -->
+
+    <script type="text/javascript" src="../assets/js/csrf.js"></script>
+    <div>
+        <?php
+        echo $modalSuccessCSRFWrongReferrer;
+        echo $modalInfoCSRFAlreadyPosted;
+        echo $modalErrorCSRFUserMismatch;
+        echo $modalSuccessCSRFWrongMessage;
+        echo $modalSuccessCSRF;
+        ?>
+    </div>
 </body>
 
 </html>

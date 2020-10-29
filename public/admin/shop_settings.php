@@ -52,10 +52,12 @@ if (isset($_POST['update-domains'])) {
     set_allowed_domains($domainList);
 }
 if (isset($_POST['update-badge'])) {
-    $reflectiveXSS = (filter_var($_POST['input-reflective-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-reflective-xss'] : "https://en.wikipedia.org/wiki/Cross-site_scripting#Non-persistent_(reflected)";
-    $storedXSS = (filter_var($_POST['input-stored-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-stored-xss'] : "https://en.wikipedia.org/wiki/Cross-site_scripting#Persistent_(or_stored)";
-    $sqli = (filter_var($_POST['input-sqli'], FILTER_VALIDATE_URL)) ? $_POST['input-sqli'] : "https://en.wikipedia.org/wiki/SQL_injection";
-    $csrf = (filter_var($_POST['input-csrf'], FILTER_VALIDATE_URL)) ? $_POST['input-csrf'] : "https://en.wikipedia.org/wiki/Cross-site_request_forgery";
+    $learnweb = (filter_var($_POST['input-learnweb'], FILTER_VALIDATE_URL)) ? $_POST['input-learnweb'] : "https://www.uni-muenster.de/LearnWeb/learnweb2/";
+    $reflectiveXSS = (filter_var($_POST['input-reflective-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-reflective-xss'] : get_setting("learnweb", "link");
+    $storedXSS = (filter_var($_POST['input-stored-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-stored-xss'] : get_setting("learnweb", "link");
+    $sqli = (filter_var($_POST['input-sqli'], FILTER_VALIDATE_URL)) ? $_POST['input-sqli'] : get_setting("learnweb", "link");
+    $csrf = (filter_var($_POST['input-csrf'], FILTER_VALIDATE_URL)) ? $_POST['input-csrf'] : get_setting("learnweb", "link");
+    set_setting("learnweb", "link", $learnweb);
     set_badge_link("reflective_xss", $reflectiveXSS);
     set_badge_link("stored_xss", $storedXSS);
     set_badge_link("sqli", $sqli);
@@ -75,10 +77,13 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.css">
 
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
+
+    <!-- Link to favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
 
     <title>Admin | Shop Settings</title>
 </head>
@@ -110,7 +115,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <h5 class="display-5">Login / Registration</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p class="lead">
                                         Here you can disable or enable the user login and registration system.
                                         The users will be redirected to an error page with an appropriated message.
                                     </p>
@@ -163,7 +168,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <h5 class="display-5">Level of Difficulty</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p class="lead">
                                         Here you can set the global difficulty for the challenges.<br>
                                     </p>
                                     <div class="row">
@@ -203,7 +208,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <h5 class="display-5">Blocked Usernames and Allowed Mail Addresses</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p class="lead">
                                         Here are all usernames that are blocked during registration. You can add new ones by appending them in the field below. The names will be processed case insensitive.
                                     </p>
                                     <div class="text-center">
@@ -215,7 +220,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                         </form>
                                     </div>
                                     <br><br>
-                                    <p>
+                                    <p class="lead">
                                         This list contains all domains that are allowed for the mail addresses during registration. You can add new ones by appending them in the field below.
                                     </p>
                                     <div class="text-center">
@@ -239,11 +244,14 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <h5 class="display-5">Badge Links</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>
-                                        Here you can set the links for the challenge badges. By default the links are set to the corresponding wikipedia articles.
+                                    <p class="lead">
+                                        Here you can set the links for the challenge badges and the current learnweb course. By default the links are set to the corresponding learnweb course page.
+                                        Please remember to put <b class="text-info">http</b> or <b class="text-info">https</b> in front of the link.
                                     </p>
                                     <br>
                                     <form action="shop_settings.php" method="post">
+                                        <label for="input-learnweb"><strong>Link Current Learnweb Course:</strong></label>
+                                        <input type="text" class="form-control" name="input-learnweb" value="<?= get_setting("learnweb", "link") ?>"><br>
                                         <label for="input-reflective-xss"><strong>Link Reflective XSS:</strong></label>
                                         <input type="text" class="form-control" name="input-reflective-xss" value="<?= get_challenge_badge_link("reflective_xss") ?>"><br>
                                         <label for="input-stored-xss"><strong>Link Stored XSS:</strong></label>
