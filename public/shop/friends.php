@@ -1,22 +1,20 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
 require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -27,10 +25,10 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Variables
+// variables
 $solved = lookup_challenge_status("sqli", $_SESSION['userName']);
 $difficulty = get_global_difficulty();
-
+$thisPage = basename(__FILE__);
 ?>
 <!doctype html>
 <html lang="en">
@@ -55,9 +53,9 @@ $difficulty = get_global_difficulty();
 <body>
 
     <?php
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
 
@@ -72,7 +70,6 @@ $difficulty = get_global_difficulty();
             <?php endif; ?>
             <div class="container" id="header-container">
 
-
                 <!-- SEARCH BAR -->
                 <div class="search-bar-flat-container row justify-content-center" id="friend-search">
                     <h2 class="display-4 mt-4">Find Your Friends</h2>
@@ -80,7 +77,7 @@ $difficulty = get_global_difficulty();
                         You are looking for the perfect present and want to know what your friends have on their wishlist?<br>
                         No Problemo! Just use our absolutely privacy conform search form.
                     </p>
-                    <form action="friends.php" method="post" class="mt-5">
+                    <form action="<?= $thisPage ?>" method="post" class="mt-5">
                         <div class="search-bar-flat-inner">
                             <div class="flat-search">
                                 <div class="custom-input-field">
@@ -100,10 +97,8 @@ $difficulty = get_global_difficulty();
                     <small><strong>Info:</strong> We value our users' privacy.
                         If you entered a username in the search field and there is no corresponding user then nothing is displayed.
                     </small>
-
-
                 </div>
-                <!-- SEARCH BAR -->
+                <!-- SEARCH BAR END -->
 
             </div>
         </div>
@@ -114,7 +109,7 @@ $difficulty = get_global_difficulty();
 
         $searchTerm = $_POST['sqli'];
 
-        // write SQLi Query to challenge input JSON file
+        // write SQLi query to challenge input JSON file
         write_to_challenge_json(
             $_SESSION['userName'],
             $_SESSION['userMail'],
@@ -123,6 +118,7 @@ $difficulty = get_global_difficulty();
         );
 
         try {
+            // query SQLite database and fetch the challenge result
             $queryResultModal = query_sqli_db($searchTerm);
         } catch (Exception $e) {
             display_exception_msg($e, "054");
@@ -133,16 +129,17 @@ $difficulty = get_global_difficulty();
     <!-- HTML Content END -->
 
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
     ?>
 
     <script type="text/javascript" src="../assets/js/csrf.js"></script>
     <div>
         <?php
+        // load modals for CSRF challenge
         echo $modalSuccessCSRFWrongReferrer;
         echo $modalInfoCSRFAlreadyPosted;
         echo $modalErrorCSRFUserMismatch;

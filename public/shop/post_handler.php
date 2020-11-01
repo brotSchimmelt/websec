@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // needs to be called first on every page
 
 /*
 * check if user exploited the comment field and showed the 'payload' as alert(),
@@ -11,7 +11,10 @@ if (isset($_POST['storedXSSMessage'])) {
     if (isset($_COOKIE['XSS_STOLEN_SESSION'])) {
 
         // suppress alert() if user has already seen 'welcome back' modal
-        if (isset($_SESSION['showStoredXSSModal']) && $_SESSION['showStoredXSSModal'] == 1) {
+        if (
+            isset($_SESSION['showStoredXSSModal'])
+            && $_SESSION['showStoredXSSModal'] == 1
+        ) {
             // echo is the preferred way to return a response to a $.post()
             // request
             echo 0;
@@ -35,8 +38,8 @@ if (isset($_POST['storedXSSMessage'])) {
             $msg = "Your attack worked! You obtained 1 stolen session cookie "
                 . "from an unsuspecting victim.\n\nXSS_STOLEN_SESSION="
                 . $_SESSION['storedXSS'] . "\n\nYou can now set the cookie and "
-                . "effectively steal the session of the victim by pressing 'OK' "
-                . "or come back later!";
+                . "effectively steal the session of the victim by pressing "
+                . "'OK' or come back later!";
 
             // return success message
             echo $msg;
@@ -47,7 +50,7 @@ if (isset($_POST['storedXSSMessage'])) {
     }
 }
 
-
+// check if CSRF has been solved
 if (isset($_POST['checkCSRF'])) {
 
     if (isset($_SESSION['csrfResult'])) {

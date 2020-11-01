@@ -1,27 +1,27 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_LOGIN);
 require(FUNC_SHOP);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
+
+// load user messages
 require(MESSAGES);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// variables
 $username = $_SESSION['userName'];
 $num = get_number_of_cart_items();
 $thisPage = basename(__FILE__);
@@ -29,6 +29,13 @@ $thisPage = basename(__FILE__);
 // check if user read the instructions
 if (isset($_POST['unlock-submit'])) {
     unlock_user($username);
+}
+
+// check if user is unlocked
+if (!is_user_unlocked()) {
+    $notUnlocked = true;
+} else {
+    $notUnlocked = false;
 }
 ?>
 <!doctype html>
@@ -53,17 +60,8 @@ if (isset($_POST['unlock-submit'])) {
 
 <body>
     <?php
-    // Load navbar
+    // load navbar
     require_once(HEADER_SHOP);
-    // // Load error messages, user notifications etc.
-    // require(MESSAGES);
-
-    // check if user is unlocked
-    if (!is_user_unlocked()) {
-        $unlocked = true;
-    } else {
-        $unlocked = false;
-    }
 
     // check if administrator has to change default password
     if ($_SESSION['pwdChangeReminder']) {
@@ -159,7 +157,6 @@ if (isset($_POST['unlock-submit'])) {
         </div>
     </section>
 
-
     <!-- Container 3 Friends Cover-->
     <section id="container-3">
         <div class="dark-overlay-friends">
@@ -181,7 +178,6 @@ if (isset($_POST['unlock-submit'])) {
             </div>
         </div>
     </section>
-
 
     <!-- Container 4 Friends Text-->
     <section id="container-4" class="text-muted py-5">
@@ -218,7 +214,6 @@ if (isset($_POST['unlock-submit'])) {
         </div>
     </section>
 
-
     <!-- Container 5 Contact Cover-->
     <section id="container-5">
         <div class="container">
@@ -246,7 +241,6 @@ if (isset($_POST['unlock-submit'])) {
                 <div class="col-md-6">
                     <img class="img-fluid mb-3 rounded-circle" src="../assets/img/question.jpg" alt="contact">
                 </div>
-
                 <div class="col-md-6">
                     <h3 class="green">Headline about the support</h3>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum impedit tempora cumque non corrupti fuga quibusdam numquam laudantium similique natus consequuntur consectetur quo qui officia in, modi dolores expedita saepe?</p>
@@ -293,7 +287,7 @@ if (isset($_POST['unlock-submit'])) {
                     </div>
                     <div class="text-center justify-content-center">
                         <br>
-                        <form class="form-signin" action="main.php" method="post">
+                        <form class="form-signin" action="<?= $thisPage ?>" method="post">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="check" name="check" required>
                                 <label class="form-check-label" for="check">I've read the instructions!</label>
@@ -308,12 +302,12 @@ if (isset($_POST['unlock-submit'])) {
     </div>
 
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
-    if ($unlocked) {
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
+    if ($notUnlocked) {
         echo "<script>$('#greeting').modal('show')</script>";
     }
 

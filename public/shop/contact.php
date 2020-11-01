@@ -1,23 +1,21 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP);
 require_once(CONF_DB_LOGIN);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
 require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -27,12 +25,18 @@ if (!is_user_unlocked()) {
     header("location: " . MAIN_PAGE);
     exit();
 }
+
+// variables
 $difficulty = get_global_difficulty();
+$thisPage = basename(__FILE__);
 
-// check if post was made and contact field still open
-if (isset($_POST['uname']) && isset($_POST['userPost']) && !lookup_challenge_status("csrf", $_SESSION['userName'])) {
+// check if post was made and if challenge is unsolved
+if (
+    isset($_POST['uname']) && isset($_POST['userPost'])
+    && !lookup_challenge_status("csrf", $_SESSION['userName'])
+) {
 
-    // write post to challenge input JSON file
+    // write post message to challenge input JSON file
     write_to_challenge_json(
         $_SESSION['userName'],
         $_SESSION['userMail'],
@@ -44,17 +48,19 @@ if (isset($_POST['uname']) && isset($_POST['userPost']) && !lookup_challenge_sta
     $uname = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_SPECIAL_CHARS);
     $userPost = filter_input(INPUT_POST, 'userPost', FILTER_SANITIZE_SPECIAL_CHARS);
 
+    // check CSRF token on 'hard'
     if ($difficulty == "hard") {
         $userTokenCSRF = filter_input(INPUT_POST, 'utoken', FILTER_SANITIZE_SPECIAL_CHARS);
     } else {
         $userTokenCSRF = 1;
     }
 
+    // set result
     $_SESSION['csrfResult'] = process_csrf($uname, $userPost, $_SESSION['userName'], $userTokenCSRF);
 }
+
 // check if challenge was solved
 $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -73,15 +79,12 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
 </head>
 
 <body>
-
     <?php
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
-
-
 
     <?php if (!$solved) : ?>
         <a href="<?= get_challenge_badge_link('csrf') ?>" class="badge badge-pill badge-warning shadow-sm" target="_blank">CSRF</a>
@@ -95,19 +98,16 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
         <div class="col-xl-4 col-lg-8 col-md-9 col-sm-10 col-xs-11">
             <!-- deeper ... -->
             <div class="jumbotron bg-light-grey shadow">
-
                 <h1 class="display-5 text-center">Contact Form</h1>
                 <p class="text-center text-muted">We'll never share your personal information. Ever!</p>
-
                 <?= $solved ? $alertContactField : $alertContactFieldClosed ?>
-
-                <!-- CHALLENGE: Here is the form for the contact form challenge -->
-                <form action="contact.php" method="post" id="reviewform">
-                    <!-- Comment field -->
+                <!-- CHALLENGE: This is the form for the contact form challenge -->
+                <form action="<?= $thisPage ?>" method="post" id="reviewform">
+                    <!-- Comment field ... -->
                     <div class="row">
-                        <!-- Comment field -->
+                        <!-- Comment field ... -->
                         <div class="col">
-                            <!-- Comment field -->
+                            <!-- Comment field! -->
                             <div class="form-group fl_icon">
                                 <div class="icon">
                                     <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -152,16 +152,17 @@ $solved = lookup_challenge_status("csrf", $_SESSION['userName']);
     </div>
 
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
     ?>
 
     <script type="text/javascript" src="../assets/js/csrf.js"></script>
     <div>
         <?php
+        // load modals for CSRF challenge
         echo $modalSuccessCSRFWrongReferrer;
         echo $modalInfoCSRFAlreadyPosted;
         echo $modalErrorCSRFUserMismatch;
