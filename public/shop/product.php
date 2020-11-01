@@ -209,11 +209,11 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     }
     ?>
     <!-- CHALLENGE: Here begins the form -->
-    <div class="row justify-content-center mt-5" id="comment-section">
+    <div class="row justify-content-center mt-5" id="commentSection">
         <!-- deeper ... -->
         <div class="col-xl-4 col-lg-6 col-md-auto">
             <!-- deeper ... -->
-            <div class="be-comment-block">
+            <div class="new-comment-block">
                 <!-- here you go! -->
                 <form class="form-block" action="<?= $thisPage ?>" method="post" id="CSRForm">
                     <h4 class="display-5 mb-4">Write Your Own Comment</h4>
@@ -267,7 +267,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-auto">
-            <div class="be-comment-block">
+            <div class="new-comment-block">
                 <?php
                 show_xss_comments();
                 ?>

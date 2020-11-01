@@ -61,14 +61,14 @@ $thisPage = basename(__FILE__);
 
 
     <!-- HTML Content BEGIN -->
-    <header id="main-header-sqli" class="shadow">
+    <header id="mainHeaderSqli" class="shadow">
         <div class="dark-overlay-sqli">
             <?php if (!$solved) : ?>
                 <a href="<?= get_challenge_badge_link('sqli') ?>" class="badge badge-pill badge-warning shadow-sm" target="_blank">SQL Injection</a>
             <?php else : ?>
                 <a href=<?= SCORE ?> class="badge badge-pill badge-success shadow-sm">SQL Injection</a>
             <?php endif; ?>
-            <div class="container" id="header-container">
+            <div class="container" id="headerContainer">
 
                 <!-- SEARCH BAR -->
                 <div class="search-bar-flat-container row justify-content-center" id="friend-search">

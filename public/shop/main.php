@@ -68,10 +68,10 @@ if (!is_user_unlocked()) {
         echo $changeDefaultPwdReminder;
     }
     ?>
-    <header id="main-header">
+    <header id="mainHeader">
         <div class="dark-overlay">
-            <div id="home-inner">
-                <div class="container" id="header-container">
+            <div id="homeInner">
+                <div class="container" id="headerContainer">
                     <div class="row">
                         <div class="col-lg-8">
                             <h1 class="display-4">Web Security Merch Shop</h1>
@@ -122,7 +122,7 @@ if (!is_user_unlocked()) {
     </header>
 
     <!-- Container 2 Product Text-->
-    <section id="container-2" class="text-muted py-5">
+    <section id="container2" class="text-muted py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -158,7 +158,7 @@ if (!is_user_unlocked()) {
     </section>
 
     <!-- Container 3 Friends Cover-->
-    <section id="container-3">
+    <section id="container3">
         <div class="dark-overlay-friends">
             <div class="container">
                 <div class="row">
@@ -180,7 +180,7 @@ if (!is_user_unlocked()) {
     </section>
 
     <!-- Container 4 Friends Text-->
-    <section id="container-4" class="text-muted py-5">
+    <section id="container4" class="text-muted py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -215,7 +215,7 @@ if (!is_user_unlocked()) {
     </section>
 
     <!-- Container 5 Contact Cover-->
-    <section id="container-5">
+    <section id="container5">
         <div class="container">
             <div class="row">
                 <div class="col text-center">
@@ -235,7 +235,7 @@ if (!is_user_unlocked()) {
     </section>
 
     <!-- Container 6 Contact Text-->
-    <section id="container-6" class="text-muted py-5">
+    <section id="container6" class="text-muted py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">

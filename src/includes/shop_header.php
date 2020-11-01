@@ -50,7 +50,7 @@ $color = ($sqliSolved) ? "rgba(145, 174, 100, 1)" : "rgba(46, 109, 134, 1)";
     }
 </style>
 
-<nav class="navbar navbar-expand-md site-header sticky-top py-1" id="main-navbar">
+<nav class="navbar navbar-expand-md site-header sticky-top py-1" id="mainNavbar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-shop" aria-controls="navbar-shop" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">
             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-list text-white pb-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
