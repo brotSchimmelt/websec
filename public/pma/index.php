@@ -5,7 +5,7 @@ session_start(); // needs to be called first on every page
 /**
  * Check if the user has permission or the token to access phpMyAdmin.
  * This option is only available if phpMyAdmin and apache are installed in the 
- * same docker container. Otherwise, access phpMyAdmin via the the open port.
+ * same docker container. Otherwise, access phpMyAdmin via the open port.
  */
 
 

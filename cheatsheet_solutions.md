@@ -2,7 +2,7 @@
 
 This is a short cheat sheet for the challenge solutions.
 
-## Normal Difficulty
+## NORMAL Difficulty
 
 ### Reflective XSS:
 
