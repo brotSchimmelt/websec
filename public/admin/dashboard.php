@@ -112,8 +112,8 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <input type="checkbox" class="tablefilter" name="is-admin" id="is-admin" unchecked />
-                                        <label for="is-admin" id="checkbox-admin-label">Hide Admin User</label>
+                                        <input type="checkbox" class="tablefilter" name="is-admin" id="isAdmin" unchecked />
+                                        <label for="is-admin" id="checkboxAdminLabel">Hide Admin User</label>
                                         <table class="table table-bordered table-striped filteredtable">
                                             <thead>
                                                 <tr>

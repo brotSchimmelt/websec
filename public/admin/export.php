@@ -89,7 +89,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name for sidebar h
                         <?php show_solved_challenges() ?>
                     </tbody>
                 </table>
-                <p id="export-table-bottom">
+                <p id="exportTableBottom">
                     <small>
                         The <strong>*</strong> indicates that a post request was made in the CSRF challenge, but the referrer does not match.
                     </small>
