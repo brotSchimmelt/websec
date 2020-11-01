@@ -6,7 +6,7 @@ This directory contains all user SQLite databases for the SQL injection challeng
 
 The databases are created during the registration process with the ```create_sqli_db($username, $mail)``` function in **src/websec_functions.php**.
 
-On **normal** difficulty the databases are initialized with one table *('users')* that stores username, password, email, whish list and user_status for every entry. The database is filled with a set of fake users and an entry for the student himself. The password that is displayed for the student is a random string, not related to the actual password hash stored in the 'real' MySQL login database.
+On **normal** difficulty the databases are initialized with one table *('users')* that stores user name, password, email, whish list and user status for every entry. The database is filled with a set of fake users and an entry for the student himself. The password that is displayed for the student is a random string, not related to the actual password hash stored in the 'real' MySQL login database.
 
 ```php
 <?php
@@ -79,12 +79,12 @@ $database->exec("INSERT INTO premium_users (username,status) "
 ?>
 ```
 
-Furthermore, the databases contain a fake token on **hard** difficulty that is needed for the CSRF challenge.
+Furthermore, the databases contain a fake token on **hard** difficulty that is needed to solve the the CSRF challenge.
 
 ## Reset
-The student can choose to reset the database in the challenge settings. In this case the database is removed from the **data/** directory and re-created as displayed above.
+The student can choose to reset the database in the challenge settings. In this case the database is removed from the **data/** directory and recreated with the ```create_sqli_db``` function.
 
 
 ## Change Challenge Difficulty
 
-In order to change the difficulty for the SQLi challenge, the SQLite database needs to be deleted and initialized with the corresponding structure and entries for the new difficulty (see the code above).
+In order to change the difficulty for the SQLi challenge, the SQLite database needs to be deleted and initialized with the corresponding structure and entries for the new difficulty (see the code sample above).
