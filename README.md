@@ -114,6 +114,9 @@ The ```.htaccess``` file redirects the most common HTTP errors (400, 401, 402, 4
 
 The **admin/** directory contains the restricted admin area. Here you can see and download the student results for the challenges, change global shop settings and access the PHPMyAdmin sites for the MySQL databases *(if enabled in the ```docker-compose.yml```)*.
 
+The index file in the **pma/** directory checks if a user is either an admin user or has a valid token in order to redirect only authorized requests to the *"hidden"* phpMyAdmin directory. (*hidden* means in this case a random string as directory name for the phpMyAdmin installation).
+This option is only relevant if phpMyAdmin and apache are installed in the same docker container. Otherwise, phpMyAdmin can be accessed via the open port. For more information on this, see the docker README.
+
 All pages related to the shop system and the hacking challenges are located in the **shop/** directory.
 
 The pages for the user settings and the local challenge settings are in the **user/** directory.
