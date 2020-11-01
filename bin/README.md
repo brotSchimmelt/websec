@@ -1,6 +1,6 @@
 # Command Line Tools
 
-This directory contains some additional command line tools for this project.
+This directory contains some additional command line tools for the hacking platform.
 
 ## Concert Markdown to HTML Files
 
