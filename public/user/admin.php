@@ -1,15 +1,15 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
-// Load custom libraries
+// load basic functions
 require(FUNC_BASE);
 
 // check admin status
 if (is_user_logged_in() && is_user_admin()) {
-
+    // redirect to admin dashboard
     header("location: " . "/admin/dashboard.php");
     exit();
 }
@@ -20,7 +20,6 @@ if (!is_user_unlocked()) {
     exit();
 }
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -44,9 +43,9 @@ if (!is_user_unlocked()) {
 <body class="text-center">
 
     <!-- HTML Content BEGIN -->
-    <form class="form-signin" action="form_handler.php" method="post">
+    <form class="form-signin" action="admin.php" method="post">
 
-        <img class="mb-4" src="../assets/img/lotr.png" alt="You.. Shall Not.. Pass!" width="280" height="180">
+        <img class="mb-4" src="../assets/img/lotr.png" alt="You.. Shall.. Not.. Pass!" width="280" height="180">
         <h1 class="h3 mb-3 font-weight-normal">Admin Login</h1>
         <div class="alert alert-danger shadow-sm" role="alert">
             For <strong>admins</strong> only!
@@ -56,9 +55,7 @@ if (!is_user_unlocked()) {
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" class="form-control shadow-sm" value="password123" placeholder="Password" required>
 
-        <!-- <a href="password_forgotten.php" id="forget_btn" class="btn btn-link">Forgot your password?</a> -->
         <a class="btn btn-lg btn-primary btn-block shadow" href="admin_redirect.php">Login</a>
-        <!-- <a href="registration.php" id="register_btn_link" class="btn btn-lg btn-outline-secondary btn-block">Register</a> -->
         <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
     </form>
     <!-- HTML Content END -->

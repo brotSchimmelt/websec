@@ -1,23 +1,21 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 require_once(CONF_DB_SHOP);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
 require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check admin status
+// check admin status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -28,8 +26,9 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// variables
 $username = $_SESSION['userName'];
+$thisPage = basename(__FILE__);
 
 // check if a reset was requested
 if (isset($_POST['simplexss']) && isset($_POST['doit-simplexss'])) {
@@ -92,9 +91,9 @@ if (isset($_GET['reset'])) {
 <body>
 
     <?php
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
 
@@ -126,7 +125,7 @@ if (isset($_GET['reset'])) {
                         <h3 class="display-5">Reset Reflective XSS Challenge</h3>
                         <br>
                         <p class="lead"><strong class="text-danger">Warning: </strong>This will delete your progress for this challenge and set new cookies.</p>
-                        <form action="challenge_settings.php" method="post">
+                        <form action="<?= $thisPage ?>" method="post">
                             <div class="row">
                                 <div class="col-auto">
                                     <div class="form-group fl_icon">
@@ -150,7 +149,7 @@ if (isset($_GET['reset'])) {
                         <h3 class="display-5">Reset Stored XSS Challenge</h3>
                         <br>
                         <p class="lead"><strong class="text-danger">Warning: </strong>This will delete your progress for this challenge and set new cookies.</p>
-                        <form action="challenge_settings.php" method="post">
+                        <form action="<?= $thisPage ?>" method="post">
                             <div class="row">
                                 <div class="col-auto">
                                     <div class="form-group fl_icon">
@@ -174,7 +173,7 @@ if (isset($_GET['reset'])) {
                         <h3 class="display-5">Remove Comment from Product Page</h3>
                         <br>
                         <p class="lead"><strong class="text-wwu-green">Note: </strong>This will remove your current comment from the product page. This action has no effect on your progress.</p>
-                        <form action="challenge_settings.php" method="post">
+                        <form action="<?= $thisPage ?>" method="post">
                             <div class="row">
                                 <div class="col-auto">
                                     <div class="form-group fl_icon">
@@ -199,7 +198,7 @@ if (isset($_GET['reset'])) {
                         <br>
                         <p class="lead"><strong class="text-danger">Warning:</strong> This will completely reset your fake challenge user databse. The changes you might made will not persist!</p>
 
-                        <form action="challenge_settings.php" method="post">
+                        <form action="<?= $thisPage ?>" method="post">
                             <div class="row">
                                 <div class="col-auto">
                                     <div class="form-group fl_icon">
@@ -223,7 +222,7 @@ if (isset($_GET['reset'])) {
                         <h3 class="display-5">Reset Contact Form Challenge</h3>
                         <br>
                         <p class="lead"><strong class="text-danger">Warning:</strong> This will delete every post you have made to the contact form!</p>
-                        <form action="challenge_settings.php" method="post">
+                        <form action="<?= $thisPage ?>" method="post">
                             <div class="row">
                                 <div class="col-auto">
                                     <div class="form-group fl_icon">
@@ -246,7 +245,7 @@ if (isset($_GET['reset'])) {
                         <h3 class="display-5">Reset all Challenges</h3>
                         <br>
                         <p class="lead"><strong class="text-danger">Warning:</strong> This will delete <b>all</b> your achievements!</p>
-                        <form action="challenge_settings.php" method="post">
+                        <form action="<?= $thisPage ?>" method="post">
                             <div class="row">
                                 <div class="col-auto">
                                     <div class="form-group fl_icon">
@@ -274,7 +273,7 @@ if (isset($_GET['reset'])) {
                 <h3 class="display-5">Reset Reflective XSS Challenge</h3>
                 <br>
                 <p class="lead"><strong class="text-danger">Warning: </strong>This will delete your progress for this challenge and set new cookies.</p>
-                <form action="challenge_settings.php" method="post">
+                <form action="<?= $thisPage ?>" method="post">
                     <div class="row">
                         <div class="col-auto">
                             <div class="form-group fl_icon">
@@ -297,7 +296,7 @@ if (isset($_GET['reset'])) {
                 <h3 class="display-5">Reset Stored XSS Challenge</h3>
                 <br>
                 <p class="lead"><strong class="text-danger">Warning: </strong>This will delete your progress for this challenge and set new cookies.</p>
-                <form action="challenge_settings.php" method="post">
+                <form action="<?= $thisPage ?>" method="post">
                     <div class="row">
                         <div class="col-auto">
                             <div class="form-group fl_icon">
@@ -320,7 +319,7 @@ if (isset($_GET['reset'])) {
                 <h3 class="display-5">Remove Comment from Product Page</h3>
                 <br>
                 <p class="lead"><strong class="text-wwu-green">Note: </strong>This will remove your current comment from the product page. This action has no effect on your progress.</p>
-                <form action="challenge_settings.php" method="post">
+                <form action="<?= $thisPage ?>" method="post">
                     <div class="row">
                         <div class="col-auto">
                             <div class="form-group fl_icon">
@@ -344,7 +343,7 @@ if (isset($_GET['reset'])) {
                 <br>
                 <p class="lead"><strong class="text-danger">Warning:</strong> This will completely reset your fake challenge user databse. The changes you might made will not persist!</p>
 
-                <form action="challenge_settings.php" method="post">
+                <form action="<?= $thisPage ?>" method="post">
                     <div class="row">
                         <div class="col-auto">
                             <div class="form-group fl_icon">
@@ -367,7 +366,7 @@ if (isset($_GET['reset'])) {
                 <h3 class="display-5">Reset Contact Form Challenge</h3>
                 <br>
                 <p class="lead"><strong class="text-danger">Warning:</strong> This will delete every post you have made to the contact form!</p>
-                <form action="challenge_settings.php" method="post">
+                <form action="<?= $thisPage ?>" method="post">
                     <div class="row">
                         <div class="col-auto">
                             <div class="form-group fl_icon">
@@ -390,7 +389,7 @@ if (isset($_GET['reset'])) {
                 <h3 class="display-5">Reset all Challenges</h3>
                 <br>
                 <p class="lead"><strong class="text-danger">Warning:</strong> This will delete <b>all</b> your achievements!</p>
-                <form action="challenge_settings.php" method="post">
+                <form action="<?= $thisPage ?>" method="post">
                     <div class="row">
                         <div class="col-auto">
                             <div class="form-group fl_icon">
@@ -414,11 +413,11 @@ if (isset($_GET['reset'])) {
         <!-- HTML Content END -->
 
         <?php
-        // Load shop footer
+        // load shop footer
         require(FOOTER_SHOP);
-        // Load JavaScript
-        require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-        require_once(JS_SHOP); // Custom JavaScript
+        // load JavaScript
+        require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+        require_once(JS_SHOP); // custom JavaScript
         ?>
 </body>
 
