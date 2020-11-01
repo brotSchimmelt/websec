@@ -18,6 +18,7 @@ cd $Path
 # test if 'grip' is installed
 python -c "import grip" &> /dev/null
 
+# install 'grip'
 if [ $? -gt 0 ]; then
 test_flag=1
 printf "## It seems like 'grip' is currently not installed on your system.\n"
