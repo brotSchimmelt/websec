@@ -8,8 +8,8 @@ This is a short summary of the most important points of the documentation for th
 2. Login with the default admin user:
 - **user** ```administrator```
 - **password** ```dpbCpfcAqVHY3gYf```
-3. Change the default password after the first login!
-4. Choose the settings either in the admin area of the WebSec shop or edit them directly in the ```config/settings.json``` file. *(The difficulty of the challenges must be set before the first student logs in. Otherwise, every student has to reset their challenges in the menu manually in order to load the new challenge settings.)*
+3. Change the default password after your first login!
+4. Choose your settings either in the admin area of the WebSec shop or edit them directly in the ```config/settings.json``` file. *(The difficulty of the challenges must be set before the first student logs in. Otherwise, every student has to reset their challenges in the menu manually in order to load the new challenge settings.)*
 5. **Optional**: You can also create a user of your choice and later upgrade it via the MySQL command line client to an admin account:
 
 - Connect to the MySQL database
@@ -34,28 +34,41 @@ The figure below shows the structure of the main directory **www/** and the purp
 www/
 ├── bin/
 │   └── command line tools
+│
 ├── config/
 │   └── php configuration files
 │   └── global shop settings JSON file
+│
 ├── data/
 │   └── sqlite databases for every user
+│
 ├── docs/
 │   └── short documentation for the project
+│
 ├── public/
 │   └── admin/
 │   │   └── pages for the admin area and global settings
+│   │
 │   └── assets/
 │   │   └── CSS, JavaScript and images
+│   │
+│   └── pma/
+│   │   └── access to phpMyAdmin (optional)
+│   │
 │   └── shop/
 │   │   └── pages for the challenges
+│   │
 │   └── user/
 │       └── pages for user settings
+│
 ├── src/
 │   └── includes/
 │   │   └── include files
 │   └── php libraries
+│
 ├── tests/
 │   └── php unit tests (PHPUnit)
+│
 └── vendor
     └── dependencies (for PHPUnit)
 ```
