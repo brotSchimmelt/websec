@@ -8,10 +8,10 @@ data/*.json
 # Log Files
 *.log
 
-# Filter phpunit
-test*
-./tests/
-./vendor/
+# # Filter phpunit
+# test*
+# ./tests/
+vendor/*
 composer.json
 composer.lock
 phpunit.xml
