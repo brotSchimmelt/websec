@@ -80,7 +80,7 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
             <br>
             <label for="confirm-password" class="sr-only">Confirm Password</label>
             <input type="password" name="confirm-pwd" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
-            <button type="submit" name="reset-submit" id="register-btn" class="btn btn-lg btn-register btn-block">Set New Password</button>
+            <button type="submit" name="reset-submit" id="registerBtn" class="btn btn-lg btn-register btn-block">Set New Password</button>
 
             <p class="mt-5 mb-3 text-muted">&copy;
                 <?=

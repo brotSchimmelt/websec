@@ -61,7 +61,7 @@ if (isset($_POST['pwd-reset-submit'])) {
 
             <label for="input-mail" class="sr-only">Enter your Mail</label>
             <input type="email" name="inputMail" id="input-mail" class="form-control" aria-describedby="mail-help" placeholder="WWU Mail" required autofocus>
-            <div class="pb-3" id="info-text">
+            <div class="pb-3" id="infoText ">
                 <small>Enter your <strong>@uni-muenster.de</strong> mail address. If you are already registered, you will receive a mail with further instructions to reset your password.</small>
             </div>
 

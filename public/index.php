@@ -94,8 +94,8 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
             <a href="password_reset.php" id="forget_btn" class="btn btn-link login-link">Forgot your password?</a>
 
-            <button type="submit" name="login-submit" id="login-btn" class="btn btn-lg btn-login btn-block">Login</button>
-            <a href="registration.php" id="register-btn-link" class="btn btn-lg btn-outline-register btn-block">Register</a>
+            <button type="submit" name="login-submit" id="loginBtn" class="btn btn-lg btn-login btn-block">Login</button>
+            <a href="registration.php" id="registerBtnLink" class="btn btn-lg btn-outline-register btn-block">Register</a>
 
             <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
             <hr class="accent-blue">

@@ -101,12 +101,12 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
             <label for="confirmPassword" class="register-label text-muted"><strong>Confirm Password:</strong></label>
             <input type="password" name="confirmPassword" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
 
-            <button type="submit" name="register-submit" id="register-btn" class="btn btn-lg btn-register btn-block text-center">Register</button>
+            <button type="submit" name="register-submit" id="registerBtn" class="btn btn-lg btn-register btn-block text-center">Register</button>
             <div class="text-center">
                 <a href="index.php" class="btn btn-link login-link">Back to Login Page</a>
             </div>
 
-            <div id="show-semester">
+            <div id="showSemester">
                 <p class="mt-5 mb-3 text-muted text-center">&copy; <?= get_semester() ?></p>
                 <hr class="accent-blue">
             </div>
