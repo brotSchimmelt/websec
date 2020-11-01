@@ -10,9 +10,7 @@ body {
   font-size: .875rem;
 }
 
-/*
- * Sidebar
- */
+/* Sidebar */
 
 .sidebar {
   position: fixed;
@@ -62,9 +60,7 @@ body {
   text-transform: uppercase;
 }
 
-/*
- * Navbar
- */
+/* Navbar */
 
 .navbar-brand {
   padding-top: .75rem;
