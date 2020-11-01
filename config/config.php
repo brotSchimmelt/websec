@@ -10,6 +10,8 @@ define('SITE_URL', 'localhost');
 // The hidden directory for PHPMyAdmin
 // this dir is only used if phpMyAdmin runs directly in the apache container
 define('PMA', 'e6rs82wdj94qsfgb' . DS);
+// Token to access phpMyAdmin without being an admin user already
+define('PMA_TOKEN', 'ux6vjfhsxqg3tfp6x9s7q6uggfdj3whm');
 // Number of challenges in the shop
 // currently XSS (2x), SQLi, CSRF
 define('NUM_CHALLENGES', 4);
