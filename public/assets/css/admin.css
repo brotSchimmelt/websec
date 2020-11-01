@@ -72,11 +72,11 @@ body {
 
 /* Filtered Table */
 
-.filteredtable tbody tr, .tablefilter {
+.filtered-table tbody tr, .table-filter {
   display: table-row;
 }
 
-#isAdmin.tablefilter:checked~table tbody tr.is-admin {
+#isAdmin.table-filter:checked~table tbody tr.is-admin {
   display: none;
 }
 
