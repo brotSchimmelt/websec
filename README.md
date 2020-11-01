@@ -136,7 +136,7 @@ Contains the [PHPUnit](https://phpunit.de/) tests. This directory can be omitted
 
 #### vendor/
 
-All dependencies for the project are stored in this directory. Currently, only the PHPUnit module has any dependencies. This directory can also be omitted in production.
+All dependencies for the project are stored in this directory. Currently, only the PHPUnit module has any dependencies. Hence, this directory can also be omitted in production.
 
 ## Challenges
 
