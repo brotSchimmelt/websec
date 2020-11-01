@@ -1,12 +1,12 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 require_once(CONF_DB_SHOP);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_ADMIN);
 require(FUNC_LOGIN);
@@ -32,6 +32,8 @@ if (isset($_POST['exportJSON'])) {
 
     export_csv($data, $csvName);
 } else {
+
+    // redirect back to results page
     header("location: " . "results.php");
     exit();
 }

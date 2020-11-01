@@ -1,35 +1,30 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 require_once(CONF_DB_SHOP);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_ADMIN);
 require(FUNC_LOGIN);
 require(FUNC_SHOP);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check admin status
+// check admin status
 if (!is_user_admin()) {
-    // Redirect to shop main page
+    // redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// variables
 $username = $_SESSION['userName'];
-
-// Other php variables
-$here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
+$here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name for sidebar highlighting
 $numOfStudents = get_num_of_students();
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -62,9 +57,9 @@ $numOfStudents = get_num_of_students();
 <body>
 
     <?php
-    // Load navbar and sidebar
+    // load navbar and sidebar
     require(HEADER_ADMIN);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
 
@@ -85,9 +80,9 @@ $numOfStudents = get_num_of_students();
 
 
     <?php
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_ADMIN); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_ADMIN); // custom JavaScript
     ?>
 </body>
 

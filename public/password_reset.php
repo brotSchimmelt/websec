@@ -17,6 +17,9 @@ if (is_user_logged_in()) {
     exit();
 }
 
+// variables
+$thisPage = basename(__FILE__);
+
 // check if password reset was requested
 if (isset($_POST['pwd-reset-submit'])) {
 
@@ -48,7 +51,7 @@ if (isset($_POST['pwd-reset-submit'])) {
 <body class="text-center">
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card overflow-auto">
-        <form class="form-signin" action="password_reset.php" method="post">
+        <form class="form-signin" action="<?= $thisPage ?>" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Reset Your Password</h1>
 
             <?=

@@ -34,6 +34,7 @@ if (is_user_logged_in()) {
 }
 
 // variables
+$thisPage = basename(__FILE__);
 $name_get = get_var_set('username') ? $_GET['username'] : "";
 $name_get = htmlentities($name_get);
 $mail_get = get_var_set('mail') ? $_GET['mail'] : "";
@@ -80,7 +81,7 @@ if (post_var_set('username') && post_var_set('mail') && post_var_set('password')
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card overflow-auto">
-        <form class="form-signin form-register" action="registration.php" method="post">
+        <form class="form-signin form-register" action="<?= $thisPage ?>" method="post">
             <h1 class="h3 mb-3 font-weight-normal text-center">User Registration</h1>
 
             <?=

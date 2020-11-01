@@ -33,6 +33,7 @@ if (is_user_logged_in()) {
 
 // variables
 $difficulty = get_global_difficulty();
+$thisPage = basename(__FILE__);
 
 // check if login was requested
 if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
@@ -69,7 +70,7 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card overflow-auto">
-        <form class="form-signin form-login" action="index.php" method="post">
+        <form class="form-signin form-login" action="<?= $thisPage ?>" method="post">
             <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="210" height="110">
 
             <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
