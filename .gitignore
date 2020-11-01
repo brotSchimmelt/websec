@@ -1,10 +1,14 @@
-
+# OS Files
 .DS_Store
+
+# User Data
 data/*.json
 *.sqlite
+
+# Log Files
 *.log
 
-# filter phpunit
+# Filter phpunit
 test*
 ./tests/
 ./vendor/
