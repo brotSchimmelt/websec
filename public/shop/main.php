@@ -288,10 +288,7 @@ if (isset($_POST['unlock-submit'])) {
                         <br>
                         <?php
                         // load instructions
-                        require(INST_GENERAL);
-                        require(INST_XSS);
-                        require(INST_SQLI);
-                        require(INST_CSRF);
+                        get_challenge_instructions(['general', 'xss', 'sqli', 'csrf']);
                         ?>
                     </div>
                     <div class="text-center justify-content-center">

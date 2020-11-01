@@ -96,25 +96,25 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
                         <!-- General Instructions -->
                         <div class="tab-pane fade show <?= $general ?>" id="list-general" role="tabpanel" aria-labelledby="list-general-list">
                             <?php
-                            require(INST_GENERAL);
+                            get_challenge_instructions("general");
                             ?>
                         </div>
                         <!-- XSS -->
                         <div class="tab-pane fade show <?= $xss ?>" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
                             <?php
-                            require(INST_XSS);
+                            get_challenge_instructions("xss");
                             ?>
                         </div>
                         <!-- SQLi -->
                         <div class="tab-pane fade show <?= $sqli ?>" id="list-sqli" role="tabpanel" aria-labelledby="list-sqli-list">
                             <?php
-                            require(INST_SQLI);
+                            get_challenge_instructions("sqli");
                             ?>
                         </div>
                         <!-- CSRF -->
                         <div class="tab-pane fade show <?= $csrf ?>" id="list-csrf" role="tabpanel" aria-labelledby="list-csrf-list">
                             <?php
-                            require(INST_CSRF);
+                            get_challenge_instructions("csrf");
                             ?>
                         </div>
                     </div>

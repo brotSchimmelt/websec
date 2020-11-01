@@ -555,3 +555,64 @@ function get_user_name($mail)
 
     return $result['user_name'];
 }
+
+/**
+ * Get challenge instructions.
+ * 
+ * Load the challenge instructions for the global difficulty setting. The 
+ * supported instructions are 'general', 'XSS', 'SQLi' and 'CSRF'.
+ * 
+ * @param string|array $instructionNames Name of the instruction section.
+ * @throws Exception If function is called with wrong parameter data type.
+ */
+function get_challenge_instructions($instructionNames)
+{
+
+    try {
+        // get instructions for single challenge
+        if (gettype($instructionNames) == "string") {
+
+            // make instruction name all lower case
+            $instructionNames = strtolower($instructionNames);
+
+            // load corresponding instruction file
+            switch ($instructionNames) {
+                case "general":
+                    require(INST_GENERAL);
+                    break;
+                case "xss":
+                    require(INST_XSS);
+                    break;
+                case "sqli":
+                    require(INST_SQLI);
+                    break;
+                case "csrf":
+                    require(INST_CSRF);
+                    break;
+                default:
+                    // to catch typos
+                    echo "Sorry, we could not find any instructions for the " .
+                        "challenge: " . htmlspecialchars($instructionNames)
+                        . ".";
+            }
+            // get instructions for multiple challenges
+        } else if (gettype($instructionNames) == "array") {
+
+            // get instructions for every array element
+            foreach ($instructionNames as $name) {
+                get_challenge_instructions($name);
+            }
+        } else {
+
+            // unsupported data type
+            $msg = "You've used an unsupported data type for the input "
+                . "parameter of <b>get_challenge_instructions</b>. Your "
+                . "parameter '" . htmlspecialchars($instructionNames)
+                . "' is of type " . gettype($instructionNames) . ".";
+            throw new Exception($msg);
+        }
+    } catch (Exception $e) {
+        display_exception_msg($e);
+        exit();
+    }
+}
