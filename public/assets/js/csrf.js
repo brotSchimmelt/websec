@@ -1,13 +1,24 @@
+/*
+* JavaScript for the contact form challenge.
+*
+*/
 
-
+// delay to ensure post request has been processed
 var delay = 1500;
+
+/**
+ * Wait a certain amount of seconds to send a post request to check if the user
+ * sent something to the contact form.
+ */
 setTimeout(function () {
+
+    // send request
     var requestCSRF;
     requestCSRF = $.post("post_handler.php", {
         checkCSRF: 1
     });
-    requestCSRF.done(function (response) {
 
+    requestCSRF.done(function (response) {
         if (response == 0) {
             // success
             $('#challenge-success-csrf').modal('show');

@@ -2,11 +2,12 @@
 * JavaScript for the reflective XSS challenge.
 *
 * Displays a modal to enter the challenge solution (session cookie) if a JS 
-* dialog was used.
+* dialog function was used.
 */
 
-
-// temporarily override alert()
+/**
+ * temporarily override the alert() function.
+ */
 (function () {
     var _alertXSS = window.alert;
     window.alert = function () {
@@ -17,7 +18,9 @@
     };
 })();
 
-// temporarily override prompt()
+/**
+ * temporarily override the prompt() function.
+ */
 (function () {
     var _promptXSS = window.prompt;
     window.prompt = function () {
@@ -28,7 +31,9 @@
     };
 })();
 
-// temporarily override confirm()
+/**
+ * temporarily override the confirm() function.
+ */
 (function () {
     var _confirmXSS = window.confirm;
     window.confirm = function () {
@@ -38,4 +43,3 @@
         $('#xss-solution').modal('show');
     };
 })();
-
