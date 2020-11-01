@@ -1,31 +1,29 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+// DB connection for the login 
 require_once(CONF_DB_LOGIN);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_LOGIN);
+require(ERROR_HANDLING);
 
-// Check login status
+// check login status
 if (is_user_logged_in()) {
-    // Redirect to shop main page
+    // redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
 }
 
-// Get this page URI
+// variables
 $thisPage = basename(__FILE__);
-
-// Load error handling and user messages
-require(ERROR_HANDLING);
 
 // Check if password change was requested
 $tokenTest = post_var_set('selector') && post_var_set('validator');
 $pwdTest = post_var_set('pwd') && post_var_set('confirm-pwd');
-
 if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
 
     // Get selector and validator token
@@ -36,6 +34,7 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
     set_new_pwd($selector, $validator, $_POST['pwd'], $_POST['confirm-pwd'], $thisPage);
 } else if (isset($_POST['reset-submit']) && (empty($_POST['selector']) || empty($_POST['validator']))) {
 
+    // redirect to error page
     header("location: " . LOGIN_PAGE . "?error=missingToken");
     exit();
 }
@@ -67,31 +66,36 @@ if (isset($_POST['reset-submit']) && $pwdTest && $tokenTest) {
         <form class="form-signin" action="<?= $thisPage ?>" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Set a new Password</h1>
 
-            <?= get_message(); ?>
+            <?=
+                // load error messages
+                get_message();
+            ?>
 
+            <!-- Selector and Validator from the URL -->
             <input type="hidden" name="selector" value="<?= $_GET['s'] ?>">
             <input type="hidden" name="validator" value="<?= $_GET['v'] ?>">
-
             <label for="input-password" class="sr-only">New Password</label>
             <input type="password" name="pwd" id="new-password" class="form-control" placeholder=" New Password" required autofocus>
             <small id="password-help" class="form-text text-muted">Please use only letters and numbers and 2 to 64 characters.</small>
             <br>
             <label for="confirm-password" class="sr-only">Confirm Password</label>
             <input type="password" name="confirm-pwd" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
-
             <button type="submit" name="reset-submit" id="register-btn" class="btn btn-lg btn-register btn-block">Set New Password</button>
 
-            <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
+            <p class="mt-5 mb-3 text-muted">&copy;
+                <?=
+                    // display current semester
+                    get_semester()
+                ?>
+            </p>
             <hr class="accent-blue">
         </form>
     </div>
     <!-- HTML content END -->
 
-    <footer></footer>
-
     <?php
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
+    // load default Bootstrap JavaScript
+    require_once(JS_BOOTSTRAP);
     ?>
 </body>
 
