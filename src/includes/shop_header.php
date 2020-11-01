@@ -1,6 +1,9 @@
 <?php
+// load DB config files
 require_once(CONF_DB_SHOP);
 require_once(CONF_DB_LOGIN);
+
+// load functions
 require_once(FUNC_WEBSEC);
 require_once(FUNC_SHOP);
 require_once(FUNC_LOGIN);
