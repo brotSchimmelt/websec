@@ -2,7 +2,12 @@
  * Refresh the current page.
  */
 function RefreshPage() {
-    window.location.reload();
+
+    if (window.location.search) {
+        window.location.search += '&reload=true';
+    } else {
+        window.location.search += '?reload=true';
+    }
 }
 
 /**
