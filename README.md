@@ -82,8 +82,6 @@ www/
 
 Contains the command line tools for this project.
 - **```convert_md_to_html.sh```** Converts markdown files (like this one) to valid HTML for the **docs/** folder.
-<br>
-
 - **```get_docker_logs.sh```** Copies log files from the separat docker containers into the **bin/** folder.
 
 
@@ -91,13 +89,10 @@ Contains the command line tools for this project.
 
 Contains the configurations and settings for the shop.
 - **```config.php```** Stores important constants for the project (server name, paths etc.). Is effected by the ```setup_docker.sh``` script.
-<br>
 
 - **```db_login.php```** Contains the login credentials for the login database. Is also setup by the ```setup_docker.sh``` script.
-<br>
 
 - **```db_shop.php```** Contains the login credentials for the shop database. Is also setup by the ```setup_docker.sh``` script.
-<br>
 
 - **```settings.json```** Stores all settings for the shop. For a more detailed description see the paragraph **Settings**.
 
