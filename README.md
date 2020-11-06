@@ -5,14 +5,15 @@ This is a short summary of the most important points of the documentation for th
 ## Installation and Setup
 
 1. Setup the docker environment with the ```setup_docker.sh``` script or follow the steps described in the docker README manually.
-<br>
+
 2. Login with the default admin user:
 - **user** ```administrator```
 - **password** ```dpbCpfcAqVHY3gYf```
+
 3. Change the default password after your first login!
-<br>
+
 4. Choose your settings either in the admin area of the WebSec shop or edit them directly in the ```config/settings.json``` file. *(The difficulty of the challenges must be set **before** the first student logs in. Otherwise, every student has to reset their challenges in the menu manually in order to load the new challenge settings.)*
-<br>
+
 5. **Optional**: You can also create a user of your choice and later set the admin status via phpMyAdmin or the MySQL command line client:
 
 - Connect to the MySQL database
@@ -82,6 +83,7 @@ www/
 Contains the command line tools for this project.
 - **```convert_md_to_html.sh```** Converts markdown files (like this one) to valid HTML for the **docs/** folder.
 <br>
+
 - **```get_docker_logs.sh```** Copies log files from the separat docker containers into the **bin/** folder.
 
 
@@ -90,10 +92,13 @@ Contains the command line tools for this project.
 Contains the configurations and settings for the shop.
 - **```config.php```** Stores important constants for the project (server name, paths etc.). Is effected by the ```setup_docker.sh``` script.
 <br>
+
 - **```db_login.php```** Contains the login credentials for the login database. Is also setup by the ```setup_docker.sh``` script.
 <br>
+
 - **```db_shop.php```** Contains the login credentials for the shop database. Is also setup by the ```setup_docker.sh``` script.
 <br>
+
 - **```settings.json```** Stores all settings for the shop. For a more detailed description see the paragraph **Settings**.
 
 
@@ -155,16 +160,22 @@ The ```settings.json``` file stores all settings for the hacking platform. The (
 
 - **login**: enables or disables the login page and replaces it with an appropriate error page. Expects either *true* or *false* as value.
 <br>
+
 - **registration**: enables or disables the registration page and replaces it with an appropriate error page. Expects either *true* or *false* as value.
 <br>
+
 - **difficulty**: sets the difficulty level for the challenges. There is at the moment only a 'hard' and a 'normal' level. Expects either *true* (hard) or *false* (normal) as value.
 <br>
+
 - **badge_links**: links to external resources (e.g. Learnweb) for the hacking challenges. The links only come into effect, if a challenge has not been solved yet. Otherwise, the badges are automatically redirecting to the scoreboard. Every link has to start with *https* or *http*.
 <br>
+
 - **domains**: list of all allowed domains for the registration process. By default, only WWU mail addresses are allowed. Expects an array of string values.
 <br>
+
 - **usernames**: list of all forbidden user names for the registration process. By default, all names that are used as fake user names in the challenges are forbidden to avoid confusion. Expects an array of string values.
 <br>
+
 - **learnweb**: link to the current WebSec Learnweb course. The link has to start with *https* or *http*.
 
 ## Challenges
