@@ -231,8 +231,12 @@ function show_cart_content()
         }
 
         // calculate product price
-        $price = ($premium) ? ($product['price'] / 100 * 0.5)
-            : ($product['price'] / 100);
+        if ($premium) {
+            // add premium discount
+            $price = round((0.5 * (float)$product['price'] / 100), 2);
+        } else {
+            $price = isset($product['price']) ? $product['price'] / 100 : 42;
+        }
 
         $rowPrice = $row['quantity'] * $price;
         $i++;
@@ -241,13 +245,13 @@ function show_cart_content()
         echo "<tr>";
         echo '<th scope="row">' . $i . '.</th>';
         echo '<td>' . $product['prod_title'] . '</td>';
-        echo '<td>' . $price . ' &euro;</td>';
+        echo '<td>' . number_format($price, 2) . ' &euro;</td>';
         echo '<td>' . $row['quantity'] . '</td>';
-        echo '<td>' . $rowPrice . ' &euro;</td>';
+        echo '<td>' . number_format($rowPrice, 2) . ' &euro;</td>';
         echo "</tr>";
     }
     echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3)
-        . "<td><strong>" . $totalPrice . " &euro;</strong></td></tr>";
+        . "<td><strong>" . number_format($totalPrice, 2) . " &euro;</strong></td></tr>";
 }
 
 /**

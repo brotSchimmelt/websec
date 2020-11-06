@@ -166,7 +166,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                     </svg>
                 </div>
                 <?php if ($solvedSQLi) : ?>
-                    <h3 class="display-5 text-left mb-3"><s>&euro; <?= $price ?></s>&nbsp;&nbsp;<b class="text-success">&euro;<?= $premiumPrice ?></b></h3>
+                    <h3 class="display-5 text-left mb-3"><s>&euro; <?= $price ?></s>&nbsp;&nbsp;<b class="text-success">&euro;<?= number_format($premiumPrice, 2) ?></b></h3>
                 <?php else : ?>
                     <h3 class="display-5 text-left mb-3">&euro; <?= $price ?></h3>
                 <?php endif; ?>
