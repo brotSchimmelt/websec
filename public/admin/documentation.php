@@ -45,16 +45,18 @@ if (!is_user_admin()) {
             <a class="p-2 text-dark" href="../shop/main.php">Back to the Shop</a>
             <a class="p-2 text-dark" href="dashboard.php">Back to the Dashboard</a>
         </nav>
-        <a class="btn btn-outline-light" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
+        <a class="btn btn-outline-warning" href="/logout.php?token=<?= $_SESSION['userToken'] ?>">Logout</a>
     </div>
 
     <div class="doc-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">WebSec Documentation</h1>
         <p class="lead">Here is the HTML version of the project documentation.</p>
-        <a class="doc-link" href="#dashboard"> · Dashboard</a>
+        <a class="doc-link" href="#settings"> · Settings</a>
+        <a class="doc-link" href="#challenges"> · Challenges</a>
+        <a class="doc-link" href="#errors"> · Error Codes</a>
         <a class="doc-link" href="#shop"> · Shop</a>
         <a class="doc-link" href="#docker"> · Docker</a>
-        <a class="doc-link" href="#vagrant"> · Vagrant</a>
+        <a class="doc-link" href="#vagrant"> · Test Environment</a>
     </div>
     <br><br>
 
@@ -62,27 +64,47 @@ if (!is_user_admin()) {
     <div class="container">
 
         <!-- Begin Documentation Body -->
-        <div id="dashboard">
-            <?php include(DOC . "dashboard.html"); ?>
+
+        <!-- Settings Section From The WebSec README -->
+        <div id="settings">
+            <?php include(DOC . "settings.html"); ?>
         </div>
         <a href="#top">Back to the Top</a>
         <br>
 
-        <div id="dashboard">
+        <!-- Challenge Solutions Cheat Sheet -->
+        <div id="challenges">
+            <?php include(DOC . "challenges.html"); ?>
+        </div>
+        <a href="#top">Back to the Top</a>
+        <br>
+
+        <!-- Error Codes From WebSec README -->
+        <div id="errors">
+            <?php include(DOC . "errors.html"); ?>
+        </div>
+        <a href="#top">Back to the Top</a>
+        <br>
+
+        <!-- WebSec README Without Error And Setting Section-->
+        <div id="shop">
             <?php include(DOC . "shop.html"); ?>
         </div>
         <a href="#top">Back to the Top</a>
         <br>
 
-        <div id="dashboard">
+        <!-- Docker README -->
+        <div id="docker">
             <?php include(DOC . "docker.html"); ?>
         </div>
         <a href="#top">Back to the Top</a>
         <br>
 
-        <div id="dashboard">
-            <?php include(DOC . "vagrant.html"); ?>
+        <!-- Vagrant README -->
+        <div id="vagrant">
+            <?php include(DOC . "test_environment.html"); ?>
         </div>
+        <a href="#top">Back to the Top</a>
         <!-- End Documentation Body -->
     </div>
     <br><br>

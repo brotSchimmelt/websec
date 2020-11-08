@@ -53,7 +53,7 @@ fi
 
 if [ $? -eq 0 ]; then
 
-    for i in dashboard shop docker vagrant; do
+    for i in settings challenges errors shop docker test_environment; do
 
         md_file="${i}.md"
         if test -f "$md_file"; then

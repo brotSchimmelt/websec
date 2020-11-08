@@ -390,7 +390,7 @@ All exceptions and errors have a corresponding error code. In the following sect
 
 **010**: A PDO exception occurred during the connection attempt to the **login** database.
 - Database credentials are wrong *(either in ```config/config.php``` or in the ```.env``` file for the Docker containers)*
-- The MySQL docker container is not running *(```docker ps | grep "db_login"```)*
+- The MySQL Docker container is not running *(```docker ps | grep "db_login"```)*
 - The MySQL Docker container needs at least 1 minute after start up to accept any connection attempts.
 
 **020**: A PDO exception occurred during the connection attempt to the **shop** database.
