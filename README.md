@@ -1,10 +1,10 @@
 # WebSec - Shop
 
-This is a short summary of the most important points of the documentation for the WebSec Shop. The docker environment and the test environment (Vagrant) are described in separat README files. 
+This is a short summary of the most important points of the documentation for the WebSec Shop. The Docker environment and the test environment (Vagrant) are described in separat README files. 
 
 ## Installation and Setup
 
-1. Setup the docker environment with the ```setup_docker.sh``` script or follow the steps described in the docker README manually.
+1. Setup the Docker environment with the ```setup_docker.sh``` script or follow the steps described in the Docker README manually.
 
 2. Login with the default admin user:
 - **user** ```administrator```
@@ -82,7 +82,7 @@ www/
 
 Contains the command line tools for this project.
 - **```convert_md_to_html.sh```** Converts markdown files (like this one) to valid HTML for the **docs/** folder.
-- **```get_docker_logs.sh```** Copies log files from the separat docker containers into the **bin/** folder.
+- **```get_docker_logs.sh```** Copies log files from the separat Docker containers into the **bin/** folder.
 
 
 ### config/
@@ -125,7 +125,7 @@ The ```.htaccess``` file redirects the most common HTTP errors (400, 401, 402, 4
 The **admin/** directory contains the restricted admin area. Here you can see and download the student results for the challenges, change global shop settings and access the phpMyAdmin site for the MySQL databases *(if enabled in the ```docker-compose.yml```)*.
 
 The index file in the **pma/** directory checks if a user is either an admin user or has a valid token in order to redirect only authorized requests to the *"hidden"* phpMyAdmin directory. (*hidden* means in this context a random string as name for the phpMyAdmin directory).
-This option is only relevant if phpMyAdmin and apache are installed in the same docker container. Otherwise, phpMyAdmin can be accessed via an open port. For more information on this, see the docker README.
+This option is only relevant if phpMyAdmin and apache are installed in the same Docker container. Otherwise, phpMyAdmin can be accessed via an open port. For more information on this, see the Docker README.
 
 All pages related to the shop system and the hacking challenges are located in the **shop/** directory.
 
@@ -389,14 +389,14 @@ xhr.send("uname=elliot&userPost=pwned&utoken=<token>");
 All exceptions and errors have a corresponding error code. In the following section, all these codes are listed and explained. Hints and/or known solutions can also be added in this part. 
 
 **010**: A PDO exception occurred during the connection attempt to the **login** database.
-- Database credentials are wrong *(either in ```config/config.php``` or in the ```.env``` file for the docker containers)*
+- Database credentials are wrong *(either in ```config/config.php``` or in the ```.env``` file for the Docker containers)*
 - The MySQL docker container is not running *(```docker ps | grep "db_login"```)*
-- The MySQL docker container needs at least 1 minute after start up to accept any connection attempts.
+- The MySQL Docker container needs at least 1 minute after start up to accept any connection attempts.
 
 **020**: A PDO exception occurred during the connection attempt to the **shop** database.
-- Database credentials are wrong *(either in ```config/config.php``` or in the ```.env``` file for the docker containers)*
-- The MySQL docker container is not running *(```docker ps | grep "db_shop"```)*
-- The MySQL docker container needs at least 1 minute after start up to accept any connection attempts.
+- Database credentials are wrong *(either in ```config/config.php``` or in the ```.env``` file for the Docker containers)*
+- The MySQL Docker container is not running *(```docker ps | grep "db_shop"```)*
+- The MySQL Docker container needs at least 1 minute after start up to accept any connection attempts.
 
 **03x**: The hash creation with the php function ```password_hash()``` failed to produce a hashed value for the given input.
 - **031**: Error during registration process in ```function do_registration```
