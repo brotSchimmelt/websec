@@ -104,7 +104,7 @@ if (isset($_GET['reset'])) {
         <h1 class="display-4">Challenge Settings</h1>
         <hr>
         <br>
-        <p class="lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores sapiente sit animi obcaecati aspernatur rerum distinctio voluptas a voluptate ipsa atque, deleniti quibusdam est nesciunt.</p>
+        <p class="lead">Here you can reset all challenges and your current achievements. If you already passed a challenge and decide to reset it, you have to solve it again in order to get your solution graded.</p>
         <br><br>
 
         <div class="row mb-5">
