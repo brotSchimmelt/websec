@@ -312,7 +312,7 @@ function get_num_of_cart_items()
 function show_search_results($searchTerm)
 {
     $sql = "SELECT `prod_id`, `prod_title`, `prod_description`, `price`, "
-        . "`img_path` FROM `products` WHERE `prod_title` LIKE :needle";
+        . "`img_path` FROM `products` WHERE `prod_title` COLLATE utf8mb4_0900_as_ci LIKE :needle";
     try {
         $stmt = get_shop_db()->prepare($sql);
         $needle = "%" . $searchTerm . "%";
