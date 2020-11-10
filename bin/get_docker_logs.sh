@@ -2,13 +2,20 @@
 
 ################################################################################
 #   Purpose: Extract selected log files from docker containers                 #
-#   Test: Tested on Ubuntu 18 LTS                                              #
-#   Note: Not yet tested on Ubuntu 20 LTS                                      #
+#   Test: Tested on Ubuntu 18 LTS and 20 LTS                                   #
 #   Author: tknebler@gmail.com                                                 #
 #                                                                              #
+#   Run as 'sudo'                                                              #
+#   Get container names                                                        #
 #   Select which log files to copy                                             #
 #   Copy log files from docker containers                                      #
 ################################################################################
+
+# run script with 'sudo'  
+if [[ $EUID -ne 0 ]];
+then
+    exec sudo /bin/bash "$0" "$@"
+fi
 
 # get container names
 php_apache="$(docker ps --format "{{.Names}}" | grep php_apache)"
