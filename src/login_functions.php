@@ -80,16 +80,14 @@ function check_user_exists($numUsers)
 {
     if ($numUsers > 1) {
 
-        sleep(3); // 3 seconds
         // check if there is more than 1 entry for that name
         header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=041");
-        exit();
+        return false;
     } else if ($numUsers < 1) {
 
-        sleep(3); // 3 seconds
         // user not found
         header("location: " . LOGIN_PAGE . "?error=wrongCredentials");
-        exit();
+        return false;
     } else {
         return true;
     }
@@ -113,16 +111,16 @@ function verify_pwd($pwd, $resultArray, $redirect = LOGIN_PAGE)
         return true;
     } else if (!$pwdTest) {
 
-        sleep(3); // 3 seconds
+        // sleep(3); // 3 seconds
         // send user back if password does not match
         header("location: " . $redirect . "?error=wrongCredentials");
-        exit();
+        return false;
     } else {
 
-        sleep(3); // 3 second
+        // sleep(3); // 3 second
         // just to catch any errors in the 'password_verify' function
         header("location: " . $redirect . "?error=internalError");
-        exit();
+        return false;
     }
 }
 
@@ -158,7 +156,7 @@ function validate_mail($mail)
     // check if user input is a valid mail format
     if (filter_var($mail, FILTER_VALIDATE_EMAIL) === false) {
         header("location: " . REGISTER_PAGE . "?error=invalidMailFormat");
-        exit();
+        return false;
     }
 
     // Note: Add other valid domains in settings.json or in the admin panel
