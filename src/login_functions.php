@@ -589,32 +589,39 @@ function get_random_token($length)
  */
 function do_pwd_reset($mail)
 {
-    try {
-        $selector = get_random_token(16); // to select user from the database
-        $validator = get_random_token(32); // to validate password reset request
-    } catch (Exception $e) {
-        display_exception_msg($e);
-        exit();
+
+    $mailCheckSQL = "SELECT 1 FROM `users` WHERE `user_wwu_email` = ?";
+    $mailExists = check_entry_exists($mail, $mailCheckSQL);
+
+    if ($mailExists) {
+        try {
+            $selector = get_random_token(16); // to select user from the database
+            $validator = get_random_token(32); // to validate password reset request
+        } catch (Exception $e) {
+            display_exception_msg($e);
+            exit();
+        }
+
+        $expires = date('U') + 1200; // Token expires after 20 min (1200 s)
+
+        // URL for redirect to password reset page
+        $url = SITE_URL . "/create_new_password.php?s="
+            . $selector . "&v=" . $validator;
+
+        // Check if an old entry already exists for this mail and delete it
+        if (check_pwd_request_status($mail)) {
+            delete_pwd_request($mail);
+        }
+
+        // Add request to DB
+        add_pwd_request($mail, $selector, $validator, $expires);
+
+        // Send mail with reset instructions to user
+        send_pwd_reset_mail($mail, $url);
     }
 
-    $expires = date('U') + 1200; // Token expires after 20 min (1200 s)
-
-    // URL for redirect to password reset page
-    $url = SITE_URL . "/create_new_password.php?s="
-        . $selector . "&v=" . $validator;
-
-    // Check if an old entry already exists for this mail and delete it
-    if (check_pwd_request_status($mail)) {
-        delete_pwd_request($mail);
-    }
-
-    // Add request to DB
-    add_pwd_request($mail, $selector, $validator, $expires);
-
-    // Send mail with reset instructions to user
-    send_pwd_reset_mail($mail, $url);
-
-    // Show success message
+    // Show success message either way
+    sleep(3); // to avoid spam
     header("location: " . LOGIN_PAGE .  "?success=requestProcessed");
     exit();
 }
