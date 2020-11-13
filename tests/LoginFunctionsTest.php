@@ -14,9 +14,6 @@ require_once(dirname(__FILE__) . FUNC_LOGIN); // login functions
 final class LoginFunctionsTest extends TestCase
 {
 
-    /**
-     * Set up the database for the test runs.
-     */
     public static function setUpBeforeClass(): void
     {
 
@@ -54,12 +51,8 @@ final class LoginFunctionsTest extends TestCase
         $_GET['test_var_empty'] = "";
     }
 
-    /**
-     * Delete all test users from the database after test completion.
-     */
     public static function tearDownAfterClass(): void
     {
-
         // delete all test users to the login database
         foreach ($_SESSION['testUsers'] as $e) {
             $deleteSQL = "DELETE FROM `users` WHERE `user_name`='" . $e . "'";
@@ -256,14 +249,13 @@ final class LoginFunctionsTest extends TestCase
      */
     public function providerTestValidateMail()
     {
-        // to run this cases, hard code the allowed domains
         return [
-            // "Correct WWU mail" =>
-            // array("user@uni-muenster.de", true, 0),
-            // "Correct WI WWU mail" =>
-            // array("user@wi.uni-muenster.de", true, 0),
-            // "Wrong domain" =>
-            // array("user@hotmail.com", false, 0),
+            "Correct WWU mail" =>
+            array("user@uni-muenster.de", true, 0),
+            "Correct WI WWU mail" =>
+            array("user@wi.uni-muenster.de", true, 0),
+            "Wrong domain" =>
+            array("user@fake.test", false, 0),
             "No mail address format" =>
             array("norealmail", 302, 1)
         ];
@@ -271,6 +263,8 @@ final class LoginFunctionsTest extends TestCase
 
     /**
      * Test the login function 'validate_mail()'.
+     * 
+     * Note: Hard code the 'allowed domains' for phpUnit testing in the function.
      * 
      * @test
      * @dataProvider providerTestValidateMail
@@ -316,10 +310,44 @@ final class LoginFunctionsTest extends TestCase
 
     /**
      * Test the login function 'hash_user_pwd()'.
+     * 
+     * @test
      */
     public function testHashUserPassword(): void
     {
         $result = hash_user_pwd("12345678");
         $this->assertEquals(!empty($result), true);
+    }
+
+    /**
+     * Generates data for the 'testCheckEntryExits()' method.
+     */
+    public function providerTestCheckEntryExits()
+    {
+
+        $mailSQL = "SELECT 1 FROM `users` WHERE `user_wwu_email` = ?";
+        $userSQL = "SELECT 1 FROM `users` WHERE `user_name` = ?";
+
+        return [
+            "Forbidden user name" => array("admin", $userSQL, true),
+            "Existing user name" => array("elliot", $userSQL, true),
+            "Existing mail" => array("fake@mail.example", $mailSQL, true),
+            "New mail" => array("test@test.test", $mailSQL, false)
+        ];
+    }
+
+    /**
+     * Test the login function 'check_entry_exists()'.
+     * 
+     * Note: Hard code the 'fake user' array for phpUnit testing in the function.
+     * 
+     * @test
+     * @dataProvider providerTestCheckEntryExits
+     * @runInSeparateProcess
+     */
+    public function testCheckEntryExits($input1, $input2, $expected): void
+    {
+        $result = check_entry_exists($input1, $input2);
+        $this->assertEquals($expected, $result);
     }
 }
