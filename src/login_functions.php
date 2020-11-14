@@ -417,6 +417,7 @@ function try_login($userInput, $pwd)
  * @param string $username User name.
  * @param string $mail Mail address.
  * @param string $password User password.
+ * @return bool Registration status.
  */
 function try_registration($username, $mail, $password)
 {
@@ -430,21 +431,22 @@ function try_registration($username, $mail, $password)
 
         $oldInput = "&mail=" . $mail;
         header("location: " . REGISTER_PAGE . "?error=nameError" . $oldInput);
-        exit();
+        return false;
     } else if (check_entry_exists($mail, $mailSQL)) {
 
         $oldInput = "&username=" . $username;
         header("location: " . REGISTER_PAGE . "?error=mailTaken" . $oldInput);
-        exit();
+        return false;
     } else  if (
         check_entry_exists($username, $oldChallengeSQL) ||
         check_entry_exists($username, $oldCookieSQL)
     ) {
 
         header("location: " . REGISTER_PAGE . "?error=doubleEntry");
-        exit();
+        return false;
     } else {
-        do_registration($username, $mail, $password);
+        $registration = do_registration($username, $mail, $password);
+        return $registration;
     }
 }
 
@@ -456,6 +458,7 @@ function try_registration($username, $mail, $password)
  * @param string $username User name.
  * @param string $mail Mail address.
  * @param string $password User password.
+ * @return bool Registration status.
  */
 function do_registration($username, $mail, $password)
 {
@@ -549,7 +552,7 @@ function do_registration($username, $mail, $password)
 
     // redirect back to login page
     header("location: " . LOGIN_PAGE . "?success=signup");
-    exit();
+    return true;
 }
 
 /**
@@ -559,13 +562,14 @@ function do_registration($username, $mail, $password)
  * bytes function.
  *
  * @param int $length Length of the token.
- * @return string Random token.
+ * @return string|bool Random token.
  * @throws Exception If the token creation fails.
  */
 function get_random_token($length)
 {
     if ($length <= 0) {
         trigger_error("Code Error: Token length cannot be 0 or negative!");
+        return false;
     }
 
     $token = bin2hex(openssl_random_pseudo_bytes($length));

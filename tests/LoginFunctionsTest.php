@@ -10,6 +10,7 @@ use PDO;
 // load configurations and functions to test
 require_once(dirname(__FILE__) . "/../config/config.php");
 require_once(dirname(__FILE__) . CONF_DB_LOGIN); // DB credentials
+require_once(dirname(__FILE__) . CONF_DB_SHOP); // DB credentials
 require_once(dirname(__FILE__) . FUNC_LOGIN); // login functions
 require_once(dirname(__FILE__) . TES . "login_mocked_functions.php");
 
@@ -41,9 +42,6 @@ final class LoginFunctionsTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        // set the test mode
-        $_SESSION['testMode'] = false;
-
         // initialize test arrays
         $_POST = [];
         $_GET = [];
@@ -94,6 +92,7 @@ final class LoginFunctionsTest extends TestCase
         ]);
         array_push($_SESSION['testUsers'], "elliot");
         array_push($_SESSION['testUsers'], "testUser");
+        array_push($_SESSION['testUsers'], "newUser");
 
         // add an entry to the POST array
         $_POST['test_var_set'] = "test";
@@ -112,15 +111,17 @@ final class LoginFunctionsTest extends TestCase
                 . "`user_name`='" . $e . "'";
             $deleteCookie = "DELETE FROM `fakeCookie` WHERE `user_name`='"
                 . $e . "'";
+            $deleteSolutions = "DELETE FROM `challenge_solutions` WHERE "
+                . "`user_name`='" . $e . "'";
             get_login_db()->query($deleteUser);
             get_login_db()->query($deleteChallenge);
             get_login_db()->query($deleteCookie);
+            get_shop_db()->query($deleteSolutions);
         }
 
         // remove the Session variable that was used to store all changes to the
         // login database
         unset($_SESSION['testUsers']);
-        unset($_SESSION['testMode']);
         session_destroy();
 
         // remove all remaining variables set by the setUp() method
@@ -196,9 +197,9 @@ final class LoginFunctionsTest extends TestCase
     public function providertestCheckUserExists()
     {
         return [
-            "No user" => array(0, 302),
-            "One user" => array(1, true),
-            "Duplicate user" => array(2, 302)
+            "No user" => array(0, false, 302),
+            "One user" => array(1, true, 0),
+            "Duplicate user" => array(2, false, 302)
         ];
     }
 
@@ -209,17 +210,19 @@ final class LoginFunctionsTest extends TestCase
      * @dataProvider providertestCheckUserExists
      * @runInSeparateProcess
      */
-    public function testCheckUserExists($input, $expected): void
+    public function testCheckUserExists($input, $expected, $code): void
     {
 
-        if ($input === 1) {
-            // check if user was found
-            $result = check_user_exists($input);
+        // check if user was found
+        $result = check_user_exists($input);
+
+        if ($code === 0) {
             $this->assertEquals($expected, $result);
         } else {
+
             // get http response code for error cases
-            $returnVal = check_user_exists($input);
-            $this->assertEquals($expected, http_response_code());
+            $this->assertEquals($code, http_response_code());
+            $this->assertEquals($expected, $result);
         }
     }
 
@@ -240,9 +243,9 @@ final class LoginFunctionsTest extends TestCase
             "Correct password and hash" =>
             array($pwdCorrect, $hashCorrect, true, 0),
             "Wrong password correct hash" =>
-            array($pwdWrong, $hashCorrect, 302, 1),
+            array($pwdWrong, $hashCorrect, false, 302),
             "Correct password wrong hash" =>
-            array($pwdCorrect, $hashWrong, 302, 1)
+            array($pwdCorrect, $hashWrong, false, 302)
         ];
     }
 
@@ -254,19 +257,20 @@ final class LoginFunctionsTest extends TestCase
      * @dataProvider providerTestVerifyPassword
      * @runInSeparateProcess
      */
-    public function testVerifyPassword($input1, $input2, $expected, $flag): void
+    public function testVerifyPassword($input1, $input2, $expected, $code): void
     {
 
-        if ($flag === 0) {
+        // verify the password
+        $result = verify_pwd($input1, $input2);
 
+        if ($code === 0) {
             // check if correct login credentials are detected
-            $result = verify_pwd($input1, $input2);
             $this->assertEquals($expected, $result);
         } else {
 
             // check if wrong credentials lead to redirect
-            $returnVal = verify_pwd($input1, $input2);
-            $this->assertEquals($expected, http_response_code());
+            $this->assertEquals($code, http_response_code());
+            $this->assertEquals($expected, $result);
         }
     }
 
@@ -321,7 +325,7 @@ final class LoginFunctionsTest extends TestCase
             "Wrong domain" =>
             array("user@fake.test", false, 0),
             "No mail address format" =>
-            array("norealmail", 302, 1)
+            array("norealmail", false, 302)
         ];
     }
 
@@ -336,16 +340,16 @@ final class LoginFunctionsTest extends TestCase
      * @dataProvider providerTestValidateMail
      * @runInSeparateProcess
      */
-    public function testValidateMail($input, $expected, $flag): void
+    public function testValidateMail($input, $expected, $code): void
     {
-        if ($flag === 0) {
 
-            $result = validate_mail($input);
+        $result = validate_mail($input);
+
+        if ($code === 0) {
             $this->assertEquals($expected, $result);
         } else {
-
-            $returnVal = validate_mail($input);
-            $this->assertEquals($expected, http_response_code());
+            $this->assertEquals($expected, $result);
+            $this->assertEquals($code, http_response_code());
         }
     }
 
@@ -381,7 +385,7 @@ final class LoginFunctionsTest extends TestCase
      */
     public function testHashUserPassword(): void
     {
-        $result = hash_user_pwd("12345678");
+        $result = hash_user_pwd("password123");
         $this->assertEquals(!empty($result), true);
     }
 
@@ -548,5 +552,46 @@ final class LoginFunctionsTest extends TestCase
 
         // check if last login is not NULL
         $this->assertNotEquals(NULL, $result['last_login']);
+    }
+
+    /**
+     * Generates data for the 'testTryRegistration()' method.
+     */
+    public function providerTestTryRegistration()
+    {
+        return [
+            "User name already exists" => array(
+                "elliot", "newMail@uni-muenster.de", "password123", false, 302
+            ),
+            "Mail already exists" => array(
+                "newUser", "test@uni-muenster.de", "password123", false, 302
+            ),
+            "Challenge status and fake cookie present" => array(
+                "testUser", "test@uni-muenster.de", "password123", false, 302
+            ),
+            "Valid registration attempt" => array(
+                "newUser", "newMail@uni-muenster.de", "password123", true, 302
+            )
+        ];
+    }
+
+    /**
+     * Test the login function 'try_registration()'.
+     * Test implicitly the 'do_registration()' function.
+     * 
+     * @test
+     * @dataProvider providerTestTryRegistration
+     * @runInSeparateProcess
+     */
+    public function testTryRegistration(
+        $input1,
+        $input2,
+        $input3,
+        $expected,
+        $code
+    ): void {
+        $result = try_registration($input1, $input2, $input3);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($code, http_response_code());
     }
 }
