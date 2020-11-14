@@ -26,12 +26,14 @@ define('RES', ROOT .  '..' . DS . 'resources' . DS);
 define('DOC', ROOT .  '..' . DS . 'docs' . DS);
 // Log dir
 define('LOG', ROOT .  '..' . DS . 'docs' . DS);
-// Command Line Utility dir (currently empty)
-define('BIN', ROOT .  '..' . DS . 'docs' . DS);
+// Command Line Utility dir
+define('BIN', ROOT .  '..' . DS . 'bin' . DS);
 // Configuration dir
 define('CON', ROOT .  '..' . DS . 'config' . DS);
 // Database dir for the sql injection challenge
 define('DAT', ROOT .  '..' . DS . 'data' . DS);
+// Test dir
+define('TES', ROOT . '..' . DS . 'tests' . DS);
 
 /* Database configurations and settings */
 // Login database credentials
