@@ -160,9 +160,7 @@ function validate_mail($mail)
     }
 
     // Note: Add other valid domains in settings.json or in the admin panel
-    // $validDomains = get_allowed_domains();
-    // TESTING: Hard code the allowed domains for phpUnit
-    $validDomains = ["@uni-muenster.de", "@wi.uni-muenster.de"];
+    $validDomains = get_allowed_domains();
 
     // check if a valid domain us used
     $needle = mb_strstr($mail, "@");
@@ -221,9 +219,7 @@ function hash_user_pwd($pwd)
 function check_entry_exists($entry, $sql)
 {
     // Fake user array
-    // $fakeUsers = get_blocked_usernames();
-    // TESTING: hard code the array for phpUnit
-    $fakeUsers = ["admin", "elliot", "l337_h4ck3r", "administrator"];
+    $fakeUsers = get_blocked_usernames();
 
     // Get entries from DB
     try {
