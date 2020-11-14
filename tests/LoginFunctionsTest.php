@@ -1,12 +1,17 @@
 <?php
+
+namespace test\login;
+
 session_start(); // to store global values
 
 use PHPUnit\Framework\TestCase;
+use PDO;
 
 // load configurations and functions to test
 require_once(dirname(__FILE__) . "/../config/config.php");
 require_once(dirname(__FILE__) . CONF_DB_LOGIN); // DB credentials
 require_once(dirname(__FILE__) . FUNC_LOGIN); // login functions
+require_once(dirname(__FILE__) . TES . "login_mocked_functions.php");
 
 
 /**
@@ -25,25 +30,6 @@ require_once(dirname(__FILE__) . FUNC_LOGIN); // login functions
  */
 
 
-
-/*
- * Mock dependencies from other files.
- */
-
-function get_global_difficulty()
-{
-    return "normal";
-}
-
-function create_sqli_db($username, $mail)
-{
-}
-
-function slug($str)
-{
-    return $str;
-}
-
 /**
  * Test Class for the login functions.
  */
@@ -55,6 +41,8 @@ final class LoginFunctionsTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
+        // set the test mode
+        $_SESSION['testMode'] = false;
 
         // initialize test arrays
         $_POST = [];
@@ -132,6 +120,7 @@ final class LoginFunctionsTest extends TestCase
         // remove the Session variable that was used to store all changes to the
         // login database
         unset($_SESSION['testUsers']);
+        unset($_SESSION['testMode']);
         session_destroy();
 
         // remove all remaining variables set by the setUp() method
@@ -522,7 +511,6 @@ final class LoginFunctionsTest extends TestCase
         }
     }
 
-
     /**
      * Test the login function 'do_login()'.
      * 
@@ -531,13 +519,13 @@ final class LoginFunctionsTest extends TestCase
      */
     public function testDoLogin(): void
     {
+
         // set valid parameter
         $username = "testUser";
         $mail = "test@uni-muenster.de";
         $adminFlag = "1";
         $unlockedFlag = "0";
 
-        sleep(3);
         // call do_login() with parameters
         do_login($username, $mail, $adminFlag, $unlockedFlag);
 
