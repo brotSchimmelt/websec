@@ -4,6 +4,7 @@ namespace test\login;
 
 session_start(); // to store global values
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PDO;
 
@@ -555,9 +556,9 @@ final class LoginFunctionsTest extends TestCase
     }
 
     /**
-     * Generates data for the 'testTryRegistration()' method.
+     * Generates data for the 'testRegistration()' method.
      */
-    public function providerTestTryRegistration()
+    public function providerTestRegistration()
     {
         return [
             "User name already exists" => array(
@@ -580,10 +581,10 @@ final class LoginFunctionsTest extends TestCase
      * Test implicitly the 'do_registration()' function.
      * 
      * @test
-     * @dataProvider providerTestTryRegistration
+     * @dataProvider providerTestRegistration
      * @runInSeparateProcess
      */
-    public function testTryRegistration(
+    public function testRegistration(
         $input1,
         $input2,
         $input3,
@@ -593,5 +594,41 @@ final class LoginFunctionsTest extends TestCase
         $result = try_registration($input1, $input2, $input3);
         $this->assertEquals($expected, $result);
         $this->assertEquals($code, http_response_code());
+    }
+
+
+    /**
+     * Generates data for the 'testGetRandomToken()' method.
+     */
+    public function providerTestGetRandomToken()
+    {
+        return [
+            "Token with 42 characters" => array(42, 42),
+            "Token with -1 characters" => array(
+                -1,
+                "Code Error: Token length cannot be 0 or negative!"
+            )
+        ];
+    }
+
+    /**
+     * Test the login function 'get_random_token()'.
+     * 
+     * @test
+     * @dataProvider providerTestGetRandomToken
+     */
+    public function testGetRandomToken($input, $expected): void
+    {
+        if ($input > 0) {
+            $tokenLength = strlen(get_random_token($input));
+            $this->assertEquals($expected, $tokenLength);
+        } else {
+            try {
+                $token = get_random_token(-1);
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            $this->assertEquals($expected, $error);
+        }
     }
 }
