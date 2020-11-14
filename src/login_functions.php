@@ -1,13 +1,13 @@
 <?php
 
 /**
- * This file contains all functions that are relevant for user login / 
+ * This file contains all functions that are relevant for user login /
  * registration.
  */
 
 /**
  * Get the PDO connection for the login DB.
- * 
+ *
  * Uses the credentials defined in the config.php file.
  *
  * @return \PDO the login database connection.
@@ -35,9 +35,9 @@ function get_login_db()
 
 /**
  * Check if a POST variable is set and not empty.
- * 
+ *
  * Check if a POST variable with a given name was set and is not empty.
- * 
+ *
  * @param string $varName POST variable name.
  * @return bool POST variable status.
  */
@@ -52,9 +52,9 @@ function post_var_set($varName)
 
 /**
  * Check if a GET variable is set and not empty.
- * 
+ *
  * Check if a GET variable with a given name was set and is not empty.
- * 
+ *
  * @param string $varName GET variable name.
  * @return bool GET variable status.
  */
@@ -69,10 +69,10 @@ function get_var_set($varName)
 
 /**
  * Check if a already user exits.
- * 
- * Check if the number of users with the same name is greater than 1 and show 
+ *
+ * Check if the number of users with the same name is greater than 1 and show
  * appropriate user messages.
- * 
+ *
  * @param int $numUser Number of times a user name exits in the database.
  * @return bool User status.
  */
@@ -95,14 +95,14 @@ function check_user_exists($numUsers)
 
 /**
  * Check if password is correct.
- * 
+ *
  * Check if the given password matches the password hash in the login database
  * and catch login errors.
- * 
+ *
  * @param string $pwd Given password.
  * @param array $resultArray User data from the login database.
  * @param string $redirect Path for error redirect.
- * @return bool Password status. 
+ * @return bool Password status.
  */
 function verify_pwd($pwd, $resultArray, $redirect = LOGIN_PAGE)
 {
@@ -126,10 +126,10 @@ function verify_pwd($pwd, $resultArray, $redirect = LOGIN_PAGE)
 
 /**
  * Check if the user name fulfills the requirements.
- * 
- * Check if a given user name is between 2 and 24 characters long and contains 
+ *
+ * Check if a given user name is between 2 and 24 characters long and contains
  * only letters and numbers.
- * 
+ *
  * @param string $username User name to verify.
  * @return bool User name status.
  */
@@ -145,9 +145,9 @@ function validate_username($username)
 
 /**
  * Check if a given mail address is valid.
- * 
+ *
  * Check if the address has a valid format and uses a allowed domain.
- * 
+ *
  * @param string $mail User mail to check.
  * @return bool Mail Status.
  */
@@ -175,9 +175,9 @@ function validate_mail($mail)
 
 /**
  * Check if the password has a valid format.
- * 
+ *
  * Check if the given password is not empty and at least 8 characters long.
- * 
+ *
  * @param string $pwd Given password.
  * @return bool Password status.
  */
@@ -191,9 +191,9 @@ function validate_pwd($pwd)
 
 /**
  * Hash the user password.
- * 
+ *
  * Hash the user password with the php default method.
- * 
+ *
  * @param string $pwd Password to hash.
  * @return string Password hash.
  * @throws Exception If the hash creation fails.
@@ -210,10 +210,10 @@ function hash_user_pwd($pwd)
 
 /**
  * Check if the given entry already exists.
- * 
- * Check with a given SQL query if the entry is already present in the login 
+ *
+ * Check with a given SQL query if the entry is already present in the login
  * database.
- * 
+ *
  * @param string $entry Entry to check.
  * @param string $sql SQL query to check entry.
  * @return bool Result flag.
@@ -251,45 +251,45 @@ function check_entry_exists($entry, $sql)
 
 /**
  * Check if user input is valid.
- * 
+ *
  * Check user name, mail and password for validity with separat functions.
- * 
+ *
  * @param string $username User name.
  * @param string $mail User mail address.
  * @param string $password User password.
  * @param string $confirmPWD Repeated password.
- * @return bool Check result.
+ * @return bool Result of the check.
  */
 function validate_registration_input($username, $mail, $password, $confirmPWD)
 {
     // check if username AND mail are okay
     if (!validate_username($username) && !validate_mail($mail)) {
         header("location: " . REGISTER_PAGE . "?error=invalidNameAndMail");
-        exit();
+        return false;
     }
     // validate the username alone
     else if (!validate_username($username)) {
         $input = "&mail=" . $mail;
         header("location: " . REGISTER_PAGE . "?error=invalidUsername" . $input);
-        exit();
+        return false;
     }
     // validate the mail adress alone
     else if (!validate_mail($mail)) {
         $input = "&username=" . $username;
         header("location: " . REGISTER_PAGE . "?error=invalidMail" . $input);
-        exit();
+        return false;
     }
     // validate the password
     else if (!validate_pwd($password)) {
         $input = "&username=" . $username . "&mail=" . $mail;
         header("location: " . REGISTER_PAGE . "?error=invalidPassword" . $input);
-        exit();
+        return false;
     }
     // check if the passwords match
     else if ($password !== $confirmPWD) {
         $input = "&username=" . $username . "&mail=" . $mail;
         header("location: " . REGISTER_PAGE . "?error=passwordMismatch" . $input);
-        exit();
+        return false;
     } else {
         // all checks passed!
         return true;
@@ -298,10 +298,10 @@ function validate_registration_input($username, $mail, $password, $confirmPWD)
 
 /**
  * Log the user in.
- * 
+ *
  * Create a PHP session and set the user name, the mail address, the admin flag
  * and the unlocked flag.
- * 
+ *
  * @param string $username The users name.
  * @param string $mail The mail address.
  * @param int $adminFlag Flag if the user is admin or not.
@@ -348,10 +348,10 @@ function do_login($username, $mail, $adminFlag, $unlockedFlag)
 
 /**
  * Ensure the SQLite database exits.
- * 
+ *
  * Check for a given user if the SQLite database for the SQLi challenge already
  * exists and if not, create it.
- * 
+ *
  * @param string $username Name of the user.
  * @param string $mail Mail address.
  */
@@ -367,9 +367,9 @@ function check_sqli_db($username, $mail)
 
 /**
  * Validate the user credentials for the login.
- * 
+ *
  * Compare the user name (or mail) and the password with the login database.
- * 
+ *
  * @param string $userInput Either the user name or the mail address.
  * @param string $pwd Password.
  */
@@ -414,10 +414,10 @@ function try_login($userInput, $pwd)
 
 /**
  * Check if user data already exits in the database.
- * 
+ *
  * Check if the user name or the mail is already in the database. If not, start
  * the registration process.
- * 
+ *
  * @param string $username User name.
  * @param string $mail Mail address.
  * @param string $password User password.
@@ -454,9 +454,9 @@ function try_registration($username, $mail, $password)
 
 /**
  * Register the user.
- * 
+ *
  * Write the user data to the login database.
- * 
+ *
  * @param string $username User name.
  * @param string $mail Mail address.
  * @param string $password User password.
@@ -558,10 +558,10 @@ function do_registration($username, $mail, $password)
 
 /**
  * Generate a custom random token.
- * 
- * Generate a random token with a given length using the open ssl random pseudo 
+ *
+ * Generate a random token with a given length using the open ssl random pseudo
  * bytes function.
- * 
+ *
  * @param int $length Length of the token.
  * @return string Random token.
  * @throws Exception If the token creation fails.
@@ -583,10 +583,10 @@ function get_random_token($length)
 
 /**
  * Create a reset request for the user password.
- * 
- * Create a password reset request for a user account identified by its mail 
+ *
+ * Create a password reset request for a user account identified by its mail
  * address in the login database.
- * 
+ *
  * @param string $mail Mail address of the user account.
  */
 function do_pwd_reset($mail)
@@ -630,9 +630,9 @@ function do_pwd_reset($mail)
 
 /**
  * Check if a password reset request exists.
- * 
+ *
  * Check if a password reset request exists in the database for a user account.
- * 
+ *
  * @param string $mail Mail address of a user account.
  * @return bool Request status.
  */
@@ -655,9 +655,9 @@ function check_pwd_request_status($mail)
 
 /**
  * Remove a password reset request.
- * 
+ *
  * Delete a password reset request from the login database.
- * 
+ *
  * @param string $mail Mail address of a user account.
  */
 function delete_pwd_request($mail)
@@ -675,9 +675,9 @@ function delete_pwd_request($mail)
 
 /**
  * Add a password reset request.
- * 
+ *
  * Add a password reset request for a given mail address to the login database.
- * 
+ *
  * @param string $mail User account mail address.
  * @param string $selector Identifier for the request in the database.
  * @param string $validator Token to validate the request.
@@ -712,9 +712,9 @@ function add_pwd_request($mail, $selector, $validator, $expires)
 
 /**
  * Send password reset mail to user.
- * 
+ *
  * Send a mail with instructions to reset the password to the given mail address.
- * 
+ *
  * @param string $mail User mail address.
  * @param string $resetUrl URL with token to the password reset form.
  */
@@ -744,9 +744,9 @@ function send_pwd_reset_mail($mail, $resetUrl)
 
 /**
  * Update user password.
- * 
+ *
  * Update the user password in the login database.
- * 
+ *
  * @param string $username User name.
  * @param string $pwd User password.
  * @param string $newPwd New user password.
@@ -813,9 +813,9 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
 // Set a new password after password reset request
 /**
  * Update password after password reset.
- * 
+ *
  * Set new password after password reset request was fulfilled.
- * 
+ *
  * @param string $selector Identifier for the request in the database.
  * @param string $validator Validation token for the request.
  * @param string $pwd New user password.
@@ -867,10 +867,10 @@ function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
 
 /**
  * Check if new password fulfills the requirements.
- * 
+ *
  * Check if the new password is not empty and fulfills the default password
  * requirements from validate_pwd().
- * 
+ *
  * @param string $pwd Password.
  * @param string $confirmPwd Repeated password.
  * @return bool Password status.
@@ -891,9 +891,9 @@ function validate_new_pwd($pwd, $confirmPwd)
 
 /**
  * Verify the request token.
- * 
+ *
  * Check if the selector and validator match the database entries.
- * 
+ *
  * @param string $selector Request identifier.
  * @param string $validator Request token.
  * @param string $requestURI URI to the reset form.
@@ -942,11 +942,11 @@ function verify_token($selector, $validator, $requestURI)
 
 /**
  * Get the user mail address.
- * 
+ *
  * Get the corresponding user e-mail to a given selector token.
- * 
+ *
  * @param string $selector Request identifier.
- * @return string User account mail. 
+ * @return string User account mail.
  */
 function get_user_mail($selector)
 {
@@ -966,10 +966,10 @@ function get_user_mail($selector)
 
 /**
  * Update last login.
- * 
+ *
  * Set a new date for the last login field in the login database for a give
  * user.
- * 
+ *
  * @param string $username User name.
  */
 function update_last_login($username)
@@ -995,9 +995,9 @@ function update_last_login($username)
 
 /**
  * Set change password reminder.
- * 
+ *
  * Check if a user has to change password.
- * 
+ *
  * @param string $username User name.
  * @return bool Change status.
  */
@@ -1013,10 +1013,10 @@ function set_change_pwd_reminder($username)
 
 /**
  * Set reflective XSS challenge cookie.
- * 
- * Get challenge cookies from the database and store them in the user session. 
+ *
+ * Get challenge cookies from the database and store them in the user session.
  * Set the reflective XSS challenge cookie.
- * 
+ *
  * @param string $username User name.
  */
 function set_user_cookies($username)
@@ -1041,9 +1041,9 @@ function set_user_cookies($username)
 
 /**
  * Get last login.
- * 
+ *
  * Get the last login date from the login database for a given user.
- * 
+ *
  * @param string $username User name.
  * @return string Last login.
  */
