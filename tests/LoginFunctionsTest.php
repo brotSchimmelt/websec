@@ -7,12 +7,51 @@ use PHPUnit\Framework\TestCase;
 require_once(dirname(__FILE__) . "/../config/config.php");
 require_once(dirname(__FILE__) . CONF_DB_LOGIN); // DB credentials
 require_once(dirname(__FILE__) . FUNC_LOGIN); // login functions
-// require_once(dirname(__FILE__) . FUNC_BASE); // basic functions
-// require_once(dirname(__FILE__) . ERROR_HANDLING); // error functions
 
 
+/**
+ * Move to README when done.
+ * 
+ * NOTES:
+ * Every test with header() must be run as a separat process
+ * The same applies to tests that include SQL queries
+ * 
+ * --> WHY:
+ * The fixtures are set before every test that runs in a separat process.
+ * And also deleted afterwards. So, if a test (A) runs normally (in the main process)
+ * after a test (B) that ran in a separat process, the fixtures will be deleted 
+ * after B and NOT set up again before A runs. Solution: A needs to run in a 
+ * separat process as well.
+ */
+
+
+
+/*
+ * Mock dependencies from other files.
+ */
+
+function get_global_difficulty()
+{
+    return "normal";
+}
+
+function create_sqli_db($username, $mail)
+{
+}
+
+function slug($str)
+{
+    return $str;
+}
+
+/**
+ * Test Class for the login functions.
+ */
 final class LoginFunctionsTest extends TestCase
 {
+    /*
+    * Set up and tear down fixtures.
+    */
 
     public static function setUpBeforeClass(): void
     {
@@ -30,6 +69,11 @@ final class LoginFunctionsTest extends TestCase
             . "user_wwu_email, user_pwd_hash, is_unlocked, is_admin, "
             . "timestamp, last_login) VALUE (NULL, :user, :mail, :pwd_hash, "
             . "'0', '0', :timestamp, NULL)";
+        $insertChallenge = "INSERT IGNORE INTO challengeStatus VALUE (DEFAULT,"
+            . ":user,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,"
+            . "DEFAULT,DEFAULT,DEFAULT)";
+        $insertFakeCookie = "INSERT IGNORE INTO fakeCookie VALUE (DEFAULT, "
+            . ":user,DEFAULT,DEFAULT,DEFAULT)";
         get_login_db()->prepare($insertUser)->execute([
             'user' =>
             "elliot",
@@ -41,7 +85,27 @@ final class LoginFunctionsTest extends TestCase
             'timestamp' =>
             date("Y-m-d H:i:s")
         ]);
+        get_login_db()->prepare($insertUser)->execute([
+            'user' =>
+            "testUser",
+            'mail' =>
+            "test@uni-muenster.de",
+            'pwd_hash' =>
+            // 'fakehash' is the corresponding password
+            '$2y$13$iPY//1niofP6MBJooRBWN.OMP1RgUaFIQZZIojUv2r8MQ28GVPL06',
+            'timestamp' =>
+            date("Y-m-d H:i:s")
+        ]);
+        get_login_db()->prepare($insertChallenge)->execute([
+            'user' =>
+            "testUser",
+        ]);
+        get_login_db()->prepare($insertFakeCookie)->execute([
+            'user' =>
+            "testUser",
+        ]);
         array_push($_SESSION['testUsers'], "elliot");
+        array_push($_SESSION['testUsers'], "testUser");
 
         // add an entry to the POST array
         $_POST['test_var_set'] = "test";
@@ -55,8 +119,14 @@ final class LoginFunctionsTest extends TestCase
     {
         // delete all test users to the login database
         foreach ($_SESSION['testUsers'] as $e) {
-            $deleteSQL = "DELETE FROM `users` WHERE `user_name`='" . $e . "'";
-            get_login_db()->query($deleteSQL);
+            $deleteUser = "DELETE FROM `users` WHERE `user_name`='" . $e . "'";
+            $deleteChallenge = "DELETE FROM `challengeStatus` WHERE "
+                . "`user_name`='" . $e . "'";
+            $deleteCookie = "DELETE FROM `fakeCookie` WHERE `user_name`='"
+                . $e . "'";
+            get_login_db()->query($deleteUser);
+            get_login_db()->query($deleteChallenge);
+            get_login_db()->query($deleteCookie);
         }
 
         // remove the Session variable that was used to store all changes to the
@@ -69,6 +139,11 @@ final class LoginFunctionsTest extends TestCase
         unset($_POST);
         unset($_COOKIE);
     }
+
+
+    /*
+    * Tests and data provider for the login functions.
+    */
 
     /**
      * Test the login function 'get_login_db()'.
@@ -264,7 +339,9 @@ final class LoginFunctionsTest extends TestCase
     /**
      * Test the login function 'validate_mail()'.
      * 
-     * Note: Hard code the 'allowed domains' for phpUnit testing in the function.
+     * Note:
+     * Hard code the 'allowed domains' for phpUnit in 'validate_mail()'.
+     * See the keyword 'TESTING' in the source code.
      * 
      * @test
      * @dataProvider providerTestValidateMail
@@ -339,7 +416,9 @@ final class LoginFunctionsTest extends TestCase
     /**
      * Test the login function 'check_entry_exists()'.
      * 
-     * Note: Hard code the 'fake user' array for phpUnit testing in the function.
+     * Note:
+     * Hard code the 'fake user' array for phpUnit in 'check_entry_exists()'.
+     * See the keyword 'TESTING' in the source code.
      * 
      * @test
      * @dataProvider providerTestCheckEntryExits
@@ -349,5 +428,137 @@ final class LoginFunctionsTest extends TestCase
     {
         $result = check_entry_exists($input1, $input2);
         $this->assertEquals($expected, $result);
+    }
+
+
+    /**
+     * Generates data for the 'testValidateRegistrationInput()' method.
+     */
+    public function providerValidateRegistrationInput()
+    {
+
+        return [
+            "Correct input" => array(
+                "test",
+                "test@uni-muenster.de",
+                "password123",
+                "password123",
+                0, true
+            ),
+            "Invalid password format" => array(
+                "test",
+                "test@uni-muenster.de",
+                "123",
+                "123",
+                302, false
+            ),
+            "Invalid user and mail format" => array(
+                "t",
+                "test@test.de",
+                "password123",
+                "password123",
+                302, false
+            ),
+            "Invalid user format" => array(
+                "t",
+                "test@uni-muenster.de",
+                "password123",
+                "password123",
+                302, false
+            ),
+            "Invalid mail format" => array(
+                "test",
+                "test@test.test",
+                "password123",
+                "password123",
+                302, false
+            ),
+            "Password missmatch" => array(
+                "test",
+                "test@uni-muenster.de",
+                "password123",
+                "123password",
+                302, false
+            ),
+            "Empty input" => array(
+                "",
+                "",
+                "",
+                "",
+                302, false
+            )
+        ];
+    }
+
+
+    /**
+     * Test the login function 'validate_registration_input()'.
+     * 
+     * Note:
+     * Hard code the 'fake user' array for phpUnit in 'check_entry_exists()'.
+     * Hard code the 'allowed domains' for phpUnit in 'validate_mail()'.
+     * See the keyword 'TESTING' in the source code.
+     * 
+     * @test
+     * @dataProvider providerValidateRegistrationInput
+     * @runInSeparateProcess
+     */
+    public function testValidateRegistrationInput(
+        $input1,
+        $input2,
+        $input3,
+        $input4,
+        $responseCode,
+        $expected
+    ): void {
+
+        $result = validate_registration_input($input1, $input2, $input3, $input4);
+
+        if ($responseCode === 0) {
+            $this->assertEquals($expected, $result);
+        } else {
+            $this->assertEquals($expected, $result);
+            $this->assertEquals($responseCode, http_response_code());
+        }
+    }
+
+
+    /**
+     * Test the login function 'do_login()'.
+     * 
+     * @test
+     * @runInSeparateProcess
+     */
+    public function testDoLogin(): void
+    {
+        // set valid parameter
+        $username = "testUser";
+        $mail = "test@uni-muenster.de";
+        $adminFlag = "1";
+        $unlockedFlag = "0";
+
+        sleep(3);
+        // call do_login() with parameters
+        do_login($username, $mail, $adminFlag, $unlockedFlag);
+
+        // test if session was started
+        $this->assertEquals(PHP_SESSION_ACTIVE, session_status());
+
+        // test if session variables were set
+        $this->assertContains($username, $_SESSION);
+        $this->assertContains($mail, $_SESSION);
+        $this->assertContains($adminFlag, $_SESSION);
+        $this->assertNotContains($unlockedFlag, $_SESSION);
+        $this->assertArrayHasKey("fakeCSRFToken", $_SESSION);
+        $this->assertContains("elliot", $_SESSION);
+
+        // get last login
+        $sql = "SELECT last_login FROM users WHERE user_name = ?";
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+
+        // check if last login is not NULL
+        $this->assertNotEquals(NULL, $result['last_login']);
     }
 }
