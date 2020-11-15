@@ -61,8 +61,8 @@ final class LoginFunctionsTest extends TestCase
             . "DEFAULT,DEFAULT,DEFAULT)";
         $insertFakeCookie = "INSERT IGNORE INTO fakeCookie VALUE (DEFAULT, "
             . ":user,DEFAULT,DEFAULT,DEFAULT)";
-        $insertFakeRequest = "INSERT IGNORE INTO resetPwd VALUE (DEFAULT, "
-            . ":mail,'selector','validator','60')";
+        $insertRequest = "INSERT IGNORE INTO resetPwd VALUE (DEFAULT, :mail,"
+            . "'abc', 'abc', 0)";
         get_login_db()->prepare($insertUser)->execute([
             'user' =>
             "elliot",
@@ -93,14 +93,11 @@ final class LoginFunctionsTest extends TestCase
             'user' =>
             "testUser",
         ]);
-        get_login_db()->prepare($insertFakeRequest)->execute([
+        get_login_db()->prepare($insertRequest)->execute([
             'mail' =>
-            "test@uni-muenster.de",
+            "test@test.test"
         ]);
-        get_login_db()->prepare($insertFakeRequest)->execute([
-            'mail' =>
-            "test@test.test",
-        ]);
+
         array_push($_SESSION['testUsers'], "elliot");
         array_push($_SESSION['testUsers'], "testUser");
         array_push($_SESSION['testUsers'], "newUser");
@@ -679,7 +676,7 @@ final class LoginFunctionsTest extends TestCase
      * @dataProvider providerTestCheckPwdRequestStatus
      * @runInSeparateProcess
      */
-    public function testCheckPwdRequestStatus($input, $expected): void
+    public function testCheckPwdRequestStatus($input, $expected, $flag = 0): void
     {
         $result = check_pwd_request_status($input);
         $this->assertEquals($expected, $result);
@@ -763,5 +760,101 @@ final class LoginFunctionsTest extends TestCase
         // clean up DB
         $sql = "DELETE FROM `resetPwd` WHERE `user_wwu_email`='" . $input . "'";
         get_login_db()->query($sql);
+    }
+
+
+    /**
+     * Generates data for the 'testValidateNewPwd()' method.
+     */
+    public function providerTestValidateNewPwd()
+    {
+        return [
+            "Empty password" => array("", "password123", false),
+            "Empty password confirm" => array("password123", "", false),
+            "Too short password" => array("test", "test", false),
+            "Valid password" => array("password123", "password123", true)
+        ];
+    }
+
+    /**
+     * Test the login function 'validate_new_pwd()'.
+     * 
+     * @test
+     * @dataProvider providerTestValidateNewPwd
+     */
+    public function testValidateNewPwd($input1, $input2, $expected): void
+    {
+        $result = validate_new_pwd($input1, $input2);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Generates data for the 'testVerifyToken()' method.
+     */
+    public function providerTestVerifyToken()
+    {
+        // set up test requests
+        $mail = "mailAdress@test.manual";
+        $mail2 = "mailAdress2@test.manual";
+        $mail3 = "mailAdress3@test.manual";
+        $selector = get_random_token(16);
+        $selector2 = get_random_token(16);
+        $selector3 = get_random_token(16);
+        $validator = get_random_token(32);
+        $expires = date('U') + 1200;
+        $expires2 = date('U') - 42;
+
+        // check if an old request exists and delete it
+        if (check_pwd_request_status($mail)) {
+            delete_pwd_request($mail);
+        }
+
+        // add request to database
+        add_pwd_request($mail, $selector, $validator, $expires);
+        add_pwd_request($mail2, $selector2, $validator, $expires2);
+        add_pwd_request($mail3, $selector3, $validator, $expires);
+        add_pwd_request($mail3, $selector3, $validator, $expires);
+
+        return [
+            "Selector not hexadecimal" => array("qwerty", $validator, false, 0),
+            "Both token not hexadecimal" => array("qwerty", "qwerty", false, 0),
+            "Selector empty" => array("", $validator, false, 0),
+            "Both token empty" => array("", "", false, 0),
+            "Expired Request" => array($selector2, $validator, false, 0, $mail2),
+            "Double Request" => array($selector3, $validator, false, 302, $mail3),
+            "Invalid token" => array("56789f", "0123f", false, 0),
+            "Validator mismatch" => array("abcdef", "foobar", false, 0),
+            "Correct request tokens" => array(
+                $selector, $validator, true, 0, $mail
+            )
+        ];
+    }
+
+    /**
+     * Test the login function 'verify_token()'.
+     * 
+     * @test
+     * @dataProvider providerTestVerifyToken
+     * @runInSeparateProcess
+     */
+    public function testVerifyToken(
+        $input1,
+        $input2,
+        $expected,
+        $code,
+        $mail = "1"
+    ): void {
+
+        $result = verify_token($input1, $input2, "url");
+        $this->assertEquals($expected, $result, "Result failed!");
+
+        if ($code > 0) {
+            $this->assertEquals($code, http_response_code(), "Redirect failed!");
+        }
+
+        // remove test requests from the database
+        if ($mail != "1") {
+            delete_pwd_request($mail);
+        }
     }
 }
