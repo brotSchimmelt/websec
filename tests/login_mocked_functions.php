@@ -24,6 +24,16 @@ function get_allowed_domains()
     return ["@uni-muenster.de", "@wi.uni-muenster.de"];
 }
 
+function get_user_name()
+{
+    return "username";
+}
+
+function send_mail($foo, $bar, $foobar, $barfoo)
+{
+    return true;
+}
+
 function get_shop_db()
 {
     static $dbShop;
