@@ -61,6 +61,8 @@ final class LoginFunctionsTest extends TestCase
             . "DEFAULT,DEFAULT,DEFAULT)";
         $insertFakeCookie = "INSERT IGNORE INTO fakeCookie VALUE (DEFAULT, "
             . ":user,DEFAULT,DEFAULT,DEFAULT)";
+        $insertFakeRequest = "INSERT IGNORE INTO resetPwd VALUE (DEFAULT, "
+            . ":mail,'selector','validator','60')";
         get_login_db()->prepare($insertUser)->execute([
             'user' =>
             "elliot",
@@ -91,9 +93,19 @@ final class LoginFunctionsTest extends TestCase
             'user' =>
             "testUser",
         ]);
+        get_login_db()->prepare($insertFakeRequest)->execute([
+            'mail' =>
+            "test@uni-muenster.de",
+        ]);
+        get_login_db()->prepare($insertFakeRequest)->execute([
+            'mail' =>
+            "test@test.test",
+        ]);
         array_push($_SESSION['testUsers'], "elliot");
         array_push($_SESSION['testUsers'], "testUser");
         array_push($_SESSION['testUsers'], "newUser");
+        array_push($_SESSION['testUsers'], "test@test.test");
+        array_push($_SESSION['testUsers'], "test@uni-muenster.de");
 
         // add an entry to the POST array
         $_POST['test_var_set'] = "test";
@@ -114,9 +126,12 @@ final class LoginFunctionsTest extends TestCase
                 . $e . "'";
             $deleteSolutions = "DELETE FROM `challenge_solutions` WHERE "
                 . "`user_name`='" . $e . "'";
+            $deleteRequest = "DELETE FROM `resetPwd` WHERE "
+                . "`user_wwu_email`='" . $e . "'";
             get_login_db()->query($deleteUser);
             get_login_db()->query($deleteChallenge);
             get_login_db()->query($deleteCookie);
+            get_login_db()->query($deleteRequest);
             get_shop_db()->query($deleteSolutions);
         }
 
@@ -630,5 +645,123 @@ final class LoginFunctionsTest extends TestCase
             }
             $this->assertEquals($expected, $error);
         }
+    }
+    /**
+     * Test the login function 'send_pwd_reset_mail()'.
+     * 
+     * @test
+     */
+    public function testSendPwdResetMail(): void
+    {
+
+        $mail = "This is a test mail.";
+        $resetUrl = "index.php";
+        $result = send_pwd_reset_mail($mail, $resetUrl);
+        $this->assertEquals(true, $result);
+    }
+
+    /**
+     * Generates data for the 'testCheckPwdRequestStatus()' method.
+     */
+    public function providerTestCheckPwdRequestStatus()
+    {
+        return [
+            "Empty input" => array("", false),
+            "Mail address exists" => array("test@test.test", true),
+            "Mail address does not exits" => array("fake@test.test", false)
+        ];
+    }
+
+    /**
+     * Test the login function 'check_pwd_request_status()'.
+     * 
+     * @test
+     * @dataProvider providerTestCheckPwdRequestStatus
+     * @runInSeparateProcess
+     */
+    public function testCheckPwdRequestStatus($input, $expected): void
+    {
+        $result = check_pwd_request_status($input);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Test the login function 'delete_pwd_request()'.
+     * 
+     * @test
+     * @runInSeparateProcess
+     */
+    public function testDeletePwdRequest(): void
+    {
+
+        // insert request to DB
+        $sql = "INSERT IGNORE INTO resetPwd VALUE (DEFAULT, "
+            . "'test@delete.request','selector_test','validator_test','42')";
+        get_login_db()->query($sql);
+
+        // delete request from DB
+        $mail = "test@delete.request";
+        delete_pwd_request($mail);
+
+        // test result
+        $sql = "SELECT 1 FROM resetPwd WHERE user_wwu_email='" . $mail . "'";
+        $stmt = get_login_db()->query($sql);
+        $result = $stmt->fetch();
+        $this->assertEquals(false, $result);
+    }
+
+    /**
+     * Test the login function 'add_pwd_request()'.
+     * 
+     * @test
+     * @runInSeparateProcess
+     */
+    public function testAddPwdRequest(): void
+    {
+
+        // insert request to DB
+        $mail = "test@add.request";
+        add_pwd_request($mail, "add", "test", "3.1415");
+
+        // test result
+        $sql = "SELECT 1 FROM resetPwd WHERE user_wwu_email='" . $mail . "'";
+        $stmt = get_login_db()->query($sql);
+        $result = $stmt->fetch();
+        $this->assertNotEquals(false, $result);
+
+        // delete request from DB
+        $sql = "DELETE FROM `resetPwd` WHERE `user_wwu_email`='" . $mail . "'";
+        get_login_db()->query($sql);
+    }
+
+
+    /**
+     * Generates data for the 'testDoPwdReset()' method.
+     */
+    public function providerTestDoPwdReset()
+    {
+        return [
+            "Mail address exists" => array("fake@mail.example", true, 302),
+            "Mail address does not exits" => array("non@exist.ing", false, 302),
+            "Request already exists" => array("test@uni-muenster.de", true, 302)
+        ];
+    }
+
+    /**
+     * Test the login function 'do_pwd_reset()'.
+     * 
+     * @test
+     * @dataProvider providerTestDoPwdReset
+     * @runInSeparateProcess
+     */
+    public function testDoPwdReset($input, $expected, $code): void
+    {
+        $result = do_pwd_reset($input);
+        $this->assertEquals($expected, $result, "Reset failed!");
+        $this->assertEquals($code, http_response_code(), "No redirect!");
+
+        // clean up DB
+        $sql = "DELETE FROM `resetPwd` WHERE `user_wwu_email`='" . $input . "'";
+        get_login_db()->query($sql);
     }
 }
