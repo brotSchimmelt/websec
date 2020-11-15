@@ -588,12 +588,14 @@ function get_random_token($length)
  * address in the login database.
  *
  * @param string $mail Mail address of the user account.
+ * @return bool Password reset status.
  */
 function do_pwd_reset($mail)
 {
 
     $mailCheckSQL = "SELECT 1 FROM `users` WHERE `user_wwu_email` = ?";
     $mailExists = check_entry_exists($mail, $mailCheckSQL);
+    $resetStatus = false;
 
     if ($mailExists) {
         try {
@@ -619,13 +621,13 @@ function do_pwd_reset($mail)
         add_pwd_request($mail, $selector, $validator, $expires);
 
         // Send mail with reset instructions to user
-        send_pwd_reset_mail($mail, $url);
+        $resetStatus = send_pwd_reset_mail($mail, $url);
     }
 
     // Show success message either way
-    sleep(3); // to avoid spam
+    // sleep(3); // to avoid spam
     header("location: " . LOGIN_PAGE .  "?success=requestProcessed");
-    exit();
+    return $resetStatus;
 }
 
 /**
@@ -685,7 +687,7 @@ function delete_pwd_request($mail)
  */
 function add_pwd_request($mail, $selector, $validator, $expires)
 {
-    // Hash the validator token
+    // hash the validator token
     try {
         $hashedToken = hash_user_pwd($validator);
     } catch (Exception $e) {
@@ -717,7 +719,7 @@ function add_pwd_request($mail, $selector, $validator, $expires)
  *
  * @param string $mail User mail address.
  * @param string $resetUrl URL with token to the password reset form.
- * @return bool True if the mail was successfully accepted for delivery, false 
+ * @return bool True if the mail was successfully accepted for delivery, false
  * otherwise.
  */
 function send_pwd_reset_mail($mail, $resetUrl)
