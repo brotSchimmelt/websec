@@ -857,4 +857,28 @@ final class LoginFunctionsTest extends TestCase
             delete_pwd_request($mail);
         }
     }
+
+    /**
+     * Generates data for the 'testGetUserMail()' method.
+     */
+    public function providerTestGetUserMail()
+    {
+        return [
+            "Invalid selector" => array("123", false),
+            "Valid selector" => array("abc", "test@test.test")
+        ];
+    }
+
+    /**
+     * Test the login function 'get_user_mail()'.
+     * 
+     * @test
+     * @dataProvider providerTestGetUserMail
+     * @runInSeparateProcess
+     */
+    public function testGetUserMail($input, $expected)
+    {
+        $result = get_user_mail($input);
+        $this->assertEquals($expected, $result);
+    }
 }
