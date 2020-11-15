@@ -966,7 +966,7 @@ function get_user_mail($selector)
         exit();
     }
 
-    return $result['user_wwu_email'];
+    return ($result) ? $result['user_wwu_email'] : $result;
 }
 
 /**
