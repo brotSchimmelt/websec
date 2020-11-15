@@ -717,6 +717,8 @@ function add_pwd_request($mail, $selector, $validator, $expires)
  *
  * @param string $mail User mail address.
  * @param string $resetUrl URL with token to the password reset form.
+ * @return bool True if the mail was successfully accepted for delivery, false 
+ * otherwise.
  */
 function send_pwd_reset_mail($mail, $resetUrl)
 {
@@ -739,7 +741,8 @@ function send_pwd_reset_mail($mail, $resetUrl)
         . "Reply-To: websec@wi.uni-muenster.de\r\n"
         . "Content-type: text/html\r\n";
 
-    mail($to, $subject, $msg, $header);
+    $mailStatus = send_mail($to, $subject, $msg, $header);
+    return $mailStatus;
 }
 
 /**

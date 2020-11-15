@@ -616,3 +616,21 @@ function get_challenge_instructions($instructionNames)
         exit();
     }
 }
+
+/**
+ * Wrapper function to send a mail via php mail function.
+ * 
+ * @param string $to Receiver, or receivers of the mail.
+ * @param string $subject Subject of the email to be sent.
+ * @param string $message Message to be sent.
+ * @param string|array $header String or array to be inserted at the end of the 
+ * email header. Since 7.2.0 accepts an array. Its keys are the header names and 
+ * its values are the respective header values.
+ * @return bool True if the mail was successfully accepted for delivery, false 
+ * otherwise.
+ */
+function send_mail($to, $subject, $message, $header)
+{
+    $mailStatus = mail($to, $subject, $message, $header);
+    return $mailStatus;
+}
