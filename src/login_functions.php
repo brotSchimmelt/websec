@@ -815,7 +815,6 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
     }
 }
 
-// Set a new password after password reset request
 /**
  * Update password after password reset.
  *
@@ -826,6 +825,7 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
  * @param string $pwd New user password.
  * @param string $confirmPWD Repeated new user password.
  * @param string $requestURI URI to the request form.
+ * @return bool Password status.
  */
 function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
 {
@@ -834,13 +834,13 @@ function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
 
     if (!validate_new_pwd($pwd, $confirmPwd)) {
         header("location: " . $completeURI . "&error=invalidPassword");
-        exit();
+        return false;
     } else if ($pwd !== $confirmPwd) {
         header("location: " . $completeURI . "&error=passwordMismatch");
-        exit();
+        return false;
     } else if (!verify_token($selector, $validator, $requestURI)) {
         header("location: " . LOGIN_PAGE . "?error=invalidToken");
-        exit();
+        return false;
     } else {
 
         try {
@@ -866,7 +866,7 @@ function set_new_pwd($selector, $validator, $pwd, $confirmPwd, $requestURI)
         }
 
         header("location: " . LOGIN_PAGE . "?success=resetPwd");
-        exit();
+        return true;
     }
 }
 
@@ -931,7 +931,7 @@ function verify_token($selector, $validator, $requestURI)
     $count = $stmt->rowCount();
     if ($count > 1) {
         header("location: " . LOGIN_PAGE . "?error=sqlError" . "&code=042");
-        exit();
+        return false;
     } else if (!$result) {
         return false;
     } else {
