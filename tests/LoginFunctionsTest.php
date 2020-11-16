@@ -33,7 +33,7 @@ require_once(dirname(__FILE__) . TES . "login_mocked_functions.php");
 
 
 /**
- * Test Class for the login functions.
+ * Test class for the login functions.
  */
 final class LoginFunctionsTest extends TestCase
 {
