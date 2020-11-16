@@ -756,6 +756,7 @@ function send_pwd_reset_mail($mail, $resetUrl)
  * @param string $pwd User password.
  * @param string $newPwd New user password.
  * @param string $confirmPWD Repeated new user password.
+ * @return bool Password status.
  */
 function change_password($username, $pwd, $newPwd, $confirmPwd)
 {
@@ -765,12 +766,12 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
     // Check if new password is secure enough
     if (!validate_pwd($newPwd)) {
         header("location: " . $redirectPath . "?error=invalidPassword");
-        exit();
+        return false;
     }
     // Check password confirmation
     else if ($newPwd !== $confirmPwd) {
         header("location: " . $redirectPath . "?error=passwordMismatch");
-        exit();
+        return false;
     } else {
 
         // Get password from the DB
@@ -810,7 +811,7 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
 
             // Success message
             header("location: " . $redirectPath . "?success=pwdChanged");
-            exit();
+            return true;
         }
     }
 }
