@@ -784,8 +784,14 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
             exit();
         }
 
-        // Check if current password is correct
+        // Check if user was found
         $result = $stmt->fetch();
+        if(!$result) {
+          header("location: " . $redirectPath . "?error=wrongCredentials");
+          return false;
+        }
+
+        // check if current password is correct
         if (verify_pwd($pwd, $result, $redirect = $redirectPath)) {
 
             try {
