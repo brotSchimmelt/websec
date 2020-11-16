@@ -12,7 +12,7 @@ require_once(dirname(__FILE__) . ERROR_HANDLING); // Error functions
 final class ErrorFunctionsTest extends TestCase
 {
     /*
-    * Tests and data provider for the login functions.
+    * Tests and data provider for the error functions.
     */
 
 
