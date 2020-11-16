@@ -111,13 +111,13 @@ function verify_pwd($pwd, $resultArray, $redirect = LOGIN_PAGE)
         return true;
     } else if (!$pwdTest) {
 
-        // sleep(3); // 3 seconds
+        sleep(3); // 3 seconds
         // send user back if password does not match
         header("location: " . $redirect . "?error=wrongCredentials");
         return false;
     } else {
 
-        // sleep(3); // 3 second
+        sleep(3); // 3 second
         // just to catch any errors in the 'password_verify' function
         header("location: " . $redirect . "?error=internalError");
         return false;
@@ -625,7 +625,7 @@ function do_pwd_reset($mail)
     }
 
     // Show success message either way
-    // sleep(3); // to avoid spam
+    sleep(3); // to avoid spam
     header("location: " . LOGIN_PAGE .  "?success=requestProcessed");
     return $resetStatus;
 }
@@ -786,9 +786,9 @@ function change_password($username, $pwd, $newPwd, $confirmPwd)
 
         // Check if user was found
         $result = $stmt->fetch();
-        if(!$result) {
-          header("location: " . $redirectPath . "?error=wrongCredentials");
-          return false;
+        if (!$result) {
+            header("location: " . $redirectPath . "?error=wrongCredentials");
+            return false;
         }
 
         // check if current password is correct
