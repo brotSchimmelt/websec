@@ -964,10 +964,125 @@ final class LoginFunctionsTest extends TestCase
         }
     }
 
+    /**
+     * Generates data for the 'testChangePassword()' method.
+     */
+    public function providerTestChangePassword()
+    {
+        return [
+            "Too short password" =>
+            array("elliot", "fakehash", "12", "12", false, 302),
+            "Empty new password" =>
+            array("elliot", "fakehash", "", "", false, 302),
+            "New password mismatch" =>
+            array("elliot", "fakehash", "password1", "password321", false, 302),
+            "Old password mismatch" =>
+            array("elliot", "invalid", "password1", "password1", false, 302),
+            "Non existing user" =>
+            array("no", "fakehash", "password1", "password1", false, 302),
+            "Valid request" =>
+            array("elliot", "fakehash", "password1", "password1", true, 302),
+        ];
+    }
 
-    // change_password
+    /**
+     * Test the login function 'change_password()'.
+     * 
+     * @test
+     * @dataProvider providerTestChangePassword
+     * @runInSeparateProcess
+     */
+    public function testChangePassword(
+        $input1,
+        $input2,
+        $input3,
+        $input4,
+        $expected,
+        $code
+    ) {
+        $result = change_password($input1, $input2, $input3, $input4);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($code, http_response_code());
+    }
 
-    // update_last_login, set_change_pwd_reminder, get_last_login --> return zu ternary wechseln
+    /**
+     * Test the login function 'update_last_login()'.
+     * 
+     * @test
+     * @runInSeparateProcess
+     */
+    public function testUpdateLastLogin()
+    {
+        $sql = "SELECT last_login FROM users WHERE user_name='elliot';";
+        $stmt = get_login_db()->query($sql);
+        $resultBefore = $stmt->fetch();
 
-    // set_user_cookies
+        update_last_login("elliot");
+
+        $sql = "SELECT last_login FROM users WHERE user_name='elliot';";
+        $stmt = get_login_db()->query($sql);
+        $resultAfter = $stmt->fetch();
+
+        $this->assertNotEquals(
+            $resultBefore['last_login'],
+            $resultAfter['last_login']
+        );
+    }
+
+    /**
+     * Generates data for the 'testSetChangePwdReminder()' method.
+     */
+    public function providerTestSetChangePwdReminder()
+    {
+        return [
+            "Admin user" => array("administrator", true),
+            "Non-admin user" => array("elliot", false),
+        ];
+    }
+
+    /**
+     * Test the login function 'set_change_pwd_reminder()'.
+     * 
+     * @test
+     * @dataProvider providerTestSetChangePwdReminder
+     */
+    public function testSetChangePwdReminder($input, $expected)
+    {
+        $result = set_change_pwd_reminder($input);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Test the login function 'get_ast_login()'.
+     * 
+     * @test
+     * @runInSeparateProcess
+     */
+    public function testGetLastLogin()
+    {
+        $result = get_last_login("elliot");
+        $this->assertEquals(true, is_null($result));
+    }
+
+    /**
+     * Test the login function 'set_user_cookies()'.
+     * 
+     * @test
+     * @runInSeparateProcess
+     */
+    public function testSetUserCookies()
+    {
+        set_user_cookies("testUser");
+        $_COOKIE['XSS_YOUR_SESSION'] = $_SESSION['reflectiveXSS'];
+
+        $this->assertEquals(true, isset($_SESSION['reflectiveXSS']));
+        $this->assertEquals(true, !empty($_SESSION['reflectiveXSS']));
+        $this->assertEquals(true, isset($_SESSION['storedXSS']));
+        $this->assertEquals(true, !empty($_SESSION['storedXSS']));
+        $this->assertArrayHasKey("XSS_YOUR_SESSION", $_COOKIE);
+        $this->assertEquals(
+            $_SESSION['reflectiveXSS'],
+            $_COOKIE['XSS_YOUR_SESSION']
+        );
+    }
 }
