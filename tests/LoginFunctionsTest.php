@@ -808,6 +808,12 @@ final class LoginFunctionsTest extends TestCase
         if (check_pwd_request_status($mail)) {
             delete_pwd_request($mail);
         }
+        if (check_pwd_request_status($mail2)) {
+            delete_pwd_request($mail2);
+        }
+        if (check_pwd_request_status($mail3)) {
+            delete_pwd_request($mail3);
+        }
 
         // add request to database
         add_pwd_request($mail, $selector, $validator, $expires);
@@ -881,4 +887,87 @@ final class LoginFunctionsTest extends TestCase
         $result = get_user_mail($input);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * Generates data for the 'testSetNewPwd()' method.
+     */
+    public function providerTestSetNewPwd()
+    {
+        // set up test requests
+        $mail = "utterNonsense";
+        $selector = get_random_token(16);
+        $validator = get_random_token(32);
+        $expires = date('U') + 1200;
+
+        // check if an old request exists and delete it
+        if (check_pwd_request_status($mail)) {
+            delete_pwd_request($mail);
+        }
+
+        // add request to database
+        add_pwd_request($mail, $selector, $validator, $expires);
+
+        return [
+            "Too short password" =>
+            array(
+                $selector, $validator, "12", "12", "url", false, 302
+            ),
+            "Empty password" =>
+            array(
+                $selector, $validator, "", "", "url", false, 302
+            ),
+            "Password mismatch" =>
+            array(
+                $selector,
+                $validator, "password123", "password321", "url", false, 302
+            ),
+            "Invalid token" =>
+            array(
+                "invalid",
+                $validator,
+                "password123", "password123", "url", false, 302
+            ),
+            "Valid Request" =>
+            array(
+                $selector,
+                $validator,
+                "password123", "password123", "url", true, 302, $mail
+            ),
+        ];
+    }
+
+    /**
+     * Test the login function 'set_new_pwd()'.
+     * 
+     * @test
+     * @dataProvider providerTestSetNewPwd
+     * @runInSeparateProcess
+     */
+    public function testSetNewPwd(
+        $input1,
+        $input2,
+        $input3,
+        $input4,
+        $input5,
+        $expected,
+        $code,
+        $mail = "1"
+    ) {
+
+        $result = set_new_pwd($input1, $input2, $input3, $input4, $input5);
+        $this->assertEquals($expected, $result, "Result failed!");
+        $this->assertEquals($code, http_response_code(), "Redirect failed!");
+
+        // remove test requests from the database
+        if ($mail != "1") {
+            delete_pwd_request($mail);
+        }
+    }
+
+
+    // change_password
+
+    // update_last_login, set_change_pwd_reminder, get_last_login --> return zu ternary wechseln
+
+    // set_user_cookies
 }
