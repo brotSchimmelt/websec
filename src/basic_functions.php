@@ -276,10 +276,8 @@ function get_blocked_usernames()
  * @return mixed Setting value.
  * @throws Exception If setting type does not match.
  */
-function get_setting($setting, $subsetting)
+function get_setting($setting, $subsetting, $file = SETTINGS)
 {
-    // load path to settings.json
-    $file = SETTINGS;
 
     // load settings as assoc array
     try {
@@ -320,10 +318,8 @@ function get_setting($setting, $subsetting)
  * @param string|bool $newValue New setting value.
  * @throws Exception If setting type does not match.
  */
-function set_setting($setting, $subsetting, $newValue)
+function set_setting($setting, $subsetting, $newValue, $file = SETTINGS)
 {
-    // load path to settings.json
-    $file = SETTINGS;
 
     // load settings as assoc array
     try {
@@ -535,7 +531,7 @@ function get_file_size($file, $unit = "kb")
  * Get the corresponding user name for a given mail address.
  *
  * @param string $mail User mail address.
- * @return string User name.
+ * @return string|bool User name.
  */
 function get_user_name($mail)
 {
@@ -553,7 +549,7 @@ function get_user_name($mail)
         exit();
     }
 
-    return $result['user_name'];
+    return (!$result) ? false : $result['user_name'];
 }
 
 /**
