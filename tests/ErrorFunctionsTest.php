@@ -1,5 +1,12 @@
 <?php
 
+namespace test\error;
+
+if (session_status() == PHP_SESSION_NONE) {
+    // session has not started
+    session_start();
+}
+
 use PHPUnit\Framework\TestCase;
 
 // load configurations and functions to test
