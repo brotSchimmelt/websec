@@ -45,6 +45,9 @@ final class LoginFunctionsTest extends TestCase
     * Set up and tear down fixtures.
     */
 
+    /**
+     * This method is called before the first test of this test class is run.
+     */
     public static function setUpBeforeClass(): void
     {
         // initialize test arrays
@@ -116,6 +119,9 @@ final class LoginFunctionsTest extends TestCase
         $_GET['test_var_empty'] = "";
     }
 
+    /**
+     * This method is called after the last test of this test class is run.
+     */
     public static function tearDownAfterClass(): void
     {
         // delete all test users to the login database

@@ -29,6 +29,9 @@ final class BasicFunctionsTest extends TestCase
     * Set up and tear down fixtures.
     */
 
+    /**
+     * This method is called before the first test of this test class is run.
+     */
     public static function setUpBeforeClass(): void
     {
         // set up test user
@@ -45,6 +48,9 @@ final class BasicFunctionsTest extends TestCase
         ]);
     }
 
+    /**
+     * This method is called after the last test of this test class is run.
+     */
     public static function tearDownAfterClass(): void
     {
         // delete test user
