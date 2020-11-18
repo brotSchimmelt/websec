@@ -2,8 +2,7 @@
 
 ################################################################################
 #   Purpose: Convert the markdown documentations to valid html.                #
-#   Test: Tested on Ubuntu 18 LTS                                              #
-#   Note: Not yet tested on Ubuntu 20 LTS                                      #
+#   Test: Tested on Ubuntu 18 LTS and 20 LTS                                   #
 #   Author: tknebler@gmail.com                                                 #
 #                                                                              #
 #   Check if 'grip' is installed                                               #
