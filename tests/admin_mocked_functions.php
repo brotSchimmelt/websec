@@ -41,3 +41,34 @@ function get_shop_db()
     }
     return $dbShop;
 }
+
+function lookup_challenge_status($challenge, $username)
+{
+    // filter challenge name since prepared statements do not work for
+    // table names etc.
+    $challengeField = filter_var($challenge, FILTER_SANITIZE_SPECIAL_CHARS);
+
+    if (get_global_difficulty() == "hard") {
+        $challengeField = $challengeField . "_hard";
+    }
+
+    $sql = "SELECT " . $challengeField . " FROM `challengeStatus` WHERE "
+        . "`user_name`=?";
+
+    try {
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+    } catch (PDOException $e) {
+        display_exception_msg($e, "125");
+        exit();
+    }
+
+    // check if challenge was already solved
+    return $result[$challengeField] == 1 ? true : false;
+}
+
+function get_global_difficulty()
+{
+    return "normal";
+}
