@@ -1,5 +1,10 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    // session has not started
+    session_start();
+}
+
 function get_login_db()
 {
     // ensure only one connection at a time is alive
@@ -28,7 +33,7 @@ function get_shop_db()
     if ($dbShop instanceof PDO) {
         return $dbShop;
     }
-    require_once(CONF_DB_SHOP);
+
     try {
         $dbShop = new PDO(DSN_SHOP, DB_USER_SHOP, DB_PWD_SHOP, OPTIONS_SHOP);
     } catch (PDOException $e) {
