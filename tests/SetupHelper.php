@@ -16,7 +16,7 @@ final class SetupHelper
     public static function insertUser(
         $name,
         $mail,
-        $hash,
+        $hash = "hash",
         $unlocked = 0,
         $admin = 0
     ): void {
@@ -32,6 +32,31 @@ final class SetupHelper
             'pwd_hash' => $hash,
             'unlocked' => $unlocked,
             'admin' => $admin
+        ]);
+    }
+    /**
+     * Insert user in fake cookie table.
+     * 
+     * @param string $name Name of the user.
+     * @param string $reflective_xss Reflective XSS cookie.
+     * @param string $stored_xss Stored XSS cookie.
+     * @param string $fake_token Fake Cookie for CSRF challenge.
+     */
+    public static function insertFakeCookie(
+        $name,
+        $reflective_xss = "reflective_cookie",
+        $stored_xss = "stored_cookie",
+        $fake_token = "csrf_token"
+    ) {
+        $sql = "INSERT IGNORE INTO fakeCookie (id, user_name, reflective_xss, "
+            . "stored_xss, fake_token) VALUE (NULL,:user,:rxss,:sxss,:csrf)";
+
+        $stmt = get_login_db()->prepare($sql);
+        $stmt->execute([
+            'user' => $name,
+            'rxss' => $reflective_xss,
+            'sxss' => $stored_xss,
+            'csrf' => $fake_token
         ]);
     }
 
