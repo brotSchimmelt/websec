@@ -77,3 +77,32 @@ function get_global_difficulty()
 {
     return "normal";
 }
+
+function set_setting($setting, $subsetting, $newValue)
+{
+    $_SESSION[$setting] = array($subsetting => $newValue);
+}
+
+function get_challenge_solution($username, $challenge)
+{
+    $sql = "SELECT " . $challenge . " FROM `challenge_solutions` WHERE "
+        . "`user_name`=:user";
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([
+            "user" => $username
+        ]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "170");
+        exit();
+    }
+
+    $result = $stmt->fetch();
+    return $result[$challenge];
+}
+
+function get_last_challenge_input($a, $b)
+{
+    return "-";
+}
