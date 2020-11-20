@@ -20,7 +20,7 @@ noColor="\033[0m"
 SECONDS=0
 
 # run all the different test classes sequentially
-for i in Admin Basic Error Login; do
+for i in Admin Basic Error Login Shop; do
 
     printf "\nTesting ${orange}${i}${noColor} functions ...\n\n"
     $phpunit $test_dir${i}FunctionsTest.php
