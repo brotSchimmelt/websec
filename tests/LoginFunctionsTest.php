@@ -318,7 +318,7 @@ final class LoginFunctionsTest extends TestCase
             "Not allowed characters" =>
             array("user_+123", false),
             "Non-Latin characters" =>
-            array("漂浪的名字", false)
+            array("好听的名字", false)
         ];
     }
 
