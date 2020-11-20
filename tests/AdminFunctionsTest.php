@@ -7,6 +7,9 @@ use PDO;
 use PDOException;
 use Exception;
 
+// load SetupHelper
+use test\helper\SetupHelper;
+
 if (session_status() == PHP_SESSION_NONE) {
     // session has not started
     session_start();
@@ -18,6 +21,7 @@ require_once(dirname(__FILE__) . CONF_DB_LOGIN); // DB credentials
 require_once(CONF_DB_SHOP); // DB credentials
 require_once(dirname(__FILE__) . FUNC_ADMIN); // admin functions
 require_once(dirname(__FILE__) . TES . "admin_mocked_functions.php");
+require_once(dirname(__FILE__) . TES . "SetupHelper.php");
 
 
 /**
@@ -36,19 +40,19 @@ final class AdminFunctionsTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         // add test students
-        self::insertUser("testUser1", "user1@test.fake", "hash");
-        self::insertUser("testUser2", "user2@test.fake", "hash", $unlocked = 1);
-        self::setAllChallenges("testUser1");
-        self::setAllChallenges("testUser2", 1, 1, 1, 1);
-        self::insertCSRFPost("testUser2", "pwned", "example.php");
-        self::insertSolutions("testUser1", "-", "-", "-");
-        self::insertSolutions("testUser2", "test", "test", "test");
+        SetupHelper::insertUser("testUser1", "user1@test.fake", "hash");
+        SetupHelper::insertUser("testUser2", "user2@test.fake", "hash", $unlocked = 1);
+        SetupHelper::insertAllChallenges("testUser1");
+        SetupHelper::insertAllChallenges("testUser2", 1, 1, 1, 1);
+        SetupHelper::insertCSRFPost("testUser2", "pwned", "example.php");
+        SetupHelper::insertSolutions("testUser1", "-", "-", "-");
+        SetupHelper::insertSolutions("testUser2", "test", "test", "test");
 
         // add test admins
-        self::insertUser("testAdmin1", "admin1@test.fake", "hash", 0, 1);
-        self::insertUser("testAdmin2", "admin2@test.fake", "hash", 1, 1);
-        self::setAllChallenges("testAdmin1");
-        self::setAllChallenges("testAdmin2");
+        SetupHelper::insertUser("testAdmin1", "admin1@test.fake", "hash", 0, 1);
+        SetupHelper::insertUser("testAdmin2", "admin2@test.fake", "hash", 1, 1);
+        SetupHelper::insertAllChallenges("testAdmin1");
+        SetupHelper::insertAllChallenges("testAdmin2");
 
         // save all test user names in SESSION array
         $_SESSION['adminTestUser'] =
@@ -62,115 +66,15 @@ final class AdminFunctionsTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        // SQL statements for the databases
-        $deleteUsers = "DELETE FROM users WHERE user_name=?";
-        $deleteChallenges = "DELETE FROM challengeStatus WHERE user_name=?";
-        $deleteCSRF = "DELETE FROM csrf_posts WHERE user_name=?";
-        $deleteCart = "DELETE FROM cart WHERE user_name=?";
-        $deleteSolutions = "DELETE FROM challenge_solutions WHERE user_name=?";
-
         // remove test users
         foreach ($_SESSION['adminTestUser'] as $user) {
-            get_login_db()->prepare($deleteUsers)->execute([$user]);
-            get_login_db()->prepare($deleteChallenges)->execute([$user]);
-            get_shop_db()->prepare($deleteCSRF)->execute([$user]);
-            get_shop_db()->prepare($deleteCart)->execute([$user]);
-            get_shop_db()->prepare($deleteSolutions)->execute([$user]);
+            SetupHelper::deleteDbEntries($user);
         }
 
         // empty SESSION array
         unset($_SESSION['adminTestUser']);
         unset($_SESSION['adminNumOfStudents']);
         unset($_SESSION['adminNumOfAdmins']);
-    }
-
-    /**
-     * Insert a user into the 'users' database.
-     */
-    public static function insertUser(
-        $name,
-        $mail,
-        $hash,
-        $unlocked = 0,
-        $admin = 0
-    ): void {
-        $insertUser = "INSERT IGNORE INTO users (user_id, user_name, "
-            . "user_wwu_email, user_pwd_hash, is_unlocked, is_admin, "
-            . "timestamp, last_login) VALUE (NULL, :user, :mail, :pwd_hash, "
-            . ":unlocked, :admin, DEFAULT, DEFAULT)";
-
-        $stmt = get_login_db()->prepare($insertUser);
-        $stmt->execute([
-            'user' => $name,
-            'mail' => $mail,
-            'pwd_hash' => $hash,
-            'unlocked' => $unlocked,
-            'admin' => $admin
-        ]);
-    }
-
-    /**
-     * Set all challenges for a given user.
-     */
-    public static function setAllChallenges(
-        $name,
-        $reflective_xss = 0,
-        $stored_xss = 0,
-        $sqli = 0,
-        $csrf = 0
-    ): void {
-        $insertChallenge = "INSERT IGNORE INTO challengeStatus "
-            . "(id,user_name,reflective_xss,stored_xss, sqli,csrf,csrf_referrer"
-            . ") VALUE (NULL,:user,:rxss,:sxss,:sqli,:csrf,:csrfr)";
-
-        // set test referrer
-        $csrfReferrer = ($csrf === 1) ? "referrer" : "";
-
-        $stmt = get_login_db()->prepare($insertChallenge);
-        $stmt->execute([
-            'user' => $name,
-            'rxss' => $reflective_xss,
-            'sxss' => $stored_xss,
-            'sqli' => $sqli,
-            'csrf' => $csrf,
-            'csrfr' => $csrfReferrer
-        ]);
-    }
-
-    /**
-     * Insert a test CSRF post for a given user into the database.
-     */
-    public static function insertCSRFPost($name, $msg, $referrer): void
-    {
-        $insertCSRF = "INSERT IGNORE INTO csrf_posts (post_id,user_name,"
-            . "message,referrer,timestamp) VALUE (NULL,:user,:msg,:referrer,"
-            . ":time)";
-
-        $stmt = get_shop_db()->prepare($insertCSRF);
-        $stmt->execute([
-            'user' => $name,
-            'msg' => $msg,
-            'referrer' => $referrer,
-            'time' => date("Y-m-d H:i:s")
-        ]);
-    }
-
-    /**
-     * Insert challenge solutions for a given user.
-     */
-    public static function insertSolutions($name, $rxss, $sxss, $sqli)
-    {
-        $insertSolution = "INSERT IGNORE INTO challenge_solutions (id, "
-            . "user_name, reflective_xss, stored_xss, sqli) VALUE (NULL, :user,"
-            . " :rxss, :sxss, :sqli)";
-
-        $stmt = get_shop_db()->prepare($insertSolution);
-        $stmt->execute([
-            'user' => $name,
-            'rxss' => $rxss,
-            'sxss' => $sxss,
-            'sqli' => $sqli
-        ]);
     }
 
 
