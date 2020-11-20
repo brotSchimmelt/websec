@@ -66,12 +66,16 @@ final class AdminFunctionsTest extends TestCase
         $deleteUsers = "DELETE FROM users WHERE user_name=?";
         $deleteChallenges = "DELETE FROM challengeStatus WHERE user_name=?";
         $deleteCSRF = "DELETE FROM csrf_posts WHERE user_name=?";
+        $deleteCart = "DELETE FROM cart WHERE user_name=?";
+        $deleteSolutions = "DELETE FROM challenge_solutions WHERE user_name=?";
 
         // remove test users
         foreach ($_SESSION['adminTestUser'] as $user) {
             get_login_db()->prepare($deleteUsers)->execute([$user]);
             get_login_db()->prepare($deleteChallenges)->execute([$user]);
             get_shop_db()->prepare($deleteCSRF)->execute([$user]);
+            get_shop_db()->prepare($deleteCart)->execute([$user]);
+            get_shop_db()->prepare($deleteSolutions)->execute([$user]);
         }
 
         // empty SESSION array
