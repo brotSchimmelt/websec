@@ -45,3 +45,21 @@ function get_shop_db()
     }
     return $dbShop;
 }
+
+function save_challenge_solution($username, $solution, $challenge)
+{
+
+    $sql = "UPDATE `challenge_solutions` SET " . $challenge . " = :solution "
+        . "WHERE `user_name` = :user";
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([
+            "solution" => $solution,
+            "user" => $username
+        ]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "169");
+        exit();
+    }
+}
