@@ -7,7 +7,20 @@
 #   Run all the different test classes sequentially                            #
 ################################################################################
 
+# paths
+phpunit=/var/www/html/vendor/bin/phpunit
+test_dir=/var/www/html/tests/
+
+# font colors
+green="\033[0;32m"
+orange="\033[0;33m"
+noColor="\033[0m"
+
 # run all the different test classes sequentially
-/var/www/html/vendor/bin/phpunit /var/www/html/tests/BasicFunctionsTest.php
-/var/www/html/vendor/bin/phpunit /var/www/html/tests/ErrorFunctionsTest.php
-/var/www/html/vendor/bin/phpunit /var/www/html/tests/LoginFunctionsTest.php
+for i in Admin Basic Error; do
+
+    printf "\nTesting ${orange}${i}${noColor} functions ...\n\n"
+    $phpunit $test_dir${i}FunctionsTest.php
+done
+
+printf "\n${green}All tests have been run!${noColor}\n"
