@@ -39,7 +39,8 @@ define('TES', ROOT . '..' . DS . 'tests' . DS);
 // Login database credentials
 define('CONF_DB_LOGIN', CON . 'db_login.php');
 // Shop database credentials
-define('CONF_DB_SHOP', CON . 'db_shop.php');
+// define('CONF_DB_SHOP', CON . 'db_shop.php');
+define('CONF_DB_SHOP', dirname(__FILE__) . DS . 'db_shop.php');
 // Settings file for difficulty and login/registration
 // define('SETTINGS', CON . 'settings.json');
 define('SETTINGS', dirname(__FILE__) . DS . 'settings.json');

@@ -15,7 +15,7 @@ if (session_status() == PHP_SESSION_NONE) {
 // load configurations and functions to test
 require_once(dirname(__FILE__) . "/../config/config.php");
 require_once(dirname(__FILE__) . CONF_DB_LOGIN); // DB credentials
-require_once(dirname(__FILE__) . CONF_DB_SHOP); // DB credentials
+require_once(CONF_DB_SHOP); // DB credentials
 require_once(dirname(__FILE__) . FUNC_ADMIN); // admin functions
 require_once(dirname(__FILE__) . TES . "admin_mocked_functions.php");
 

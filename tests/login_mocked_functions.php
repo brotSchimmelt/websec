@@ -41,7 +41,7 @@ function get_shop_db()
     if ($dbShop instanceof PDO) {
         return $dbShop;
     }
-    require_once(dirname(__FILE__) . CONF_DB_SHOP); // DB credentials
+    require_once(CONF_DB_SHOP); // DB credentials
     try {
         $dbShop = new PDO(DSN_SHOP, DB_USER_SHOP, DB_PWD_SHOP, OPTIONS_SHOP);
     } catch (PDOException $e) {
