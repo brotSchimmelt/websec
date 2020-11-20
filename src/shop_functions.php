@@ -49,7 +49,9 @@ function get_number_of_cart_items()
         $stmt->execute([$_SESSION['userName']]);
         return $stmt->fetchColumn();
     } catch (PDOException $e) {
-        trigger_error("Code Error: The number of cart items could not be fetched.");
+        trigger_error(
+            "Code Error: The number of cart items could not be fetched."
+        );
         return 0;
     }
 }
@@ -112,8 +114,9 @@ function add_product_to_cart($productID, $quantity)
         }
         // add new product to cart
     } else {
-        // check if quantity sent by user is not greater than 3
+        // check if quantity is not greater than 10 and smaller than/equal to 0
         $quantity = $quantity > 10 ? 10 : $quantity;
+        $quantity = $quantity <= 0 ? 1 : $quantity;
 
         $sql = "INSERT INTO `cart` (`position_id`, `prod_id`, `user_name`, "
             . "`quantity`, `timestamp`) VALUES "
@@ -280,27 +283,28 @@ function is_cart_empty()
     return false;
 }
 
-/**
- * Get the number of items in the cart.
- * 
- * Get the number of items in the cart for the current session from the shop 
- * database.
- * 
- * @return int Number of items in cart.
- */
-function get_num_of_cart_items()
-{
-    $sql = "SELECT SUM(quantity) FROM `cart` WHERE `user_name` = :user_name";
-    try {
-        $stmt = get_shop_db()->prepare($sql);
-        $stmt->execute(['user_name' => $_SESSION['userName']]);
-    } catch (PDOException $e) {
-        display_exception_msg($e, "159");
-        exit();
-    }
+// Duplicate! see get_number_of_cart_items
+// /**
+//  * Get the number of items in the cart.
+//  * 
+//  * Get the number of items in the cart for the current session from the shop 
+//  * database.
+//  * 
+//  * @return int Number of items in cart.
+//  */
+// function get_num_of_cart_items()
+// {
+//     $sql = "SELECT SUM(quantity) FROM `cart` WHERE `user_name` = :user_name";
+//     try {
+//         $stmt = get_shop_db()->prepare($sql);
+//         $stmt->execute(['user_name' => $_SESSION['userName']]);
+//     } catch (PDOException $e) {
+//         display_exception_msg($e, "159");
+//         exit();
+//     }
 
-    return $stmt->fetchColumn();
-}
+//     return $stmt->fetchColumn();
+// }
 
 /**
  * Show search results.
