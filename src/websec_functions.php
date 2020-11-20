@@ -31,12 +31,12 @@ function slug($str)
  * @throws Exception If the SQLite database creation failed.
  * @throws Exception If the write permission is missing for the data dir.
  */
-function create_sqli_db($username, $mail)
+function create_sqli_db($username, $mail, $path = DAT)
 {
 
     $currentDifficulty = get_global_difficulty();
 
-    $dbName = DAT . slug($username) . ".sqlite";
+    $dbName = $path . slug($username) . ".sqlite";
 
     if (file_exists($dbName)) {
         unlink($dbName);
