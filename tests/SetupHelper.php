@@ -162,6 +162,25 @@ final class SetupHelper
     }
 
     /**
+     * Insert a comment into the XSS comment table.
+     * 
+     * @param string $name Name of the user.
+     * @param string $comment XSS comment.
+     */
+    public static function insertComment($name, $comment = "first"): void
+    {
+        $sql = "INSERT IGNORE INTO xss_comments (comment_id, author, text, "
+            . "rating, timestamp, post_time) VALUE (NULL,:user,:comment,0,"
+            . ":timestamp,'123')";
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([
+            'user' => $name,
+            'comment' => $comment,
+            'timestamp' => date("Y-m-d H:i:s")
+        ]);
+    }
+
+    /**
      * Deletes all database entries for a given user.
      * 
      * @param string $name Name of the user.
