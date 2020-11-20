@@ -41,6 +41,8 @@ final class AdminFunctionsTest extends TestCase
         self::setAllChallenges("testUser1");
         self::setAllChallenges("testUser2", 1, 1, 1, 1);
         self::insertCSRFPost("testUser2", "pwned", "example.php");
+        self::insertSolutions("testUser1", "-", "-", "-");
+        self::insertSolutions("testUser2", "test", "test", "test");
 
         // add test admins
         self::insertUser("testAdmin1", "admin1@test.fake", "hash", 0, 1);
@@ -146,6 +148,24 @@ final class AdminFunctionsTest extends TestCase
             'msg' => $msg,
             'referrer' => $referrer,
             'time' => date("Y-m-d H:i:s")
+        ]);
+    }
+
+    /**
+     * Insert challenge solutions for a given user.
+     */
+    public static function insertSolutions($name, $rxss, $sxss, $sqli)
+    {
+        $insertSolution = "INSERT IGNORE INTO challenge_solutions (id, "
+            . "user_name, reflective_xss, stored_xss, sqli) VALUE (NULL, :user,"
+            . " :rxss, :sxss, :sqli)";
+
+        $stmt = get_shop_db()->prepare($insertSolution);
+        $stmt->execute([
+            'user' => $name,
+            'rxss' => $rxss,
+            'sxss' => $sxss,
+            'sqli' => $sqli
         ]);
     }
 
@@ -377,23 +397,152 @@ final class AdminFunctionsTest extends TestCase
     public function testSetGlobalDifficulty(): void
     {
         set_global_difficulty("normal");
-        // assert Session from mocked 'set_setting'
+        $this->assertEquals(false, $_SESSION['difficulty']['hard']);
         set_global_difficulty("hard");
-        // assert Session from mocked 'set_setting'
+        $this->assertEquals(true, $_SESSION['difficulty']['hard']);
 
         // clean up
-        // unset(SESSION['adminGlobalDifficulty'])
+        unset($_SESSION['difficulty']);
     }
 
-    // /**
-    //  * Test the admin function 'get_results_as_array()'.
-    //  * 
-    //  * @test
-    //  */
-    // public function testGetResultsAsArray(): void
-    // {
-    //     $result = get_results_as_array();
-    //     $expected = "";
-    //     $this->assertEquals($result, " ");
-    // }
+    /**
+     * Test the admin function 'set_login_status()'.
+     * 
+     * @test
+     */
+    public function testSetLoginStatus(): void
+    {
+        set_login_status(true);
+        $this->assertEquals(false, $_SESSION['login']['disabled']);
+        set_login_status(false);
+        $this->assertEquals(true, $_SESSION['login']['disabled']);
+
+        // clean up
+        unset($_SESSION['login']);
+    }
+
+    /**
+     * Test the admin function 'set_registration_status()'.
+     * 
+     * @test
+     */
+    public function testSetRegistrationStatus(): void
+    {
+        set_registration_status(true);
+        $this->assertEquals(false, $_SESSION['registration']['disabled']);
+        set_registration_status(false);
+        $this->assertEquals(true, $_SESSION['registration']['disabled']);
+
+        // clean up
+        unset($_SESSION['registration']);
+    }
+
+    /**
+     * Test the admin function 'get_results_as_array()'.
+     * 
+     * @test
+     */
+    public function testGetResultsAsArray(): void
+    {
+        $expected = array(
+            array(
+                "wwu_mail", "user_name", "difficulty",
+                "reflective_xss", "stored_xss", "sqli", "csrf",
+                "csrf_referrer_match", "reflective_xss_solution",
+                "stored_xss_solution", "sqli_solution", "csrf_solution",
+                "csrf_referrer", "csrf_msg"
+            ),
+            array(
+                "user1@test.fake", "testUser1", "normal",
+                0, 0, 0, 0, 0, "-", "-", "-", "-", "-", "-"
+            ),
+            array(
+                "user2@test.fake", "testUser2", "normal", 1, 1, 1, 1, 0, "test", "test",
+                "test", "-", "-", "-"
+            )
+        );
+        $result = get_results_as_array();
+        $this->assertEquals($expected, $result, "Result array does not match!");
+    }
+
+    /**
+     * Test the admin function 'get_challenge_status()'.
+     * 
+     * @test
+     */
+    public function testGetChallengeStatus(): void
+    {
+        // nothing solved
+        $result1 = get_challenge_status("testUser1");
+        $this->assertEquals([0, 0, 0, 0, 0], $result1, "Nothing solved failed!");
+
+        // everything solved
+        $result2 = get_challenge_status("testUser2");
+        $this->assertEquals([1, 1, 1, 1, 0], $result2, "All solved failed!");
+    }
+
+    /**
+     * Test the admin function 'set_blocked_usernames()'.
+     * 
+     * @test
+     */
+    public function testSetBlockedUsernames(): void
+    {
+        set_blocked_usernames("test1, test2");
+        $this->assertEquals("test1, test2", $_SESSION['usernames']['deny_list']);
+
+        // clean up
+        unset($_SESSION['usernames']);
+    }
+
+    /**
+     * Test the admin function 'set_allowed_domains()'.
+     * 
+     * @test
+     */
+    public function testSetAllowedDomains(): void
+    {
+        set_allowed_domains("test1, test2");
+        $this->assertEquals("test1, test2", $_SESSION['domains']['allow_list']);
+
+        // clean up
+        unset($_SESSION['domains']);
+    }
+
+    /**
+     * Test the admin function 'set_badge_link()'.
+     * 
+     * @test
+     */
+    public function testSetBadgeLink(): void
+    {
+        set_badge_link("reflective", "test.domain");
+        $this->assertEquals(
+            "test.domain",
+            $_SESSION['badge_links']['reflective']
+        );
+        set_badge_link("sqli", "test2.domain");
+        $this->assertEquals(
+            "test2.domain",
+            $_SESSION['badge_links']['sqli']
+        );
+
+        // clean up
+        unset($_SESSION['badge_links']);
+    }
+
+    /**
+     * Test the admin function 'show_challenge_solutions()'.
+     * 
+     * @test
+     */
+    public function testShowChallengeSolutions(): void
+    {
+        show_challenge_solutions();
+        $this->expectOutputRegEx("/"
+            . "\<tr\>\<td\>testUser1\<\/td\>\<td\>-\<\/td\>\<td\>-\<\/td\>\<"
+            . "td\>-\<\/td\>\<td\>-\<\/td\>\<\/tr\>\<tr\>\<td\>testUser2\<\/"
+            . "td\>\<td\>test\<\/td\>\<td\>test\<\/td\>\<td\>test\<\/td\>"
+            . "\<td\>-\<\/td\>\<\/tr\>/");
+    }
 }
