@@ -441,7 +441,8 @@ function save_challenge_solution($username, $solution, $challenge)
  */
 function get_challenge_solution($username, $challenge)
 {
-    $sql = "SELECT " . $challenge . " FROM `challenge_solutions` WHERE `user_name`=:user";
+    $sql = "SELECT " . $challenge . " FROM `challenge_solutions` WHERE "
+        . "`user_name`=:user";
 
     try {
         $stmt = get_shop_db()->prepare($sql);
