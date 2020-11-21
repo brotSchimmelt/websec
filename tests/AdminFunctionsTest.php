@@ -228,7 +228,7 @@ final class AdminFunctionsTest extends TestCase
             "0 solved challenges" =>
             array("testUser1", "-"),
             "All challenges solved" =>
-            array("testUser2", "Reflective XSS, Stored XSS, SQLi, Crosspost*")
+            array("testUser2", "Reflective XSS, Stored XSS, SQLi, Crosspost")
         ];
     }
 
@@ -251,7 +251,7 @@ final class AdminFunctionsTest extends TestCase
     {
         return [
             "0 open challenges" =>
-            array("testUser2", "Crosspost*"),
+            array("testUser2", ""),
             "All challenges open" =>
             array("testUser1", "Reflective XSS, Stored XSS, SQLi, Crosspost")
         ];
@@ -365,7 +365,7 @@ final class AdminFunctionsTest extends TestCase
                 0, 0, 0, 0, 0, "-", "-", "-", "-", "-", "-"
             ),
             array(
-                "user2@test.fake", "testUser2", "normal", 1, 1, 1, 1, 0, "test", "test",
+                "user2@test.fake", "testUser2", "normal", 1, 1, 1, 1, 1, "test", "test",
                 "test", "-", "-", "-"
             )
         );
@@ -386,7 +386,7 @@ final class AdminFunctionsTest extends TestCase
 
         // everything solved
         $result2 = get_challenge_status("testUser2");
-        $this->assertEquals([1, 1, 1, 1, 0], $result2, "All solved failed!");
+        $this->assertEquals([1, 1, 1, 1, 1], $result2, "All solved failed!");
     }
 
     /**
