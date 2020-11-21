@@ -2,7 +2,11 @@
 
 function get_global_difficulty()
 {
-    return "normal";
+    if (isset($_SESSION['hard']) && $_SESSION['hard'] == true) {
+        return "hard";
+    } else {
+        return "normal";
+    }
 }
 
 function get_login_db()
@@ -60,6 +64,40 @@ function save_challenge_solution($username, $solution, $challenge)
         ]);
     } catch (PDOException $e) {
         display_exception_msg($e, "169");
+        exit();
+    }
+}
+
+function read_json_file($file)
+{
+    // read file in
+    if (file_exists($file)) {
+        // load content as assoc array
+        return json_decode(file_get_contents($file), true);
+    } else {
+        throw new Exception($file . " could not be opened.");
+    }
+}
+
+function delete_all_challenge_cookies()
+{
+}
+
+function get_random_token()
+{
+    return "newToken";
+}
+
+function empty_cart($username)
+{
+
+    $sql = "DELETE FROM `cart` WHERE `user_name`=?";
+
+    try {
+        $stmt = get_shop_db()->prepare($sql);
+        $stmt->execute([$username]);
+    } catch (PDOException $e) {
+        display_exception_msg($e, "164");
         exit();
     }
 }
