@@ -81,7 +81,7 @@ final class SetupHelper
             . ") VALUE (NULL,:user,:rxss,:sxss,:sqli,:csrf,:csrfr)";
 
         // set test referrer
-        $csrfReferrer = ($csrf === 1) ? "referrer" : "";
+        $csrfReferrer = ($csrf === 1) ? 1 : 0;
 
         $stmt = get_login_db()->prepare($insertChallenge);
         $stmt->execute([
