@@ -4,6 +4,7 @@ namespace test\helper;
 
 final class SetupHelper
 {
+
     /**
      * Insert a user into the 'users' database.
      * 
@@ -34,6 +35,7 @@ final class SetupHelper
             'admin' => $admin
         ]);
     }
+
     /**
      * Insert user in fake cookie table.
      * 
@@ -181,6 +183,21 @@ final class SetupHelper
     }
 
     /**
+     * Insert password reset request.
+     * 
+     * @param string $mail User mail address.
+     */
+    public static function insertRequest($mail)
+    {
+        $sql = "INSERT IGNORE INTO resetPwd VALUE (DEFAULT, :mail,"
+            . "'abc', 'abc', 0)";
+
+        get_login_db()->prepare($sql)->execute([
+            'mail' => $mail
+        ]);
+    }
+
+    /**
      * Deletes all database entries for a given user.
      * 
      * @param string $name Name of the user.
@@ -206,5 +223,7 @@ final class SetupHelper
         // special cases:
         $sql = "DELETE FROM xss_comments WHERE author=?";
         get_shop_db()->prepare($sql)->execute([$name]);
+        $sql = "DELETE FROM `resetPwd` WHERE `user_wwu_email`=?";
+        get_login_db()->prepare($sql)->execute([$name]);
     }
 }
