@@ -6,6 +6,9 @@ use PDO;
 use PDOException;
 use Exception;
 
+// load SetupHelper
+use test\helper\SetupHelper;
+
 if (session_status() == PHP_SESSION_NONE) {
     // session has not started
     session_start();
@@ -19,21 +22,7 @@ require_once(dirname(__FILE__) . CONF_DB_LOGIN); // DB credentials
 require_once(CONF_DB_SHOP); // DB credentials
 require_once(dirname(__FILE__) . FUNC_LOGIN); // login functions
 require_once(dirname(__FILE__) . TES . "login_mocked_functions.php");
-
-/**
- * Move to README when done.
- * 
- * NOTES:
- * Every test with header() must be run as a separat process
- * The same applies to tests that include SQL queries
- * 
- * --> WHY:
- * The fixtures are set before every test that runs in a separat process.
- * And also deleted afterwards. So, if a test (A) runs normally (in the main process)
- * after a test (B) that ran in a separat process, the fixtures will be deleted 
- * after B and NOT set up again before A runs. Solution: A needs to run in a 
- * separat process as well.
- */
+require_once(dirname(__FILE__) . TES . "SetupHelper.php");
 
 
 /**
@@ -54,62 +43,6 @@ final class LoginFunctionsTest extends TestCase
         $_POST = [];
         $_GET = [];
         $_COOKIE = [];
-        $_SESSION['testUsers'] = [];
-
-        // add test user to the 'users' database
-        // 'elliot' can not be used as a user name for normal users, so there
-        // are no conflicts with production data
-        $insertUser = "INSERT IGNORE INTO users (user_id, user_name, "
-            . "user_wwu_email, user_pwd_hash, is_unlocked, is_admin, "
-            . "timestamp, last_login) VALUE (NULL, :user, :mail, :pwd_hash, "
-            . "'0', '0', :timestamp, NULL)";
-        $insertChallenge = "INSERT IGNORE INTO challengeStatus VALUE (DEFAULT,"
-            . ":user,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,"
-            . "DEFAULT,DEFAULT,DEFAULT)";
-        $insertFakeCookie = "INSERT IGNORE INTO fakeCookie VALUE (DEFAULT, "
-            . ":user,DEFAULT,DEFAULT,DEFAULT)";
-        $insertRequest = "INSERT IGNORE INTO resetPwd VALUE (DEFAULT, :mail,"
-            . "'abc', 'abc', 0)";
-        get_login_db()->prepare($insertUser)->execute([
-            'user' =>
-            "elliot",
-            'mail' =>
-            "fake@mail.example",
-            'pwd_hash' =>
-            // 'fakehash' is the corresponding password
-            '$2y$13$iPY//1niofP6MBJooRBWN.OMP1RgUaFIQZZIojUv2r8MQ28GVPL06',
-            'timestamp' =>
-            date("Y-m-d H:i:s")
-        ]);
-        get_login_db()->prepare($insertUser)->execute([
-            'user' =>
-            "testUser",
-            'mail' =>
-            "test@uni-muenster.de",
-            'pwd_hash' =>
-            // 'fakehash' is the corresponding password
-            '$2y$13$iPY//1niofP6MBJooRBWN.OMP1RgUaFIQZZIojUv2r8MQ28GVPL06',
-            'timestamp' =>
-            date("Y-m-d H:i:s")
-        ]);
-        get_login_db()->prepare($insertChallenge)->execute([
-            'user' =>
-            "testUser",
-        ]);
-        get_login_db()->prepare($insertFakeCookie)->execute([
-            'user' =>
-            "testUser",
-        ]);
-        get_login_db()->prepare($insertRequest)->execute([
-            'mail' =>
-            "test@test.test"
-        ]);
-
-        array_push($_SESSION['testUsers'], "elliot");
-        array_push($_SESSION['testUsers'], "testUser");
-        array_push($_SESSION['testUsers'], "newUser");
-        array_push($_SESSION['testUsers'], "test@test.test");
-        array_push($_SESSION['testUsers'], "test@uni-muenster.de");
 
         // add an entry to the POST array
         $_POST['test_var_set'] = "test";
@@ -117,6 +50,35 @@ final class LoginFunctionsTest extends TestCase
         // add an entry to the GET array
         $_GET['test_var_set'] = "test";
         $_GET['test_var_empty'] = "";
+
+        // add test user to the 'users' database
+        SetupHelper::insertUser(
+            "elliot",
+            "fake@mail.example",
+            '$2y$13$iPY//1niofP6MBJooRBWN.OMP1RgUaFIQZZIojUv2r8MQ28GVPL06'
+        );
+        SetupHelper::insertUser(
+            "testUser",
+            "test@uni-muenster.de",
+            '$2y$13$iPY//1niofP6MBJooRBWN.OMP1RgUaFIQZZIojUv2r8MQ28GVPL06'
+        );
+        SetupHelper::insertUser(
+            "testUser",
+            "test@uni-muenster.de",
+            '$2y$13$iPY//1niofP6MBJooRBWN.OMP1RgUaFIQZZIojUv2r8MQ28GVPL06'
+        );
+        SetupHelper::insertAllChallenges("testUser");
+        SetupHelper::insertFakeCookie("testUser");
+        SetupHelper::insertRequest("test@test.test");
+
+        // test user catalog
+        $_SESSION['testUsers'] = [
+            "elliot",
+            "testUser",
+            "newUser",
+            "test@test.test",
+            "test@uni-muenster.de"
+        ];
     }
 
     /**
@@ -126,24 +88,10 @@ final class LoginFunctionsTest extends TestCase
     {
         // delete all test users to the login database
         foreach ($_SESSION['testUsers'] as $e) {
-            $deleteUser = "DELETE FROM `users` WHERE `user_name`='" . $e . "'";
-            $deleteChallenge = "DELETE FROM `challengeStatus` WHERE "
-                . "`user_name`='" . $e . "'";
-            $deleteCookie = "DELETE FROM `fakeCookie` WHERE `user_name`='"
-                . $e . "'";
-            $deleteSolutions = "DELETE FROM `challenge_solutions` WHERE "
-                . "`user_name`='" . $e . "'";
-            $deleteRequest = "DELETE FROM `resetPwd` WHERE "
-                . "`user_wwu_email`='" . $e . "'";
-            get_login_db()->query($deleteUser);
-            get_login_db()->query($deleteChallenge);
-            get_login_db()->query($deleteCookie);
-            get_login_db()->query($deleteRequest);
-            get_shop_db()->query($deleteSolutions);
+            SetupHelper::deleteDbEntries($e);
         }
 
-        // remove the Session variable that was used to store all changes to the
-        // login database
+        // remove the Session variables 
         unset($_SESSION['testUsers']);
         session_destroy();
 
@@ -157,6 +105,7 @@ final class LoginFunctionsTest extends TestCase
     /*
     * Tests and data provider for the login functions.
     */
+
 
     /**
      * Test the login function 'get_login_db()'.
@@ -355,9 +304,6 @@ final class LoginFunctionsTest extends TestCase
     /**
      * Test the login function 'validate_mail()'.
      * 
-     * Note:
-     * Hard code the 'allowed domains' for phpUnit in 'validate_mail()'.
-     * See the keyword 'TESTING' in the source code.
      * 
      * @test
      * @dataProvider providerTestValidateMail
@@ -432,9 +378,6 @@ final class LoginFunctionsTest extends TestCase
     /**
      * Test the login function 'check_entry_exists()'.
      * 
-     * Note:
-     * Hard code the 'fake user' array for phpUnit in 'check_entry_exists()'.
-     * See the keyword 'TESTING' in the source code.
      * 
      * @test
      * @dataProvider providerTestCheckEntryExits
@@ -510,10 +453,6 @@ final class LoginFunctionsTest extends TestCase
     /**
      * Test the login function 'validate_registration_input()'.
      * 
-     * Note:
-     * Hard code the 'fake user' array for phpUnit in 'check_entry_exists()'.
-     * Hard code the 'allowed domains' for phpUnit in 'validate_mail()'.
-     * See the keyword 'TESTING' in the source code.
      * 
      * @test
      * @dataProvider providerValidateRegistrationInput
@@ -1071,7 +1010,7 @@ final class LoginFunctionsTest extends TestCase
     public function testGetLastLogin()
     {
         $result = get_last_login("elliot");
-        $this->assertEquals(true, is_null($result));
+        $this->assertEquals(false, is_null($result));
     }
 
     /**
