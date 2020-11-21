@@ -355,7 +355,7 @@ function add_comment_to_db($comment, $author)
  * @param string $userTokenCSRF Token for the CSRF challenge.
  * @return int Operation status.
  */
-function process_csrf($uname, $userPost, $username, $userTokenCSRF)
+function process_csrf($uname, $userPost, $username, $userTokenCSRF, $path = DAT)
 {
     $difficulty = get_global_difficulty();
 
@@ -373,7 +373,8 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
         $_SESSION['userName'],
         $_SESSION['userMail'],
         "csrf_referrer",
-        $shortReferrer
+        $shortReferrer,
+        $path
     );
 
     // pages with open text forms
@@ -464,7 +465,7 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
             return 3;
         }
     } else {
-        // wrong user
+        // wrong user or token
         return 2;
     }
 }
@@ -577,12 +578,12 @@ function reset_stored_xss_db($username)
  * 
  * @param string $username User name.
  */
-function reset_sqli_db($username)
+function reset_sqli_db($username, $path = DAT)
 {
     $mail = $_SESSION['userMail'];
 
     try {
-        create_sqli_db($username, $mail);
+        create_sqli_db($username, $mail, $path);
     } catch (Exception $e) {
         display_exception_msg($e, "052");
         exit();
@@ -623,12 +624,12 @@ function reset_csrf_db($username)
  * 
  * @param string $username User name.
  */
-function reset_all_challenges($username)
+function reset_all_challenges($username, $path = DAT)
 {
     // reset all challenges
     reset_reflective_xss_db($username);
     reset_stored_xss_db($username);
-    reset_sqli_db($username);
+    reset_sqli_db($username, $path);
     reset_csrf_db($username);
 }
 
@@ -1075,10 +1076,15 @@ function remove_comment($username)
  * @param string $challenge Challenge name.
  * @param string $content Last user input.
  */
-function write_to_challenge_json($username, $mail, $challenge, $content)
-{
+function write_to_challenge_json(
+    $username,
+    $mail,
+    $challenge,
+    $content,
+    $dir = DAT
+) {
 
-    $path = DAT . slug($username) . ".json";
+    $path = $dir . slug($username) . ".json";
 
     // ensure file exists and is not empty
     if (!file_exists($path) || empty(file_get_contents($path))) {
@@ -1141,10 +1147,10 @@ function write_to_challenge_json($username, $mail, $challenge, $content)
  * @param string $challenge Name of the challenge.
  * @return string Last user input.
  */
-function get_last_challenge_input($username, $challenge, $path = DAT)
+function get_last_challenge_input($username, $challenge, $dir = DAT)
 {
 
-    $path = $path . slug($username) . ".json";
+    $path = $dir . slug($username) . ".json";
 
     // check if file exits
     if (!file_exists($path)) {
