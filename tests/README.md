@@ -1,15 +1,14 @@
 # Tests
 
-This directory contains all [PHPUnit](https://phpunit.de/) tests for the php functions.
+This directory contains all [PHPUnit](https://phpunit.de/) test classes for the php functions.
 
-NOTES:
-Every test with header() must be run as a separat process
-The same applies to tests that include SQL queries
-  
---> WHY:
-The fixtures are set before every test that runs in a separat process.
-And also deleted afterwards. So, if a test (A) runs normally (in the main process)
-after a test (B) that ran in a separat process, the fixtures will be deleted 
-after B and NOT set up again before A runs. Solution: A needs to run in a 
-separat process as well.
+The test classes can be run separately with the command:
+
+```shell
+$ ./vendor/bin/phpunit <TestClass>.php
+```
+
+If you wish to run all tests in a row, you can use the **run_all_test_classes.sh** script. In addition to that, you can run all tests inside the php docker container with the **bin/run_unit_tests_docker.sh** script (recommended).
+
+To avoid any unexpected behavior you should run the tests only in a non-production environment!
  
