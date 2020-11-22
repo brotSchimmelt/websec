@@ -21,7 +21,7 @@
         <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="230" height="120">
         <br>
         <h1 class="display-3"><?= $name ?> Disabled</h1>
-        <p class="lead">The hacking portal is currently closed.</p>
+        <p class="lead">The hacking platform is currently closed.</p>
     </div>
 
 </body>

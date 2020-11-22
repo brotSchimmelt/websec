@@ -1,21 +1,19 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
 require(FUNC_LOGIN);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -26,12 +24,14 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Change Password
+// variables
+$thisPage = basename(__FILE__);
+
+// change password
 if (isset($_POST['change-pwd-submit'])) {
 
     if (post_var_set('pwd') && post_var_set('new-pwd') && post_var_set('confirm-pwd')) {
 
-        // Load variables
         $username = $_SESSION['userName'];
         $pwd = $_POST['pwd'];
         $newPwd = $_POST['new-pwd'];
@@ -39,7 +39,8 @@ if (isset($_POST['change-pwd-submit'])) {
 
         change_password($username, $pwd, $newPwd, $confirmPwd);
     }
-} ?>
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -63,15 +64,14 @@ if (isset($_POST['change-pwd-submit'])) {
 <body>
 
     <?php
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
 
 
     <!-- HTML Content BEGIN -->
-    <!-- <div class="page-container"> -->
     <div class="row justify-content-center mt-5 card-page-width">
         <div class="col-xl-4 col-lg-8 col-md-9 col-sm-10 col-xs-11">
             <div class="jumbotron bg-light-grey shadow">
@@ -81,7 +81,7 @@ if (isset($_POST['change-pwd-submit'])) {
                     <?= get_message() ?>
                 </div>
                 <br>
-                <form class="form-signin" action="change_password.php" method="post">
+                <form class="form-signin" action="<?= $thisPage ?>" method="post">
 
                     <div class="row">
                         <div class="col">
@@ -141,11 +141,11 @@ if (isset($_POST['change-pwd-submit'])) {
 
 
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
     ?>
 </body>
 

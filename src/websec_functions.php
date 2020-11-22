@@ -31,12 +31,12 @@ function slug($str)
  * @throws Exception If the SQLite database creation failed.
  * @throws Exception If the write permission is missing for the data dir.
  */
-function create_sqli_db($username, $mail)
+function create_sqli_db($username, $mail, $path = DAT)
 {
 
     $currentDifficulty = get_global_difficulty();
 
-    $dbName = DAT . slug($username) . ".sqlite";
+    $dbName = $path . slug($username) . ".sqlite";
 
     if (file_exists($dbName)) {
         unlink($dbName);
@@ -144,16 +144,18 @@ function create_sqli_db($username, $mail)
  * @return int Operation status.
  * @throws Exception If the SQL query could not be processed.
  */
-function query_sqli_db($searchTerm)
+function query_sqli_db($searchTerm, $path = DAT)
 {
     // get user database
-    $userDbPath = DAT . $_SESSION['userName'] . ".sqlite";
+    $userDbPath = $path . $_SESSION['userName'] . ".sqlite";
 
     // queries
     if (get_global_difficulty() == "hard") {
-        $countPremiumQuery = "SELECT COUNT(*) FROM `premium_users` WHERE status='premium';";
+        $countPremiumQuery = "SELECT COUNT(*) FROM `premium_users` "
+            . "WHERE status='premium';";
     } else {
-        $countPremiumQuery = "SELECT COUNT(*) FROM `users` WHERE user_status='premium';";
+        $countPremiumQuery = "SELECT COUNT(*) FROM `users` WHERE "
+            . "user_status='premium';";
     }
     $countUserQuery = "SELECT COUNT(*) FROM `users`;";
     $searchQuery = "SELECT username,email,wishlist FROM users WHERE "
@@ -204,7 +206,8 @@ function query_sqli_db($searchTerm)
                         echo '<div class="page-center page-container">';
                         echo '<h3 class="display-5">Looks like we found your '
                             . 'friend!</h3>';
-                        echo '<p class="lead">Here are his/her contact infos and wishlist items!</p>';
+                        echo '<p class="lead">Here are his/her contact infos '
+                            . 'and wishlist items!</p>';
 
                         // iterate SELECT results
                         foreach ($row as $key => $value) {
@@ -214,7 +217,8 @@ function query_sqli_db($searchTerm)
                                 continue;
                             }
                             // output results
-                            echo "<strong>" . htmlentities($key) . "</strong>" . " = " . htmlentities($value) . "<br>";
+                            echo "<strong>" . htmlentities($key) . "</strong>"
+                                . " = " . htmlentities($value) . "<br>";
                         }
                         echo "<br><hr><br>";
                         echo "</div>";
@@ -232,7 +236,10 @@ function query_sqli_db($searchTerm)
         if ($database->querySingle($countPremiumQuery) > $numOfPremiumBefore) {
 
             try {
-                $challengeStatus = check_sqli_challenge($_SESSION['userName']);
+                $challengeStatus = check_sqli_challenge(
+                    $_SESSION['userName'],
+                    $path
+                );
             } catch (Exception $e) {
                 display_exception_msg($e, "058");
                 exit();
@@ -276,6 +283,7 @@ function query_sqli_db($searchTerm)
         // return code for unexpected behaviour
         return -1;
     }
+    return 4;
 }
 
 /**
@@ -283,9 +291,9 @@ function query_sqli_db($searchTerm)
  * 
  * Load the product comments from the shop database and display them.
  */
-function show_xss_comments()
+function show_xss_comments($path = INCL)
 {
-    include(INCL . "shop_comments.php");
+    include($path . "shop_comments.php");
 }
 
 /**
@@ -347,7 +355,7 @@ function add_comment_to_db($comment, $author)
  * @param string $userTokenCSRF Token for the CSRF challenge.
  * @return int Operation status.
  */
-function process_csrf($uname, $userPost, $username, $userTokenCSRF)
+function process_csrf($uname, $userPost, $username, $userTokenCSRF, $path = DAT)
 {
     $difficulty = get_global_difficulty();
 
@@ -365,7 +373,8 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
         $_SESSION['userName'],
         $_SESSION['userMail'],
         "csrf_referrer",
-        $shortReferrer
+        $shortReferrer,
+        $path
     );
 
     // pages with open text forms
@@ -456,7 +465,7 @@ function process_csrf($uname, $userPost, $username, $userTokenCSRF)
             return 3;
         }
     } else {
-        // wrong user
+        // wrong user or token
         return 2;
     }
 }
@@ -569,12 +578,12 @@ function reset_stored_xss_db($username)
  * 
  * @param string $username User name.
  */
-function reset_sqli_db($username)
+function reset_sqli_db($username, $path = DAT)
 {
     $mail = $_SESSION['userMail'];
 
     try {
-        create_sqli_db($username, $mail);
+        create_sqli_db($username, $mail, $path);
     } catch (Exception $e) {
         display_exception_msg($e, "052");
         exit();
@@ -615,12 +624,12 @@ function reset_csrf_db($username)
  * 
  * @param string $username User name.
  */
-function reset_all_challenges($username)
+function reset_all_challenges($username, $path = DAT)
 {
     // reset all challenges
     reset_reflective_xss_db($username);
     reset_stored_xss_db($username);
-    reset_sqli_db($username);
+    reset_sqli_db($username, $path);
     reset_csrf_db($username);
 }
 
@@ -655,25 +664,25 @@ function check_reflective_xss_challenge($cookie)
  * @return bool Challenge result.
  * @throws Exception If the user SQLite database is missing.
  */
-function check_sqli_challenge($username)
+function check_sqli_challenge($username, $path = DAT)
 {
     // get current difficulty
     $difficulty = get_global_difficulty();
 
     $challengeStatus = false;
-    $pathToSQLiDB = DAT . $username . ".sqlite";
+    $pathToSQLiDB = $path . $username . ".sqlite";
 
     $database = new SQLite3($pathToSQLiDB);
     if ($database) {
 
         if ($difficulty == "hard") {
             // check if the user account is premium on hard
-            $sql = "SELECT COUNT(*) FROM `premium_users` WHERE `status`='premium' AND "
-                . "`username`='" . $username . "';";
+            $sql = "SELECT COUNT(*) FROM `premium_users` WHERE `status`="
+                . "'premium' AND `username`='" . $username . "';";
         } else {
             // check if the user account is premium on normal
-            $sql = "SELECT COUNT(*) FROM `users` WHERE `user_status`='premium' AND "
-                . "`username`='" . $username . "';";
+            $sql = "SELECT COUNT(*) FROM `users` WHERE `user_status`='premium' "
+                . "AND `username`='" . $username . "';";
         }
 
         try {
@@ -1067,10 +1076,15 @@ function remove_comment($username)
  * @param string $challenge Challenge name.
  * @param string $content Last user input.
  */
-function write_to_challenge_json($username, $mail, $challenge, $content)
-{
+function write_to_challenge_json(
+    $username,
+    $mail,
+    $challenge,
+    $content,
+    $dir = DAT
+) {
 
-    $path = DAT . slug($username) . ".json";
+    $path = $dir . slug($username) . ".json";
 
     // ensure file exists and is not empty
     if (!file_exists($path) || empty(file_get_contents($path))) {
@@ -1133,10 +1147,10 @@ function write_to_challenge_json($username, $mail, $challenge, $content)
  * @param string $challenge Name of the challenge.
  * @return string Last user input.
  */
-function get_last_challenge_input($username, $challenge)
+function get_last_challenge_input($username, $challenge, $dir = DAT)
 {
 
-    $path = DAT . slug($username) . ".json";
+    $path = $dir . slug($username) . ".json";
 
     // check if file exits
     if (!file_exists($path)) {

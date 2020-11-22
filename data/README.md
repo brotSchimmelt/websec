@@ -1,12 +1,12 @@
-# SQLite Databases
+# Data
 
-This directory contains all user SQLite databases for the SQL injection challenge.
+This directory contains the SQLite databases for the SQL injection challenge and all user input files.
 
-## Setup
+## Setup SQLite Databases
 
 The databases are created during the registration process with the ```create_sqli_db($username, $mail)``` function in **src/websec_functions.php**.
 
-On **normal** difficulty the databases are initialized with one table *('users')* that stores username, password, email, whish list and user_status for every entry. The database is filled with a set of fake users and an entry for the student himself. The password that is displayed for the student is a random string, not related to the actual password hash stored in the 'real' MySQL login database.
+On **normal** difficulty the databases are initialized with one table *('users')* that stores user name, password, email, whish list and user status for every entry. The database is filled with a set of fake users and an entry for the student. The password that is displayed for the student is a random string, not related to the actual password hash stored in the 'real' MySQL login database.
 
 ```php
 <?php
@@ -33,7 +33,7 @@ $database->exec("INSERT INTO users (username,password,email,"
 ?>
 ```
 
-On **hard** difficulty the above mentioned table is extended by a second one *('premium_users')* in which the premium user status is stored for every fake user *(and the student respectively)*.
+On **hard** difficulty the above mentioned table is extended by a second *('premium_users')* table in which the premium user status is stored for every fake user *(and the student respectively)*.
 
 ```php
 // Initial setup of the SQLite database on 'hard' difficulty
@@ -79,12 +79,22 @@ $database->exec("INSERT INTO premium_users (username,status) "
 ?>
 ```
 
-Furthermore, the databases contain a fake token on **hard** difficulty that is needed for the CSRF challenge.
+Furthermore, the databases contain a fake token on **hard** difficulty that is needed to solve the CSRF challenge.
 
-## Reset
-The student can choose to reset the database in the challenge settings. In this case the database is removed from the **data/** directory and re-created as displayed above.
+## Reset SQLite Database
+The student can choose to reset the database in the challenge settings. In this case, the database is removed from the **data/** directory and recreated with the ```create_sqli_db``` function.
 
 
-## Change Challenge Difficulty
+## Change Challenge Difficulty (SQLite)
 
-In order to change the difficulty for the SQLi challenge, the SQLite database needs to be deleted and initialized with the corresponding structure and entries for the new difficulty (see the code above).
+In order to change the difficulty for the SQLi challenge, the SQLite database needs to be deleted and initialized with the corresponding structure and entries for the new difficulty (see the code samples above).
+
+## User Input Files
+
+All user input related to the hacking challenges is stored in a user specific JSON file, that is created when the user attempts a challenge for the first time. The user input in the JSON file is grouped by challenges.
+In addition to the raw user input, the referrer for the CSRF challenge is also saved.
+
+The purpose of these files is, to give the lecturer the option to verify that a particular challenge has been solved in the intended way and no scripts are other tools were used.
+
+Furthermore, the user input that solved a specific challenge is also directly displayed in the results section in the admin area.
+

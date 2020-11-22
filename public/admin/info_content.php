@@ -1,14 +1,18 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
-// Load custom libraries
+
+// load basic functions
 require(FUNC_BASE);
 
 // check if user is admin before showing info.php
 if (is_user_admin()) {
+    // show php configurations
     phpinfo();
 } else {
+    // redirect to shop main page
+    header("location: " . MAIN_PAGE);
     exit();
 }

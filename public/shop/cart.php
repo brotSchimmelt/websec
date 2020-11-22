@@ -1,21 +1,21 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
+
+// load user messages
 require(MESSAGES);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -30,7 +30,6 @@ if (!is_user_unlocked()) {
 if (isset($_POST['doit-delete'])) {
     empty_cart($_SESSION['userName']);
 }
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -52,13 +51,11 @@ if (isset($_POST['doit-delete'])) {
     <title>Websec | Cart</title>
 </head>
 
-
 <body>
-
     <?php
     // load cart modal
     echo $modalConfirmDeleteCart;
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
     ?>
 
@@ -66,9 +63,9 @@ if (isset($_POST['doit-delete'])) {
     <?php
     if (!is_cart_empty()) :
     ?>
-        <header id="desert-section">
-            <div class="dark-overlay2">
-                <div id="home-inner2" class="page-container page-center">
+        <header id="desertSection">
+            <div class="dark-overlay-cart">
+                <div id="homeInner2" class="page-container page-center">
                     <h1 class="display-4">Your cart is empty</h1>
                 </div>
             </div>
@@ -108,11 +105,11 @@ if (isset($_POST['doit-delete'])) {
     <!-- HTML Content END -->
 
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
     ?>
 </body>
 

@@ -1,11 +1,14 @@
 <?php
 session_start();
 
-// includes
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
+
+// load functions
 require(FUNC_BASE);
 require(ERROR_HANDLING);
 
+// check login status
 if (is_user_logged_in()) {
 
     // check if user used a link to get here
@@ -37,6 +40,7 @@ if (is_user_logged_in()) {
         exit();
     }
 } else {
+    // redirect back to shop
     header("location: " . LOGIN_PAGE . "?success=logout");
     exit();
 }

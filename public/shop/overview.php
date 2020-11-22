@@ -1,24 +1,24 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP); // Credentials for the shop db
 require_once(CONF_DB_LOGIN); // Credentials for the users db
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
 require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
+
+// load user messages
 require(MESSAGES);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -29,14 +29,14 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// local variables
+// variables
 $userName = $_SESSION['userName'];
 $thisPage = basename(__FILE__);
-$searchFieldWasUsed = (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
+$searchFieldWasUsed =
+    (isset($_GET['xss']) && (!empty($_GET['xss']))) ? true : false;
 $challengeFailed = false;
 $solved = false;
 $showSuccessModal = false;
-// get level of difficulty
 $difficulty = get_global_difficulty();
 
 // check if a search term was entered
@@ -53,9 +53,11 @@ if (isset($_GET['xss'])) {
     );
 
     if ($difficulty == "hard") {
-        // filter all '<script>' tags (case sensitive)
-        // filter only '<script>' and '<SCRIPT>' tags
-        // Solution for all browsers: <ScRiPt>alert(document.cookie)</ScRiPt>
+        /* 
+        * filter all '<script>' tags (case sensitive)
+        * --> filter only '<script>' and '<SCRIPT>' tags
+        * Solution for all browsers: <ScRiPt>alert(document.cookie)</ScRiPt>
+        */
         $rawSearchTerm = str_replace("<script>", "", $rawSearchTerm);
         $rawSearchTerm = str_replace("<SCRIPT>", "", $rawSearchTerm);
 
@@ -69,7 +71,11 @@ if (isset($_GET['xss'])) {
 
 // check if cookie was entered in modal
 if (isset($_POST['xss-cookie'])) {
-    $cookie = filter_input(INPUT_POST, 'xss-cookie', FILTER_SANITIZE_SPECIAL_CHARS);
+    $cookie = filter_input(
+        INPUT_POST,
+        'xss-cookie',
+        FILTER_SANITIZE_SPECIAL_CHARS
+    );
 
     // check if cookie is correct
     if (check_reflective_xss_challenge($cookie)) {
@@ -127,16 +133,17 @@ if (isset($_POST['add-preview'])) {
 
 <body>
     <?php
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
 
     if ($searchFieldWasUsed) {
+        // show cookie modal
         echo $modalInputXSSCookie;
     }
     ?>
     <!-- JavaScript -->
     <?php
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript 
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript 
     ?>
     <script src="/assets/js/reflective_xss.js"></script>
 
@@ -149,7 +156,6 @@ if (isset($_POST['add-preview'])) {
 
     <!-- Search form -->
     <div class="page-center page-container">
-        <!-- <h2 class="display-4">Product Search</h2> -->
         <div class="search-bar-flat-container row justify-content-center">
             <form action="<?= $thisPage ?>" method="get">
                 <div class="search-bar-flat-inner">
@@ -165,14 +171,12 @@ if (isset($_POST['add-preview'])) {
                         </div>
                     </div>
                 </div>
-
             </form>
         </div>
         <?php if ($searchFieldWasUsed) : ?>
             <p>You searched for <strong><?= $rawSearchTerm ?></strong></p>
         <?php endif; ?>
     </div>
-
 
     <?php if ($searchFieldWasUsed) : ?>
 
@@ -192,16 +196,17 @@ if (isset($_POST['add-preview'])) {
 
     <!-- JavaScript BEGIN -->
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_SHOP); // custom JavaScript
     ?>
     <!-- JavaScript END -->
 
     <script type="text/javascript" src="../assets/js/csrf.js"></script>
     <div>
         <?php
+        // load modals for CSRF challenge
         echo $modalSuccessCSRFWrongReferrer;
         echo $modalInfoCSRFAlreadyPosted;
         echo $modalErrorCSRFUserMismatch;

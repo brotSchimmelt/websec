@@ -1,33 +1,29 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 require_once(CONF_DB_SHOP);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_ADMIN);
 require(FUNC_LOGIN);
 require(FUNC_SHOP);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check admin status
+// check admin status
 if (!is_user_admin()) {
-    // Redirect to shop main page
+    // redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// variables
 $username = $_SESSION['userName'];
-
-// Other php variables
-$here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
+$here = basename($_SERVER['PHP_SELF'], ".php"); // get script name for sidebar highlighting
 $numOfStudents = get_num_of_students();
 $registrationStatus = is_registration_enabled() ? "enabled" : "disabled";
 $loginStatus = is_login_enabled() ? "enabled" : "disabled";
@@ -56,9 +52,9 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
 <body>
 
     <?php
-    // Load navbar and sidebar
+    // load navbar and sidebar
     require(HEADER_ADMIN);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
 
@@ -67,9 +63,7 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
     <div class="container-fluid">
         <div class="row">
             <?php include(SIDEBAR_ADMIN); ?>
-
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-
                 <div class="jumbotron shadow-sm">
                     <h1 class="display-4">Dashboard</h1>
                     <hr><br><br>
@@ -118,9 +112,9 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <input type="checkbox" class="tablefilter" name="is-admin" id="is-admin" unchecked />
-                                        <label for="is-admin" id="checkbox-admin-label">Hide Admin User</label>
-                                        <table class="table table-bordered table-striped filteredtable">
+                                        <input type="checkbox" class="table-filter" name="is-admin" id="isAdmin" unchecked />
+                                        <label for="is-admin" id="checkboxAdminLabel">Hide Admin User</label>
+                                        <table class="table table-bordered table-striped filtered-table">
                                             <thead>
                                                 <tr>
                                                     <td><strong>Pos.</strong></td>
@@ -151,9 +145,9 @@ $loginStatus = is_login_enabled() ? "enabled" : "disabled";
 
 
     <?php
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_ADMIN); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_ADMIN); // custom JavaScript
     ?>
 </body>
 

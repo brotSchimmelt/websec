@@ -1,33 +1,29 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 require_once(CONF_DB_SHOP);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_ADMIN);
 require(FUNC_LOGIN);
 require(FUNC_SHOP);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check admin status
+// check admin status
 if (!is_user_admin()) {
-    // Redirect to shop main page
+    // redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// variables
 $username = $_SESSION['userName'];
-
-// Other php variables
-$here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
+$here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name for sidebar highlighting
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,6 +39,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
     <!-- Custom CSS to overwrite bootstrap.css -->
     <link rel="stylesheet" href="/assets/css/admin.css">
 
+    <!-- Styles for print -->
     <style type="text/css">
         @media print {
             body {
@@ -63,9 +60,9 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
 <body>
 
     <?php
-    // Load navbar and sidebar
+    // load navbar and sidebar
     require(HEADER_ADMIN);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
 
@@ -92,7 +89,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                         <?php show_solved_challenges() ?>
                     </tbody>
                 </table>
-                <p id="export-table-bottom">
+                <p id="exportTableBottom">
                     <small>
                         The <strong>*</strong> indicates that a post request was made in the CSRF challenge, but the referrer does not match.
                     </small>
@@ -131,7 +128,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                     <div class="row justify-content-center">
 
                                         <div class="col-xl-3 col-lg-4 col-md-12">
-                                            <form action="export_file.php" method="post">
+                                            <form action="<?= EXPORT ?>" method="post">
                                                 <input type="hidden" name="exportCSV" value="1">
                                                 <button class="btn btn btn-info" type="submit">
                                                     Download CSV
@@ -146,7 +143,7 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
                                         <br><br><br>
 
                                         <div class="col-xl-3 col-lg-4 col-md-12">
-                                            <form action="export_file.php" method="post">
+                                            <form action="<?= EXPORT ?>" method="post">
                                                 <input type="hidden" name="exportJSON" value="1">
                                                 <button class="btn btn btn-info" type="submit">
                                                     Download JSON
@@ -183,9 +180,9 @@ $here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
 
 
     <?php
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_ADMIN); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_ADMIN); // custom JavaScript
     ?>
 </body>
 

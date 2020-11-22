@@ -1,23 +1,21 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP);
 require_once(CONF_DB_LOGIN);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
 require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -28,7 +26,7 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// variables
 $username = $_SESSION['userName'];
 $difficulty = get_global_difficulty();
 
@@ -48,7 +46,6 @@ $allChallengesSolved = ($solvedXSS && $solvedStoredXSS && $solvedSQLi
 $echoGreen = '<span style="color:green;">Solved</span>';
 $echoRed = '<span style="color:red;">Still Open</span>';
 $echoOrange = '<span style="color:orange;">Probably Solved</span>';
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -73,9 +70,9 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
 <body>
 
     <?php
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
 
@@ -145,11 +142,11 @@ $echoOrange = '<span style="color:orange;">Probably Solved</span>';
 
 
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
     ?>
 </body>
 

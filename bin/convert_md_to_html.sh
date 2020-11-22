@@ -2,8 +2,7 @@
 
 ################################################################################
 #   Purpose: Convert the markdown documentations to valid html.                #
-#   Test: Tested on Ubuntu 18 LTS                                              #
-#   Note: Not yet tested on Ubuntu 20 LTS                                      #
+#   Test: Tested on Ubuntu 18 LTS and 20 LTS                                   #
 #   Author: tknebler@gmail.com                                                 #
 #                                                                              #
 #   Check if 'grip' is installed                                               #
@@ -18,6 +17,7 @@ cd $Path
 # test if 'grip' is installed
 python -c "import grip" &> /dev/null
 
+# install 'grip'
 if [ $? -gt 0 ]; then
 test_flag=1
 printf "## It seems like 'grip' is currently not installed on your system.\n"
@@ -52,7 +52,7 @@ fi
 
 if [ $? -eq 0 ]; then
 
-    for i in dashboard shop docker vagrant; do
+    for i in settings challenges errors shop docker test_environment; do
 
         md_file="${i}.md"
         if test -f "$md_file"; then

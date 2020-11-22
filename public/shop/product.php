@@ -1,23 +1,21 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_SHOP);
 require_once(CONF_DB_LOGIN);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
 require(FUNC_LOGIN);
 require(FUNC_WEBSEC);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -28,23 +26,23 @@ if (!is_user_unlocked()) {
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// get product ID
 if (!isset($_GET['id']) or empty($_GET['id'])) {
-    $productID = 1;
+    $ID = 1;
 } else if (isset($_GET['id']) and (!empty($_GET['id']))) {
-    $productID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+    $ID = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 }
 
-$productData = get_product_data($productID);
+// variables
+$productData = get_product_data($ID);
 $price = isset($productData['price']) ? $productData['price'] / 100 : 42;
 $premiumPrice = round((0.5 * (float)$price), 2);
 $difficulty = get_global_difficulty();
 $solvedSQLi = lookup_challenge_status("sqli", $_SESSION['userName']);
-
+$thisPage = basename(__FILE__);
 
 // stored XSS challenge
 if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
-
 
     // write comment to challenge input JSON file
     write_to_challenge_json(
@@ -56,8 +54,10 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
 
     if ($difficulty == "hard") {
 
-        // filter all '<script>' tags (case insensitive)
-        // solution for all tested browsers: <img src="" onerror=javascript:alert(document.cookie)>
+        /* filter all '<script>' tags (case insensitive)
+        * solution for all tested browsers:
+        *    <img src="" onerror=javascript:alert(document.cookie)>
+        */
         $filteredComment = str_ireplace("<script>", "", $_POST['userComment']);
 
         /*
@@ -81,16 +81,19 @@ if (isset($_POST['userComment']) && (!empty($_POST['userComment']))) {
     header("location: " . basename(__FILE__) . "?comment=sent");
     exit();
 }
+
+// check if a product was added to the cart
 if (isset($_POST['add-product'])) {
 
-    $productID = filter_input(INPUT_POST, 'product_id');
+    $ID = filter_input(INPUT_POST, 'product_id');
     $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_INT);
-    add_product_to_cart($productID, $quantity);
-    header("location: " . "/shop/product.php?id=" . $productID . "&success=prodAdded");
+    add_product_to_cart($ID, $quantity);
+    header("location: " . "/shop/product.php?id=" . $ID . "&success=prodAdded");
     exit();
 }
-$solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 
+// check if stored XSS challenge was solved
+$solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 ?>
 <!doctype html>
 <html lang="en">
@@ -110,14 +113,14 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
 
 <body>
     <?php
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
 
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
     ?>
     <script type="text/javascript">
         // encrypted cookie
@@ -163,7 +166,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                     </svg>
                 </div>
                 <?php if ($solvedSQLi) : ?>
-                    <h3 class="display-5 text-left mb-3"><s>&euro; <?= $price ?></s>&nbsp;&nbsp;<b class="text-success">&euro;<?= $premiumPrice ?></b></h3>
+                    <h3 class="display-5 text-left mb-3"><s>&euro; <?= $price ?></s>&nbsp;&nbsp;<b class="text-success">&euro;<?= number_format($premiumPrice, 2) ?></b></h3>
                 <?php else : ?>
                     <h3 class="display-5 text-left mb-3">&euro; <?= $price ?></h3>
                 <?php endif; ?>
@@ -173,7 +176,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                 <p class="text-left"><?= $productData['prod_description'] ?></p>
 
 
-                <form class="mb-5 mt-5" action="product.php" method="post">
+                <form class="mb-5 mt-5" action="<?= $thisPage ?>" method="post">
                     <div class="form-row">
                         <div class="col-5">
                             <span class="float-right">
@@ -182,7 +185,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
                         </div>
                         <div class="col-2">
                             <span class="float-right">
-                                <input type="hidden" name="product_id" value="<?= $productID ?>">
+                                <input type="hidden" name="product_id" value="<?= $ID ?>">
                                 <input class="form-control number-field" type="number" name="quantity" value="1" min="1" max="10" placeholder="-" required>
                             </span>
                         </div>
@@ -206,13 +209,13 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
     }
     ?>
     <!-- CHALLENGE: Here begins the form -->
-    <div class="row justify-content-center mt-5" id="comment-section">
+    <div class="row justify-content-center mt-5" id="commentSection">
         <!-- deeper ... -->
         <div class="col-xl-4 col-lg-6 col-md-auto">
             <!-- deeper ... -->
-            <div class="be-comment-block">
+            <div class="new-comment-block">
                 <!-- here you go! -->
-                <form class="form-block" action="product.php" method="post" id="CSRForm">
+                <form class="form-block" action="<?= $thisPage ?>" method="post" id="CSRForm">
                     <h4 class="display-5 mb-4">Write Your Own Comment</h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12">
@@ -264,7 +267,7 @@ $solved = lookup_challenge_status("stored_xss", $_SESSION['userName']);
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-auto">
-            <div class="be-comment-block">
+            <div class="new-comment-block">
                 <?php
                 show_xss_comments();
                 ?>

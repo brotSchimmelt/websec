@@ -49,7 +49,9 @@ function get_number_of_cart_items()
         $stmt->execute([$_SESSION['userName']]);
         return $stmt->fetchColumn();
     } catch (PDOException $e) {
-        trigger_error("Code Error: The number of cart items could not be fetched.");
+        trigger_error(
+            "Code Error: The number of cart items could not be fetched."
+        );
         return 0;
     }
 }
@@ -112,8 +114,9 @@ function add_product_to_cart($productID, $quantity)
         }
         // add new product to cart
     } else {
-        // check if quantity sent by user is not greater than 3
+        // check if quantity is not greater than 10 and smaller than/equal to 0
         $quantity = $quantity > 10 ? 10 : $quantity;
+        $quantity = $quantity <= 0 ? 1 : $quantity;
 
         $sql = "INSERT INTO `cart` (`position_id`, `prod_id`, `user_name`, "
             . "`quantity`, `timestamp`) VALUES "
@@ -231,8 +234,12 @@ function show_cart_content()
         }
 
         // calculate product price
-        $price = ($premium) ? ($product['price'] / 100 * 0.5)
-            : ($product['price'] / 100);
+        if ($premium) {
+            // add premium discount
+            $price = round((0.5 * (float)$product['price'] / 100), 2);
+        } else {
+            $price = isset($product['price']) ? $product['price'] / 100 : 42;
+        }
 
         $rowPrice = $row['quantity'] * $price;
         $i++;
@@ -241,13 +248,13 @@ function show_cart_content()
         echo "<tr>";
         echo '<th scope="row">' . $i . '.</th>';
         echo '<td>' . $product['prod_title'] . '</td>';
-        echo '<td>' . $price . ' &euro;</td>';
+        echo '<td>' . number_format($price, 2) . ' &euro;</td>';
         echo '<td>' . $row['quantity'] . '</td>';
-        echo '<td>' . $rowPrice . ' &euro;</td>';
+        echo '<td>' . number_format($rowPrice, 2) . ' &euro;</td>';
         echo "</tr>";
     }
     echo '<tr><th scope="row">Total</th>' . str_repeat("<td></td>", 3)
-        . "<td><strong>" . $totalPrice . " &euro;</strong></td></tr>";
+        . "<td><strong>" . number_format($totalPrice, 2) . " &euro;</strong></td></tr>";
 }
 
 /**
@@ -276,27 +283,28 @@ function is_cart_empty()
     return false;
 }
 
-/**
- * Get the number of items in the cart.
- * 
- * Get the number of items in the cart for the current session from the shop 
- * database.
- * 
- * @return int Number of items in cart.
- */
-function get_num_of_cart_items()
-{
-    $sql = "SELECT SUM(quantity) FROM `cart` WHERE `user_name` = :user_name";
-    try {
-        $stmt = get_shop_db()->prepare($sql);
-        $stmt->execute(['user_name' => $_SESSION['userName']]);
-    } catch (PDOException $e) {
-        display_exception_msg($e, "159");
-        exit();
-    }
+// Duplicate! see get_number_of_cart_items
+// /**
+//  * Get the number of items in the cart.
+//  * 
+//  * Get the number of items in the cart for the current session from the shop 
+//  * database.
+//  * 
+//  * @return int Number of items in cart.
+//  */
+// function get_num_of_cart_items()
+// {
+//     $sql = "SELECT SUM(quantity) FROM `cart` WHERE `user_name` = :user_name";
+//     try {
+//         $stmt = get_shop_db()->prepare($sql);
+//         $stmt->execute(['user_name' => $_SESSION['userName']]);
+//     } catch (PDOException $e) {
+//         display_exception_msg($e, "159");
+//         exit();
+//     }
 
-    return $stmt->fetchColumn();
-}
+//     return $stmt->fetchColumn();
+// }
 
 /**
  * Show search results.
@@ -308,7 +316,7 @@ function get_num_of_cart_items()
 function show_search_results($searchTerm)
 {
     $sql = "SELECT `prod_id`, `prod_title`, `prod_description`, `price`, "
-        . "`img_path` FROM `products` WHERE `prod_title` LIKE :needle";
+        . "`img_path` FROM `products` WHERE `prod_title` COLLATE utf8mb4_0900_as_ci LIKE :needle";
     try {
         $stmt = get_shop_db()->prepare($sql);
         $needle = "%" . $searchTerm . "%";
@@ -437,7 +445,8 @@ function save_challenge_solution($username, $solution, $challenge)
  */
 function get_challenge_solution($username, $challenge)
 {
-    $sql = "SELECT " . $challenge . " FROM `challenge_solutions` WHERE `user_name`=:user";
+    $sql = "SELECT " . $challenge . " FROM `challenge_solutions` WHERE "
+        . "`user_name`=:user";
 
     try {
         $stmt = get_shop_db()->prepare($sql);

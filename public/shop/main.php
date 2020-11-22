@@ -1,27 +1,27 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN);
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_LOGIN);
 require(FUNC_SHOP);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
+
+// load user messages
 require(MESSAGES);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// variables
 $username = $_SESSION['userName'];
 $num = get_number_of_cart_items();
 $thisPage = basename(__FILE__);
@@ -29,6 +29,13 @@ $thisPage = basename(__FILE__);
 // check if user read the instructions
 if (isset($_POST['unlock-submit'])) {
     unlock_user($username);
+}
+
+// check if user is unlocked
+if (!is_user_unlocked()) {
+    $notUnlocked = true;
+} else {
+    $notUnlocked = false;
 }
 ?>
 <!doctype html>
@@ -53,27 +60,18 @@ if (isset($_POST['unlock-submit'])) {
 
 <body>
     <?php
-    // Load navbar
+    // load navbar
     require_once(HEADER_SHOP);
-    // // Load error messages, user notifications etc.
-    // require(MESSAGES);
-
-    // check if user is unlocked
-    if (!is_user_unlocked()) {
-        $unlocked = true;
-    } else {
-        $unlocked = false;
-    }
 
     // check if administrator has to change default password
     if ($_SESSION['pwdChangeReminder']) {
         echo $changeDefaultPwdReminder;
     }
     ?>
-    <header id="main-header">
+    <header id="mainHeader">
         <div class="dark-overlay">
-            <div id="home-inner">
-                <div class="container" id="header-container">
+            <div id="homeInner">
+                <div class="container" id="headerContainer">
                     <div class="row">
                         <div class="col-lg-8">
                             <h1 class="display-4">Web Security Merch Shop</h1>
@@ -113,7 +111,7 @@ if (isset($_POST['unlock-submit'])) {
                                 </div>
                             </div>
                             <div class="text-center">
-                                <a class="btn btn-outline-light" href="overview.php">Discover our Products</a>
+                                <a class="btn btn-outline-light" href="overview.php">Discover Our Products</a>
                             </div>
 
                         </div>
@@ -124,7 +122,7 @@ if (isset($_POST['unlock-submit'])) {
     </header>
 
     <!-- Container 2 Product Text-->
-    <section id="container-2" class="text-muted py-5">
+    <section id="container2" class="text-muted py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -132,26 +130,29 @@ if (isset($_POST['unlock-submit'])) {
                 </div>
 
                 <div class="col-md-6">
-                    <h3 class="green">Headline about the products</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum impedit tempora cumque non corrupti fuga quibusdam numquam laudantium similique natus consequuntur consectetur quo qui officia in, modi dolores expedita saepe?</p>
+                    <h3 class="green">Find Out More About Our Products</h3>
+                    <p>Our outstanding products are always designed with the needs of our loyal customers in mind. What does a security affine person want the most in todays world of increasing online surveillance and privacy infringing mega-corporations? Merchandise!</p>
                     <div class="d-flex flex-row">
                         <div class="p-4 align-self-start">
-                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-compact-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z" />
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-clipboard-data" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                <path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z" />
                             </svg>
                         </div>
                         <div class="p-4 align-self-end">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum unde consequatur fuga fugit tempore laborum.
+                            With the help of Big Data and Machine Learning we designed our exquisite selection of products.
                         </div>
                     </div>
                     <div class="d-flex flex-row">
                         <div class="p-4 align-self-start">
-                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-compact-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z" />
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-emoji-heart-eyes" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path fill-rule="evenodd" d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z" />
                             </svg>
                         </div>
                         <div class="p-4 align-self-end">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum unde consequatur fuga fugit tempore laborum.
+                            Our newest creation is the revolutionary banana slicer S. By incorporating user feedback in the new design, we were able to increase the success rate of the slicing process to 50%!
                         </div>
                     </div>
                 </div>
@@ -159,9 +160,8 @@ if (isset($_POST['unlock-submit'])) {
         </div>
     </section>
 
-
     <!-- Container 3 Friends Cover-->
-    <section id="container-3">
+    <section id="container3">
         <div class="dark-overlay-friends">
             <div class="container">
                 <div class="row">
@@ -172,9 +172,9 @@ if (isset($_POST['unlock-submit'])) {
                             </h1>
                             <hr class="accent-white">
                             <p class="lead d-none d-sm-block">
-                                Do you ever wanted to know what products your friends buy? Well, now you can! With our great privacy compliant search feature.
+                                Do you ever wanted to know what products your friends need? Well, now you can!
                             </p>
-                            <a class="btn btn-outline-light" href="friends.php">Search for your Friends</a>
+                            <a class="btn btn-outline-light" href="friends.php">Search For Your Friends</a>
                         </div>
                     </div>
                 </div>
@@ -182,14 +182,13 @@ if (isset($_POST['unlock-submit'])) {
         </div>
     </section>
 
-
     <!-- Container 4 Friends Text-->
-    <section id="container-4" class="text-muted py-5">
+    <section id="container4" class="text-muted py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="green">Headline about your friends</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum impedit tempora cumque non corrupti fuga quibusdam numquam laudantium similique natus consequuntur consectetur quo qui officia in, modi dolores expedita saepe?</p>
+                    <h3 class="green">See What Your Friends Want</h3>
+                    <p>With our dynamic, AI-based market research techniques, we were able to increase our active user base to a total of <b>4</b>! So, there is a chance that one of your friends is already using our site.</p>
                     <div class="d-flex flex-row">
                         <div class="p-4 align-self-start">
                             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-compact-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -197,7 +196,7 @@ if (isset($_POST['unlock-submit'])) {
                             </svg>
                         </div>
                         <div class="p-4 align-self-end">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum unde consequatur fuga fugit tempore laborum.
+                            With our great, privacy compliant search feature you can see the private whish list of your friends!
                         </div>
                     </div>
                     <div class="d-flex flex-row">
@@ -207,7 +206,7 @@ if (isset($_POST['unlock-submit'])) {
                             </svg>
                         </div>
                         <div class="p-4 align-self-end">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum unde consequatur fuga fugit tempore laborum.
+                            You just have to enter their user names and we will query our secure user database to find their personal data.
                         </div>
                     </div>
                 </div>
@@ -218,9 +217,8 @@ if (isset($_POST['unlock-submit'])) {
         </div>
     </section>
 
-
     <!-- Container 5 Contact Cover-->
-    <section id="container-5">
+    <section id="container5">
         <div class="container">
             <div class="row">
                 <div class="col text-center">
@@ -240,35 +238,35 @@ if (isset($_POST['unlock-submit'])) {
     </section>
 
     <!-- Container 6 Contact Text-->
-    <section id="container-6" class="text-muted py-5">
+    <section id="container6" class="text-muted py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <img class="img-fluid mb-3 rounded-circle" src="../assets/img/question.jpg" alt="contact">
                 </div>
-
                 <div class="col-md-6">
-                    <h3 class="green">Headline about the support</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum impedit tempora cumque non corrupti fuga quibusdam numquam laudantium similique natus consequuntur consectetur quo qui officia in, modi dolores expedita saepe?</p>
+                    <h3 class="green">We Are Happy to Help</h3>
+                    <p>We appreciate any feedback you might have for us and our products. The best way to contact us is via our contact form.</p>
                     <div class="d-flex flex-row">
                         <div class="p-4 align-self-start">
-                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-telephone-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chat-text" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
+                                <path fill-rule="evenodd" d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8zm0 2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
                             </svg>
                         </div>
                         <div class="p-4 align-self-end">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum unde consequatur fuga fugit tempore laborum.
+                            Our awesome new chat bot will try to answer all your questions!
                         </div>
                     </div>
                     <div class="d-flex flex-row">
                         <div class="p-4 align-self-start">
-                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-                                <path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x-octagon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1L1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z" />
+                                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                             </svg>
                         </div>
                         <div class="p-4 align-self-end">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum unde consequatur fuga fugit tempore laborum.
+                            The contact form is currently closed due to recent hacker activities.
                         </div>
                     </div>
                 </div>
@@ -288,15 +286,12 @@ if (isset($_POST['unlock-submit'])) {
                         <br>
                         <?php
                         // load instructions
-                        require(INST_GENERAL);
-                        require(INST_XSS);
-                        require(INST_SQLI);
-                        require(INST_CSRF);
+                        get_challenge_instructions(['general', 'xss', 'sqli', 'csrf']);
                         ?>
                     </div>
                     <div class="text-center justify-content-center">
                         <br>
-                        <form class="form-signin" action="main.php" method="post">
+                        <form class="form-signin" action="<?= $thisPage ?>" method="post">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="check" name="check" required>
                                 <label class="form-check-label" for="check">I've read the instructions!</label>
@@ -311,12 +306,12 @@ if (isset($_POST['unlock-submit'])) {
     </div>
 
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
-    if ($unlocked) {
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
+    if ($notUnlocked) {
         echo "<script>$('#greeting').modal('show')</script>";
     }
 

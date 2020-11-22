@@ -3,6 +3,7 @@
 /*
 * Java Script for modals
 */
+
 // error modal for reflective XSS challenge
 if (isset($challengeFailed)) {
     if ($challengeFailed) {
@@ -104,32 +105,4 @@ if (isset($queryResultModal)) {
             . "</script>";
     }
 }
-
-// challenge modals for CSRF challenge
-// if (isset($_SESSION['csrfResult'])) {
-//     if ($_SESSION['csrfResult'] == 0) {
-//         // success
-//         echo $modalSuccessCSRF;
-//         echo "<script>$('#challenge-success-csrf').modal('show')</script>";
-//     } elseif ($_SESSION['csrfResult'] == 1) {
-//         // wrong message; still passed
-//         echo $modalSuccessCSRFWrongMessage;
-//         echo "<script>$('#challenge-success-csrf-pwned').modal('show')</script>";
-//     } elseif ($_SESSION['csrfResult'] == 2) {
-//         // error: wrong user
-//         echo $modalErrorCSRFUserMismatch;
-//         echo "<script>$('#challenge-info-csrf-user-mismatch').modal('show')"
-//             . "</script>";
-//     } elseif ($_SESSION['csrfResult'] == 3) {
-//         // error: already post in the database
-//         echo $modalInfoCSRFAlreadyPosted;
-//         echo "<script>$('#challenge-info-csrf-already-posted').modal('show')"
-//             . "</script>";
-//     } elseif ($_SESSION['csrfResult'] == 4) {
-//         // wrong referrer; still passed
-//         echo $modalSuccessCSRFWrongReferrer;
-//         echo "<script>$('#challenge-success-csrf-referrer').modal('show')"
-//             . "</script>";
-//     }
-// }
 ?>

@@ -1,19 +1,17 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_SHOP);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check login status
+// check login status
 if (!is_user_logged_in()) {
-    // Redirect to login page
+    // redirect to login page
     header("location: " . LOGIN_PAGE . "?login=false");
     exit();
 }
@@ -30,7 +28,7 @@ $xss = "";
 $sqli = "";
 $csrf = "";
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// load GET variables
 if (isset($_GET['help'])) {
 
     $section = filter_input(INPUT_GET, 'help', FILTER_SANITIZE_STRING);
@@ -69,9 +67,9 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
 <body>
 
     <?php
-    // Load navbar
+    // load navbar
     require(HEADER_SHOP);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
     <div class="page-container">
@@ -96,25 +94,25 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
                         <!-- General Instructions -->
                         <div class="tab-pane fade show <?= $general ?>" id="list-general" role="tabpanel" aria-labelledby="list-general-list">
                             <?php
-                            require(INST_GENERAL);
+                            get_challenge_instructions("general");
                             ?>
                         </div>
                         <!-- XSS -->
                         <div class="tab-pane fade show <?= $xss ?>" id="list-xss" role="tabpanel" aria-labelledby="list-xss-list">
                             <?php
-                            require(INST_XSS);
+                            get_challenge_instructions("xss");
                             ?>
                         </div>
                         <!-- SQLi -->
                         <div class="tab-pane fade show <?= $sqli ?>" id="list-sqli" role="tabpanel" aria-labelledby="list-sqli-list">
                             <?php
-                            require(INST_SQLI);
+                            get_challenge_instructions("sqli");
                             ?>
                         </div>
                         <!-- CSRF -->
                         <div class="tab-pane fade show <?= $csrf ?>" id="list-csrf" role="tabpanel" aria-labelledby="list-csrf-list">
                             <?php
-                            require(INST_CSRF);
+                            get_challenge_instructions("csrf");
                             ?>
                         </div>
                     </div>
@@ -130,22 +128,22 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
                     <!-- General -->
                     <div id="general_sm"></div>
                     <?php
-                    require(INST_GENERAL);
+                    get_challenge_instructions("general");
                     ?>
                     <!-- XSS -->
                     <div id="xss_sm"></div>
                     <?php
-                    require(INST_XSS);
+                    get_challenge_instructions("xss");
                     ?>
                     <!-- SQLi -->
                     <div id="sqli_sm"></div>
                     <?php
-                    require(INST_SQLI);
+                    get_challenge_instructions("sqli");
                     ?>
                     <!-- CSRF -->
                     <div id="csrf_sm"></div>
                     <?php
-                    require(INST_CSRF);
+                    get_challenge_instructions("csrf");
                     ?>
                 </div>
             </div>
@@ -154,11 +152,11 @@ if (empty($xss) && empty($sqli) && empty($csrf)) {
     <!-- HTML Content END -->
 
     <?php
-    // Load shop footer
+    // load shop footer
     require(FOOTER_SHOP);
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_SHOP); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_SHOP); // custom JavaScript
     ?>
 </body>
 

@@ -10,6 +10,8 @@ define('SITE_URL', 'localhost');
 // The hidden directory for PHPMyAdmin
 // this dir is only used if phpMyAdmin runs directly in the apache container
 define('PMA', 'e6rs82wdj94qsfgb' . DS);
+// Token to access phpMyAdmin without being an admin user already
+define('PMA_TOKEN', 'ux6vjfhsxqg3tfp6x9s7q6uggfdj3whm');
 // Number of challenges in the shop
 // currently XSS (2x), SQLi, CSRF
 define('NUM_CHALLENGES', 4);
@@ -24,20 +26,24 @@ define('RES', ROOT .  '..' . DS . 'resources' . DS);
 define('DOC', ROOT .  '..' . DS . 'docs' . DS);
 // Log dir
 define('LOG', ROOT .  '..' . DS . 'docs' . DS);
-// Command Line Utility dir (currently empty)
-define('BIN', ROOT .  '..' . DS . 'docs' . DS);
+// Command Line Utility dir
+define('BIN', ROOT .  '..' . DS . 'bin' . DS);
 // Configuration dir
 define('CON', ROOT .  '..' . DS . 'config' . DS);
 // Database dir for the sql injection challenge
 define('DAT', ROOT .  '..' . DS . 'data' . DS);
+// Test dir
+define('TES', ROOT . '..' . DS . 'tests' . DS);
 
 /* Database configurations and settings */
 // Login database credentials
 define('CONF_DB_LOGIN', CON . 'db_login.php');
 // Shop database credentials
-define('CONF_DB_SHOP', CON . 'db_shop.php');
+// define('CONF_DB_SHOP', CON . 'db_shop.php');
+define('CONF_DB_SHOP', dirname(__FILE__) . DS . 'db_shop.php');
 // Settings file for difficulty and login/registration
-define('SETTINGS', CON . 'settings.json');
+// define('SETTINGS', CON . 'settings.json');
+define('SETTINGS', dirname(__FILE__) . DS . 'settings.json');
 
 /* Subfolders in src/ */
 // Includes dir
@@ -92,3 +98,4 @@ define('MAIN_PAGE', '/shop/main.php');
 define('LOGIN_PAGE', '/index.php');
 define('REGISTER_PAGE', '/registration.php');
 define('SCORE', '/user/scorecard.php');
+define('EXPORT', '/admin/export_file.php');

@@ -1,16 +1,18 @@
-
+# OS Files
 .DS_Store
+
+# User Data
 data/*.json
 *.sqlite
+
+# Log Files
 *.log
 
-# filter phpunit
-test*
-./tests/
-./vendor/
+# # Filter phpunit
+# test*
+# ./tests/
+vendor/*
 composer.json
 composer.lock
 phpunit.xml
-
-# other test files
-*solutions.md
+SampleTest.php

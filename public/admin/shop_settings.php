@@ -1,27 +1,28 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load config files
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
-// Load custom libraries
+// load functions
 require(FUNC_BASE);
 require(FUNC_ADMIN);
-
-// Load error handling and user messages
 require(ERROR_HANDLING);
 
-// Check admin status
+// check admin status
 if (!is_user_admin()) {
-    // Redirect to shop main page
+    // redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
 }
 
-// Load POST or GET variables and sanitize input BELOW this comment
+// variables
 $username = $_SESSION['userName'];
+$here = basename($_SERVER['PHP_SELF'], ".php"); // get script name for sidebar highlighting
+$checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
+$thisPage = basename($_SERVER['PHP_SELF']);
 
-// process setting requests
+// process login setting requests
 if (isset($_POST['update-login'])) {
     if ($_POST['loginRadios'] == "enable") {
         set_login_status(true);
@@ -29,6 +30,7 @@ if (isset($_POST['update-login'])) {
         set_login_status(false);
     }
 }
+// process registration setting requests
 if (isset($_POST['update-registration'])) {
     if ($_POST['registrationRadios'] == "enable") {
         set_registration_status(true);
@@ -36,6 +38,7 @@ if (isset($_POST['update-registration'])) {
         set_registration_status(false);
     }
 }
+// process difficulty setting requests
 if (isset($_POST['update-difficulty'])) {
     if ($_POST['diffRadios'] == "normal") {
         set_global_difficulty("normal");
@@ -43,14 +46,17 @@ if (isset($_POST['update-difficulty'])) {
         set_global_difficulty("hard");
     }
 }
+// process username setting requests
 if (isset($_POST['update-usernames'])) {
     $nameList = make_clean_array($_POST['input-usernames']);
     set_blocked_usernames($nameList);
 }
+// process domain setting requests
 if (isset($_POST['update-domains'])) {
     $domainList = make_clean_array($_POST['input-domains']);
     set_allowed_domains($domainList);
 }
+// process link settings requests
 if (isset($_POST['update-badge'])) {
     $learnweb = (filter_var($_POST['input-learnweb'], FILTER_VALIDATE_URL)) ? $_POST['input-learnweb'] : "https://www.uni-muenster.de/LearnWeb/learnweb2/";
     $reflectiveXSS = (filter_var($_POST['input-reflective-xss'], FILTER_VALIDATE_URL)) ? $_POST['input-reflective-xss'] : get_setting("learnweb", "link");
@@ -63,10 +69,6 @@ if (isset($_POST['update-badge'])) {
     set_badge_link("sqli", $sqli);
     set_badge_link("csrf", $csrf);
 }
-
-// Other php variables
-$here = basename($_SERVER['PHP_SELF'], ".php"); // Get script name
-$checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
 ?>
 <!doctype html>
 <html lang="en">
@@ -91,9 +93,9 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
 <body>
 
     <?php
-    // Load navbar and sidebar
+    // load navbar and sidebar
     require(HEADER_ADMIN);
-    // Load error messages, user notifications etc.
+    // load error messages, user notifications etc.
     require(MESSAGES);
     ?>
 
@@ -121,7 +123,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     </p>
                                     <div class="row">
                                         <div class="col">
-                                            <form action="shop_settings.php" method="post">
+                                            <form action="<?= $thisPage ?>" method="post">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="loginRadios" id="enLoginRadio" value="enable" <?= is_login_enabled() ? "checked" : "" ?>>
                                                     <label class="form-check-label" for="enLoginRadio">
@@ -140,7 +142,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                             </form>
                                         </div>
                                         <div class="col">
-                                            <form action="shop_settings.php" method="post">
+                                            <form action="<?= $thisPage ?>" method="post">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="registrationRadios" id="enRegistrationRadio" value="enable" <?= is_registration_enabled() ? "checked" : "" ?>>
                                                     <label class="form-check-label" for="enRegistrationRadio">
@@ -174,7 +176,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                     <div class="row">
                                         <div class="col"></div>
                                         <div class="col">
-                                            <form action="shop_settings.php" method="post">
+                                            <form action="<?= $thisPage ?>" method="post">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="diffRadios" id="normalRadio" value="normal" <?= $checkDifficulty ? "checked" : "" ?>>
                                                     <label class="form-check-label" for="normalRadio">
@@ -212,7 +214,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                         Here are all usernames that are blocked during registration. You can add new ones by appending them in the field below. The names will be processed case insensitive.
                                     </p>
                                     <div class="text-center">
-                                        <form action="shop_settings.php" method="post">
+                                        <form action="<?= $thisPage ?>" method="post">
                                             <input type="text" class="form-control" name="input-usernames" value="<?= implode(', ', get_blocked_usernames()) ?>">
                                             <input type="hidden" name="update-usernames" value="1">
                                             <br>
@@ -224,7 +226,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                         This list contains all domains that are allowed for the mail addresses during registration. You can add new ones by appending them in the field below.
                                     </p>
                                     <div class="text-center">
-                                        <form action="shop_settings.php" method="post">
+                                        <form action="<?= $thisPage ?>" method="post">
                                             <input type="text" class="form-control" name="input-domains" value="<?= implode(', ', get_allowed_domains()) ?>">
                                             <input type="hidden" name="update-domains" value="1">
                                             <br>
@@ -249,7 +251,7 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
                                         Please remember to put <b class="text-info">http</b> or <b class="text-info">https</b> in front of the link.
                                     </p>
                                     <br>
-                                    <form action="shop_settings.php" method="post">
+                                    <form action="<?= $thisPage ?>" method="post">
                                         <label for="input-learnweb"><strong>Link Current Learnweb Course:</strong></label>
                                         <input type="text" class="form-control" name="input-learnweb" value="<?= get_setting("learnweb", "link") ?>"><br>
                                         <label for="input-reflective-xss"><strong>Link Reflective XSS:</strong></label>
@@ -275,11 +277,12 @@ $checkDifficulty = (get_global_difficulty() == "normal") ? true : false;
         </div>
     </div>
     <?php
-    // Load JavaScript
-    require_once(JS_BOOTSTRAP); // Default Bootstrap JavaScript
-    require_once(JS_ADMIN); // Custom JavaScript
+    // load JavaScript
+    require_once(JS_BOOTSTRAP); // default Bootstrap JavaScript
+    require_once(JS_ADMIN); // custom JavaScript
     ?>
     <script>
+        // activate popovers
         $(document).ready(function() {
             $('[data-toggle="popover"]').popover();
         });

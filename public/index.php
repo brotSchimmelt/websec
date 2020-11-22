@@ -1,39 +1,44 @@
 <?php
-session_start(); // Needs to be called first on every page
+session_start(); // needs to be called first on every page
 
-// Load dependencies
+// load config files
 require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 require_once(CONF_DB_LOGIN); // DB credentials
-require(FUNC_BASE); // Basic functions
-require(FUNC_LOGIN); // Login & registration functions
-require(FUNC_WEBSEC); // Challenge and SQLi functions
-require(ERROR_HANDLING); // Error handling
+
+// load functions
+require(FUNC_BASE); // basic functions
+require(FUNC_LOGIN); // login & registration functions
+require(FUNC_WEBSEC); // challenge and SQLi functions
+require(ERROR_HANDLING); // error handling
 
 // check if login is disabled
 if (!is_login_enabled()) {
 
+    // destroy session
     $_SESSION = array();
     session_destroy();
 
+    // redirect to error page
     $name = "Login";
     include(INCL . "login_disabled.php");
     exit();
 }
 
-// Check login status
+// check login status
 if (is_user_logged_in()) {
-    // Redirect to shop main page
+    // redirect to shop main page
     header("location: " . MAIN_PAGE);
     exit();
 }
 
 // variables
 $difficulty = get_global_difficulty();
+$thisPage = basename(__FILE__);
 
-// check if login was tried
+// check if login was requested
 if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
-    // Load POST variables
+    // load POST variables
     $username = $_POST['loginUsername'];
     $pwd = $_POST['loginPwd'];
 
@@ -65,18 +70,22 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
     <!-- HTML Content BEGIN -->
     <div class="jumbotron shadow bg-light login-card overflow-auto">
-        <form class="form-signin form-login" action="index.php" method="post">
+        <form class="form-signin form-login" action="<?= $thisPage ?>" method="post">
             <img class="mb-4" src="assets/img/wwu_cysec.png" alt="WWU Logo" width="210" height="110">
 
             <h1 class="h3 mb-3 font-weight-normal">WebSec Shop</h1>
 
+            <!-- Check if JS is enabled -->
             <noscript>
                 <div class="alert alert-warning shadow" role="alert">
                     You need to enabled <strong>Java Script</strong> in your browser in order to complete the challenges.
                 </div>
             </noscript>
 
-            <?= get_message(); ?>
+            <?=
+                // get error message
+                get_message();
+            ?>
 
             <label for="input-name" class="sr-only">Username or WWU Mail</label>
             <input type="text" name="loginUsername" id="input-name" class="form-control" placeholder="Username or WWU Mail" required autofocus>
@@ -85,8 +94,8 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 
             <a href="password_reset.php" id="forget_btn" class="btn btn-link login-link">Forgot your password?</a>
 
-            <button type="submit" name="login-submit" id="login-btn" class="btn btn-lg btn-login btn-block">Login</button>
-            <a href="registration.php" id="register-btn-link" class="btn btn-lg btn-outline-register btn-block">Register</a>
+            <button type="submit" name="login-submit" id="loginBtn" class="btn btn-lg btn-login btn-block">Login</button>
+            <a href="registration.php" id="registerBtnLink" class="btn btn-lg btn-outline-register btn-block">Register</a>
 
             <p class="mt-5 mb-3 text-muted">&copy; <?= get_semester() ?></p>
             <hr class="accent-blue">
@@ -104,9 +113,11 @@ if (post_var_set('loginUsername') && post_var_set('loginPwd')) {
 </body>
 
 <?php
-include_once(JS_BOOTSTRAP);
+// load default Bootstrap JavaScript
+require_once(JS_BOOTSTRAP);
 ?>
 <script>
+    // activate tool tips
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
     });

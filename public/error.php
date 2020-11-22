@@ -1,11 +1,13 @@
 <?php
+session_start(); // needs to be called first on every page
 
-$mainPage = "/index.php";
+// load config files
+require_once("$_SERVER[DOCUMENT_ROOT]/../config/config.php");
 
 if (isset($_GET['error']) && !empty($_GET['error'])) {
 
+    // get error info
     $error = (string)$_GET['error'];
-
     $headline = $error . " Error";
 
     switch ($error) {
@@ -45,7 +47,7 @@ if (isset($_GET['error']) && !empty($_GET['error'])) {
             $msg = "";
             $link = "https://en.wikipedia.org/wiki/List_of_HTTP_status_codes";
     }
-    // Page Title
+    // page Title
     $title = $error . " - " . $caption;
 } else {
     // default output
@@ -55,7 +57,6 @@ if (isset($_GET['error']) && !empty($_GET['error'])) {
     $msg = "";
     $link = "https://en.wikipedia.org/wiki/List_of_HTTP_status_codes";
 }
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -88,11 +89,14 @@ if (isset($_GET['error']) && !empty($_GET['error'])) {
 
     <!-- Content Container -->
     <div class="container text-center">
-        <?= $msg ?>
+        <?=
+            // error message
+            $msg
+        ?>
         <br><br>
         <div class="row">
             <div class="col text-right">
-                <a href="<?= $mainPage ?>" target="_blank">Go Back</a>
+                <a href="<?= LOGIN_PAGE ?>">Go Back</a>
             </div>
             <div class="col text-left">
                 <a href="<?= $link ?>" target="_blank">More Information</a>

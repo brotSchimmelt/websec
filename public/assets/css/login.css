@@ -1,3 +1,7 @@
+/*
+* General changes to the layout
+*/
+
 html, body {
   height: 100%;
 }
@@ -16,6 +20,8 @@ body {
   padding-bottom: 40px;
   background-color: #e2e2e2;
 }
+
+/* Form */
 
 .form-signin {
   width: 100%;
@@ -58,43 +64,31 @@ body {
   border-top-right-radius: 0;
 }
 
-/* .form-login input[type="email-register"] {
-  margin-bottom: 0px;
-  margin-top: 10px;
-}
-
-.form-signin input[type="text-register"] {
-  margin-bottom: 0px;
-}
-
-.form-signin input[type="password-register"] {
-  margin-bottom: 0px;
-  margin-top: 10px;
-} */
-
 .form-register input {
   margin-bottom: 10px;
 }
 
-#info-text {
+/* Text and Buttons */
+
+#infoText {
   margin-top: 15px;
 }
 
-#login-btn {
+#loginBtn {
   margin-top: 15px;
 }
 
-#register-btn-link {
+#registerBtnLink {
   margin-top: 5px;
 }
 
-#register-btn {
+#registerBtn {
   margin-top: 25px;
 }
 
-hr.accent-blue {
-  border-top: 2px solid #006E89;
-  max-width: 80%;
+.show-difficulty {
+  margin-top: -20px;
+  margin-bottom: -35px;
 }
 
 .btn-login {
@@ -140,6 +134,17 @@ hr.accent-blue {
   color: #005469;
 }
 
+/* Miscellaneous */
+
+#showSemester {
+  margin-top: -20px;
+}
+
+hr.accent-blue {
+  border-top: 2px solid #006E89;
+  max-width: 80%;
+}
+
 .login-card {
   min-width: 22%;
   padding-top: 10px;
@@ -149,13 +154,4 @@ hr.accent-blue {
 .register-label {
   text-align: left;
   margin-bottom: -10px;
-}
-
-.show-difficulty {
-  margin-top: -20px;
-  margin-bottom: -35px;
-}
-
-#show-semester {
-  margin-top: -20px;
 }
